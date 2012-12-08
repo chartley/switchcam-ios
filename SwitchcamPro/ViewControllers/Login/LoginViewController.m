@@ -99,7 +99,7 @@
 - (IBAction)facebookConnectButtonAction:(id)sender {
     // The user has initiated a login, so call the openSession method.
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    [appDelegate openSessionWithAllowLoginUI:YES];
+    [appDelegate openReadSessionWithAllowLoginUI:YES];
     
     [loadingIndicator show:YES];
 }

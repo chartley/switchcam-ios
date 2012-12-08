@@ -7,11 +7,13 @@
 //
 
 #import <RestKit/RestKit.h>
-#import "MyEventsViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import <FacebookSDK/FacebookSDK.h>
+#import "MyEventsViewController.h"
 #import "ECSlidingViewController.h"
 #import "MenuViewController.h"
 #import "MyEventCell.h"
+#import "AppDelegate.h"
 #import "AFNetworking.h"
 #import "SPConstants.h"
 #import "Event.h"
@@ -39,6 +41,8 @@
     // Do any additional setup after loading the view from its nib.
     [self.myEventsTableView setTableFooterView:[[UIView alloc] init]];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stateChanged:) name:SCSessionStateChangedNotification object:nil];
+    
     // Set debug logging level. Set to 'RKLogLevelTrace' to see JSON payload
     RKLogConfigureByName("RestKit/Network", RKLogLevelTrace);
     
@@ -54,8 +58,6 @@
                                                                                    cacheName:nil];
     [self.fetchedResultsController setDelegate:self];
     [self.fetchedResultsController performFetch:&error];
-    
-    [self getMyEvents];
 }
 
 - (void)didReceiveMemoryWarning
@@ -78,9 +80,6 @@
     }
     
     [self.view addGestureRecognizer:self.slidingViewController.panGesture];
-    
-    
-    [self getMyEvents];
 }
 
 #pragma mark - IBActions
@@ -91,7 +90,7 @@
 
 #pragma mark - Network Calls
 
-- (void)getMyEvents {    
+- (void)getMyEvents {
     // Load the object model via RestKit
     [[RKObjectManager sharedManager] getObjectsAtPath:@"mission/" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         RKLogInfo(@"Load complete: Table should refresh...");
@@ -185,6 +184,27 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     [self.myEventsTableView reloadData];
+}
+
+#pragma mark - Observer Methods
+
+- (void)stateChanged:(NSNotification*)notification {
+    FBSession *session = (FBSession *) [notification object];
+    
+    switch (session.state) {
+        case FBSessionStateOpen: {
+            [self getMyEvents];
+        }
+            break;
+        case FBSessionStateClosed: {
+        }
+            break;
+        case FBSessionStateClosedLoginFailed: {
+        }
+            break;
+        default:
+            break;
+    }
 }
 
 @end
