@@ -87,6 +87,7 @@
 		C97B19191673E5D0005BB65F /* PendingUploadCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C97B19181673E5D0005BB65F /* PendingUploadCell.xib */; };
 		C97B191E1673E66F005BB65F /* InviteFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C97B191C1673E66E005BB65F /* InviteFriendsViewController.m */; };
 		C97B191F1673E66F005BB65F /* InviteFriendsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C97B191D1673E66E005BB65F /* InviteFriendsViewController.xib */; };
+		C97B19221673ECE1005BB65F /* UILocalizedIndexedCollation+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = C97B19211673ECE1005BB65F /* UILocalizedIndexedCollation+Util.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C97BFEE7166D909D005BB65F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97BFEE6166D909D005BB65F /* UIKit.framework */; };
 		C97BFEE9166D909D005BB65F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97BFEE8166D909D005BB65F /* Foundation.framework */; };
 		C97BFEEB166D909D005BB65F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97BFEEA166D909D005BB65F /* CoreGraphics.framework */; };
@@ -246,6 +247,8 @@
 		C97B191B1673E66E005BB65F /* InviteFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InviteFriendsViewController.h; path = ViewControllers/Friends/InviteFriendsViewController.h; sourceTree = "<group>"; };
 		C97B191C1673E66E005BB65F /* InviteFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InviteFriendsViewController.m; path = ViewControllers/Friends/InviteFriendsViewController.m; sourceTree = "<group>"; };
 		C97B191D1673E66E005BB65F /* InviteFriendsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = InviteFriendsViewController.xib; path = ViewControllers/Friends/InviteFriendsViewController.xib; sourceTree = "<group>"; };
+		C97B19201673ECE1005BB65F /* UILocalizedIndexedCollation+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UILocalizedIndexedCollation+Util.h"; path = "Helpers/UILocalizedIndexedCollation+Util.h"; sourceTree = "<group>"; };
+		C97B19211673ECE1005BB65F /* UILocalizedIndexedCollation+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UILocalizedIndexedCollation+Util.m"; path = "Helpers/UILocalizedIndexedCollation+Util.m"; sourceTree = "<group>"; };
 		C97BFEE2166D909D005BB65F /* SwitchcamPro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwitchcamPro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C97BFEE6166D909D005BB65F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C97BFEE8166D909D005BB65F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -701,6 +704,8 @@
 				C97B139B166DDD03005BB65F /* Reachability.h */,
 				C97B139C166DDD03005BB65F /* Reachability.m */,
 				C97BFF5F166D9CFC005BB65F /* SPConstants.h */,
+				C97B19201673ECE1005BB65F /* UILocalizedIndexedCollation+Util.h */,
+				C97B19211673ECE1005BB65F /* UILocalizedIndexedCollation+Util.m */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -871,6 +876,7 @@
 				C97B190E1673B459005BB65F /* User.m in Sources */,
 				C97B19171673E5BC005BB65F /* PendingUploadCell.m in Sources */,
 				C97B191E1673E66F005BB65F /* InviteFriendsViewController.m in Sources */,
+				C97B19221673ECE1005BB65F /* UILocalizedIndexedCollation+Util.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

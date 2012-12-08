@@ -15,7 +15,8 @@ extern NSString *const SCSessionStateChangedNotification;
 @property (strong, nonatomic) UIWindow *window;
 
 // Facebook
-- (BOOL)openSessionWithAllowLoginUI:(BOOL)allowLoginUI;
+- (BOOL)openReadSessionWithAllowLoginUI:(BOOL)allowLoginUI;
+- (BOOL)openWriteSessionWithAllowLoginUI:(BOOL)allowLoginUI;
 
 // Callback
 - (void)successfulLoginViewControllerChange;

@@ -53,7 +53,7 @@ NSString *const SCSessionStateChangedNotification = @"com.switchcam.switchcampro
     [self.window makeKeyAndVisible];
     
     // See if we have a valid token for the current state.
-    if (![self openSessionWithAllowLoginUI:NO]) {
+    if (![self openReadSessionWithAllowLoginUI:NO]) {
         // No? Display the login page.
         [self showLoginView];
     } else {
@@ -242,10 +242,21 @@ NSString *const SCSessionStateChangedNotification = @"com.switchcam.switchcampro
     }
 }
 
-- (BOOL)openSessionWithAllowLoginUI:(BOOL)allowLoginUI {
-    NSArray *permissionsArray = [NSArray arrayWithObjects:@"email", @"publish_actions", nil];
+- (BOOL)openReadSessionWithAllowLoginUI:(BOOL)allowLoginUI {
+    NSArray *permissionsArray = [NSArray arrayWithObjects:@"email", nil];
     
-    return [FBSession openActiveSessionWithPublishPermissions:permissionsArray defaultAudience:FBSessionDefaultAudienceEveryone
+    return [FBSession openActiveSessionWithReadPermissions:permissionsArray
+                                              allowLoginUI:allowLoginUI
+                                         completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {
+                                             [self sessionStateChanged:session state:state error:error];
+                                         }];
+}
+
+- (BOOL)openWriteSessionWithAllowLoginUI:(BOOL)allowLoginUI {
+    NSArray *permissionsArray = [NSArray arrayWithObjects:@"publish_actions", nil];
+    
+    return [FBSession openActiveSessionWithPublishPermissions:permissionsArray
+                                              defaultAudience:FBSessionDefaultAudienceFriends
                                               allowLoginUI:allowLoginUI
                                          completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {
                                              [self sessionStateChanged:session state:state error:error];

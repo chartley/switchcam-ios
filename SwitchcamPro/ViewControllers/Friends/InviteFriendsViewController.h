@@ -10,4 +10,6 @@
 
 @interface InviteFriendsViewController : UIViewController
 
+@property (strong, nonatomic) IBOutlet UITableView *selectFriendsTableView;
+
 @end
