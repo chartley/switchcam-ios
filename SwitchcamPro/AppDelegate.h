@@ -8,12 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-@class ViewController;
+extern NSString *const SCSessionStateChangedNotification;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
-@property (strong, nonatomic) ViewController *viewController;
+// Facebook
+- (BOOL)openSessionWithAllowLoginUI:(BOOL)allowLoginUI;
+
+// Callback
+- (void)successfulLoginViewControllerChange;
 
 @end

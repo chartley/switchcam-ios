@@ -8,17 +8,73 @@
 
 #import "AppDelegate.h"
 
-#import "ViewController.h"
+#import <RestKit/RestKit.h>
+#import <RestKit/CoreData.h>
+#import <FacebookSDK/FacebookSDK.h>
+#import "UAirship.h"
+#import "UAPush.h"
+#import "AFNetworking.h"
+#import "MyEventsViewController.h"
+#import "ECSlidingViewController.h"
+#import "LoginViewController.h"
+#import "SPConstants.h"
+
+NSString *const SCSessionStateChangedNotification = @"com.switchcam.switchcampro:SCSessionStateChangedNotification";
+
+@interface AppDelegate ()
+
+@property (strong, nonatomic) ECSlidingViewController *slidingViewController;
+@property (strong, nonatomic) UINavigationController* loginViewController;
+
+- (void)showLoginView;
+
+@end
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    // Initialize Push
+    //[self initAirship:launchOptions];
+    
+    // Show Activity Indicator
+    [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
+    
+    // Initialize RestKit
+    [self initializeRestKit];
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    self.viewController = [[ViewController alloc] initWithNibName:@"ViewController" bundle:nil];
-    self.window.rootViewController = self.viewController;
+    MyEventsViewController *viewController = [[MyEventsViewController alloc] initWithNibName:@"MyEventsViewController" bundle:nil];
+    self.slidingViewController = [[ECSlidingViewController alloc] init];
+    self.slidingViewController.topViewController = viewController;
+    self.window.rootViewController = self.slidingViewController;
+
     [self.window makeKeyAndVisible];
+    
+    // See if we have a valid token for the current state.
+    if (![self openSessionWithAllowLoginUI:NO]) {
+        // No? Display the login page.
+        [self showLoginView];
+    } else {
+        // Save Facebook id and token for API access
+        [[FBRequest requestForMe] startWithCompletionHandler:
+         ^(FBRequestConnection *connection,
+           NSDictionary<FBGraphUser> *user,
+           NSError *error) {
+             if (!error) {
+                 NSString *facebookId = user.id;
+                 NSString *facebookToken = [FBSession activeSession].accessToken;
+                 
+                 [[NSUserDefaults standardUserDefaults] setObject:facebookId forKey:kSPUserFacebookIdKey];
+                 [[NSUserDefaults standardUserDefaults] setObject:facebookToken forKey:kSPUserFacebookTokenKey];
+             } else {
+                 // No? Display the login page.
+                 [self showLoginView];
+             }
+         }];
+    }
+    
     return YES;
 }
 
@@ -42,11 +98,281 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    // We need to properly handle activation of the application with regards to SSO
+    //  (e.g., returning from iOS 6.0 authorization dialog or from fast app switching).
+    [FBSession.activeSession handleDidBecomeActive];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    // if the app is going away, we close the session object; this is a good idea because
+    // things may be hanging off the session, that need releasing (completion block, etc.) and
+    // other components in the app may be awaiting close notification in order to do cleanup
+    [FBSession.activeSession close];
+}
+
+#pragma mark - Facebook
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation
+{
+    return [FBSession.activeSession handleOpenURL:url];
+}
+
+#pragma mark - AirShip
+
+- (void)initAirship:(NSDictionary*)launchOptions {
+    //Init Airship launch options
+    NSMutableDictionary *takeOffOptions = [[NSMutableDictionary alloc] init];
+    [takeOffOptions setValue:launchOptions forKey:UAirshipTakeOffOptionsLaunchOptionsKey];
+    
+    // Create Airship singleton that's used to talk to Urban Airship servers.
+    // Please replace these with your info from http://go.urbanairship.com
+    [UAirship takeOff:takeOffOptions];
+
+    
+    [[UAPush shared] resetBadge];//zero badge on startup
+    
+    // Register for notifications through UAPush for notification type tracking
+    [[UAPush shared] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+                                                         UIRemoteNotificationTypeSound |
+                                                         UIRemoteNotificationTypeAlert)];
+}
+
+#pragma mark - Push Notifications
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    // Updates the device token and registers the token with UA
+    [[UAPush shared] registerDeviceToken:deviceToken];
+}
+
+#pragma mark - View Control Helper Methods
+
+- (void)successfulLoginViewControllerChange {
+    if (self.loginViewController != nil) {
+        UIViewController *topViewController = [self.slidingViewController topViewController];
+        [topViewController dismissModalViewControllerAnimated:YES];
+        self.loginViewController = nil;
+    }
+}
+
+#pragma mark Facebook Login Code
+
+- (void)createAndPresentLoginView {
+    if (self.loginViewController == nil) {
+        LoginViewController *loginRootViewController = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
+        self.loginViewController = [[UINavigationController alloc] initWithRootViewController:loginRootViewController];
+        UIViewController *topViewController = [self.slidingViewController topViewController];
+        [topViewController presentModalViewController:self.loginViewController animated:NO];
+    }
+}
+
+- (void)showLoginView {
+    if (self.loginViewController == nil) {
+        [self createAndPresentLoginView];
+    } else {
+        // State being observed at LoginViewController
+    }
+}
+
+- (void)sessionStateChanged:(FBSession *)session
+                      state:(FBSessionState)state
+                      error:(NSError *)error
+{
+    // FBSample logic
+    // Any time the session is closed, we want to display the login controller (the user
+    // cannot use the application unless they are logged in to Facebook). When the session
+    // is opened successfully, hide the login controller and show the main UI.
+    switch (state) {
+        case FBSessionStateOpen: {
+            //[self.mainViewController startLocationManager];
+            
+            // FBSample logic
+            // Pre-fetch and cache the friends for the friend picker as soon as possible to improve
+            // responsiveness when the user tags their friends.
+            FBCacheDescriptor *cacheDescriptor = [FBFriendPickerViewController cacheDescriptor];
+            [cacheDescriptor prefetchAndCacheForSession:session];
+        }
+            break;
+        case FBSessionStateClosed: {
+            // FBSample logic
+            // Once the user has logged out, we want them to be looking at the root view.
+            UIViewController *topViewController = [self.slidingViewController topViewController];
+            UIViewController *modalViewController = [topViewController modalViewController];
+            if (modalViewController != nil) {
+                [topViewController dismissModalViewControllerAnimated:NO];
+            }
+            [self.slidingViewController resetTopView];
+            
+            [FBSession.activeSession closeAndClearTokenInformation];
+            
+            [self performSelector:@selector(showLoginView)
+                       withObject:nil
+                       afterDelay:0.5f];
+        }
+            break;
+        case FBSessionStateClosedLoginFailed: {
+            // if the token goes invalid we want to switch right back to
+            // the login view, however we do it with a slight delay in order to
+            // account for a race between this and the login view dissappearing
+            // a moment before
+            [self performSelector:@selector(showLoginView)
+                       withObject:nil
+                       afterDelay:0.5f];
+        }
+            break;
+        default:
+            break;
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:SCSessionStateChangedNotification
+                                                        object:session];
+    
+    if (error) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Error: %@",
+                                                                     [AppDelegate FBErrorCodeDescription:error.code]]
+                                                            message:error.localizedDescription
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+        [alertView show];
+    }
+}
+
+- (BOOL)openSessionWithAllowLoginUI:(BOOL)allowLoginUI {
+    NSArray *permissionsArray = [NSArray arrayWithObjects:@"email", @"publish_actions", nil];
+    
+    return [FBSession openActiveSessionWithPublishPermissions:permissionsArray defaultAudience:FBSessionDefaultAudienceEveryone
+                                              allowLoginUI:allowLoginUI
+                                         completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {
+                                             [self sessionStateChanged:session state:state error:error];
+                                         }];
+}
+
++ (NSString *)FBErrorCodeDescription:(FBErrorCode) code {
+    switch(code){
+        case FBErrorInvalid :{
+            return @"FBErrorInvalid";
+        }
+        case FBErrorOperationCancelled:{
+            return @"FBErrorOperationCancelled";
+        }
+        case FBErrorLoginFailedOrCancelled:{
+            return @"FBErrorLoginFailedOrCancelled";
+        }
+        case FBErrorRequestConnectionApi:{
+            return @"FBErrorRequestConnectionApi";
+        }case FBErrorProtocolMismatch:{
+            return @"FBErrorProtocolMismatch";
+        }
+        case FBErrorHTTPError:{
+            return @"FBErrorHTTPError";
+        }
+        case FBErrorNonTextMimeTypeReturned:{
+            return @"FBErrorNonTextMimeTypeReturned";
+        }
+        case FBErrorNativeDialog:{
+            return @"FBErrorNativeDialog";
+        }
+        default:
+            return @"[Unknown]";
+    }
+}
+
+#pragma mark - RestKit
+
+- (void)initializeRestKit {
+    // Initialize RestKit
+    NSURL *baseURL = [NSURL URLWithString:kAPIHost];
+    RKObjectManager *objectManager = [RKObjectManager managerWithBaseURL:baseURL];
+    
+    NSString *facebookId = [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookIdKey];
+    NSString *facebookToken = [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookTokenKey];
+    
+    // Force basic auth with credentials
+    [[RKObjectManager sharedManager].HTTPClient setAuthorizationHeaderWithUsername:facebookId password:facebookToken];
+    
+    // Initialize managed object store
+    NSManagedObjectModel *managedObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
+    RKManagedObjectStore *managedObjectStore = [[RKManagedObjectStore alloc] initWithManagedObjectModel:managedObjectModel];
+    objectManager.managedObjectStore = managedObjectStore;
+    
+    // Setup our object mappings
+    /**
+     Mapping by entity. Here we are configuring a mapping by targetting a Core Data entity with a specific
+     name. This allows us to map back Event/User objects directly onto NSManagedObject instances --
+     there is no backing model class!
+     */
+    RKEntityMapping *userMapping = [RKEntityMapping mappingForEntityForName:@"User" inManagedObjectStore:managedObjectStore];
+    userMapping.identificationAttributes = @[ @"userId" ];
+    
+    [userMapping addAttributeMappingsFromDictionary:@{
+     @"id": @"userId",
+     @"legal_terms_accept_date": @"legalTermsAcceptDate",
+     @"pic_link": @"pictureURL",
+     }];
+    // If source and destination key path are the same, we can simply add a string to the array
+    [userMapping addAttributeMappingsFromArray:@[ @"name" ]];
+    
+    RKEntityMapping *eventMapping = [RKEntityMapping mappingForEntityForName:@"Event" inManagedObjectStore:managedObjectStore];
+    eventMapping.identificationAttributes = @[ @"eventId" ];
+    [eventMapping addAttributeMappingsFromDictionary:@{
+     @"id": @"eventId",
+     @"lat": @"latitude",
+     @"lon": @"longitude",
+     @"start_datetime": @"startDatetime",
+     @"end_datetime": @"endDatetime",
+     @"submission_deadline": @"submissionDeadline",
+     }];
+    // If source and destination key path are the same, we can simply add a string to the array
+    [eventMapping addAttributeMappingsFromArray:@[ @"title" ]];
+    
+    // Relationships
+    [eventMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"camera_crew" toKeyPath:@"cameraCrew" withMapping:userMapping]];
+    [eventMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"created_by" toKeyPath:@"createdBy" withMapping:userMapping]];    
+    [eventMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"followers" toKeyPath:@"followers" withMapping:userMapping]];
+    
+    [userMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"attendedEvents" toKeyPath:@"cameraCrew" withMapping:eventMapping]];
+    [userMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"createdEvents" toKeyPath:@"createdBy" withMapping:eventMapping]];
+    [userMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"followedEvents" toKeyPath:@"followers" withMapping:eventMapping]];
+    
+    // Update date format so that we can parse Twitter dates properly
+    // Wed Sep 29 15:31:08 +0000 2010
+    //[RKObjectMapping addDefaultDateFormatterForString:@"E MMM d HH:mm:ss Z y" inTimeZone:nil];
+    
+    // Register json serialization
+    [RKMIMETypeSerialization registerClass:[RKNSJSONSerialization class] forMIMEType:@"application/json"];
+    
+    // Register our mappings with the provider
+    //RKResponseDescriptor *eventResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:eventMapping
+    //                                                                                   pathPattern:@"mission/"
+    //                                                                                       keyPath:nil
+    //                                                                                   statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    
+    // Register our mappings with the provider
+    RKResponseDescriptor *eventResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:eventMapping
+                                                                                            pathPattern:@"mission/"
+                                                                                                keyPath:@"data"
+                                                                                            statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    [objectManager addResponseDescriptor:eventResponseDescriptor];
+    
+    /**
+     Complete Core Data stack initialization
+     */
+    [managedObjectStore createPersistentStoreCoordinator];
+    NSString *storePath = [RKApplicationDataDirectory() stringByAppendingPathComponent:@"SPDirector.sqlite"];
+    NSError *error;
+    NSPersistentStore *persistentStore = [managedObjectStore addSQLitePersistentStoreAtPath:storePath fromSeedDatabaseAtPath:nil withConfiguration:nil options:nil error:&error];
+    NSAssert(persistentStore, @"Failed to add persistent store with error: %@", error);
+    
+    // Create the managed object contexts
+    [managedObjectStore createManagedObjectContexts];
+    
+    // Configure a managed object cache to ensure we do not create duplicate objects
+    managedObjectStore.managedObjectCache = [[RKInMemoryManagedObjectCache alloc] initWithManagedObjectContext:managedObjectStore.persistentStoreManagedObjectContext];
 }
 
 @end
