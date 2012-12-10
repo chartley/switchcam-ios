@@ -14,15 +14,22 @@
         <relationship name="myRecordings" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Recording" inverseName="event" inverseEntity="Recording" syncable="YES"/>
     </entity>
     <entity name="Recording" representedClassName="Recording" syncable="YES">
+        <attribute name="compressedVideoURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="filename" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isUploaded" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="localVideoAssetURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="mimetype" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="recordEnd" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="recordStart" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="sizeBytes" optional="YES" attributeType="Integer 64" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="sizeMegaBytes" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="thumbnailURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uploadDestination" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="uploadedVideoId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uploadPath" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uploadS3Bucket" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="event" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Event" inverseName="myRecordings" inverseEntity="Event" syncable="YES"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES">
@@ -36,7 +43,7 @@
     </entity>
     <elements>
         <element name="Event" positionX="160" positionY="192" width="128" height="210"/>
+        <element name="Recording" positionX="160" positionY="192" width="128" height="300"/>
         <element name="User" positionX="160" positionY="192" width="128" height="150"/>
-        <element name="Recording" positionX="160" positionY="192" width="128" height="195"/>
     </elements>
 </model>

@@ -93,7 +93,6 @@
 		C97B19301673F4B3005BB65F /* SCCamUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = C97B192A1673F4B3005BB65F /* SCCamUtilities.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C97B19311673F4B3005BB65F /* SCCamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C97B192C1673F4B3005BB65F /* SCCamViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C97B19321673F4B3005BB65F /* SCCamViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C97B192D1673F4B3005BB65F /* SCCamViewController.xib */; };
-		C97B193C16740522005BB65F /* Recording.m in Sources */ = {isa = PBXBuildFile; fileRef = C97B193B16740521005BB65F /* Recording.m */; };
 		C97B193E1674053D005BB65F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97B193D1674053B005BB65F /* AVFoundation.framework */; };
 		C97B194216740585005BB65F /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97B194116740582005BB65F /* AssetsLibrary.framework */; };
 		C97B194416740596005BB65F /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97B194316740594005BB65F /* MediaPlayer.framework */; };
@@ -120,6 +119,8 @@
 		C9E9B6BB16741D6C00487A72 /* ButtonToProgressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9E9B6BA16741D6C00487A72 /* ButtonToProgressCell.xib */; };
 		C9E9B6BD16741D8700487A72 /* LabelInvisibleButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9E9B6BC16741D8700487A72 /* LabelInvisibleButtonCell.xib */; };
 		C9E9B6BF16741D9C00487A72 /* LabelTextFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9E9B6BE16741D9C00487A72 /* LabelTextFieldCell.xib */; };
+		C9E9B6D01675DF4200487A72 /* SPSerializable.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E9B6CF1675DF4200487A72 /* SPSerializable.m */; };
+		C9E9B6D31675E1D300487A72 /* Recording.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E9B6D21675E1D300487A72 /* Recording.m */; };
 		EA4961B4C6514DAA8566373E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D3FF39401B0F465894FA8F8C /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -276,8 +277,6 @@
 		C97B192B1673F4B3005BB65F /* SCCamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCamViewController.h; sourceTree = "<group>"; };
 		C97B192C1673F4B3005BB65F /* SCCamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCamViewController.m; sourceTree = "<group>"; };
 		C97B192D1673F4B3005BB65F /* SCCamViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCCamViewController.xib; sourceTree = "<group>"; };
-		C97B193A16740521005BB65F /* Recording.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Recording.h; path = Model/ManagedObjects/Recording.h; sourceTree = "<group>"; };
-		C97B193B16740521005BB65F /* Recording.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Recording.m; path = Model/ManagedObjects/Recording.m; sourceTree = "<group>"; };
 		C97B193D1674053B005BB65F /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		C97B193F16740570005BB65F /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		C97B194116740582005BB65F /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
@@ -320,6 +319,10 @@
 		C9E9B6BA16741D6C00487A72 /* ButtonToProgressCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ButtonToProgressCell.xib; path = TableViewCells/ButtonToProgressCell.xib; sourceTree = "<group>"; };
 		C9E9B6BC16741D8700487A72 /* LabelInvisibleButtonCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LabelInvisibleButtonCell.xib; path = TableViewCells/LabelInvisibleButtonCell.xib; sourceTree = "<group>"; };
 		C9E9B6BE16741D9C00487A72 /* LabelTextFieldCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LabelTextFieldCell.xib; path = TableViewCells/LabelTextFieldCell.xib; sourceTree = "<group>"; };
+		C9E9B6CE1675DF4200487A72 /* SPSerializable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPSerializable.h; path = Helpers/SPSerializable.h; sourceTree = "<group>"; };
+		C9E9B6CF1675DF4200487A72 /* SPSerializable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPSerializable.m; path = Helpers/SPSerializable.m; sourceTree = "<group>"; };
+		C9E9B6D11675E1D300487A72 /* Recording.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Recording.h; path = Model/ManagedObjects/Recording.h; sourceTree = "<group>"; };
+		C9E9B6D21675E1D300487A72 /* Recording.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Recording.m; path = Model/ManagedObjects/Recording.m; sourceTree = "<group>"; };
 		D3FF39401B0F465894FA8F8C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -531,8 +534,8 @@
 				C97B190A1673ACF7005BB65F /* Event.m */,
 				C97B190C1673B459005BB65F /* User.h */,
 				C97B190D1673B459005BB65F /* User.m */,
-				C97B193A16740521005BB65F /* Recording.h */,
-				C97B193B16740521005BB65F /* Recording.m */,
+				C9E9B6D11675E1D300487A72 /* Recording.h */,
+				C9E9B6D21675E1D300487A72 /* Recording.m */,
 			);
 			name = ManagedObjects;
 			sourceTree = "<group>";
@@ -791,6 +794,8 @@
 				C97BFF5F166D9CFC005BB65F /* SPConstants.h */,
 				C97B19201673ECE1005BB65F /* UILocalizedIndexedCollation+Util.h */,
 				C97B19211673ECE1005BB65F /* UILocalizedIndexedCollation+Util.m */,
+				C9E9B6CE1675DF4200487A72 /* SPSerializable.h */,
+				C9E9B6CF1675DF4200487A72 /* SPSerializable.m */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -981,11 +986,12 @@
 				C97B192F1673F4B3005BB65F /* SCCamRecorder.m in Sources */,
 				C97B19301673F4B3005BB65F /* SCCamUtilities.m in Sources */,
 				C97B19311673F4B3005BB65F /* SCCamViewController.m in Sources */,
-				C97B193C16740522005BB65F /* Recording.m in Sources */,
 				C9E9B6AF16741B1800487A72 /* UploadVideoViewController.m in Sources */,
 				C9E9B6B316741D0E00487A72 /* LabelTextFieldCell.m in Sources */,
 				C9E9B6B616741D2700487A72 /* LabelInvisibleButtonCell.m in Sources */,
 				C9E9B6B916741D5000487A72 /* ButtonToProgressCell.m in Sources */,
+				C9E9B6D01675DF4200487A72 /* SPSerializable.m in Sources */,
+				C9E9B6D31675E1D300487A72 /* Recording.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -42,7 +42,7 @@
     // Do any additional setup after loading the view from its nib.
     [self.myEventsTableView setTableFooterView:[[UIView alloc] init]];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stateChanged:) name:SCAPINetworkRequestCanStartNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stateChangedFromNotification) name:SCAPINetworkRequestCanStartNotification object:nil];
     
     // Set debug logging level. Set to 'RKLogLevelTrace' to see JSON payload
     RKLogConfigureByName("RestKit/Network", RKLogLevelTrace);
@@ -205,6 +205,11 @@
 }
 
 #pragma mark - Observer Methods
+
+- (void)stateChangedFromNotification {
+    // Notification told us we have an open connection
+    [self getMyEvents];
+}
 
 - (void)stateChanged:(NSNotification*)notification {
     FBSession *session = (FBSession *) [notification object];

@@ -89,7 +89,8 @@
 
 - (IBAction)recordButtonAction:(id)sender {
     SCCamViewController *viewController = [[SCCamViewController alloc] init];
-    [self presentModalViewController:viewController animated:YES];
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    [self presentModalViewController:navController animated:YES];
 }
 
 - (IBAction)noteButtonAction:(id)sender {

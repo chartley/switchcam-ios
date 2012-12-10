@@ -52,6 +52,7 @@
 #import "SCCamCaptureManager.h"
 #import "SCCamRecorder.h"
 #import "UploadVideoViewController.h"
+#import "Recording.h"
 
 static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
 
@@ -244,6 +245,7 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
                                           insertNewObjectForEntityForName:@"Recording"
                                           inManagedObjectContext:context];
         
+        [currentRecording setRecordStart:[NSDate date]];
         [[self captureManager] setCurrentRecording:currentRecording];
         
         // Hide the close button

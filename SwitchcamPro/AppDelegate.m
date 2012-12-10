@@ -72,7 +72,7 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
                  [[RKObjectManager sharedManager].HTTPClient setAuthorizationHeaderWithUsername:facebookId password:facebookToken];
                  
                  [[NSUserDefaults standardUserDefaults] setObject:facebookId forKey:kSPUserFacebookIdKey];
-                 [[NSUserDefaults standardUserDefaults] setObject:facebookToken forKey:kSPUserFacebookIdKey];
+                 [[NSUserDefaults standardUserDefaults] setObject:facebookToken forKey:kSPUserFacebookTokenKey];
                  
                  // Facebook id and token captured, we can start making network requests
                  [[NSNotificationCenter defaultCenter] postNotificationName:SCAPINetworkRequestCanStartNotification
@@ -352,6 +352,20 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     [userMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"attendedEvents" toKeyPath:@"cameraCrew" withMapping:eventMapping]];
     [userMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"createdEvents" toKeyPath:@"createdBy" withMapping:eventMapping]];
     [userMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"followedEvents" toKeyPath:@"followers" withMapping:eventMapping]];
+    
+    // Recording Object Mapping
+    RKEntityMapping *recordingMapping = [RKEntityMapping mappingForEntityForName:@"Recording" inManagedObjectStore:managedObjectStore];
+    recordingMapping.identificationAttributes = @[ @"uploadedVideoId" ];
+    [recordingMapping addAttributeMappingsFromDictionary:@{
+     @"upload_destination": @"uploadDestination",
+     @"upload_s3_bucket": @"uploadS3Bucket",
+     @"upload_path": @"uploadPath",
+     @"size_mb": @"sizeMegaBytes",
+     }];
+    // If source and destination key path are the same, we can simply add a string to the array
+    [recordingMapping addAttributeMappingsFromArray:@[ @"filename" ]];
+    [recordingMapping addAttributeMappingsFromArray:@[ @"mimetype" ]];
+    
     
     // Register json serialization
     [RKMIMETypeSerialization registerClass:[RKNSJSONSerialization class] forMIMEType:@"application/json"];

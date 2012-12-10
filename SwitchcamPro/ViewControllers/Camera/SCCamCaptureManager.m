@@ -267,7 +267,7 @@
     }
     
     [self removeFile:[[self recorder] outputFileURL]];
-    // Force record video with button on the right
+    //TODO maybe force horizonta
     [[self recorder] startRecordingWithOrientation:AVCaptureVideoOrientationLandscapeLeft];
 }
 

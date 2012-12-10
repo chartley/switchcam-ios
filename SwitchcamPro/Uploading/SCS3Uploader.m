@@ -42,7 +42,7 @@
         [s3 putObject:por];
     }
     @catch ( AmazonServiceException *exception ) {
-        //NSLog( @"Upload Failed, Reason: %@", exception );
+        NSLog( @"Upload Failed, Reason: %@", exception );
     }
 }
 
@@ -81,7 +81,7 @@ const int PART_SIZE = (5 * 1024 * 1024); // 5MB is the smallest part size allowe
         [s3 completeMultipartUpload:compReq];
     }
     @catch ( AmazonServiceException *exception ) {
-        //NSLog( @"Multipart Upload Failed, Reason: %@", exception  );
+        NSLog( @"Multipart Upload Failed, Reason: %@", exception  );
     }
 }
 
