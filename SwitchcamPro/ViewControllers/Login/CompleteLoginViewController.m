@@ -49,10 +49,7 @@
 
 #pragma mark - Network Calls
 
-- (void)login {
-    //NSString *facebookId = nil;
-    //NSString *facebookToken = nil;
-    
+- (void)login {    
     // Completion Blocks
     void (^userLoginSuccessBlock)(AFHTTPRequestOperation *operation, id responseObject);
     void (^userLoginFailureBlock)(AFHTTPRequestOperation *operation, NSError *error);
@@ -71,7 +68,7 @@
         [alertView show];
     };
     
-    // Some registration
+    // Some push registration
     /*
     // Make Request and set params
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:kAPIHost]];

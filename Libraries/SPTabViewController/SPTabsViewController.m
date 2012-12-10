@@ -5,6 +5,8 @@
 
 enum { kTagTabBase = 100 };
 
+#define kTopPictureHeight 200
+
 @interface SPTabsViewController ()
 
 @property (nonatomic, retain) NSArray *viewControllers;
@@ -74,7 +76,7 @@ enum { kTagTabBase = 100 };
   self.contentView = viewController.view;
   
   self.contentView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-  self.contentView.frame = CGRectMake(0, self.tabsContainerView.bounds.size.height, self.view.bounds.size.width, self.view.bounds.size.height);
+  self.contentView.frame = CGRectMake(0, kTopPictureHeight + self.tabsContainerView.bounds.size.height, self.view.bounds.size.width, self.view.bounds.size.height);
   
   [self.view addSubview:self.contentView];
 

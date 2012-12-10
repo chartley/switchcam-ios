@@ -69,8 +69,12 @@
     
     switch (indexPath.row) {
         case 0:
-            newTopViewController = [[MyEventsViewController alloc] init];
+        {
+            MyEventsViewController *myEventsViewController = [[MyEventsViewController alloc] initWithNibName:@"MyEventsViewController" bundle:nil];
+            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:myEventsViewController];
+            newTopViewController = navController;
             break;
+        }
             
         case 1:
             newTopViewController = [[FindEventsViewController alloc] init];

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 extern NSString *const SCSessionStateChangedNotification;
+extern NSString *const SCAPINetworkRequestCanStartNotification;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

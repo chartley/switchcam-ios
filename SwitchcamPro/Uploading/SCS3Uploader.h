@@ -8,26 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol S3UploadDelegate <NSObject>
-@required
-- (void)startedUpload;	// This method is always called on the main thread.
-- (void)percentCompleted:(float) percent;
-- (void)uploadCompleted;
-- (void)uploadFailed;
-
-@end
+#define kSCS3UploadStartedNotification @"SCS3UploadStartedNotification"
+#define kSCS3UploadPercentCompleteNotification @"SCS3UploadPercentCompleteNotification"
+#define kSCS3UploadCompletedNotification @"SCS3UploadCompletedNotification"
+#define kSCS3UploadFailedNotification @"SCS3UploadFailedNotification"
 
 @interface SCS3Uploader : NSObject
 
-@property (nonatomic, retain) NSURL *uploadVideoURL; //the video;
-@property (nonatomic, retain) NSString *s3VideoURL; //the video;
-
-@property (nonatomic, retain) NSString *bucketName; //the video;
-
-
-
+@property (nonatomic, strong) NSURL *uploadVideoURL; //the video;
+@property (nonatomic, strong) NSString *s3VideoURL; //the video;
+@property (nonatomic, strong) NSString *bucketName; //the video;
 
 - (void)uploadVideo:(NSData*)videoData withKey:(NSString*)videoKey;
-@property (nonatomic, retain) id <S3UploadDelegate> delegate;
 
 @end

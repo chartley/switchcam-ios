@@ -10,6 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import <FacebookSDK/FacebookSDK.h>
 #import "MyEventsViewController.h"
+#import "EventViewController.h"
 #import "ECSlidingViewController.h"
 #import "MenuViewController.h"
 #import "MyEventCell.h"
@@ -41,7 +42,7 @@
     // Do any additional setup after loading the view from its nib.
     [self.myEventsTableView setTableFooterView:[[UIView alloc] init]];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stateChanged:) name:SCSessionStateChangedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stateChanged:) name:SCAPINetworkRequestCanStartNotification object:nil];
     
     // Set debug logging level. Set to 'RKLogLevelTrace' to see JSON payload
     RKLogConfigureByName("RestKit/Network", RKLogLevelTrace);
@@ -80,6 +81,17 @@
     }
     
     [self.view addGestureRecognizer:self.slidingViewController.panGesture];
+    
+    // Add Menu button
+    UIButton *menuButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [menuButton setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+    [menuButton addTarget:self action:@selector(menuButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *menuBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:menuButton];
+    [self.navigationItem setLeftBarButtonItem:menuBarButtonItem];
+    
+    if ([FBSession.activeSession isOpen]) {
+        [self getMyEvents];
+    }
 }
 
 #pragma mark - IBActions
@@ -178,6 +190,12 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    Event *event = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    EventViewController *viewController = [[EventViewController alloc] init];
+    [viewController setEvent:event];
+    [self.navigationController pushViewController:viewController animated:YES];
+    
 }
 
 #pragma mark NSFetchedResultsControllerDelegate methods

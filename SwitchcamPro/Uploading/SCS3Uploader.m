@@ -17,22 +17,16 @@
 
 @synthesize bucketName;
 
-@synthesize delegate;
 - (id)init {
     self = [super init];
     if (self) {
-        if ( [kAWS_ACCESS_KEY_ID isEqualToString:@"CHANGE ME"]) {
-            //TODO FIX ME
-            
-        }
         self.bucketName = [SCBucketNameGenerator bucketName];
-        
     }
+
     return self;
 }
 
 -(void)upload:(NSData*)dataToUpload inBucket:(NSString*)bucket forKey:(NSString*)key {
-    
     @try {
         AmazonS3Client *s3 = [[[AmazonS3Client alloc] initWithAccessKey:kAWS_ACCESS_KEY_ID withSecretKey:kAWS_SECRET_KEY] autorelease];
         
@@ -67,7 +61,8 @@ const int PART_SIZE = (5 * 1024 * 1024); // 5MB is the smallest part size allowe
         int numberOfParts = [self countParts:dataToUpload];
         for ( int part = 0; part < numberOfParts; part++ ) {
             
-            [delegate percentCompleted: (float)(((float)part) / ((float)numberOfParts))  * 100.0];
+            NSNumber *percentComplete = [NSNumber numberWithFloat:(float)(((float)part) / ((float)numberOfParts))  * 100.0];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kSCS3UploadPercentCompleteNotification object:percentComplete];
             
             NSData *dataForPart = [self getPart:part fromData:dataToUpload];
             
@@ -118,9 +113,8 @@ const int PART_SIZE = (5 * 1024 * 1024); // 5MB is the smallest part size allowe
     
     //[AmazonLogger verboseLogging];
     
-    [delegate percentCompleted: 0.4 * 100];
-    
-    //NSLog(@"videoKey: %@", videoKey);
+    NSNumber *percentComplete = [NSNumber numberWithFloat:0.4 * 100];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSCS3UploadPercentCompleteNotification object:percentComplete];
     
     if ([self countParts:videoData] == 1) {
         AmazonS3Client *s3 = [[[AmazonS3Client alloc] initWithAccessKey:kAWS_ACCESS_KEY_ID withSecretKey:kAWS_SECRET_KEY] autorelease];
@@ -138,11 +132,10 @@ const int PART_SIZE = (5 * 1024 * 1024); // 5MB is the smallest part size allowe
             // Put the image data into the specified s3 bucket and object.
             [s3 putObject:por];
             //     NSLog( @"single part Upload Completed"  );
-            
-            [delegate uploadCompleted];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kSCS3UploadCompletedNotification object:nil];
         }
         @catch (AmazonClientException *exception) {
-            [delegate uploadFailed];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kSCS3UploadFailedNotification object:nil];
             //  NSLog( @"single part Upload Failed"  );
             // TODO FIX ME
             //[Constants showAlertMessage:exception.message withTitle:@"Upload Error"];
@@ -153,7 +146,6 @@ const int PART_SIZE = (5 * 1024 * 1024); // 5MB is the smallest part size allowe
         AmazonS3Client *s3 = [[[AmazonS3Client alloc] initWithAccessKey:kAWS_ACCESS_KEY_ID withSecretKey:kAWS_SECRET_KEY] autorelease];
         
         @try {
-            // [s3 createBucket:[[[S3CreateBucketRequest alloc] initWithName:[Constants bucket] andRegion:[[S3Region alloc] initWithStringValue:@"us-west-1"]] autorelease]];
             [s3 createBucket:[[[S3CreateBucketRequest alloc] initWithName:self.bucketName] autorelease]];
             
             S3InitiateMultipartUploadRequest *initReq = [[[S3InitiateMultipartUploadRequest alloc] initWithKey:videoKey inBucket:self.bucketName] autorelease];
@@ -164,7 +156,8 @@ const int PART_SIZE = (5 * 1024 * 1024); // 5MB is the smallest part size allowe
             
             for ( int part = 0; part < numberOfParts; part++ ) {
                 
-                [delegate percentCompleted: (float)(((float)part) / ((float)numberOfParts))  * 100.0];
+                NSNumber *percentComplete = [NSNumber numberWithFloat:(float)(((float)part) / ((float)numberOfParts))  * 100.0];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kSCS3UploadPercentCompleteNotification object:percentComplete];
                 
                 NSData *dataForPart = [self getPart:part fromData:videoData];
                 
@@ -181,14 +174,11 @@ const int PART_SIZE = (5 * 1024 * 1024); // 5MB is the smallest part size allowe
             }
             
             [s3 completeMultipartUpload:compReq];
-            [delegate uploadCompleted];
-            // NSLog( @"Multipart Upload Completed"  );
+            [[NSNotificationCenter defaultCenter] postNotificationName:kSCS3UploadCompletedNotification object:nil];
             
         }
         @catch ( AmazonServiceException *exception ) {
-            [delegate uploadFailed];
-            
-            NSLog( @"Multipart Upload Failed, Reason: %@", exception  );
+            [[NSNotificationCenter defaultCenter] postNotificationName:kSCS3UploadFailedNotification object:nil];
         }
     }
     // Initial the S3 Client.

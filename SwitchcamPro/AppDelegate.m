@@ -20,6 +20,7 @@
 #import "SPConstants.h"
 
 NSString *const SCSessionStateChangedNotification = @"com.switchcam.switchcampro:SCSessionStateChangedNotification";
+NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switchcampro:SCAPINetworkRequestCanStartNotification";
 
 @interface AppDelegate ()
 
@@ -45,9 +46,10 @@ NSString *const SCSessionStateChangedNotification = @"com.switchcam.switchcampro
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    MyEventsViewController *viewController = [[MyEventsViewController alloc] initWithNibName:@"MyEventsViewController" bundle:nil];
+    MyEventsViewController *myEventsViewController = [[MyEventsViewController alloc] initWithNibName:@"MyEventsViewController" bundle:nil];
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:myEventsViewController];
     self.slidingViewController = [[ECSlidingViewController alloc] init];
-    self.slidingViewController.topViewController = viewController;
+    self.slidingViewController.topViewController = navController;
     self.window.rootViewController = self.slidingViewController;
 
     [self.window makeKeyAndVisible];
@@ -66,8 +68,15 @@ NSString *const SCSessionStateChangedNotification = @"com.switchcam.switchcampro
                  NSString *facebookId = user.id;
                  NSString *facebookToken = [FBSession activeSession].accessToken;
                  
+                 // Force basic auth with credentials
+                 [[RKObjectManager sharedManager].HTTPClient setAuthorizationHeaderWithUsername:facebookId password:facebookToken];
+                 
                  [[NSUserDefaults standardUserDefaults] setObject:facebookId forKey:kSPUserFacebookIdKey];
-                 [[NSUserDefaults standardUserDefaults] setObject:facebookToken forKey:kSPUserFacebookTokenKey];
+                 [[NSUserDefaults standardUserDefaults] setObject:facebookToken forKey:kSPUserFacebookIdKey];
+                 
+                 // Facebook id and token captured, we can start making network requests
+                 [[NSNotificationCenter defaultCenter] postNotificationName:SCAPINetworkRequestCanStartNotification
+                                                                     object:[FBSession activeSession]];
              } else {
                  // No? Display the login page.
                  [self showLoginView];
@@ -300,12 +309,6 @@ NSString *const SCSessionStateChangedNotification = @"com.switchcam.switchcampro
     NSURL *baseURL = [NSURL URLWithString:kAPIHost];
     RKObjectManager *objectManager = [RKObjectManager managerWithBaseURL:baseURL];
     
-    NSString *facebookId = [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookIdKey];
-    NSString *facebookToken = [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookTokenKey];
-    
-    // Force basic auth with credentials
-    [[RKObjectManager sharedManager].HTTPClient setAuthorizationHeaderWithUsername:facebookId password:facebookToken];
-    
     // Initialize managed object store
     NSManagedObjectModel *managedObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
     RKManagedObjectStore *managedObjectStore = [[RKManagedObjectStore alloc] initWithManagedObjectModel:managedObjectModel];
@@ -350,18 +353,8 @@ NSString *const SCSessionStateChangedNotification = @"com.switchcam.switchcampro
     [userMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"createdEvents" toKeyPath:@"createdBy" withMapping:eventMapping]];
     [userMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"followedEvents" toKeyPath:@"followers" withMapping:eventMapping]];
     
-    // Update date format so that we can parse Twitter dates properly
-    // Wed Sep 29 15:31:08 +0000 2010
-    //[RKObjectMapping addDefaultDateFormatterForString:@"E MMM d HH:mm:ss Z y" inTimeZone:nil];
-    
     // Register json serialization
     [RKMIMETypeSerialization registerClass:[RKNSJSONSerialization class] forMIMEType:@"application/json"];
-    
-    // Register our mappings with the provider
-    //RKResponseDescriptor *eventResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:eventMapping
-    //                                                                                   pathPattern:@"mission/"
-    //                                                                                       keyPath:nil
-    //                                                                                   statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
     
     // Register our mappings with the provider
     RKResponseDescriptor *eventResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:eventMapping

@@ -9,6 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "SPTabsViewController.h"
 
-@interface EventViewController : SPTabsViewController
+@class Event;
+
+@interface EventViewController : SPTabsViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+
+@property (strong, nonatomic) Event *event;
+@property (strong, nonatomic) IBOutlet UIView *toolbarDrawer;
 
 @end
