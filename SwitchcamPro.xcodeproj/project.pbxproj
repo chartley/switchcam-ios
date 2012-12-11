@@ -75,12 +75,10 @@
 		C97B14A616710898005BB65F /* SPTabsFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = C97B149D16710898005BB65F /* SPTabsFooterView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C97B14A716710898005BB65F /* SPTabStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = C97B149F16710898005BB65F /* SPTabStyle.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C97B14A816710898005BB65F /* SPTabsView.m in Sources */ = {isa = PBXBuildFile; fileRef = C97B14A116710898005BB65F /* SPTabsView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		C97B14A916710898005BB65F /* SPTabsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C97B14A316710898005BB65F /* SPTabsViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C97B14AA16710898005BB65F /* SPTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = C97B14A516710898005BB65F /* SPTabView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C97B14AE16710E94005BB65F /* ActivityVideoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C97B14AD16710E94005BB65F /* ActivityVideoCell.m */; };
 		C97B18FA1671A6BB005BB65F /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C97B18F81671A6BB005BB65F /* Model.xcdatamodeld */; };
 		C97B19081673A93C005BB65F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97B19071673A93C005BB65F /* CoreData.framework */; };
-		C97B190B1673ACF7005BB65F /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = C97B190A1673ACF7005BB65F /* Event.m */; };
 		C97B190E1673B459005BB65F /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = C97B190D1673B459005BB65F /* User.m */; };
 		C97B19101673BAC6005BB65F /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97B190F1673BAC5005BB65F /* StoreKit.framework */; };
 		C97B19171673E5BC005BB65F /* PendingUploadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C97B19161673E5BC005BB65F /* PendingUploadCell.m */; };
@@ -111,6 +109,8 @@
 		C97BFF30166D9541005BB65F /* MyEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C97BFF2F166D9541005BB65F /* MyEventCell.m */; };
 		C97BFF32166D9551005BB65F /* MyEventCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C97BFF31166D9551005BB65F /* MyEventCell.xib */; };
 		C97BFF5D166D9BE8005BB65F /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = C97BFF5C166D9BE8005BB65F /* MBProgressHUD.m */; };
+		C9DDF1751676C88B000399EA /* EventTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DDF1741676C88B000399EA /* EventTabViewController.m */; };
+		C9DDF1861676D539000399EA /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DDF1851676D539000399EA /* Event.m */; };
 		C9E9B6AF16741B1800487A72 /* UploadVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E9B6AD16741B1800487A72 /* UploadVideoViewController.m */; };
 		C9E9B6B016741B1800487A72 /* UploadVideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9E9B6AE16741B1800487A72 /* UploadVideoViewController.xib */; };
 		C9E9B6B316741D0E00487A72 /* LabelTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E9B6B216741D0E00487A72 /* LabelTextFieldCell.m */; };
@@ -247,16 +247,12 @@
 		C97B149F16710898005BB65F /* SPTabStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTabStyle.m; sourceTree = "<group>"; };
 		C97B14A016710898005BB65F /* SPTabsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTabsView.h; sourceTree = "<group>"; };
 		C97B14A116710898005BB65F /* SPTabsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTabsView.m; sourceTree = "<group>"; };
-		C97B14A216710898005BB65F /* SPTabsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTabsViewController.h; sourceTree = "<group>"; };
-		C97B14A316710898005BB65F /* SPTabsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTabsViewController.m; sourceTree = "<group>"; };
 		C97B14A416710898005BB65F /* SPTabView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTabView.h; sourceTree = "<group>"; };
 		C97B14A516710898005BB65F /* SPTabView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTabView.m; sourceTree = "<group>"; };
 		C97B14AC16710E94005BB65F /* ActivityVideoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActivityVideoCell.h; path = TableViewCells/Activity/ActivityVideoCell.h; sourceTree = "<group>"; };
 		C97B14AD16710E94005BB65F /* ActivityVideoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActivityVideoCell.m; path = TableViewCells/Activity/ActivityVideoCell.m; sourceTree = "<group>"; };
 		C97B18F91671A6BB005BB65F /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		C97B19071673A93C005BB65F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		C97B19091673ACF7005BB65F /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Event.h; path = Model/ManagedObjects/Event.h; sourceTree = "<group>"; };
-		C97B190A1673ACF7005BB65F /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Event.m; path = Model/ManagedObjects/Event.m; sourceTree = "<group>"; };
 		C97B190C1673B459005BB65F /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = User.h; path = Model/ManagedObjects/User.h; sourceTree = "<group>"; };
 		C97B190D1673B459005BB65F /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = Model/ManagedObjects/User.m; sourceTree = "<group>"; };
 		C97B190F1673BAC5005BB65F /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -307,6 +303,10 @@
 		C97BFF5F166D9CFC005BB65F /* SPConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPConstants.h; path = Helpers/SPConstants.h; sourceTree = "<group>"; };
 		C97BFFC2166DBDC0005BB65F /* libUAirship-1.3.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libUAirship-1.3.3.a"; sourceTree = "<group>"; };
 		C97BFFC3166DBDC0005BB65F /* libUAirshipPush-1.3.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libUAirshipPush-1.3.3.a"; sourceTree = "<group>"; };
+		C9DDF1731676C88B000399EA /* EventTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventTabViewController.h; path = ViewControllers/Event/EventTabViewController.h; sourceTree = "<group>"; };
+		C9DDF1741676C88B000399EA /* EventTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EventTabViewController.m; path = ViewControllers/Event/EventTabViewController.m; sourceTree = "<group>"; };
+		C9DDF1841676D539000399EA /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Event.h; path = Model/ManagedObjects/Event.h; sourceTree = "<group>"; };
+		C9DDF1851676D539000399EA /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Event.m; path = Model/ManagedObjects/Event.m; sourceTree = "<group>"; };
 		C9E9B6AC16741B1800487A72 /* UploadVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UploadVideoViewController.h; path = ViewControllers/Upload/UploadVideoViewController.h; sourceTree = "<group>"; };
 		C9E9B6AD16741B1800487A72 /* UploadVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UploadVideoViewController.m; path = ViewControllers/Upload/UploadVideoViewController.m; sourceTree = "<group>"; };
 		C9E9B6AE16741B1800487A72 /* UploadVideoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UploadVideoViewController.xib; path = ViewControllers/Upload/UploadVideoViewController.xib; sourceTree = "<group>"; };
@@ -487,6 +487,8 @@
 				C97B14961671068D005BB65F /* EventVideosViewController.h */,
 				C97B14971671068E005BB65F /* EventVideosViewController.m */,
 				C97B14981671068E005BB65F /* EventVideosViewController.xib */,
+				C9DDF1731676C88B000399EA /* EventTabViewController.h */,
+				C9DDF1741676C88B000399EA /* EventTabViewController.m */,
 			);
 			name = Event;
 			sourceTree = "<group>";
@@ -500,8 +502,6 @@
 				C97B149F16710898005BB65F /* SPTabStyle.m */,
 				C97B14A016710898005BB65F /* SPTabsView.h */,
 				C97B14A116710898005BB65F /* SPTabsView.m */,
-				C97B14A216710898005BB65F /* SPTabsViewController.h */,
-				C97B14A316710898005BB65F /* SPTabsViewController.m */,
 				C97B14A416710898005BB65F /* SPTabView.h */,
 				C97B14A516710898005BB65F /* SPTabView.m */,
 			);
@@ -530,12 +530,12 @@
 		C97B18FB1671A964005BB65F /* ManagedObjects */ = {
 			isa = PBXGroup;
 			children = (
-				C97B19091673ACF7005BB65F /* Event.h */,
-				C97B190A1673ACF7005BB65F /* Event.m */,
 				C97B190C1673B459005BB65F /* User.h */,
 				C97B190D1673B459005BB65F /* User.m */,
 				C9E9B6D11675E1D300487A72 /* Recording.h */,
 				C9E9B6D21675E1D300487A72 /* Recording.m */,
+				C9DDF1841676D539000399EA /* Event.h */,
+				C9DDF1851676D539000399EA /* Event.m */,
 			);
 			name = ManagedObjects;
 			sourceTree = "<group>";
@@ -973,11 +973,9 @@
 				C97B14A616710898005BB65F /* SPTabsFooterView.m in Sources */,
 				C97B14A716710898005BB65F /* SPTabStyle.m in Sources */,
 				C97B14A816710898005BB65F /* SPTabsView.m in Sources */,
-				C97B14A916710898005BB65F /* SPTabsViewController.m in Sources */,
 				C97B14AA16710898005BB65F /* SPTabView.m in Sources */,
 				C97B14AE16710E94005BB65F /* ActivityVideoCell.m in Sources */,
 				C97B18FA1671A6BB005BB65F /* Model.xcdatamodeld in Sources */,
-				C97B190B1673ACF7005BB65F /* Event.m in Sources */,
 				C97B190E1673B459005BB65F /* User.m in Sources */,
 				C97B19171673E5BC005BB65F /* PendingUploadCell.m in Sources */,
 				C97B191E1673E66F005BB65F /* InviteFriendsViewController.m in Sources */,
@@ -992,6 +990,8 @@
 				C9E9B6B916741D5000487A72 /* ButtonToProgressCell.m in Sources */,
 				C9E9B6D01675DF4200487A72 /* SPSerializable.m in Sources */,
 				C9E9B6D31675E1D300487A72 /* Recording.m in Sources */,
+				C9DDF1751676C88B000399EA /* EventTabViewController.m in Sources */,
+				C9DDF1861676D539000399EA /* Event.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

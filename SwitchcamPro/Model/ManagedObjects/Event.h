@@ -2,14 +2,14 @@
 //  Event.h
 //  SwitchcamPro
 //
-//  Created by William Ketterer on 12/8/12.
+//  Created by William Ketterer on 12/10/12.
 //  Copyright (c) 2012 William Ketterer. All rights reserved.
 //
 
-#import <RestKit/RestKit.h>
-#import <RestKit/CoreData.h>
+#import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 
-@class User;
+@class Recording, User;
 
 @interface Event : NSManagedObject
 
@@ -20,9 +20,11 @@
 @property (nonatomic, retain) NSDate * startDatetime;
 @property (nonatomic, retain) NSDate * submissionDeadline;
 @property (nonatomic, retain) NSString * title;
+@property (nonatomic, retain) NSNumber * following;
 @property (nonatomic, retain) NSSet *cameraCrew;
 @property (nonatomic, retain) User *createdBy;
 @property (nonatomic, retain) NSSet *followers;
+@property (nonatomic, retain) Recording *myRecordings;
 @end
 
 @interface Event (CoreDataGeneratedAccessors)

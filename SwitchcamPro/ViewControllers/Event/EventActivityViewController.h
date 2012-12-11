@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EventTabViewController.h"
 
-@interface EventActivityViewController : UIViewController
+@interface EventActivityViewController : EventTabViewController
 
 @end

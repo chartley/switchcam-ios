@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EventTabViewController.h"
 
-@interface EventInfoViewController : UIViewController
+@interface EventInfoViewController : EventTabViewController
 
 @property (strong, nonatomic) IBOutlet UILabel *goingDetailLabel;
 

@@ -50,6 +50,9 @@
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Event"];
     NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"startDatetime" ascending:NO];
     fetchRequest.sortDescriptors = @[descriptor];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"following == YES"];
+    fetchRequest.predicate = predicate;
+    fetchRequest.fetchLimit = 30;
     NSError *error = nil;
     
     // Setup fetched results
@@ -105,6 +108,11 @@
 - (void)getMyEvents {
     // Load the object model via RestKit
     [[RKObjectManager sharedManager] getObjectsAtPath:@"mission/" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        // Mark these missions as following
+        for (Event *event in (NSArray*)mappingResult) {
+            event.following = [NSNumber numberWithBool:YES];
+        }
+        
         RKLogInfo(@"Load complete: Table should refresh...");
         [self.myEventsTableView reloadData];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {

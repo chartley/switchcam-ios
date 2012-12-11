@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EventTabViewController.h"
 
-@interface EventPeopleViewController : UIViewController
+@interface EventPeopleViewController : EventTabViewController
 
 @end
