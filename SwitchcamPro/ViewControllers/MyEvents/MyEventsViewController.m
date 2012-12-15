@@ -109,7 +109,7 @@
     // Load the object model via RestKit
     [[RKObjectManager sharedManager] getObjectsAtPath:@"mission/" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         // Mark these missions as following
-        for (Mission *mission in (NSArray*)mappingResult) {
+        for (Mission *mission in [mappingResult array]) {
             mission.following = [NSNumber numberWithBool:YES];
         }
         
@@ -135,7 +135,8 @@
 #pragma mark - Helper Methods
 
 - (void)configureCell:(UITableViewCell *)cell forTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
-    Mission *mission = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    Mission *mission
+    = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"d. MMMM YYYY"];

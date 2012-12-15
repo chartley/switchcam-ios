@@ -6,8 +6,8 @@
 //  Copyright (c) 2012 William Ketterer. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
+#import <RestKit/RestKit.h>
+#import <RestKit/CoreData.h>
 
 @class Recording, User;
 
