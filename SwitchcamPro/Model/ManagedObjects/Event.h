@@ -2,7 +2,7 @@
 //  Event.h
 //  SwitchcamPro
 //
-//  Created by William Ketterer on 12/10/12.
+//  Created by William Ketterer on 12/15/12.
 //  Copyright (c) 2012 William Ketterer. All rights reserved.
 //
 
@@ -14,13 +14,13 @@
 @interface Event : NSManagedObject
 
 @property (nonatomic, retain) NSDate * endDatetime;
-@property (nonatomic, retain) NSNumber * eventId;
+@property (nonatomic, retain) NSNumber * missionId;
+@property (nonatomic, retain) NSNumber * following;
 @property (nonatomic, retain) NSNumber * latitude;
 @property (nonatomic, retain) NSNumber * longitude;
 @property (nonatomic, retain) NSDate * startDatetime;
 @property (nonatomic, retain) NSDate * submissionDeadline;
 @property (nonatomic, retain) NSString * title;
-@property (nonatomic, retain) NSNumber * following;
 @property (nonatomic, retain) NSSet *cameraCrew;
 @property (nonatomic, retain) User *createdBy;
 @property (nonatomic, retain) NSSet *followers;

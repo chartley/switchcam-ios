@@ -2,41 +2,41 @@
 //  User.h
 //  SwitchcamPro
 //
-//  Created by William Ketterer on 12/8/12.
+//  Created by William Ketterer on 12/15/12.
 //  Copyright (c) 2012 William Ketterer. All rights reserved.
 //
 
-#import <RestKit/RestKit.h>
-#import <RestKit/CoreData.h>
+#import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 
 @class Event;
 
 @interface User : NSManagedObject
 
-@property (nonatomic, retain) NSNumber * userId;
 @property (nonatomic, retain) NSDate * legalTermsAcceptDate;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * pictureURL;
-@property (nonatomic, retain) NSSet *attendedEvents;
-@property (nonatomic, retain) NSSet *createdEvents;
-@property (nonatomic, retain) NSSet *followedEvents;
+@property (nonatomic, retain) NSNumber * userId;
+@property (nonatomic, retain) NSSet *attendedMission;
+@property (nonatomic, retain) NSSet *createdMission;
+@property (nonatomic, retain) NSSet *followedMission;
 @end
 
 @interface User (CoreDataGeneratedAccessors)
 
-- (void)addAttendedEventsObject:(Event *)value;
-- (void)removeAttendedEventsObject:(Event *)value;
-- (void)addAttendedEvents:(NSSet *)values;
-- (void)removeAttendedEvents:(NSSet *)values;
+- (void)addAttendedMissionObject:(Event *)value;
+- (void)removeAttendedMissionObject:(Event *)value;
+- (void)addAttendedMission:(NSSet *)values;
+- (void)removeAttendedMission:(NSSet *)values;
 
-- (void)addCreatedEventsObject:(Event *)value;
-- (void)removeCreatedEventsObject:(Event *)value;
-- (void)addCreatedEvents:(NSSet *)values;
-- (void)removeCreatedEvents:(NSSet *)values;
+- (void)addCreatedMissionObject:(Event *)value;
+- (void)removeCreatedMissionObject:(Event *)value;
+- (void)addCreatedMission:(NSSet *)values;
+- (void)removeCreatedMission:(NSSet *)values;
 
-- (void)addFollowedEventsObject:(Event *)value;
-- (void)removeFollowedEventsObject:(Event *)value;
-- (void)addFollowedEvents:(NSSet *)values;
-- (void)removeFollowedEvents:(NSSet *)values;
+- (void)addFollowedMissionObject:(Event *)value;
+- (void)removeFollowedMissionObject:(Event *)value;
+- (void)addFollowedMission:(NSSet *)values;
+- (void)removeFollowedMission:(NSSet *)values;
 
 @end

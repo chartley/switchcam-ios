@@ -2,7 +2,7 @@
 //  Event.m
 //  SwitchcamPro
 //
-//  Created by William Ketterer on 12/10/12.
+//  Created by William Ketterer on 12/15/12.
 //  Copyright (c) 2012 William Ketterer. All rights reserved.
 //
 
@@ -14,13 +14,13 @@
 @implementation Event
 
 @dynamic endDatetime;
-@dynamic eventId;
+@dynamic missionId;
+@dynamic following;
 @dynamic latitude;
 @dynamic longitude;
 @dynamic startDatetime;
 @dynamic submissionDeadline;
 @dynamic title;
-@dynamic following;
 @dynamic cameraCrew;
 @dynamic createdBy;
 @dynamic followers;

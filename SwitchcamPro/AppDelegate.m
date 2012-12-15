@@ -331,9 +331,9 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     // If source and destination key path are the same, we can simply add a string to the array
     [userMapping addAttributeMappingsFromArray:@[ @"name" ]];
     
-    RKEntityMapping *eventMapping = [RKEntityMapping mappingForEntityForName:@"Event" inManagedObjectStore:managedObjectStore];
-    eventMapping.identificationAttributes = @[ @"eventId" ];
-    [eventMapping addAttributeMappingsFromDictionary:@{
+    RKEntityMapping *missionMapping = [RKEntityMapping mappingForEntityForName:@"Mission" inManagedObjectStore:managedObjectStore];
+    missionMapping.identificationAttributes = @[ @"missionId" ];
+    [missionMapping addAttributeMappingsFromDictionary:@{
      @"id": @"eventId",
      @"lat": @"latitude",
      @"lon": @"longitude",
@@ -342,16 +342,16 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
      @"submission_deadline": @"submissionDeadline",
      }];
     // If source and destination key path are the same, we can simply add a string to the array
-    [eventMapping addAttributeMappingsFromArray:@[ @"title" ]];
+    [missionMapping addAttributeMappingsFromArray:@[ @"title" ]];
     
     // Relationships
-    [eventMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"camera_crew" toKeyPath:@"cameraCrew" withMapping:userMapping]];
-    [eventMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"created_by" toKeyPath:@"createdBy" withMapping:userMapping]];    
-    [eventMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"followers" toKeyPath:@"followers" withMapping:userMapping]];
+    [missionMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"camera_crew" toKeyPath:@"cameraCrew" withMapping:userMapping]];
+    [missionMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"created_by" toKeyPath:@"createdBy" withMapping:userMapping]];    
+    [missionMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"followers" toKeyPath:@"followers" withMapping:userMapping]];
     
-    [userMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"attendedEvents" toKeyPath:@"cameraCrew" withMapping:eventMapping]];
-    [userMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"createdEvents" toKeyPath:@"createdBy" withMapping:eventMapping]];
-    [userMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"followedEvents" toKeyPath:@"followers" withMapping:eventMapping]];
+    [userMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"attendedMissions" toKeyPath:@"cameraCrew" withMapping:missionMapping]];
+    [userMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"createdMissions" toKeyPath:@"createdBy" withMapping:missionMapping]];
+    [userMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"followedMissions" toKeyPath:@"followers" withMapping:missionMapping]];
     
     // Recording Object Mapping
     RKEntityMapping *recordingMapping = [RKEntityMapping mappingForEntityForName:@"Recording" inManagedObjectStore:managedObjectStore];
@@ -371,11 +371,11 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     [RKMIMETypeSerialization registerClass:[RKNSJSONSerialization class] forMIMEType:@"application/json"];
     
     // Register our mappings with the provider
-    RKResponseDescriptor *eventResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:eventMapping
+    RKResponseDescriptor *missionResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:missionMapping
                                                                                             pathPattern:@"mission/"
                                                                                                 keyPath:@"data"
                                                                                             statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
-    [objectManager addResponseDescriptor:eventResponseDescriptor];
+    [objectManager addResponseDescriptor:missionResponseDescriptor];
     
     /**
      Complete Core Data stack initialization

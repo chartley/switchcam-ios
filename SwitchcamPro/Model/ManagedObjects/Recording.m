@@ -2,7 +2,7 @@
 //  Recording.m
 //  SwitchcamPro
 //
-//  Created by William Ketterer on 12/10/12.
+//  Created by William Ketterer on 12/15/12.
 //  Copyright (c) 2012 William Ketterer. All rights reserved.
 //
 
@@ -12,22 +12,22 @@
 
 @implementation Recording
 
+@dynamic compressedVideoURL;
+@dynamic filename;
 @dynamic isUploaded;
 @dynamic latitude;
 @dynamic localVideoAssetURL;
 @dynamic longitude;
+@dynamic mimetype;
 @dynamic recordEnd;
 @dynamic recordStart;
 @dynamic sizeBytes;
-@dynamic thumbnailURL;
-@dynamic uploadedVideoId;
-@dynamic uploadDestination;
-@dynamic uploadS3Bucket;
-@dynamic mimetype;
 @dynamic sizeMegaBytes;
+@dynamic thumbnailURL;
+@dynamic uploadDestination;
+@dynamic uploadedVideoId;
 @dynamic uploadPath;
-@dynamic filename;
-@dynamic compressedVideoURL;
-@dynamic event;
+@dynamic uploadS3Bucket;
+@dynamic mission;
 
 @end
