@@ -17,7 +17,7 @@
 #import "AppDelegate.h"
 #import "AFNetworking.h"
 #import "SPConstants.h"
-#import "Event.h"
+#import "Mission.h"
 
 @interface MyEventsViewController () <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate>
 
@@ -47,7 +47,7 @@
     // Set debug logging level. Set to 'RKLogLevelTrace' to see JSON payload
     RKLogConfigureByName("RestKit/Network", RKLogLevelTrace);
     
-    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Event"];
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Mission"];
     NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"startDatetime" ascending:NO];
     fetchRequest.sortDescriptors = @[descriptor];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"following == YES"];
@@ -109,8 +109,8 @@
     // Load the object model via RestKit
     [[RKObjectManager sharedManager] getObjectsAtPath:@"mission/" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         // Mark these missions as following
-        for (Event *event in (NSArray*)mappingResult) {
-            event.following = [NSNumber numberWithBool:YES];
+        for (Mission *mission in (NSArray*)mappingResult) {
+            mission.following = [NSNumber numberWithBool:YES];
         }
         
         RKLogInfo(@"Load complete: Table should refresh...");
@@ -135,16 +135,16 @@
 #pragma mark - Helper Methods
 
 - (void)configureCell:(UITableViewCell *)cell forTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
-    Event *event = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    Mission *mission = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"d. MMMM YYYY"];
-    NSString *startEventTimeString = [dateFormatter stringFromDate:[event startDatetime]];
+    NSString *startEventTimeString = [dateFormatter stringFromDate:[mission startDatetime]];
 
     MyEventCell *myEventCell = (MyEventCell *)cell;
     
     
-    [myEventCell.eventNameLabel setText:[event title]];
+    [myEventCell.eventNameLabel setText:[mission title]];
     [myEventCell.eventLocationLabel setText:@"Magik"];
     [myEventCell.eventDateLabel setText:startEventTimeString];
 }

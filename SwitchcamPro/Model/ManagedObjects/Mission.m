@@ -1,17 +1,17 @@
 //
-//  Event.m
+//  Mission.m
 //  SwitchcamPro
 //
 //  Created by William Ketterer on 12/15/12.
 //  Copyright (c) 2012 William Ketterer. All rights reserved.
 //
 
-#import "Event.h"
+#import "Mission.h"
 #import "Recording.h"
 #import "User.h"
 
 
-@implementation Event
+@implementation Mission
 
 @dynamic endDatetime;
 @dynamic missionId;

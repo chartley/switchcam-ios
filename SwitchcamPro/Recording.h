@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Event;
+@class Mission;
 
 @interface Recording : NSManagedObject
 
@@ -29,6 +29,6 @@
 @property (nonatomic, retain) NSString * uploadedVideoId;
 @property (nonatomic, retain) NSString * uploadPath;
 @property (nonatomic, retain) NSString * uploadS3Bucket;
-@property (nonatomic, retain) Event *mission;
+@property (nonatomic, retain) Mission *mission;
 
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "User.h"
-#import "Event.h"
+#import "Mission.h"
 
 
 @implementation User

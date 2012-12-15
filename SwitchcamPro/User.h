@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Event;
+@class Mission;
 
 @interface User : NSManagedObject
 
@@ -24,18 +24,18 @@
 
 @interface User (CoreDataGeneratedAccessors)
 
-- (void)addAttendedMissionObject:(Event *)value;
-- (void)removeAttendedMissionObject:(Event *)value;
+- (void)addAttendedMissionObject:(Mission *)value;
+- (void)removeAttendedMissionObject:(Mission *)value;
 - (void)addAttendedMission:(NSSet *)values;
 - (void)removeAttendedMission:(NSSet *)values;
 
-- (void)addCreatedMissionObject:(Event *)value;
-- (void)removeCreatedMissionObject:(Event *)value;
+- (void)addCreatedMissionObject:(Mission *)value;
+- (void)removeCreatedMissionObject:(Mission *)value;
 - (void)addCreatedMission:(NSSet *)values;
 - (void)removeCreatedMission:(NSSet *)values;
 
-- (void)addFollowedMissionObject:(Event *)value;
-- (void)removeFollowedMissionObject:(Event *)value;
+- (void)addFollowedMissionObject:(Mission *)value;
+- (void)removeFollowedMissionObject:(Mission *)value;
 - (void)addFollowedMission:(NSSet *)values;
 - (void)removeFollowedMission:(NSSet *)values;
 

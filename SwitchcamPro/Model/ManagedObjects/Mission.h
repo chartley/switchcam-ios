@@ -1,5 +1,5 @@
 //
-//  Event.h
+//  Mission.h
 //  SwitchcamPro
 //
 //  Created by William Ketterer on 12/15/12.
@@ -11,7 +11,7 @@
 
 @class Recording, User;
 
-@interface Event : NSManagedObject
+@interface Mission : NSManagedObject
 
 @property (nonatomic, retain) NSDate * endDatetime;
 @property (nonatomic, retain) NSNumber * missionId;
@@ -27,7 +27,7 @@
 @property (nonatomic, retain) Recording *myRecordings;
 @end
 
-@interface Event (CoreDataGeneratedAccessors)
+@interface Mission (CoreDataGeneratedAccessors)
 
 - (void)addCameraCrewObject:(User *)value;
 - (void)removeCameraCrewObject:(User *)value;

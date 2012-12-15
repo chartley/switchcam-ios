@@ -2,7 +2,7 @@
 #import "SPTabsFooterView.h"
 #import "SPTabStyle.h"
 #import "SPTabsView.h"
-#import "Event.h"
+#import "Mission.h"
 #import "ECSlidingViewController.h"
 #import "MenuViewController.h"
 #import "SCCamViewController.h"
