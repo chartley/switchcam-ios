@@ -17,14 +17,12 @@
 
 @interface EventViewController : UIViewController <SPTabViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate> {
     NSArray *viewControllers;
-    UIView *contentView;
     SPTabsView *tabsContainerView;
     SPTabsFooterView *footerView;
     SPTabStyle *tabStyle;
     NSUInteger currentTabIndex;
 }
 
-@property (nonatomic, assign, readonly) UIView *contentView;
 @property (nonatomic, retain) SPTabStyle *style;
 @property (strong, nonatomic) Event *event;
 @property (strong, nonatomic) IBOutlet UIView *toolbarDrawer;
