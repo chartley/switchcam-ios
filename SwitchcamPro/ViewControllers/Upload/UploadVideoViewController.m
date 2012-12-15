@@ -148,7 +148,7 @@
     AVURLAsset *asset = [AVURLAsset URLAssetWithURL:inputURL options:nil];
     AVAssetExportSession *exportSession = [[AVAssetExportSession alloc] initWithAsset:asset presetName:AVAssetExportPresetMediumQuality];
     exportSession.outputURL = outputURL;
-    exportSession.outputFileType = AVFileTypeQuickTimeMovie;
+    exportSession.outputFileType = AVFileTypeMPEG4;
     [exportSession exportAsynchronouslyWithCompletionHandler:^(void) {
         if (exportSession.status == AVAssetExportSessionStatusCompleted) {
             successHandler();
