@@ -55,7 +55,19 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     [self initializeRestKit];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
+    
+    // Fade out splash screen
+    UIImageView *splashScreen = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Default.png"]];
+    [self.window addSubview:splashScreen];
+    [self.window makeKeyAndVisible];
+    
+    [UIView animateWithDuration:0.3 animations:^{splashScreen.alpha = 0.0;}
+                     completion:(void (^)(BOOL)) ^{
+                         [splashScreen removeFromSuperview];
+                         [[NSNotificationCenter defaultCenter] postNotificationName:kAppFadeInCompleteNotification object:nil];
+                     }
+     ];
+    
     MyEventsViewController *myEventsViewController = [[MyEventsViewController alloc] initWithNibName:@"MyEventsViewController" bundle:nil];
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:myEventsViewController];
     self.slidingViewController = [[ECSlidingViewController alloc] init];

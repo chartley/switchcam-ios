@@ -7,7 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SPPagingScrollView.h"
 
-@interface LoginViewController : UIViewController
+@interface LoginViewController : UIViewController <SPPagingScrollViewDelegate, UIScrollViewDelegate>
+
+@property (strong, nonatomic) IBOutlet UIButton *loginButton;
+@property (strong, nonatomic) IBOutlet UIImageView *facebookLogo;
+@property (strong, nonatomic) IBOutlet UIPageControl *pageControl;
+
+@property (strong, nonatomic) IBOutlet UIView *slide0View;
+@property (strong, nonatomic) IBOutlet UIImageView *switchCamLogo;
+@property (strong, nonatomic) IBOutlet UILabel *slide0Label;
 
 @end
