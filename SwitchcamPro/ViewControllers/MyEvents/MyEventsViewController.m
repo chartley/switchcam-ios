@@ -87,7 +87,9 @@
     
     // Add Menu button
     UIButton *menuButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [menuButton setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+    [menuButton setFrame:CGRectMake(0, 0, 30, 30)];
+    
+    [menuButton setImage:[UIImage imageNamed:@"btn-sidemenu"] forState:UIControlStateNormal];
     [menuButton addTarget:self action:@selector(menuButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *menuBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:menuButton];
     [self.navigationItem setLeftBarButtonItem:menuBarButtonItem];

@@ -100,9 +100,6 @@
 		C97BFEF1166D909D005BB65F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C97BFEEF166D909D005BB65F /* InfoPlist.strings */; };
 		C97BFEF3166D909D005BB65F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C97BFEF2166D909D005BB65F /* main.m */; };
 		C97BFEF7166D909D005BB65F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C97BFEF6166D909D005BB65F /* AppDelegate.m */; };
-		C97BFEF9166D909D005BB65F /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = C97BFEF8166D909D005BB65F /* Default.png */; };
-		C97BFEFB166D909D005BB65F /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C97BFEFA166D909D005BB65F /* Default@2x.png */; };
-		C97BFEFD166D909D005BB65F /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C97BFEFC166D909D005BB65F /* Default-568h@2x.png */; };
 		C97BFF19166D9133005BB65F /* ECSlidingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C97BFF16166D9133005BB65F /* ECSlidingViewController.m */; };
 		C97BFF1A166D9133005BB65F /* UIImage+ImageWithUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = C97BFF18166D9133005BB65F /* UIImage+ImageWithUIView.m */; };
 		C97BFF30166D9541005BB65F /* MyEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C97BFF2F166D9541005BB65F /* MyEventCell.m */; };
@@ -148,9 +145,9 @@
 		C9DDF2A2167D24DD000399EA /* bgfull-fullapp-h568@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9DDF1D0167D24DD000399EA /* bgfull-fullapp-h568@2x.png */; };
 		C9DDF2A3167D24DD000399EA /* bgfull-fullapp.png in Resources */ = {isa = PBXBuildFile; fileRef = C9DDF1D1167D24DD000399EA /* bgfull-fullapp.png */; };
 		C9DDF2A4167D24DD000399EA /* bgfull-fullapp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9DDF1D2167D24DD000399EA /* bgfull-fullapp@2x.png */; };
-		C9DDF2A5167D24DD000399EA /* bgfull-loadingscreen-h568@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9DDF1D3167D24DD000399EA /* bgfull-loadingscreen-h568@2x.png */; };
-		C9DDF2A6167D24DD000399EA /* bgfull-loadingscreen.png in Resources */ = {isa = PBXBuildFile; fileRef = C9DDF1D4167D24DD000399EA /* bgfull-loadingscreen.png */; };
-		C9DDF2A7167D24DD000399EA /* bgfull-loadingscreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9DDF1D5167D24DD000399EA /* bgfull-loadingscreen@2x.png */; };
+		C9DDF2A5167D24DD000399EA /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9DDF1D3167D24DD000399EA /* Default-568h@2x.png */; };
+		C9DDF2A6167D24DD000399EA /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = C9DDF1D4167D24DD000399EA /* Default.png */; };
+		C9DDF2A7167D24DD000399EA /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9DDF1D5167D24DD000399EA /* Default@2x.png */; };
 		C9DDF2A8167D24DD000399EA /* bgfull-signin-h568@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9DDF1D6167D24DD000399EA /* bgfull-signin-h568@2x.png */; };
 		C9DDF2A9167D24DD000399EA /* bgfull-signin.png in Resources */ = {isa = PBXBuildFile; fileRef = C9DDF1D7167D24DD000399EA /* bgfull-signin.png */; };
 		C9DDF2AA167D24DD000399EA /* bgfull-signin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9DDF1D8167D24DD000399EA /* bgfull-signin@2x.png */; };
@@ -331,6 +328,9 @@
 		C9E9B6BD16741D8700487A72 /* LabelInvisibleButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9E9B6BC16741D8700487A72 /* LabelInvisibleButtonCell.xib */; };
 		C9E9B6BF16741D9C00487A72 /* LabelTextFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9E9B6BE16741D9C00487A72 /* LabelTextFieldCell.xib */; };
 		C9E9B6D01675DF4200487A72 /* SPSerializable.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E9B6CF1675DF4200487A72 /* SPSerializable.m */; };
+		C9F49114167D389F00C75C6F /* UIImage+H568.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F49113167D389F00C75C6F /* UIImage+H568.m */; };
+		C9F49116167D43CE00C75C6F /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9F49115167D43CB00C75C6F /* ImageIO.framework */; };
+		C9F4911A167D506700C75C6F /* UploadTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F49119167D506700C75C6F /* UploadTextField.m */; };
 		EA4961B4C6514DAA8566373E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D3FF39401B0F465894FA8F8C /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -496,9 +496,6 @@
 		C97BFEF4166D909D005BB65F /* SwitchcamPro-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SwitchcamPro-Prefix.pch"; sourceTree = "<group>"; };
 		C97BFEF5166D909D005BB65F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C97BFEF6166D909D005BB65F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		C97BFEF8166D909D005BB65F /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		C97BFEFA166D909D005BB65F /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		C97BFEFC166D909D005BB65F /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		C97BFF15166D9133005BB65F /* ECSlidingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ECSlidingViewController.h; sourceTree = "<group>"; };
 		C97BFF16166D9133005BB65F /* ECSlidingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ECSlidingViewController.m; sourceTree = "<group>"; };
 		C97BFF17166D9133005BB65F /* UIImage+ImageWithUIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageWithUIView.h"; sourceTree = "<group>"; };
@@ -552,9 +549,9 @@
 		C9DDF1D0167D24DD000399EA /* bgfull-fullapp-h568@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bgfull-fullapp-h568@2x.png"; sourceTree = "<group>"; };
 		C9DDF1D1167D24DD000399EA /* bgfull-fullapp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bgfull-fullapp.png"; sourceTree = "<group>"; };
 		C9DDF1D2167D24DD000399EA /* bgfull-fullapp@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bgfull-fullapp@2x.png"; sourceTree = "<group>"; };
-		C9DDF1D3167D24DD000399EA /* bgfull-loadingscreen-h568@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bgfull-loadingscreen-h568@2x.png"; sourceTree = "<group>"; };
-		C9DDF1D4167D24DD000399EA /* bgfull-loadingscreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bgfull-loadingscreen.png"; sourceTree = "<group>"; };
-		C9DDF1D5167D24DD000399EA /* bgfull-loadingscreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bgfull-loadingscreen@2x.png"; sourceTree = "<group>"; };
+		C9DDF1D3167D24DD000399EA /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		C9DDF1D4167D24DD000399EA /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		C9DDF1D5167D24DD000399EA /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		C9DDF1D6167D24DD000399EA /* bgfull-signin-h568@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bgfull-signin-h568@2x.png"; sourceTree = "<group>"; };
 		C9DDF1D7167D24DD000399EA /* bgfull-signin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bgfull-signin.png"; sourceTree = "<group>"; };
 		C9DDF1D8167D24DD000399EA /* bgfull-signin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bgfull-signin@2x.png"; sourceTree = "<group>"; };
@@ -743,6 +740,11 @@
 		C9E9B6BE16741D9C00487A72 /* LabelTextFieldCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LabelTextFieldCell.xib; path = TableViewCells/LabelTextFieldCell.xib; sourceTree = "<group>"; };
 		C9E9B6CE1675DF4200487A72 /* SPSerializable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPSerializable.h; path = Helpers/SPSerializable.h; sourceTree = "<group>"; };
 		C9E9B6CF1675DF4200487A72 /* SPSerializable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPSerializable.m; path = Helpers/SPSerializable.m; sourceTree = "<group>"; };
+		C9F49112167D389F00C75C6F /* UIImage+H568.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+H568.h"; path = "Helpers/UIImage+H568.h"; sourceTree = "<group>"; };
+		C9F49113167D389F00C75C6F /* UIImage+H568.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+H568.m"; path = "Helpers/UIImage+H568.m"; sourceTree = "<group>"; };
+		C9F49115167D43CB00C75C6F /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		C9F49118167D506700C75C6F /* UploadTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UploadTextField.h; path = ViewControllers/Upload/UploadTextField.h; sourceTree = "<group>"; };
+		C9F49119167D506700C75C6F /* UploadTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UploadTextField.m; path = ViewControllers/Upload/UploadTextField.m; sourceTree = "<group>"; };
 		D3FF39401B0F465894FA8F8C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -751,6 +753,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9F49116167D43CE00C75C6F /* ImageIO.framework in Frameworks */,
 				C97B1946167405C8005BB65F /* CoreMedia.framework in Frameworks */,
 				C97B194416740596005BB65F /* MediaPlayer.framework in Frameworks */,
 				C97B194216740585005BB65F /* AssetsLibrary.framework in Frameworks */,
@@ -1011,6 +1014,7 @@
 		C97BFEE5166D909D005BB65F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C9F49115167D43CB00C75C6F /* ImageIO.framework */,
 				C97B1945167405C6005BB65F /* CoreMedia.framework */,
 				C97B194316740594005BB65F /* MediaPlayer.framework */,
 				C97B194116740582005BB65F /* AssetsLibrary.framework */,
@@ -1045,6 +1049,7 @@
 		C97BFEEC166D909D005BB65F /* SwitchcamPro */ = {
 			isa = PBXGroup;
 			children = (
+				C9F49117167D4FEA00C75C6F /* Custom Views */,
 				C97B18F71671A6A4005BB65F /* Model */,
 				C97B1376166DDAD9005BB65F /* Uploading */,
 				C97BFF5E166D9CC9005BB65F /* Helpers */,
@@ -1065,9 +1070,6 @@
 				C97BFEEF166D909D005BB65F /* InfoPlist.strings */,
 				C97BFEF2166D909D005BB65F /* main.m */,
 				C97BFEF4166D909D005BB65F /* SwitchcamPro-Prefix.pch */,
-				C97BFEF8166D909D005BB65F /* Default.png */,
-				C97BFEFA166D909D005BB65F /* Default@2x.png */,
-				C97BFEFC166D909D005BB65F /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1210,6 +1212,8 @@
 		C97BFF5E166D9CC9005BB65F /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				C9F49112167D389F00C75C6F /* UIImage+H568.h */,
+				C9F49113167D389F00C75C6F /* UIImage+H568.m */,
 				C97B139B166DDD03005BB65F /* Reachability.h */,
 				C97B139C166DDD03005BB65F /* Reachability.m */,
 				C97BFF5F166D9CFC005BB65F /* SPConstants.h */,
@@ -1284,9 +1288,9 @@
 				C9DDF1D0167D24DD000399EA /* bgfull-fullapp-h568@2x.png */,
 				C9DDF1D1167D24DD000399EA /* bgfull-fullapp.png */,
 				C9DDF1D2167D24DD000399EA /* bgfull-fullapp@2x.png */,
-				C9DDF1D3167D24DD000399EA /* bgfull-loadingscreen-h568@2x.png */,
-				C9DDF1D4167D24DD000399EA /* bgfull-loadingscreen.png */,
-				C9DDF1D5167D24DD000399EA /* bgfull-loadingscreen@2x.png */,
+				C9DDF1D3167D24DD000399EA /* Default-568h@2x.png */,
+				C9DDF1D4167D24DD000399EA /* Default.png */,
+				C9DDF1D5167D24DD000399EA /* Default@2x.png */,
 				C9DDF1D6167D24DD000399EA /* bgfull-signin-h568@2x.png */,
 				C9DDF1D7167D24DD000399EA /* bgfull-signin.png */,
 				C9DDF1D8167D24DD000399EA /* bgfull-signin@2x.png */,
@@ -1463,11 +1467,20 @@
 		C9E9B6AB16741AEB00487A72 /* Upload */ = {
 			isa = PBXGroup;
 			children = (
+				C9F49118167D506700C75C6F /* UploadTextField.h */,
+				C9F49119167D506700C75C6F /* UploadTextField.m */,
 				C9E9B6AC16741B1800487A72 /* UploadVideoViewController.h */,
 				C9E9B6AD16741B1800487A72 /* UploadVideoViewController.m */,
 				C9E9B6AE16741B1800487A72 /* UploadVideoViewController.xib */,
 			);
 			name = Upload;
+			sourceTree = "<group>";
+		};
+		C9F49117167D4FEA00C75C6F /* Custom Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Custom Views";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1523,9 +1536,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C97BFEF1166D909D005BB65F /* InfoPlist.strings in Resources */,
-				C97BFEF9166D909D005BB65F /* Default.png in Resources */,
-				C97BFEFB166D909D005BB65F /* Default@2x.png in Resources */,
-				C97BFEFD166D909D005BB65F /* Default-568h@2x.png in Resources */,
 				C97BFF32166D9551005BB65F /* MyEventCell.xib in Resources */,
 				C97B1370166DC42F005BB65F /* FacebookSDKResources.bundle in Resources */,
 				C97B1371166DC42F005BB65F /* FBUserSettingsViewResources.bundle in Resources */,
@@ -1601,9 +1611,9 @@
 				C9DDF2A2167D24DD000399EA /* bgfull-fullapp-h568@2x.png in Resources */,
 				C9DDF2A3167D24DD000399EA /* bgfull-fullapp.png in Resources */,
 				C9DDF2A4167D24DD000399EA /* bgfull-fullapp@2x.png in Resources */,
-				C9DDF2A5167D24DD000399EA /* bgfull-loadingscreen-h568@2x.png in Resources */,
-				C9DDF2A6167D24DD000399EA /* bgfull-loadingscreen.png in Resources */,
-				C9DDF2A7167D24DD000399EA /* bgfull-loadingscreen@2x.png in Resources */,
+				C9DDF2A5167D24DD000399EA /* Default-568h@2x.png in Resources */,
+				C9DDF2A6167D24DD000399EA /* Default.png in Resources */,
+				C9DDF2A7167D24DD000399EA /* Default@2x.png in Resources */,
 				C9DDF2A8167D24DD000399EA /* bgfull-signin-h568@2x.png in Resources */,
 				C9DDF2A9167D24DD000399EA /* bgfull-signin.png in Resources */,
 				C9DDF2AA167D24DD000399EA /* bgfull-signin@2x.png in Resources */,
@@ -1849,6 +1859,8 @@
 				C9DDF352167D2728000399EA /* Mission.m in Sources */,
 				C9DDF355167D2735000399EA /* User.m in Sources */,
 				C9DDF358167D2736000399EA /* Recording.m in Sources */,
+				C9F49114167D389F00C75C6F /* UIImage+H568.m in Sources */,
+				C9F4911A167D506700C75C6F /* UploadTextField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

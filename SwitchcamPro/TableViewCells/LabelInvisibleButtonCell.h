@@ -14,6 +14,7 @@
 @interface LabelInvisibleButtonCell : UITableViewCell
 
 @property (strong, nonatomic) IBOutlet UILabel *leftLabel;
+@property (strong, nonatomic) IBOutlet UILabel *rightLabel;
 @property (strong, nonatomic) IBOutlet UIButton *invisibleButton;
 
 @end

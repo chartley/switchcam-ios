@@ -9,11 +9,12 @@
 #import <UIKit/UIKit.h>
 
 #define kButtonToProgressCellIdentifier @"ButtonToProgressCellIdentifier"
-#define kButtonToProgressCellRowHeight 44
+#define kButtonToProgressCellRowHeight 60
 
 @interface ButtonToProgressCell : UITableViewCell
 
 @property (strong, nonatomic) IBOutlet UIButton *bigButton;
 @property (strong, nonatomic) IBOutlet UIProgressView *progressView;
+@property (strong, nonatomic) IBOutlet UILabel *progressLabel;
 
 @end

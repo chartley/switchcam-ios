@@ -38,6 +38,8 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     // Initialize Push
     //[self initAirship:launchOptions];
     
+    [self initializeNavigationBarAppearance];
+    
     // Show Activity Indicator
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
     
@@ -334,7 +336,7 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     RKEntityMapping *missionMapping = [RKEntityMapping mappingForEntityForName:@"Mission" inManagedObjectStore:managedObjectStore];
     missionMapping.identificationAttributes = @[ @"missionId" ];
     [missionMapping addAttributeMappingsFromDictionary:@{
-     @"id": @"eventId",
+     @"id": @"missionId",
      @"lat": @"latitude",
      @"lon": @"longitude",
      @"start_datetime": @"startDatetime",
@@ -391,6 +393,17 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     
     // Configure a managed object cache to ensure we do not create duplicate objects
     managedObjectStore.managedObjectCache = [[RKInMemoryManagedObjectCache alloc] initWithManagedObjectContext:managedObjectStore.persistentStoreManagedObjectContext];
+}
+
+#pragma mark - NavigationBar
+
+- (void)initializeNavigationBarAppearance {
+    // Set Title bar font
+    NSMutableDictionary *titleBarAttributes = [NSMutableDictionary dictionaryWithDictionary: [[UINavigationBar appearance] titleTextAttributes]];
+    [titleBarAttributes setValue:[UIFont fontWithName:@"SourceSansPro-Regular" size:18] forKey:UITextAttributeFont];
+    [[UINavigationBar appearance] setTitleTextAttributes:titleBarAttributes];
+    
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"bg-appheader"] forBarMetrics:UIBarMetricsDefault];
 }
 
 @end
