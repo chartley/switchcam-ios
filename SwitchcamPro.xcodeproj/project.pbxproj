@@ -105,6 +105,8 @@
 		C97BFF30166D9541005BB65F /* MyEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C97BFF2F166D9541005BB65F /* MyEventCell.m */; };
 		C97BFF32166D9551005BB65F /* MyEventCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C97BFF31166D9551005BB65F /* MyEventCell.xib */; };
 		C97BFF5D166D9BE8005BB65F /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = C97BFF5C166D9BE8005BB65F /* MBProgressHUD.m */; };
+		C9856D05167E533400C5B708 /* bg-sharefooter-land.png in Resources */ = {isa = PBXBuildFile; fileRef = C9856D03167E533400C5B708 /* bg-sharefooter-land.png */; };
+		C9856D06167E533400C5B708 /* bg-sharefooter-land@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9856D04167E533400C5B708 /* bg-sharefooter-land@2x.png */; };
 		C99E97E5167E40A6006B3BBC /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C99E97E3167E40A6006B3BBC /* Icon.png */; };
 		C99E97E6167E40A6006B3BBC /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C99E97E4167E40A6006B3BBC /* Icon@2x.png */; };
 		C99E97ED167E4494006B3BBC /* StatusBarToastAndProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = C99E97EC167E4494006B3BBC /* StatusBarToastAndProgressView.m */; };
@@ -511,6 +513,8 @@
 		C97BFF5F166D9CFC005BB65F /* SPConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPConstants.h; path = Helpers/SPConstants.h; sourceTree = "<group>"; };
 		C97BFFC2166DBDC0005BB65F /* libUAirship-1.3.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libUAirship-1.3.3.a"; sourceTree = "<group>"; };
 		C97BFFC3166DBDC0005BB65F /* libUAirshipPush-1.3.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libUAirshipPush-1.3.3.a"; sourceTree = "<group>"; };
+		C9856D03167E533400C5B708 /* bg-sharefooter-land.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-sharefooter-land.png"; sourceTree = "<group>"; };
+		C9856D04167E533400C5B708 /* bg-sharefooter-land@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-sharefooter-land@2x.png"; sourceTree = "<group>"; };
 		C99E97E3167E40A6006B3BBC /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		C99E97E4167E40A6006B3BBC /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		C99E97EB167E4494006B3BBC /* StatusBarToastAndProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StatusBarToastAndProgressView.h; path = Views/StatusBarToastAndProgressView.h; sourceTree = "<group>"; };
@@ -1284,6 +1288,8 @@
 				C9DDF1C3167D24DD000399EA /* bg-searchbox@2x.png */,
 				C9DDF1C4167D24DD000399EA /* bg-sharefooter.png */,
 				C9DDF1C5167D24DD000399EA /* bg-sharefooter@2x.png */,
+				C9856D03167E533400C5B708 /* bg-sharefooter-land.png */,
+				C9856D04167E533400C5B708 /* bg-sharefooter-land@2x.png */,
 				C9DDF1C6167D24DD000399EA /* bg-statusbar-green.png */,
 				C9DDF1C7167D24DD000399EA /* bg-statusbar-green@2x.png */,
 				C9DDF1C8167D24DD000399EA /* bg-statusbar-grey.png */,
@@ -1795,6 +1801,8 @@
 				C9DDF34F167D24DD000399EA /* slide6@2x.png in Resources */,
 				C99E97E5167E40A6006B3BBC /* Icon.png in Resources */,
 				C99E97E6167E40A6006B3BBC /* Icon@2x.png in Resources */,
+				C9856D05167E533400C5B708 /* bg-sharefooter-land.png in Resources */,
+				C9856D06167E533400C5B708 /* bg-sharefooter-land@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

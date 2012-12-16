@@ -117,6 +117,10 @@
     [[self movieFileOutput] stopRecording];
 }
 
+- (AVCaptureConnection*)videoConnection {
+    return [SCCamUtilities connectionWithMediaType:AVMediaTypeVideo fromConnections:[[self movieFileOutput] connections]];
+}
+
 @end
 
 @implementation SCCamRecorder (FileOutputDelegate)

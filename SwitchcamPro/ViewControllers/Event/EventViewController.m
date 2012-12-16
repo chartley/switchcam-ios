@@ -213,8 +213,9 @@ enum { kTagTabBase = 100 };
 
 - (IBAction)recordButtonAction:(id)sender {
     SCCamViewController *viewController = [[SCCamViewController alloc] init];
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
-    [self presentModalViewController:navController animated:YES];
+    //UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    //[navController setNavigationBarHidden:YES];
+    [self presentModalViewController:viewController animated:YES];
 }
 
 - (IBAction)noteButtonAction:(id)sender {

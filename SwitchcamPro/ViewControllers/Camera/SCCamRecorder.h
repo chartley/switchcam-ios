@@ -66,6 +66,8 @@
 -(void)startRecordingWithOrientation:(AVCaptureVideoOrientation)videoOrientation;
 -(void)stopRecording;
 
+- (AVCaptureConnection*)videoConnection;
+
 @end
 
 @protocol SCCamRecorderDelegate

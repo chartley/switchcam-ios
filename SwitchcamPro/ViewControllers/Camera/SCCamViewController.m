@@ -147,6 +147,8 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
 			[newCaptureVideoPreviewLayer setFrame:bounds];
 			
 			[newCaptureVideoPreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
+            //TODO Fix deprecation
+            [newCaptureVideoPreviewLayer setOrientation:AVCaptureVideoOrientationLandscapeRight];
 			
 			[viewLayer insertSublayer:newCaptureVideoPreviewLayer below:[[viewLayer sublayers] objectAtIndex:0]];
 			
@@ -167,7 +169,6 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
 			AVCaptureFocusMode initialFocusMode = [[[captureManager videoInput] device] focusMode];
 			[newFocusModeLabel setText:[NSString stringWithFormat:@"focus: %@", [self stringForFocusMode:initialFocusMode]]];
 			[view addSubview:newFocusModeLabel];
-            newFocusModeLabel.transform = CGAffineTransformMakeRotation(M_PI_2); // 90 degress
 			[self addObserver:self forKeyPath:@"captureManager.videoInput.device.focusMode" options:NSKeyValueObservingOptionNew context:SCCamFocusModeObserverContext];
 			[self setFocusModeLabel:newFocusModeLabel];
             [newFocusModeLabel release];
@@ -191,28 +192,32 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
 	}
     
     // Recorder Glow
-    //self.recorderGlow.animationImages = @[ [UIImage imageNamed:@"recorder-record-button-on"],
-    //[UIImage imageNamed:@"recorder-record-button-off"] ];
+    self.recorderGlow.animationImages = @[ [UIImage imageNamed:@"record-button-on"],
+    [UIImage imageNamed:@"camera-recordbutton"] ];
     
     // all frames will execute in 1.75 seconds
     self.recorderGlow.animationDuration = 1.0;
     // repeat the annimation forever
     self.recorderGlow.animationRepeatCount = 0;
     [self.recorderGlow startAnimating];
-    
-    // Rotate the timer label 
-    self.timerCountLabelLandscape.transform = CGAffineTransformMakeRotation(M_PI_2); // 90 degress
-    timerBackgroundLandscape.transform = CGAffineTransformMakeRotation(M_PI_2); // 90 degress
 		
     // The hud will dispable all input on the view (use the higest view possible in the view hierarchy)
 	HUD = [[MBProgressHUD alloc] initWithView:self.view];
 	[self.view addSubview:HUD];
-    HUD.transform = CGAffineTransformMakeRotation(M_PI_2); // 90 degress
 	
 	// Regiser for HUD callbacks so we can remove it from the window at the right time
 	HUD.delegate = self;
     
     [super viewDidLoad];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [[UIApplication sharedApplication] setStatusBarHidden: YES withAnimation: UIStatusBarAnimationNone];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [[UIApplication sharedApplication] setStatusBarHidden: NO
+                                            withAnimation: UIStatusBarAnimationNone];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
@@ -223,6 +228,18 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
 	} else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return (interfaceOrientation == UIInterfaceOrientationLandscapeRight);
+}
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+    return UIInterfaceOrientationLandscapeRight;
+}
+
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskLandscapeRight;
 }
 
 #pragma mark IBActions Actions
@@ -357,7 +374,7 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
     CGPoint pointOfInterest = CGPointMake(.5f, .5f);
     CGSize frameSize = [[self videoPreviewView] frame].size;
     
-    if ([captureVideoPreviewLayer isMirrored]) {
+    if ([[self.captureManager recorder].videoConnection isVideoMirrored]) {
         viewCoordinates.x = frameSize.width - viewCoordinates.x;
     }    
 
@@ -498,10 +515,7 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
     CFRunLoopPerformBlock(CFRunLoopGetMain(), kCFRunLoopCommonModes, ^(void) {
         [[self recordButton] setEnabled:YES];
         
-        // Upload
-        UploadVideoViewController *viewController = [[UploadVideoViewController alloc] init];
-        [viewController setRecordingToUpload:[self.captureManager currentRecording]];
-        [self.navigationController pushViewController:viewController animated:YES];
+        [HUD hide:YES];
     });
 }
 

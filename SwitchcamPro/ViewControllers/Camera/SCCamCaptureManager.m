@@ -145,7 +145,7 @@
         [self setDeviceDisconnectedObserver:[notificationCenter addObserverForName:AVCaptureDeviceWasDisconnectedNotification object:nil queue:nil usingBlock:deviceDisconnectedBlock]];
 		[[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
 		[notificationCenter addObserver:self selector:@selector(deviceOrientationDidChange) name:UIDeviceOrientationDidChangeNotification object:nil];
-		orientation = AVCaptureVideoOrientationPortrait;
+		orientation = AVCaptureVideoOrientationLandscapeRight;
     }
     
     return self;
@@ -268,8 +268,7 @@
     }
     
     [self removeFile:[[self recorder] outputFileURL]];
-    //TODO maybe force horizonta
-    [[self recorder] startRecordingWithOrientation:AVCaptureVideoOrientationLandscapeLeft];
+    [[self recorder] startRecordingWithOrientation:AVCaptureVideoOrientationLandscapeRight];
 }
 
 - (void) stopRecording
