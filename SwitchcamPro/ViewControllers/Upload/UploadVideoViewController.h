@@ -13,5 +13,9 @@
 @interface UploadVideoViewController : UIViewController
 
 @property (strong, nonatomic) Recording *recordingToUpload;
+@property (strong, nonatomic) IBOutlet UILabel *timeLabel;
+@property (strong, nonatomic) IBOutlet UILabel *lengthLabel;
+@property (strong, nonatomic) IBOutlet UILabel *sizeLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *videoThumbnailImageView;
 
 @end

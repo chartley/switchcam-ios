@@ -48,6 +48,7 @@
 #import <MobileCoreServices/UTCoreTypes.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <ImageIO/CGImageProperties.h>
+#import <ImageIO/ImageIO.h>
 #import "SCCamCaptureManager.h"
 #import "SCCamRecorder.h"
 #import "SCCamUtilities.h"
@@ -405,6 +406,20 @@ bail:
 	}
 }
 
+#pragma mark - Helper Methods
+
+void CGImageWriteToFile(CGImageRef image, NSString *path) {
+    CFURLRef url = (CFURLRef)[NSURL fileURLWithPath:path];
+    CGImageDestinationRef destination = CGImageDestinationCreateWithURL(url, kUTTypePNG, 1, NULL);
+    CGImageDestinationAddImage(destination, image, nil);
+    
+    if (!CGImageDestinationFinalize(destination)) {
+        NSLog(@"Failed to write image to %@", path);
+    }
+    
+    CFRelease(destination);
+}
+
 @end
 
 
@@ -540,11 +555,8 @@ bail:
 										if ([[UIDevice currentDevice] isMultitaskingSupported]) {
 											[[UIApplication sharedApplication] endBackgroundTask:[self backgroundRecordingID]];
 										}
-										
-										if ([[self delegate] respondsToSelector:@selector(captureManagerRecordingFinished:)]) {
-											[[self delegate] captureManagerRecordingFinished:self];
-										}
                                         
+                                        // Wait to fire recording finished until after we save
                                         [self saveMovieToCurrentVideoWithLibrary:library andAssetURL:assetURL andOutputFileURL:outputFileURL];
 									}];
 		[library release];
@@ -562,8 +574,13 @@ bail:
     ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *myasset) {
         ALAssetRepresentation *rep = [myasset defaultRepresentation];
         self.currentRecording.sizeBytes =  [NSNumber numberWithLongLong:rep.size];
-        //TODO Thumbnail
+        // Save Thumbnail
+        CGImageWriteToFile([myasset aspectRatioThumbnail], [self.currentRecording thumbnailURL]);
         
+        // Fire that we are finished and bring upload view
+        if ([[self delegate] respondsToSelector:@selector(captureManagerRecordingFinished:)]) {
+            [[self delegate] captureManagerRecordingFinished:self];
+        }
     };
     
     ALAssetsLibraryAccessFailureBlock failureblock  = ^(NSError *myerror) {

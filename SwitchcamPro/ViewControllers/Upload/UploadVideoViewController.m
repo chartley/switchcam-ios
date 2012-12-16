@@ -17,8 +17,16 @@
 #import "Recording.h"
 #import "SCS3Uploader.h"
 #import "SPSerializable.h"
+#import "UIImage+H568.h"
+
+#define kBufferBetweenThumbnailLabels 10
 
 @interface UploadVideoViewController ()
+
+@property (strong, nonatomic) UIProgressView *compressProgressView;
+@property (strong, nonatomic) UILabel *compressProgressLabel;
+@property (strong, nonatomic) NSTimer *compressProgressBarTimer;
+@property (strong, nonatomic) AVAssetExportSession *compressionSession;
 
 @end
 
@@ -37,7 +45,74 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    // Add background
+    UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bgfull-fullapp"]];
+    [self.view addSubview:backgroundImageView];
+    [self.view sendSubviewToBack:backgroundImageView];
 
+    // Change back button to our custom one
+    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [backButton setFrame:CGRectMake(0, 0, 30, 30)];
+    [backButton setImage:[UIImage imageNamed:@"btn-back"] forState:UIControlStateNormal];
+    [backButton addTarget:self action:@selector(backButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    [self.navigationItem setLeftBarButtonItem:backBarButtonItem];
+    
+    // Set title
+    [self.navigationItem setTitle:NSLocalizedString(@"Upload Video", @"")];
+    
+    // Set fonts
+    [self.timeLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:12]];
+    [self.timeLabel setTextColor:[UIColor whiteColor]];
+    [self.timeLabel setShadowColor:[UIColor blackColor]];
+    [self.timeLabel setShadowOffset:CGSizeMake(0, -1)];
+    
+    [self.lengthLabel setFont:[UIFont fontWithName:@"SourceSansPro-It" size:12]];
+    [self.lengthLabel setTextColor:RGBA(105, 105, 105, 1)];
+    [self.lengthLabel setShadowColor:[UIColor blackColor]];
+    [self.lengthLabel setShadowOffset:CGSizeMake(0, -1)];
+    
+    [self.sizeLabel setFont:[UIFont fontWithName:@"SourceSansPro-It" size:12]];
+    [self.sizeLabel setTextColor:RGBA(105, 105, 105, 1)];
+    [self.sizeLabel setShadowColor:[UIColor blackColor]];
+    [self.sizeLabel setShadowOffset:CGSizeMake(0, -1)];
+    
+    // Set Labels
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+	[dateFormatter setDateFormat:@"h:mm a"];
+    [self.timeLabel setText:[dateFormatter stringFromDate:[self.recordingToUpload recordStart]]];
+    
+    NSString *lengthString = [NSString stringWithFormat:NSLocalizedString(@"Length: %@", @""), @""];
+    [self.lengthLabel setText:lengthString];
+    
+    NSString *sizeString = [NSString stringWithFormat:NSLocalizedString(@"Size: %@MB", @""), [[self.recordingToUpload sizeMegaBytes] stringValue]];
+    [self.sizeLabel setText:sizeString];
+    
+    // Size to fit labels and set their origins
+    [self.timeLabel sizeToFit];
+    [self.lengthLabel setFrame:CGRectMake(self.timeLabel.frame.origin.x + self.timeLabel.frame.size.width + kBufferBetweenThumbnailLabels, self.lengthLabel.frame.origin.y, self.lengthLabel.frame.size.width, self.lengthLabel.frame.size.height)];
+    
+    [self.lengthLabel sizeToFit];
+    [self.sizeLabel setFrame:CGRectMake(self.lengthLabel.frame.origin.x + self.lengthLabel.frame.size.width + kBufferBetweenThumbnailLabels, self.sizeLabel.frame.origin.y, self.sizeLabel.frame.size.width, self.sizeLabel.frame.size.height)];
+    
+    [self.sizeLabel sizeToFit];
+    
+    // Load thumbnail image
+    UIImage *thumbnailImage = [UIImage imageWithContentsOfFile:[self.recordingToUpload thumbnailURL]];
+    
+    // Set Thumbnail
+    [self.videoThumbnailImageView setImage:thumbnailImage];
+    
+    // Thumbnail border
+    [self.videoThumbnailImageView.layer setCornerRadius:5.0f];
+    [self.videoThumbnailImageView.layer setBorderColor:[UIColor blackColor].CGColor];
+    [self.videoThumbnailImageView.layer setBorderWidth:1.5f];
+    [self.videoThumbnailImageView.layer setShadowColor:[UIColor blackColor].CGColor];
+    [self.videoThumbnailImageView.layer setShadowOpacity:0.8];
+    [self.videoThumbnailImageView.layer setShadowRadius:3.0];
+    [self.videoThumbnailImageView.layer setShadowOffset:CGSizeMake(2.0, 2.0)];
+    [self.videoThumbnailImageView.layer setMasksToBounds:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -94,6 +169,14 @@
 #pragma mark - Button Actions
 
 - (void)uploadButtonAction {
+    // Fade in progress bar
+    [UIView animateWithDuration:1.0 animations:^(){
+        [self.compressProgressView setAlpha:1.0];
+        [self.compressProgressLabel setAlpha:1.0];
+    } completion:^(BOOL finished) {
+        
+    }];
+    
     // Completion Blocks
     void (^compressionSuccessBlock)();
     void (^compressionFailureBlock)(NSError *error);
@@ -113,50 +196,35 @@
     [self startVideoCompressionWithSuccessHandler:compressionSuccessBlock failureHandler:compressionFailureBlock];
 }
 
+- (void)backButtonAction {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 #pragma mark - Helper Methods
 
 - (void)startVideoCompressionWithSuccessHandler:(void (^)())successHandler failureHandler:(void (^)(NSError *))failureHandler  {
+    NSString *outputURLString = [self.recordingToUpload compressedVideoURL];
     NSURL *inputURL = [NSURL URLWithString:[self.recordingToUpload localVideoAssetURL]];
-    
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd-HH-mm-ss"];
-    NSString *dateString = [dateFormatter stringFromDate:[self.recordingToUpload recordStart]];
-    
-    // Make sure we don't overwrite
-    NSUInteger count = 0;
-    NSString *outputURLString = nil;
-    do {
-        NSString *extension = (__bridge  NSString *)UTTypeCopyPreferredTagWithClass(( CFStringRef)AVFileTypeQuickTimeMovie, kUTTagClassFilenameExtension);
-        NSString *fileNameNoExtension = [[inputURL URLByDeletingPathExtension] lastPathComponent];
-        NSString *fileName = [NSString stringWithFormat:@"%@-%@-%u",fileNameNoExtension , dateString, count];
-        outputURLString = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-        outputURLString = [outputURLString stringByAppendingPathComponent:fileName];
-        outputURLString = [outputURLString stringByAppendingPathExtension:extension];
-        count++;
-        
-    } while ([[NSFileManager defaultManager] fileExistsAtPath:outputURLString]);
-    
     NSURL *outputURL = [NSURL fileURLWithPath:outputURLString];
-    
-    [self.recordingToUpload setCompressedVideoURL:outputURLString];
-    
     
     if ([[NSFileManager defaultManager] fileExistsAtPath:outputURLString]) {
         [[NSFileManager defaultManager] removeItemAtURL:outputURL error:nil];
     }
     
     AVURLAsset *asset = [AVURLAsset URLAssetWithURL:inputURL options:nil];
-    AVAssetExportSession *exportSession = [[AVAssetExportSession alloc] initWithAsset:asset presetName:AVAssetExportPresetMediumQuality];
-    exportSession.outputURL = outputURL;
-    exportSession.outputFileType = AVFileTypeMPEG4;
-    [exportSession exportAsynchronouslyWithCompletionHandler:^(void) {
-        if (exportSession.status == AVAssetExportSessionStatusCompleted) {
+    self.compressionSession = [[AVAssetExportSession alloc] initWithAsset:asset presetName:AVAssetExportPresetMediumQuality];
+    self.compressionSession.outputURL = outputURL;
+    self.compressionSession.outputFileType = AVFileTypeMPEG4;
+    [self.compressionSession exportAsynchronouslyWithCompletionHandler:^(void) {
+        if (self.compressionSession.status == AVAssetExportSessionStatusCompleted) {
             successHandler();
         } else {
-            NSError *error = exportSession.error;
+            NSError *error = self.compressionSession.error;
             failureHandler(error);
         }
     }];
+    
+    self.compressProgressBarTimer = [NSTimer scheduledTimerWithTimeInterval:.1 target:self selector:@selector(updateCompressDisplay) userInfo:nil repeats:YES];
 }
 
 - (void)tagFriends {
@@ -170,6 +238,9 @@
         {
             LabelTextFieldCell *labelTextFieldCell = (LabelTextFieldCell *)cell;
             [labelTextFieldCell.leftLabel setText:NSLocalizedString(@"Video Title", @"")];
+            [labelTextFieldCell.leftLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:17]];
+            [labelTextFieldCell.textField setTextColor:[UIColor whiteColor]];
+            [labelTextFieldCell.textField setFont:[UIFont fontWithName:@"SourceSansPro-Light" size:17]];
             break;
         }
             
@@ -177,14 +248,31 @@
         {
             LabelInvisibleButtonCell *labelInvisibleButtonCell = (LabelInvisibleButtonCell *)cell;
             [labelInvisibleButtonCell.leftLabel setText:NSLocalizedString(@"Tag Friends?", @"")];
+            [labelInvisibleButtonCell.leftLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:17]];
+            [labelInvisibleButtonCell.rightLabel setTextColor:RGBA(105, 105, 105, 1)];
+            [labelInvisibleButtonCell.rightLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:17]];
+
             [labelInvisibleButtonCell.invisibleButton addTarget:self action:@selector(tagFriends) forControlEvents:UIControlEventTouchUpInside];
             break;
         }
         case 2:
         {
-            ButtonToProgressCell *labelSwitchCell = (ButtonToProgressCell *)cell;
-            [labelSwitchCell.bigButton setTitle:NSLocalizedString(@"Upload", @"") forState:UIControlStateNormal];
-            [labelSwitchCell.bigButton addTarget:self action:@selector(uploadButtonAction) forControlEvents:UIControlEventTouchUpInside];
+            ButtonToProgressCell *buttonToProgressCell = (ButtonToProgressCell *)cell;
+            [buttonToProgressCell.bigButton setTitle:NSLocalizedString(@"Upload", @"") forState:UIControlStateNormal];
+            [buttonToProgressCell.bigButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [buttonToProgressCell.bigButton setTitleShadowColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [buttonToProgressCell.bigButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
+            [buttonToProgressCell.bigButton addTarget:self action:@selector(uploadButtonAction) forControlEvents:UIControlEventTouchUpInside];
+            
+            
+            // Set Button Image
+            UIImage *buttonImage = [[UIImage imageNamed:@"btn-orange-lg"]
+                                    resizableImageWithCapInsets:UIEdgeInsetsMake(8, 8, 8, 8)];
+            UIImage *buttonImageHighlight = [[UIImage imageNamed:@"btn-orange-lg-pressed"]
+                                             resizableImageWithCapInsets:UIEdgeInsetsMake(8, 8, 8, 8)];
+            // Set the background for any states you plan to use
+            [buttonToProgressCell.bigButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
+            [buttonToProgressCell.bigButton setBackgroundImage:buttonImageHighlight forState:UIControlStateHighlighted];
             break;
         }
         default:
@@ -193,6 +281,30 @@
 }
 
 #pragma mark - UITableViewDataSource methods
+
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath: (NSIndexPath *) indexPath {
+    switch (indexPath.row) {
+        case 0:
+        {
+            return kLabelTextFieldCellRowHeight;
+            break;
+        }
+            
+        case 1:
+        {
+            return kLabelInvisibleButtonCellRowHeight;
+            break;
+        }
+        case 2:
+        {
+            return kButtonToProgressCellRowHeight;
+            break;
+        }
+        default:
+            return 0;
+            break;
+    }
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 3;
@@ -243,6 +355,23 @@
             {
                 NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"ButtonToProgressCell" owner:self options:nil];
                 cell = [nibArray objectAtIndex:0];
+                
+                // Grab progress view and label
+                self.compressProgressView = [((ButtonToProgressCell*)cell) progressView];
+                self.compressProgressLabel = [((ButtonToProgressCell*)cell) progressLabel];
+                
+                // Custom track
+                UIImage *progressImage = [[UIImage imageNamed:@"processingbar"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 8, 0, 8)];
+                UIImage *trackImage = [[UIImage imageNamed:@"bg-processing-bar"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 8, 0, 8)];
+                [self.compressProgressView setProgressImage:progressImage];
+                [self.compressProgressView setTrackImage:trackImage];
+                [self.compressProgressView setFrame:CGRectMake(self.compressProgressView.frame.origin.x, self.compressProgressView.frame.origin.y, self.compressProgressView.frame.size.width, 41)];
+                
+                // Set Font / Color
+                [self.compressProgressLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:12]];
+                [self.compressProgressLabel setTextColor:[UIColor whiteColor]];
+                [self.compressProgressLabel setShadowColor:[UIColor blackColor]];
+                [self.compressProgressLabel setShadowOffset:CGSizeMake(0, -1)];
                 break;
             }
             default:
@@ -251,6 +380,18 @@
     }
     
     [self configureCell:cell forTableView:tableView atIndexPath:indexPath];
+    
+    // Set backgrounds
+    if (indexPath.row == 0) {
+        // Top
+        [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grptableview-top"]]];
+    } else if (indexPath.row == 2) {
+        // Bottom
+        [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grptableview-bottom"]]];
+    } else {
+        // Middle
+        [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grptableview-middle"]]];
+    }
     
     return cell;
 }
@@ -264,6 +405,24 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+}
+
+#pragma mark - NSTimer Methods
+
+- (void) updateCompressDisplay {
+    // Update progress bar
+    self.compressProgressView.progress = self.compressionSession.progress;
+    
+    // Update label
+    NSString *progressString = [NSString stringWithFormat:NSLocalizedString(@"Processing Video - %f%", @""), (self.compressionSession.progress * 100)];
+    [self.compressProgressLabel setText:progressString];
+    
+    // Kill timer if we are finished
+    if (self.compressProgressView.progress > .99) {
+        [self.compressProgressBarTimer invalidate];
+    }
+    
+    
 }
 
 @end

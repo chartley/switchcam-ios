@@ -246,6 +246,32 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
                                           inManagedObjectContext:context];
         
         [currentRecording setRecordStart:[NSDate date]];
+        
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd-HH-mm-ss"];
+        NSString *dateString = [dateFormatter stringFromDate:[currentRecording recordStart]];
+        
+        // Make sure we don't overwrite
+        NSUInteger count = 0;
+        NSString *outputURLString = nil;
+        do {
+            NSString *videoExtension = (NSString *)UTTypeCopyPreferredTagWithClass(( CFStringRef)AVFileTypeMPEG4, kUTTagClassFilenameExtension);
+            NSString *photoExtension = (NSString *)UTTypeCopyPreferredTagWithClass(( CFStringRef)kUTTypePNG, kUTTagClassFilenameExtension);
+            NSString *fileNameNoExtension = @"capture";
+            NSString *fileName = [NSString stringWithFormat:@"%@-%@-%u",fileNameNoExtension , dateString, count];
+            outputURLString = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+            outputURLString = [outputURLString stringByAppendingPathComponent:fileName];
+            NSString *videoURLString = [outputURLString stringByAppendingPathExtension:videoExtension];
+            NSString *thumbnailURLString = [outputURLString stringByAppendingPathExtension:photoExtension];
+            
+            [currentRecording setCompressedVideoURL:videoURLString];
+            [currentRecording setThumbnailURL:thumbnailURLString];
+            [currentRecording setFilename:fileName];
+            count++;
+            
+        } while ([[NSFileManager defaultManager] fileExistsAtPath:outputURLString]);
+        
+        
         [[self captureManager] setCurrentRecording:currentRecording];
         
         // Hide the close button
