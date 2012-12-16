@@ -574,10 +574,12 @@ void CGImageWriteToFile(CGImageRef image, NSString *path) {
     ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *myasset) {
         ALAssetRepresentation *rep = [myasset defaultRepresentation];
         self.currentRecording.sizeBytes =  [NSNumber numberWithLongLong:rep.size];
+        self.currentRecording.sizeMegaBytes = [NSNumber numberWithLongLong:((rep.size/1024)/1024)];
+        
         // Save Thumbnail
         CGImageWriteToFile([myasset aspectRatioThumbnail], [self.currentRecording thumbnailURL]);
         
-        // Fire that we are finished and bring upload view
+        // Fire that we are finished to perform next action
         if ([[self delegate] respondsToSelector:@selector(captureManagerRecordingFinished:)]) {
             [[self delegate] captureManagerRecordingFinished:self];
         }

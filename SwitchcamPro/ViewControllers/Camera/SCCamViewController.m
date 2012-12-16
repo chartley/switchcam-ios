@@ -294,6 +294,15 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
         
         [[self captureManager] stopRecording];
         
+        // Stop recording
+        [[[self captureManager] currentRecording] setRecordEnd:[NSDate date]];
+        
+        NSManagedObjectContext *context = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
+        NSError *error;
+        if (![context save:&error]) {
+            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+        }
+        
         // Stop glow
         self.recorderGlow.hidden = YES;
         
