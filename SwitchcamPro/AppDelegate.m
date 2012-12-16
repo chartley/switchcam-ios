@@ -18,6 +18,8 @@
 #import "ECSlidingViewController.h"
 #import "LoginViewController.h"
 #import "SPConstants.h"
+#import "StatusBarToastAndProgressView.h"
+#import "SCS3Uploader.h"
 
 NSString *const SCSessionStateChangedNotification = @"com.switchcam.switchcampro:SCSessionStateChangedNotification";
 NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switchcampro:SCAPINetworkRequestCanStartNotification";
@@ -26,6 +28,7 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
 
 @property (strong, nonatomic) ECSlidingViewController *slidingViewController;
 @property (strong, nonatomic) UINavigationController* loginViewController;
+@property (strong, nonatomic) StatusBarToastAndProgressView* statusBarToastAndProgressView;
 
 - (void)showLoginView;
 
@@ -38,6 +41,11 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     // Initialize Push
     //[self initAirship:launchOptions];
     
+    // Initialize Toast and Progress
+    //TODO find the right place for this, since statusbar will get us rejected, disabled for now
+    //[self initalizeStatusBarToastAndProgressView];
+    
+    // Initialize Custom Navigation Bar
     [self initializeNavigationBarAppearance];
     
     // Show Activity Indicator
@@ -404,6 +412,41 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     [[UINavigationBar appearance] setTitleTextAttributes:titleBarAttributes];
     
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"bg-appheader"] forBarMetrics:UIBarMetricsDefault];
+}
+
+#pragma mark - Status Bar Overlay
+
+- (void)initalizeStatusBarToastAndProgressView {
+    // Create View
+    self.statusBarToastAndProgressView = [[StatusBarToastAndProgressView alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
+    [self.window addSubview:self.statusBarToastAndProgressView];
+    
+    // Setup listeners
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadStarted) name:kSCS3UploadStartedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadCompleted) name:kSCS3UploadCompletedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadStarted) name:kSCS3UploadPercentCompleteNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadFailed) name:kSCS3UploadFailedNotification object:nil];
+}
+
+#pragma mark - Observer Methods
+
+- (void)uploadStarted {
+    [self.statusBarToastAndProgressView showProgressView];
+}
+
+- (void)uploadProgress:(NSNotification*)notification {
+    NSNumber *progress = (NSNumber*)[notification object];
+    [self.statusBarToastAndProgressView updateProgressLabelWithAmount:[progress floatValue]];
+}
+
+- (void)uploadCompleted {
+    [self.statusBarToastAndProgressView showToastWithMessage:NSLocalizedString(@"Upload Complete!", @"")];
+    [self.statusBarToastAndProgressView hideProgressView];
+}
+
+- (void)uploadFailed {
+    [self.statusBarToastAndProgressView showToastWithMessage:NSLocalizedString(@"Upload Failed!", @"")];
+    [self.statusBarToastAndProgressView hideProgressView];
 }
 
 @end

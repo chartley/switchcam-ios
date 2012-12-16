@@ -107,6 +107,7 @@
 		C97BFF5D166D9BE8005BB65F /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = C97BFF5C166D9BE8005BB65F /* MBProgressHUD.m */; };
 		C99E97E5167E40A6006B3BBC /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C99E97E3167E40A6006B3BBC /* Icon.png */; };
 		C99E97E6167E40A6006B3BBC /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C99E97E4167E40A6006B3BBC /* Icon@2x.png */; };
+		C99E97ED167E4494006B3BBC /* StatusBarToastAndProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = C99E97EC167E4494006B3BBC /* StatusBarToastAndProgressView.m */; };
 		C9DDF1751676C88B000399EA /* EventTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DDF1741676C88B000399EA /* EventTabViewController.m */; };
 		C9DDF27E167D24DD000399EA /* arrow-comments.png in Resources */ = {isa = PBXBuildFile; fileRef = C9DDF1AC167D24DD000399EA /* arrow-comments.png */; };
 		C9DDF27F167D24DD000399EA /* arrow-comments@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9DDF1AD167D24DD000399EA /* arrow-comments@2x.png */; };
@@ -512,6 +513,8 @@
 		C97BFFC3166DBDC0005BB65F /* libUAirshipPush-1.3.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libUAirshipPush-1.3.3.a"; sourceTree = "<group>"; };
 		C99E97E3167E40A6006B3BBC /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		C99E97E4167E40A6006B3BBC /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		C99E97EB167E4494006B3BBC /* StatusBarToastAndProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StatusBarToastAndProgressView.h; path = Views/StatusBarToastAndProgressView.h; sourceTree = "<group>"; };
+		C99E97EC167E4494006B3BBC /* StatusBarToastAndProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StatusBarToastAndProgressView.m; path = Views/StatusBarToastAndProgressView.m; sourceTree = "<group>"; };
 		C9DDF1731676C88B000399EA /* EventTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventTabViewController.h; path = ViewControllers/Event/EventTabViewController.h; sourceTree = "<group>"; };
 		C9DDF1741676C88B000399EA /* EventTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EventTabViewController.m; path = ViewControllers/Event/EventTabViewController.m; sourceTree = "<group>"; };
 		C9DDF1AC167D24DD000399EA /* arrow-comments.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-comments.png"; sourceTree = "<group>"; };
@@ -1485,6 +1488,8 @@
 		C9F49117167D4FEA00C75C6F /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
+				C99E97EB167E4494006B3BBC /* StatusBarToastAndProgressView.h */,
+				C99E97EC167E4494006B3BBC /* StatusBarToastAndProgressView.m */,
 			);
 			name = "Custom Views";
 			sourceTree = "<group>";
@@ -1869,6 +1874,7 @@
 				C9DDF358167D2736000399EA /* Recording.m in Sources */,
 				C9F49114167D389F00C75C6F /* UIImage+H568.m in Sources */,
 				C9F4911A167D506700C75C6F /* UploadTextField.m in Sources */,
+				C99E97ED167E4494006B3BBC /* StatusBarToastAndProgressView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
