@@ -7,9 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "PendingUploadCell.h"
 @class MenuViewController;
 
-@interface MenuPendingUploadDSD : NSObject <UITableViewDataSource, UITableViewDelegate>
+@interface MenuPendingUploadDSD : NSObject <UITableViewDataSource, UITableViewDelegate, PendingUploadCellDelegate>
 
 @property (weak, nonatomic) MenuViewController *menuViewController;
 

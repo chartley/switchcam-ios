@@ -9,7 +9,6 @@
 #import <RestKit/RestKit.h>
 #import <RestKit/CoreData.h>
 #import "MenuPendingUploadDSD.h"
-#import "PendingUploadCell.h"
 #import "Recording.h"
 #import "MenuViewController.h"
 
@@ -44,7 +43,7 @@
     
     // Setup fetched results
     self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
-                                                                        managedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext
+                                                                        managedObjectContext:[RKManagedObjectStore defaultStore].persistentStoreManagedObjectContext
                                                                           sectionNameKeyPath:nil
                                                                                    cacheName:nil];
     [self.fetchedResultsController setDelegate:self];
@@ -63,6 +62,13 @@
         pendingUploadCell.pendingUploadCountLabel.text = [NSString stringWithFormat:@"%d", [sectionInfo numberOfObjects]];
 
     }
+    
+    // Save row
+    [pendingUploadCell setTag:indexPath.row];
+    
+    // Set Delegate
+    [pendingUploadCell setDelegate:self];
+    
     // Load thumbnail image
     UIImage *thumbnailImage = [UIImage imageWithContentsOfFile:[recording thumbnailURL]];
     
@@ -137,8 +143,50 @@
 
 #pragma mark NSFetchedResultsControllerDelegate methods
 
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
-    [[self.menuViewController pendingUploadTableView] reloadData];
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
+    switch (type) {
+        case NSFetchedResultsChangeDelete:
+            [self.menuViewController.pendingUploadTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        default:
+            [[self.menuViewController pendingUploadTableView] reloadData];
+            break;
+    }
+}
+
+#pragma mark - PendingUploadCellDelegate
+
+- (void)previewButtonPressed:(PendingUploadCell*)pendingUploadCell {
+    int row = [pendingUploadCell tag];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+    
+    Recording *recording = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    //TODO Playback
+}
+
+- (void)uploadButtonPressed:(PendingUploadCell*)pendingUploadCell {
+    int row = [pendingUploadCell tag];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+    
+    Recording *recording = [self.fetchedResultsController objectAtIndexPath:indexPath];
+}
+
+- (void)deleteButtonPressed:(PendingUploadCell*)pendingUploadCell {
+    NSManagedObjectContext *context = [RKManagedObjectStore defaultStore].persistentStoreManagedObjectContext;
+    int row = [pendingUploadCell tag];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+    
+    Recording *recording = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    [context deleteObject:recording];
+    [context processPendingChanges];
+    
+    // This delete should trigger the results controller in a change and delete automagically
+    NSError *error = nil;
+    if (![context save:&error]) {
+        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+    }
 }
 
 @end
