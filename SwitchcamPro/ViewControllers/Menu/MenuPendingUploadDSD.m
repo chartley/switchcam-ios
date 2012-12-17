@@ -36,8 +36,8 @@
 - (void)refreshUploads {
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Recording"];
     NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"recordStart" ascending:NO];
-    //NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isUploaded == NO"];
-    //fetchRequest.predicate = predicate;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isUploaded == NO"];
+    fetchRequest.predicate = predicate;
     fetchRequest.sortDescriptors = @[descriptor];
     fetchRequest.fetchLimit = 30;
     NSError *error = nil;
@@ -115,11 +115,6 @@
         }
         
         cell = [nibArray objectAtIndex:0];
-        
-        // Set Custom Font
-        [cell.pendingUploadCountLabel setFont:[UIFont fontWithName:@"SourceSansPro-Bold" size:18]];
-        [cell.pendingUploadCountLabel setShadowColor:[UIColor blackColor]];
-        [cell.pendingUploadCountLabel setShadowOffset:CGSizeMake(0, 1)];
     }
     
     [self configureCell:cell forTableView:tableView atIndexPath:indexPath];
