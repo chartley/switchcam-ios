@@ -329,6 +329,7 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
         
         // Hide the close button
         self.closeButton.hidden = YES;
+        self.closeImageView.hidden = YES;
         
         // Start Timer
         timerCount = 0;
@@ -360,6 +361,10 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
         
         // Stop glow
         self.recorderGlow.hidden = YES;
+        
+        // Show the close button
+        self.closeButton.hidden = NO;
+        self.closeImageView.hidden = NO;
         
         // Stop timer
         [videoLengthTimer invalidate];
