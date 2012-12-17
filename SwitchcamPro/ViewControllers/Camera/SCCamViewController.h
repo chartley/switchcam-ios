@@ -57,16 +57,29 @@
 @property (nonatomic,retain) IBOutlet UIView *videoPreviewView;
 @property (nonatomic,retain) AVCaptureVideoPreviewLayer *captureVideoPreviewLayer;
 @property (nonatomic,retain) IBOutlet UIButton *cameraToggleButton;
+@property (nonatomic,retain) IBOutlet UIImageView *cameraToggleImageView;
 @property (nonatomic,retain) IBOutlet UIButton *recordButton;
 @property (nonatomic,retain) IBOutlet UIButton *stillButton;
 @property (nonatomic,retain) IBOutlet UILabel *focusModeLabel;
 @property (nonatomic,retain) IBOutlet UIButton *closeButton;
+@property (nonatomic,retain) IBOutlet UIImageView *closeImageView;
+@property (nonatomic,retain) IBOutlet UIButton *flashButton;
+@property (nonatomic,retain) IBOutlet UIImageView *flashImageView;
 @property (nonatomic,retain) IBOutlet UIImageView *recorderGlow;
+
+@property (nonatomic,retain) IBOutlet UIButton *flashSelectAutoButton;
+@property (nonatomic,retain) IBOutlet UIButton *flashSelectOffButton;
+@property (nonatomic,retain) IBOutlet UIButton *flashSelectOnButton;
+@property (nonatomic,retain) IBOutlet UIButton *flashSelectedButton;
 
 #pragma mark Toolbar Actions
 - (IBAction)toggleRecording:(id)sender;
 - (IBAction)captureStillImage:(id)sender;
 - (IBAction)toggleCamera:(id)sender;
+- (IBAction)toggleFlashAction:(id)sender;
+- (IBAction)toggleFlashAutoAction:(id)sender;
+- (IBAction)toggleFlashOnAction:(id)sender;
+- (IBAction)toggleFlashOffAction:(id)sender;
 
 @end
 

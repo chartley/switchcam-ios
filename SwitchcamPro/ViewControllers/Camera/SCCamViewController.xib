@@ -63,13 +63,13 @@
 						<int key="NSvFlags">274</int>
 						<object class="NSMutableArray" key="NSSubviews">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBUIImageView" id="225621510">
+							<object class="IBUIImageView" id="901133103">
 								<reference key="NSNextResponder" ref="197392939"/>
 								<int key="NSvFlags">297</int>
 								<string key="NSFrame">{{490, 0}, {79, 320}}</string>
 								<reference key="NSSuperview" ref="197392939"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="79535362"/>
+								<reference key="NSNextKeyView" ref="429542498"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<int key="IBUIContentMode">4</int>
@@ -126,10 +126,9 @@
 							<object class="IBUILabel" id="826718554">
 								<reference key="NSNextResponder" ref="197392939"/>
 								<int key="NSvFlags">265</int>
-								<string key="NSFrame">{{429, 284}, {68, 22}}</string>
+								<string key="NSFrame">{{443, 284}, {68, 22}}</string>
 								<reference key="NSSuperview" ref="197392939"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -146,7 +145,7 @@
 								</object>
 								<nil key="IBUIHighlightedColor"/>
 								<int key="IBUIBaselineAdjustment">0</int>
-								<int key="IBUITextAlignment">1</int>
+								<int key="IBUITextAlignment">2</int>
 								<object class="IBUIFontDescription" key="IBUIFontDescription">
 									<string key="name">Helvetica</string>
 									<string key="family">Helvetica</string>
@@ -166,7 +165,7 @@
 								<string key="NSFrame">{{500, 127}, {65, 65}}</string>
 								<reference key="NSSuperview" ref="197392939"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="857807104"/>
+								<reference key="NSNextKeyView" ref="309942975"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<int key="IBUIContentMode">4</int>
@@ -176,7 +175,7 @@
 								</object>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
-							<object class="IBUIImageView" id="99622745">
+							<object class="IBUIImageView" id="1047800366">
 								<reference key="NSNextResponder" ref="197392939"/>
 								<int key="NSvFlags">297</int>
 								<string key="NSFrame">{{527, 76}, {16, 13}}</string>
@@ -193,13 +192,13 @@
 									<string key="NSResourceName">icn-photo-switch.png</string>
 								</object>
 							</object>
-							<object class="IBUIImageView" id="79535362">
+							<object class="IBUIImageView" id="429542498">
 								<reference key="NSNextResponder" ref="197392939"/>
 								<int key="NSvFlags">297</int>
 								<string key="NSFrame">{{527, 40}, {16, 11}}</string>
 								<reference key="NSSuperview" ref="197392939"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="99622745"/>
+								<reference key="NSNextKeyView" ref="1047800366"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<int key="IBUIContentMode">4</int>
@@ -210,24 +209,24 @@
 									<string key="NSResourceName">icn-video-switch.png</string>
 								</object>
 							</object>
-							<object class="IBUIImageView" id="857807104">
+							<object class="IBUIImageView" id="309942975">
 								<reference key="NSNextResponder" ref="197392939"/>
 								<int key="NSvFlags">268</int>
 								<string key="NSFrame">{{8, 277}, {36, 35}}</string>
 								<reference key="NSSuperview" ref="197392939"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="254512034"/>
+								<reference key="NSNextKeyView" ref="903835811"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<int key="IBUIContentMode">4</int>
 								<bool key="IBUIMultipleTouchEnabled">YES</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<object class="NSCustomResource" key="IBUIImage">
+								<object class="NSCustomResource" key="IBUIImage" id="135041410">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">btn-camera-circle.png</string>
 								</object>
 							</object>
-							<object class="IBUIButton" id="254512034">
+							<object class="IBUIButton" id="903835811">
 								<reference key="NSNextResponder" ref="197392939"/>
 								<int key="NSvFlags">268</int>
 								<string key="NSFrame">{{11, 280}, {30, 30}}</string>
@@ -252,11 +251,183 @@
 								<reference key="IBUIFontDescription" ref="684730106"/>
 								<reference key="IBUIFont" ref="406268077"/>
 							</object>
+							<object class="IBUIImageView" id="111324481">
+								<reference key="NSNextResponder" ref="197392939"/>
+								<int key="NSvFlags">256</int>
+								<string key="NSFrame">{{11, 11}, {81, 35}}</string>
+								<reference key="NSSuperview" ref="197392939"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="707359228"/>
+								<bool key="IBUIOpaque">NO</bool>
+								<bool key="IBUIClipsSubviews">YES</bool>
+								<bool key="IBUIMultipleTouchEnabled">YES</bool>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<reference key="IBUIImage" ref="135041410"/>
+							</object>
+							<object class="IBUIButton" id="707359228">
+								<reference key="NSNextResponder" ref="197392939"/>
+								<int key="NSvFlags">268</int>
+								<string key="NSFrame">{{15, 7}, {27, 43}}</string>
+								<reference key="NSSuperview" ref="197392939"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="145014210"/>
+								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<bool key="IBUIOpaque">NO</bool>
+								<int key="IBUIContentMode">4</int>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<int key="IBUIContentHorizontalAlignment">0</int>
+								<int key="IBUIContentVerticalAlignment">0</int>
+								<reference key="IBUIHighlightedTitleColor" ref="770142078"/>
+								<object class="NSColor" key="IBUINormalTitleColor" id="1009510366">
+									<int key="NSColorSpace">3</int>
+									<bytes key="NSWhite">MAA</bytes>
+								</object>
+								<reference key="IBUINormalTitleShadowColor" ref="224916528"/>
+								<object class="NSCustomResource" key="IBUINormalImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">icn-camera-flash.png</string>
+								</object>
+								<reference key="IBUIFontDescription" ref="684730106"/>
+								<reference key="IBUIFont" ref="406268077"/>
+							</object>
+							<object class="IBUIImageView" id="289771774">
+								<reference key="NSNextResponder" ref="197392939"/>
+								<int key="NSvFlags">256</int>
+								<string key="NSFrame">{{447, 11}, {64, 35}}</string>
+								<reference key="NSSuperview" ref="197392939"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="901133103"/>
+								<bool key="IBUIOpaque">NO</bool>
+								<bool key="IBUIClipsSubviews">YES</bool>
+								<bool key="IBUIMultipleTouchEnabled">YES</bool>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<object class="NSCustomResource" key="IBUIImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">btn-camera.png</string>
+								</object>
+							</object>
+							<object class="IBUIButton" id="806333866">
+								<reference key="NSNextResponder" ref="197392939"/>
+								<int key="NSvFlags">292</int>
+								<string key="NSFrame">{{443, 7}, {73, 44}}</string>
+								<reference key="NSSuperview" ref="197392939"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="289771774"/>
+								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<bool key="IBUIOpaque">NO</bool>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<int key="IBUIContentHorizontalAlignment">0</int>
+								<int key="IBUIContentVerticalAlignment">0</int>
+								<reference key="IBUIHighlightedTitleColor" ref="770142078"/>
+								<object class="NSColor" key="IBUINormalTitleColor">
+									<int key="NSColorSpace">1</int>
+									<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
+								</object>
+								<reference key="IBUINormalTitleShadowColor" ref="224916528"/>
+								<object class="NSCustomResource" key="IBUINormalImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">icn-camera-flip.png</string>
+								</object>
+								<reference key="IBUIFontDescription" ref="684730106"/>
+								<reference key="IBUIFont" ref="406268077"/>
+							</object>
+							<object class="IBUIButton" id="333876027">
+								<reference key="NSNextResponder" ref="197392939"/>
+								<int key="NSvFlags">292</int>
+								<string key="NSFrame">{{32, 11}, {46, 35}}</string>
+								<reference key="NSSuperview" ref="197392939"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="13357920"/>
+								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<bool key="IBUIOpaque">NO</bool>
+								<float key="IBUIAlpha">0.0</float>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<int key="IBUIContentHorizontalAlignment">0</int>
+								<int key="IBUIContentVerticalAlignment">0</int>
+								<string key="IBUINormalTitle">Auto</string>
+								<object class="NSColor" key="IBUIHighlightedTitleColor" id="845280393">
+									<int key="NSColorSpace">3</int>
+									<bytes key="NSWhite">MC4zMzMzMzMzMzMzAA</bytes>
+								</object>
+								<reference key="IBUINormalTitleColor" ref="1009510366"/>
+								<reference key="IBUINormalTitleShadowColor" ref="224916528"/>
+								<object class="IBUIFontDescription" key="IBUIFontDescription" id="756702617">
+									<string key="name">HelveticaNeue-Bold</string>
+									<string key="family">Helvetica Neue</string>
+									<int key="traits">2</int>
+									<double key="pointSize">15</double>
+								</object>
+								<object class="NSFont" key="IBUIFont" id="796873950">
+									<string key="NSName">HelveticaNeue-Bold</string>
+									<double key="NSSize">15</double>
+									<int key="NSfFlags">16</int>
+								</object>
+							</object>
+							<object class="IBUIButton" id="13357920">
+								<reference key="NSNextResponder" ref="197392939"/>
+								<int key="NSvFlags">292</int>
+								<string key="NSFrame">{{84, 17}, {39, 23}}</string>
+								<reference key="NSSuperview" ref="197392939"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="1047828686"/>
+								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<bool key="IBUIOpaque">NO</bool>
+								<float key="IBUIAlpha">0.0</float>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<int key="IBUIContentHorizontalAlignment">0</int>
+								<int key="IBUIContentVerticalAlignment">0</int>
+								<string key="IBUINormalTitle">On</string>
+								<reference key="IBUIHighlightedTitleColor" ref="845280393"/>
+								<reference key="IBUINormalTitleColor" ref="1009510366"/>
+								<reference key="IBUINormalTitleShadowColor" ref="224916528"/>
+								<reference key="IBUIFontDescription" ref="756702617"/>
+								<reference key="IBUIFont" ref="796873950"/>
+							</object>
+							<object class="IBUIButton" id="1047828686">
+								<reference key="NSNextResponder" ref="197392939"/>
+								<int key="NSvFlags">292</int>
+								<string key="NSFrame">{{125, 17}, {39, 23}}</string>
+								<reference key="NSSuperview" ref="197392939"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="806333866"/>
+								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<bool key="IBUIOpaque">NO</bool>
+								<float key="IBUIAlpha">0.0</float>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<int key="IBUIContentHorizontalAlignment">0</int>
+								<int key="IBUIContentVerticalAlignment">0</int>
+								<string key="IBUINormalTitle">Off</string>
+								<reference key="IBUIHighlightedTitleColor" ref="845280393"/>
+								<reference key="IBUINormalTitleColor" ref="1009510366"/>
+								<reference key="IBUIHighlightedTitleShadowColor" ref="845280393"/>
+								<reference key="IBUINormalTitleShadowColor" ref="224916528"/>
+								<reference key="IBUIFontDescription" ref="756702617"/>
+								<reference key="IBUIFont" ref="796873950"/>
+							</object>
+							<object class="IBUIButton" id="145014210">
+								<reference key="NSNextResponder" ref="197392939"/>
+								<int key="NSvFlags">292</int>
+								<string key="NSFrame">{{25, 6}, {62, 44}}</string>
+								<reference key="NSSuperview" ref="197392939"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="333876027"/>
+								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<bool key="IBUIOpaque">NO</bool>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<int key="IBUIContentHorizontalAlignment">0</int>
+								<int key="IBUIContentVerticalAlignment">0</int>
+								<string key="IBUINormalTitle">Auto</string>
+								<reference key="IBUIHighlightedTitleColor" ref="845280393"/>
+								<reference key="IBUINormalTitleColor" ref="1009510366"/>
+								<reference key="IBUINormalTitleShadowColor" ref="224916528"/>
+								<reference key="IBUIFontDescription" ref="684730106"/>
+								<reference key="IBUIFont" ref="406268077"/>
+							</object>
 						</object>
 						<string key="NSFrameSize">{568, 320}</string>
 						<reference key="NSSuperview" ref="774585933"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="225621510"/>
+						<reference key="NSNextKeyView" ref="111324481"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MCAwIDAAA</bytes>
@@ -347,6 +518,86 @@
 					<int key="connectionID">315</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">cameraToggleImageView</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="289771774"/>
+					</object>
+					<int key="connectionID">330</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">cameraToggleButton</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="806333866"/>
+					</object>
+					<int key="connectionID">331</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">closeButton</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="903835811"/>
+					</object>
+					<int key="connectionID">332</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">flashButton</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="707359228"/>
+					</object>
+					<int key="connectionID">334</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">flashImageView</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="111324481"/>
+					</object>
+					<int key="connectionID">335</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">closeImageView</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="309942975"/>
+					</object>
+					<int key="connectionID">336</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">flashSelectAutoButton</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="333876027"/>
+					</object>
+					<int key="connectionID">346</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">flashSelectOffButton</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="1047828686"/>
+					</object>
+					<int key="connectionID">347</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">flashSelectOnButton</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="13357920"/>
+					</object>
+					<int key="connectionID">348</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">flashSelectedButton</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="145014210"/>
+					</object>
+					<int key="connectionID">352</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">toggleRecording:</string>
 						<reference key="source" ref="125315282"/>
@@ -358,11 +609,65 @@
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">closeButtonAction:</string>
-						<reference key="source" ref="254512034"/>
+						<reference key="source" ref="903835811"/>
 						<reference key="destination" ref="372490531"/>
 						<int key="IBEventType">7</int>
 					</object>
 					<int key="connectionID">321</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">toggleCamera:</string>
+						<reference key="source" ref="806333866"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">333</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">toggleFlashAction:</string>
+						<reference key="source" ref="707359228"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">342</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">toggleFlashAutoAction:</string>
+						<reference key="source" ref="333876027"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">349</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">toggleFlashOnAction:</string>
+						<reference key="source" ref="13357920"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">345</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">toggleFlashOffAction:</string>
+						<reference key="source" ref="1047828686"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">344</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">toggleFlashAction:</string>
+						<reference key="source" ref="145014210"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">351</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -403,13 +708,21 @@
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="125315282"/>
-							<reference ref="99622745"/>
-							<reference ref="79535362"/>
-							<reference ref="857807104"/>
-							<reference ref="254512034"/>
+							<reference ref="1047800366"/>
+							<reference ref="429542498"/>
+							<reference ref="309942975"/>
+							<reference ref="903835811"/>
 							<reference ref="826718554"/>
-							<reference ref="225621510"/>
+							<reference ref="901133103"/>
 							<reference ref="720283587"/>
+							<reference ref="111324481"/>
+							<reference ref="289771774"/>
+							<reference ref="707359228"/>
+							<reference ref="806333866"/>
+							<reference ref="333876027"/>
+							<reference ref="1047828686"/>
+							<reference ref="145014210"/>
+							<reference ref="13357920"/>
 						</object>
 						<reference key="parent" ref="774585933"/>
 					</object>
@@ -436,27 +749,67 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">316</int>
-						<reference key="object" ref="225621510"/>
+						<reference key="object" ref="901133103"/>
 						<reference key="parent" ref="197392939"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">317</int>
-						<reference key="object" ref="99622745"/>
+						<reference key="object" ref="1047800366"/>
 						<reference key="parent" ref="197392939"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">318</int>
-						<reference key="object" ref="79535362"/>
+						<reference key="object" ref="429542498"/>
 						<reference key="parent" ref="197392939"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">319</int>
-						<reference key="object" ref="857807104"/>
+						<reference key="object" ref="309942975"/>
 						<reference key="parent" ref="197392939"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">320</int>
-						<reference key="object" ref="254512034"/>
+						<reference key="object" ref="903835811"/>
+						<reference key="parent" ref="197392939"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">324</int>
+						<reference key="object" ref="111324481"/>
+						<reference key="parent" ref="197392939"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">325</int>
+						<reference key="object" ref="289771774"/>
+						<reference key="parent" ref="197392939"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">327</int>
+						<reference key="object" ref="806333866"/>
+						<reference key="parent" ref="197392939"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">328</int>
+						<reference key="object" ref="707359228"/>
+						<reference key="parent" ref="197392939"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">339</int>
+						<reference key="object" ref="333876027"/>
+						<reference key="parent" ref="197392939"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">340</int>
+						<reference key="object" ref="13357920"/>
+						<reference key="parent" ref="197392939"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">341</int>
+						<reference key="object" ref="1047828686"/>
+						<reference key="parent" ref="197392939"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">350</int>
+						<reference key="object" ref="145014210"/>
 						<reference key="parent" ref="197392939"/>
 					</object>
 				</object>
@@ -479,6 +832,18 @@
 					<string>318.IBPluginDependency</string>
 					<string>319.IBPluginDependency</string>
 					<string>320.IBPluginDependency</string>
+					<string>324.IBPluginDependency</string>
+					<string>325.IBPluginDependency</string>
+					<string>327.IBPluginDependency</string>
+					<string>328.IBPluginDependency</string>
+					<string>339.IBPluginDependency</string>
+					<string>339.IBUIButtonInspectorSelectedStateConfigurationMetadataKey</string>
+					<string>340.IBPluginDependency</string>
+					<string>340.IBUIButtonInspectorSelectedStateConfigurationMetadataKey</string>
+					<string>341.IBPluginDependency</string>
+					<string>341.IBUIButtonInspectorSelectedStateConfigurationMetadataKey</string>
+					<string>350.IBPluginDependency</string>
+					<string>350.IBUIButtonInspectorSelectedStateConfigurationMetadataKey</string>
 					<string>46.IBPluginDependency</string>
 					<string>6.IBPluginDependency</string>
 				</object>
@@ -500,6 +865,18 @@
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<real value="1"/>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<real value="1"/>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<real value="1"/>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<real value="1"/>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="unlocalizedProperties">
@@ -514,7 +891,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">321</int>
+			<int key="maxID">352</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -528,10 +905,18 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>captureStillImage:</string>
 							<string>toggleCamera:</string>
+							<string>toggleFlashAction:</string>
+							<string>toggleFlashAutoAction:</string>
+							<string>toggleFlashOffAction:</string>
+							<string>toggleFlashOnAction:</string>
 							<string>toggleRecording:</string>
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -543,6 +928,10 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>captureStillImage:</string>
 							<string>toggleCamera:</string>
+							<string>toggleFlashAction:</string>
+							<string>toggleFlashAutoAction:</string>
+							<string>toggleFlashOffAction:</string>
+							<string>toggleFlashOnAction:</string>
 							<string>toggleRecording:</string>
 						</object>
 						<object class="NSArray" key="dict.values">
@@ -556,6 +945,22 @@
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
+								<string key="name">toggleFlashAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">toggleFlashAutoAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">toggleFlashOffAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">toggleFlashOnAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
 								<string key="name">toggleRecording:</string>
 								<string key="candidateClassName">id</string>
 							</object>
@@ -566,7 +971,15 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>cameraToggleButton</string>
+							<string>cameraToggleImageView</string>
 							<string>closeButton</string>
+							<string>closeImageView</string>
+							<string>flashButton</string>
+							<string>flashImageView</string>
+							<string>flashSelectAutoButton</string>
+							<string>flashSelectOffButton</string>
+							<string>flashSelectOnButton</string>
+							<string>flashSelectedButton</string>
 							<string>focusModeLabel</string>
 							<string>recordButton</string>
 							<string>recorderGlow</string>
@@ -577,6 +990,14 @@
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>UIButton</string>
+							<string>UIImageView</string>
+							<string>UIButton</string>
+							<string>UIImageView</string>
+							<string>UIButton</string>
+							<string>UIImageView</string>
+							<string>UIButton</string>
+							<string>UIButton</string>
 							<string>UIButton</string>
 							<string>UIButton</string>
 							<string>UILabel</string>
@@ -593,7 +1014,15 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>cameraToggleButton</string>
+							<string>cameraToggleImageView</string>
 							<string>closeButton</string>
+							<string>closeImageView</string>
+							<string>flashButton</string>
+							<string>flashImageView</string>
+							<string>flashSelectAutoButton</string>
+							<string>flashSelectOffButton</string>
+							<string>flashSelectOnButton</string>
+							<string>flashSelectedButton</string>
 							<string>focusModeLabel</string>
 							<string>recordButton</string>
 							<string>recorderGlow</string>
@@ -609,7 +1038,39 @@
 								<string key="candidateClassName">UIButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
+								<string key="name">cameraToggleImageView</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
 								<string key="name">closeButton</string>
+								<string key="candidateClassName">UIButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">closeImageView</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">flashButton</string>
+								<string key="candidateClassName">UIButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">flashImageView</string>
+								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">flashSelectAutoButton</string>
+								<string key="candidateClassName">UIButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">flashSelectOffButton</string>
+								<string key="candidateClassName">UIButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">flashSelectOnButton</string>
+								<string key="candidateClassName">UIButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">flashSelectedButton</string>
 								<string key="candidateClassName">UIButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
@@ -667,9 +1128,12 @@
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<string>bg-sharefooter-land.png</string>
 				<string>btn-camera-circle.png</string>
+				<string>btn-camera.png</string>
 				<string>camera-recordbutton-pressed.png</string>
 				<string>camera-recordbutton.png</string>
 				<string>icn-camera-close.png</string>
+				<string>icn-camera-flash.png</string>
+				<string>icn-camera-flip.png</string>
 				<string>icn-photo-switch.png</string>
 				<string>icn-video-switch.png</string>
 			</object>
@@ -677,9 +1141,12 @@
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<string>{79, 320}</string>
 				<string>{36, 35}</string>
+				<string>{45, 35}</string>
 				<string>{66, 65}</string>
 				<string>{65, 65}</string>
 				<string>{16, 16}</string>
+				<string>{14, 20}</string>
+				<string>{45, 22}</string>
 				<string>{16, 13}</string>
 				<string>{16, 11}</string>
 			</object>

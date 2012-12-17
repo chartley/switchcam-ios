@@ -200,6 +200,26 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
     // repeat the annimation forever
     self.recorderGlow.animationRepeatCount = 0;
     [self.recorderGlow startAnimating];
+    
+    AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    
+    // If no torch supported, hide controls for it
+    if ([device hasTorch] == NO)
+    {
+        self.flashButton.hidden = YES;
+        self.flashImageView.hidden = YES;
+    }
+    
+    // Set Button with resizable one
+    UIImage *cameraButtonImage = [[UIImage imageNamed:@"btn-camera"]
+                                  resizableImageWithCapInsets:UIEdgeInsetsMake(17, 22, 17, 22)];
+    self.cameraToggleImageView.image = cameraButtonImage;
+    
+    // Set Button with resizable one
+    UIImage *flashButtonImage = [[UIImage imageNamed:@"btn-camera-circle"]
+                                  resizableImageWithCapInsets:UIEdgeInsetsMake(17, 17, 17, 17)];
+    self.flashImageView.image = flashButtonImage;
+    
 		
     // The hud will dispable all input on the view (use the higest view possible in the view hierarchy)
 	HUD = [[MBProgressHUD alloc] initWithView:self.view];
@@ -240,6 +260,22 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
 
 - (NSUInteger)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskLandscapeRight;
+}
+
+#pragma mark - Helper Methods
+
+- (void)closeTorchDrawer {
+    // Shrink button & hide options
+    [UIView animateWithDuration:.4f
+                     animations:^{
+                         [self.flashImageView setFrame:CGRectMake(self.flashImageView.frame.origin.x, self.flashImageView.frame.origin.y, 81, self.flashImageView.frame.size.height)];
+                         [self.flashSelectAutoButton setAlpha:0.0];
+                         [self.flashSelectOnButton setAlpha:0.0];
+                         [self.flashSelectOffButton setAlpha:0.0];
+                         [self.flashSelectedButton setAlpha:1.0];
+                     }
+                     completion:^(BOOL finished){
+                     }];
 }
 
 #pragma mark IBActions Actions
@@ -303,6 +339,8 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
             NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
         }
         
+        self.recorderGlow.hidden = NO;
+        
         [[self captureManager] startRecording];
     } else {
         HUD.labelText = @"Saving";
@@ -351,7 +389,39 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
 }
 
 - (IBAction)closeButtonAction:(id)sender {
-    //TODO
+    [self dismissModalViewControllerAnimated:YES];
+}
+
+- (IBAction)toggleFlashAction:(id)sender {
+    // Grow button & show options
+    [UIView animateWithDuration:.4f
+                     animations:^{
+                         [self.flashImageView setFrame:CGRectMake(self.flashImageView.frame.origin.x, self.flashImageView.frame.origin.y, 160, self.flashImageView.frame.size.height)];
+                         [self.flashSelectAutoButton setAlpha:1.0];
+                         [self.flashSelectOnButton setAlpha:1.0];
+                         [self.flashSelectOffButton setAlpha:1.0];
+                         [self.flashSelectedButton setAlpha:0.0];
+                     }
+                     completion:^(BOOL finished){
+                     }];
+}
+
+- (IBAction)toggleFlashAutoAction:(id)sender {
+    [[self captureManager] setTorchMode:AVCaptureTorchModeAuto];
+    [self.flashSelectedButton setTitle:NSLocalizedString(@"Auto", @"") forState:UIControlStateNormal];
+    [self closeTorchDrawer];
+}
+
+- (IBAction)toggleFlashOnAction:(id)sender {
+    [[self captureManager] setTorchMode:AVCaptureTorchModeOn];
+    [self.flashSelectedButton setTitle:NSLocalizedString(@"On", @"") forState:UIControlStateNormal];
+    [self closeTorchDrawer];
+}
+
+- (IBAction)toggleFlashOffAction:(id)sender {
+    [[self captureManager] setTorchMode:AVCaptureTorchModeOff];
+    [self.flashSelectedButton setTitle:NSLocalizedString(@"Off", @"") forState:UIControlStateNormal];
+    [self closeTorchDrawer];
 }
 
 #pragma mark - Timer Methods

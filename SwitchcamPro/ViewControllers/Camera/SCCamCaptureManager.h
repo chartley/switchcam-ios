@@ -66,6 +66,7 @@
 @property (nonatomic,assign) id deviceDisconnectedObserver;
 @property (nonatomic,assign) UIBackgroundTaskIdentifier backgroundRecordingID;
 @property (nonatomic,assign) id <SCCamCaptureManagerDelegate> delegate;
+@property(nonatomic) AVCaptureTorchMode torchMode;
 
 - (BOOL) setupSession;
 - (void) startRecording;

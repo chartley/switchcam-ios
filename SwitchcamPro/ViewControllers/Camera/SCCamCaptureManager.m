@@ -354,8 +354,33 @@ bail:
     return success;
 }
 
+#pragma mark - Properties
 
-#pragma mark Device Counts
+- (AVCaptureTorchMode)torchMode {
+    return [[self backFacingCamera] torchMode];
+}
+
+- (void)setTorchMode:(AVCaptureTorchMode)torchMode {
+    // Set torch and flash mode to auto
+	if ([[self backFacingCamera] hasFlash]) {
+		if ([[self backFacingCamera] lockForConfiguration:nil]) {
+			if ([[self backFacingCamera] isFlashModeSupported:torchMode]) {
+				[[self backFacingCamera] setFlashMode:torchMode];
+			}
+			[[self backFacingCamera] unlockForConfiguration];
+		}
+	}
+	if ([[self backFacingCamera] hasTorch]) {
+		if ([[self backFacingCamera] lockForConfiguration:nil]) {
+			if ([[self backFacingCamera] isTorchModeSupported:torchMode]) {
+				[[self backFacingCamera] setTorchMode:torchMode];
+			}
+			[[self backFacingCamera] unlockForConfiguration];
+		}
+	}
+}
+
+#pragma mark - Device Counts
 - (NSUInteger) cameraCount
 {
     return [[AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo] count];
@@ -367,7 +392,7 @@ bail:
 }
 
 
-#pragma mark Camera Properties
+#pragma mark - Camera Properties
 // Perform an auto focus at the specified point. The focus mode will automatically change to locked once the auto focus is complete.
 - (void) autoFocusAtPoint:(CGPoint)point
 {
