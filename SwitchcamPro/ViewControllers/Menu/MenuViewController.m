@@ -12,9 +12,11 @@
 #import "FindEventsViewController.h"
 #import "SettingsViewController.h"
 #import "AboutViewController.h"
+#import "MenuPendingUploadDSD.h"
 
 @interface MenuViewController()
 @property (nonatomic, strong) NSArray *menuItems;
+@property (nonatomic, strong) MenuPendingUploadDSD *pendingDataSourceDelegate;
 @end
 
 @implementation MenuViewController
@@ -36,7 +38,19 @@
     
     [self.slidingViewController setAnchorRightRevealAmount:280.0f];
     self.slidingViewController.underLeftWidthLayout = ECFullWidth;
+    
+    self.pendingDataSourceDelegate = [[MenuPendingUploadDSD alloc] init];
+    [self.pendingDataSourceDelegate setMenuViewController:self];
+    [self.pendingUploadTableView setDataSource:self.pendingDataSourceDelegate];
+    [self.pendingUploadTableView setDelegate:self.pendingDataSourceDelegate];
 }
+
+- (void)viewWillAppear:(BOOL)animated {
+    [self.pendingUploadTableView reloadData];
+}
+
+
+#pragma mark - Menu TableView Data Source / Delegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)sectionIndex
 {

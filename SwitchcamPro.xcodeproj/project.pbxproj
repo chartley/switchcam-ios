@@ -114,6 +114,8 @@
 		C9856D27167E748400C5B708 /* Slide4View.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9856D1B167E748200C5B708 /* Slide4View.xib */; };
 		C9856D29167E748400C5B708 /* Slide5View.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9856D1E167E748200C5B708 /* Slide5View.xib */; };
 		C9856D2B167E748400C5B708 /* Slide6View.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9856D21167E748300C5B708 /* Slide6View.xib */; };
+		C9856D32167EB27900C5B708 /* MenuPendingUploadDSD.m in Sources */ = {isa = PBXBuildFile; fileRef = C9856D31167EB27900C5B708 /* MenuPendingUploadDSD.m */; };
+		C9856D34167F117A00C5B708 /* PendingUploadCellTop.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9856D33167F117A00C5B708 /* PendingUploadCellTop.xib */; };
 		C99E97E5167E40A6006B3BBC /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C99E97E3167E40A6006B3BBC /* Icon.png */; };
 		C99E97E6167E40A6006B3BBC /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C99E97E4167E40A6006B3BBC /* Icon@2x.png */; };
 		C99E97ED167E4494006B3BBC /* StatusBarToastAndProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = C99E97EC167E4494006B3BBC /* StatusBarToastAndProgressView.m */; };
@@ -530,6 +532,9 @@
 		C9856D1B167E748200C5B708 /* Slide4View.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Slide4View.xib; path = Views/Walkthrough/Slide4View.xib; sourceTree = "<group>"; };
 		C9856D1E167E748200C5B708 /* Slide5View.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Slide5View.xib; path = Views/Walkthrough/Slide5View.xib; sourceTree = "<group>"; };
 		C9856D21167E748300C5B708 /* Slide6View.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Slide6View.xib; path = Views/Walkthrough/Slide6View.xib; sourceTree = "<group>"; };
+		C9856D30167EB27900C5B708 /* MenuPendingUploadDSD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuPendingUploadDSD.h; path = ViewControllers/Menu/MenuPendingUploadDSD.h; sourceTree = "<group>"; };
+		C9856D31167EB27900C5B708 /* MenuPendingUploadDSD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MenuPendingUploadDSD.m; path = ViewControllers/Menu/MenuPendingUploadDSD.m; sourceTree = "<group>"; };
+		C9856D33167F117A00C5B708 /* PendingUploadCellTop.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PendingUploadCellTop.xib; path = TableViewCells/PendingUploads/PendingUploadCellTop.xib; sourceTree = "<group>"; };
 		C99E97E3167E40A6006B3BBC /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		C99E97E4167E40A6006B3BBC /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		C99E97EB167E4494006B3BBC /* StatusBarToastAndProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StatusBarToastAndProgressView.h; path = Views/StatusBarToastAndProgressView.h; sourceTree = "<group>"; };
@@ -1132,6 +1137,8 @@
 				C97B1387166DDBE9005BB65F /* MenuViewController.h */,
 				C97B1388166DDBE9005BB65F /* MenuViewController.m */,
 				C97B1389166DDBE9005BB65F /* MenuViewController.xib */,
+				C9856D30167EB27900C5B708 /* MenuPendingUploadDSD.h */,
+				C9856D31167EB27900C5B708 /* MenuPendingUploadDSD.m */,
 			);
 			name = Menu;
 			sourceTree = "<group>";
@@ -1159,6 +1166,7 @@
 		C97BFF2D166D94FD005BB65F /* TableViewCells */ = {
 			isa = PBXGroup;
 			children = (
+				C9856D2C167EB02300C5B708 /* Pending Uploads */,
 				C97B14AB16710E70005BB65F /* Activity */,
 				C97B1411166EFA5C005BB65F /* ButtonCell.h */,
 				C97B1412166EFA5C005BB65F /* ButtonCell.m */,
@@ -1183,6 +1191,7 @@
 				C97B146816703801005BB65F /* ProfileCell.xib */,
 				C97B19151673E5BB005BB65F /* PendingUploadCell.h */,
 				C97B19161673E5BC005BB65F /* PendingUploadCell.m */,
+				C9856D33167F117A00C5B708 /* PendingUploadCellTop.xib */,
 				C97B19181673E5D0005BB65F /* PendingUploadCell.xib */,
 				C9E9B6B116741D0E00487A72 /* LabelTextFieldCell.h */,
 				C9E9B6B216741D0E00487A72 /* LabelTextFieldCell.m */,
@@ -1279,6 +1288,13 @@
 				C9856D21167E748300C5B708 /* Slide6View.xib */,
 			);
 			name = Walkthrough;
+			sourceTree = "<group>";
+		};
+		C9856D2C167EB02300C5B708 /* Pending Uploads */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Pending Uploads";
 			sourceTree = "<group>";
 		};
 		C9DDF1AA167D24CA000399EA /* Resources */ = {
@@ -1840,6 +1856,7 @@
 				C9856D27167E748400C5B708 /* Slide4View.xib in Resources */,
 				C9856D29167E748400C5B708 /* Slide5View.xib in Resources */,
 				C9856D2B167E748400C5B708 /* Slide6View.xib in Resources */,
+				C9856D34167F117A00C5B708 /* PendingUploadCellTop.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1921,6 +1938,7 @@
 				C9F4911A167D506700C75C6F /* UploadTextField.m in Sources */,
 				C99E97ED167E4494006B3BBC /* StatusBarToastAndProgressView.m in Sources */,
 				C9856D10167E734C00C5B708 /* SlideView.m in Sources */,
+				C9856D32167EB27900C5B708 /* MenuPendingUploadDSD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

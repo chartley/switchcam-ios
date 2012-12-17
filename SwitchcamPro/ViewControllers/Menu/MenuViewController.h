@@ -11,4 +11,6 @@
 
 @interface MenuViewController : UIViewController <UITableViewDataSource, UITabBarControllerDelegate>
 
+@property (strong, nonatomic) IBOutlet UITableView *pendingUploadTableView;
+
 @end
