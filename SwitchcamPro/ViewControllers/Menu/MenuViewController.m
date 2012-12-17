@@ -43,6 +43,7 @@
     [self.pendingDataSourceDelegate setMenuViewController:self];
     [self.pendingUploadTableView setDataSource:self.pendingDataSourceDelegate];
     [self.pendingUploadTableView setDelegate:self.pendingDataSourceDelegate];
+    [self.pendingUploadTableView setTableFooterView:[[UIView alloc] init]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

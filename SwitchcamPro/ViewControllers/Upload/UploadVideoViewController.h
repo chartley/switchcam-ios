@@ -17,5 +17,9 @@
 @property (strong, nonatomic) IBOutlet UILabel *lengthLabel;
 @property (strong, nonatomic) IBOutlet UILabel *sizeLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *videoThumbnailImageView;
+@property (strong, nonatomic) IBOutlet UIToolbar *headerToolbar;
+@property (strong, nonatomic) IBOutlet UILabel *headerToolbarLabel;
+
+- (IBAction)backButtonAction:(id)sender;
 
 @end

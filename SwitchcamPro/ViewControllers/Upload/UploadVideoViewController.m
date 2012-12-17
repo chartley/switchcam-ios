@@ -28,6 +28,8 @@
 @property (strong, nonatomic) NSTimer *compressProgressBarTimer;
 @property (strong, nonatomic) AVAssetExportSession *compressionSession;
 
+- (void)startUpload;
+
 @end
 
 @implementation UploadVideoViewController
@@ -50,14 +52,6 @@
     UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bgfull-fullapp"]];
     [self.view addSubview:backgroundImageView];
     [self.view sendSubviewToBack:backgroundImageView];
-
-    // Change back button to our custom one
-    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backButton setFrame:CGRectMake(0, 0, 30, 30)];
-    [backButton setImage:[UIImage imageNamed:@"btn-back"] forState:UIControlStateNormal];
-    [backButton addTarget:self action:@selector(backButtonAction) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-    [self.navigationItem setLeftBarButtonItem:backBarButtonItem];
     
     // Set title
     [self.navigationItem setTitle:NSLocalizedString(@"Upload Video", @"")];
@@ -77,6 +71,11 @@
     [self.sizeLabel setTextColor:RGBA(105, 105, 105, 1)];
     [self.sizeLabel setShadowColor:[UIColor blackColor]];
     [self.sizeLabel setShadowOffset:CGSizeMake(0, -1)];
+    
+    [self.headerToolbarLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:17]];
+    [self.headerToolbarLabel setTextColor:[UIColor whiteColor]];
+    [self.headerToolbarLabel setShadowColor:[UIColor blackColor]];
+    [self.headerToolbarLabel setShadowOffset:CGSizeMake(0, -1)];
     
     // Set Labels
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -113,6 +112,9 @@
     [self.videoThumbnailImageView.layer setShadowRadius:3.0];
     [self.videoThumbnailImageView.layer setShadowOffset:CGSizeMake(2.0, 2.0)];
     [self.videoThumbnailImageView.layer setMasksToBounds:YES];
+    
+    // Set Toolbar
+    [self.headerToolbar setBackgroundImage:[UIImage imageNamed:@"bg-appheader"] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
 }
 
 - (void)didReceiveMemoryWarning
@@ -132,17 +134,10 @@
     void (^createUserVideoFailureBlock)(AFHTTPRequestOperation *operation, NSError *error);
     
     createUserVideoSuccessBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
-        // Create Key
-        NSString *videoKey = [NSString stringWithFormat:@"%@-%@", [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookIdKey] , [SPSerializable formattedStringFromDate: self.recordingToUpload.recordStart]];
+        // Start Upload in background
+        [self performSelectorInBackground:@selector(startUpload) withObject:nil];
         
-        NSError *error;
-        // Get Data
-        NSData *uploadData = [[NSData alloc] initWithContentsOfFile:[self.recordingToUpload compressedVideoURL] options:NSDataReadingMapped error:&error];
-        
-        
-        // Start Upload
-        SCS3Uploader *uploader = [[SCS3Uploader alloc] init];
-        [uploader uploadVideo:uploadData withKey:videoKey];
+        [self dismissModalViewControllerAnimated:YES];
     };
     
     createUserVideoFailureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -196,11 +191,23 @@
     [self startVideoCompressionWithSuccessHandler:compressionSuccessBlock failureHandler:compressionFailureBlock];
 }
 
-- (void)backButtonAction {
-    [self.navigationController popViewControllerAnimated:YES];
+- (IBAction)backButtonAction:(id)sender {
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 #pragma mark - Helper Methods
+
+- (void)startUpload {
+    // Create Key
+    NSString *videoKey = [NSString stringWithFormat:@"%@-%@", [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookIdKey] , [SPSerializable formattedStringFromDate: self.recordingToUpload.recordStart]];
+    
+    NSError *error;
+    // Get Data
+    NSData *uploadData = [[NSData alloc] initWithContentsOfFile:[self.recordingToUpload compressedVideoURL] options:NSDataReadingMapped error:&error];
+    
+    SCS3Uploader *uploader = [[SCS3Uploader alloc] init];
+    [uploader uploadVideo:uploadData withKey:videoKey];
+}
 
 - (void)startVideoCompressionWithSuccessHandler:(void (^)())successHandler failureHandler:(void (^)(NSError *))failureHandler  {
     NSString *outputURLString = [self.recordingToUpload compressedVideoURL];
@@ -410,19 +417,21 @@
 #pragma mark - NSTimer Methods
 
 - (void) updateCompressDisplay {
-    // Update progress bar
-    self.compressProgressView.progress = self.compressionSession.progress;
-    
-    // Update label
-    NSString *progressString = [NSString stringWithFormat:NSLocalizedString(@"Processing Video - %f%", @""), (self.compressionSession.progress * 100)];
-    [self.compressProgressLabel setText:progressString];
+    [self performSelectorOnMainThread:@selector(updateCompressBarAndLabel) withObject:nil waitUntilDone:NO];
     
     // Kill timer if we are finished
     if (self.compressProgressView.progress > .99) {
         [self.compressProgressBarTimer invalidate];
     }
+}
+
+- (void)updateCompressBarAndLabel {
+    // Update progress bar
+    self.compressProgressView.progress = self.compressionSession.progress;
     
-    
+    // Update label
+    NSString *progressString = [NSString stringWithFormat:NSLocalizedString(@"Processing Video - %d%%", @""), (self.compressionSession.progress * 100)];
+    [self.compressProgressLabel setText:progressString];
 }
 
 @end

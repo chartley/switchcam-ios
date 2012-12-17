@@ -336,12 +336,6 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
         timerCount = 0;
         videoLengthTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(increaseAndDisplayTime) userInfo:nil repeats:YES];
         
-        [context processPendingChanges];
-        NSError *error = nil;
-        if (![context save:&error]) {
-            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
-        }
-        
         self.recorderGlow.hidden = NO;
         
         [[self captureManager] startRecording];
@@ -354,13 +348,6 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
         
         // Stop recording
         [[[self captureManager] currentRecording] setRecordEnd:[NSDate date]];
-        
-        NSManagedObjectContext *context = [RKManagedObjectStore defaultStore].persistentStoreManagedObjectContext;
-        [context processPendingChanges];
-        NSError *error = nil;
-        if (![context save:&error]) {
-            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
-        }
         
         // Stop glow
         self.recorderGlow.hidden = YES;
@@ -594,6 +581,14 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
         [[self recordButton] setEnabled:YES];
         
         [HUD hide:YES];
+        
+        // Save
+        NSManagedObjectContext *context = [RKManagedObjectStore defaultStore].persistentStoreManagedObjectContext;
+        [context processPendingChanges];
+        NSError *error = nil;
+        if (![context save:&error]) {
+            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+        }
     });
 }
 

@@ -8,6 +8,7 @@
 
 #import <RestKit/RestKit.h>
 #import <RestKit/CoreData.h>
+#import "UploadVideoViewController.h"
 #import "MenuPendingUploadDSD.h"
 #import "Recording.h"
 #import "MenuViewController.h"
@@ -171,6 +172,14 @@
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
     
     Recording *recording = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    // Upload
+    UploadVideoViewController *viewController = [[UploadVideoViewController alloc] init];
+    [viewController setRecordingToUpload:recording];
+    [self.menuViewController presentModalViewController:viewController animated:YES];
+    
+    // Reset Top view
+    [self.menuViewController.slidingViewController resetTopView];
 }
 
 - (void)deleteButtonPressed:(PendingUploadCell*)pendingUploadCell {

@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C90847A3167FDD7300DEF94E /* camswitch-off.png in Resources */ = {isa = PBXBuildFile; fileRef = C9084799167FDD7300DEF94E /* camswitch-off.png */; };
+		C90847A4167FDD7300DEF94E /* camswitch-off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C908479A167FDD7300DEF94E /* camswitch-off@2x.png */; };
+		C90847A5167FDD7300DEF94E /* camswitch-on.png in Resources */ = {isa = PBXBuildFile; fileRef = C908479B167FDD7300DEF94E /* camswitch-on.png */; };
+		C90847A6167FDD7300DEF94E /* camswitch-on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C908479C167FDD7300DEF94E /* camswitch-on@2x.png */; };
+		C90847A7167FDD7300DEF94E /* icn-delete-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = C908479D167FDD7300DEF94E /* icn-delete-pressed.png */; };
+		C90847A8167FDD7300DEF94E /* icn-delete-pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C908479E167FDD7300DEF94E /* icn-delete-pressed@2x.png */; };
+		C90847A9167FDD7300DEF94E /* icn-preview-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = C908479F167FDD7300DEF94E /* icn-preview-pressed.png */; };
+		C90847AA167FDD7300DEF94E /* icn-preview-pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C90847A0167FDD7300DEF94E /* icn-preview-pressed@2x.png */; };
+		C90847AB167FDD7300DEF94E /* icn-upload-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = C90847A1167FDD7300DEF94E /* icn-upload-pressed.png */; };
+		C90847AC167FDD7300DEF94E /* icn-upload-pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C90847A2167FDD7300DEF94E /* icn-upload-pressed@2x.png */; };
 		C97B0CB2166DBDC3005BB65F /* libUAirship-1.3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C97BFFC2166DBDC0005BB65F /* libUAirship-1.3.3.a */; };
 		C97B132F166DBFA8005BB65F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97B132E166DBFA8005BB65F /* SystemConfiguration.framework */; };
 		C97B1331166DBFB8005BB65F /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97B1330166DBFB8005BB65F /* CFNetwork.framework */; };
@@ -350,6 +360,16 @@
 
 /* Begin PBXFileReference section */
 		A19C79BD691C4B088E80A4B3 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		C9084799167FDD7300DEF94E /* camswitch-off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camswitch-off.png"; sourceTree = "<group>"; };
+		C908479A167FDD7300DEF94E /* camswitch-off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camswitch-off@2x.png"; sourceTree = "<group>"; };
+		C908479B167FDD7300DEF94E /* camswitch-on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camswitch-on.png"; sourceTree = "<group>"; };
+		C908479C167FDD7300DEF94E /* camswitch-on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camswitch-on@2x.png"; sourceTree = "<group>"; };
+		C908479D167FDD7300DEF94E /* icn-delete-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icn-delete-pressed.png"; sourceTree = "<group>"; };
+		C908479E167FDD7300DEF94E /* icn-delete-pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icn-delete-pressed@2x.png"; sourceTree = "<group>"; };
+		C908479F167FDD7300DEF94E /* icn-preview-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icn-preview-pressed.png"; sourceTree = "<group>"; };
+		C90847A0167FDD7300DEF94E /* icn-preview-pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icn-preview-pressed@2x.png"; sourceTree = "<group>"; };
+		C90847A1167FDD7300DEF94E /* icn-upload-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icn-upload-pressed.png"; sourceTree = "<group>"; };
+		C90847A2167FDD7300DEF94E /* icn-upload-pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icn-upload-pressed@2x.png"; sourceTree = "<group>"; };
 		C97B132E166DBFA8005BB65F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		C97B1330166DBFB8005BB65F /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		C97B1332166DBFC5005BB65F /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -1308,6 +1328,16 @@
 		C9DDF1AB167D24DD000399EA /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				C9084799167FDD7300DEF94E /* camswitch-off.png */,
+				C908479A167FDD7300DEF94E /* camswitch-off@2x.png */,
+				C908479B167FDD7300DEF94E /* camswitch-on.png */,
+				C908479C167FDD7300DEF94E /* camswitch-on@2x.png */,
+				C908479D167FDD7300DEF94E /* icn-delete-pressed.png */,
+				C908479E167FDD7300DEF94E /* icn-delete-pressed@2x.png */,
+				C908479F167FDD7300DEF94E /* icn-preview-pressed.png */,
+				C90847A0167FDD7300DEF94E /* icn-preview-pressed@2x.png */,
+				C90847A1167FDD7300DEF94E /* icn-upload-pressed.png */,
+				C90847A2167FDD7300DEF94E /* icn-upload-pressed@2x.png */,
 				C9DDF1AC167D24DD000399EA /* arrow-comments.png */,
 				C9DDF1AD167D24DD000399EA /* arrow-comments@2x.png */,
 				C9DDF1AE167D24DD000399EA /* bg-alert-orange.png */,
@@ -1857,6 +1887,16 @@
 				C9856D29167E748400C5B708 /* Slide5View.xib in Resources */,
 				C9856D2B167E748400C5B708 /* Slide6View.xib in Resources */,
 				C9856D34167F117A00C5B708 /* PendingUploadCellTop.xib in Resources */,
+				C90847A3167FDD7300DEF94E /* camswitch-off.png in Resources */,
+				C90847A4167FDD7300DEF94E /* camswitch-off@2x.png in Resources */,
+				C90847A5167FDD7300DEF94E /* camswitch-on.png in Resources */,
+				C90847A6167FDD7300DEF94E /* camswitch-on@2x.png in Resources */,
+				C90847A7167FDD7300DEF94E /* icn-delete-pressed.png in Resources */,
+				C90847A8167FDD7300DEF94E /* icn-delete-pressed@2x.png in Resources */,
+				C90847A9167FDD7300DEF94E /* icn-preview-pressed.png in Resources */,
+				C90847AA167FDD7300DEF94E /* icn-preview-pressed@2x.png in Resources */,
+				C90847AB167FDD7300DEF94E /* icn-upload-pressed.png in Resources */,
+				C90847AC167FDD7300DEF94E /* icn-upload-pressed@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

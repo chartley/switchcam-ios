@@ -448,6 +448,7 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     [[UINavigationBar appearance] setTitleTextAttributes:titleBarAttributes];
     
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"bg-appheader"] forBarMetrics:UIBarMetricsDefault];
+    [[UIToolbar appearance] setBackgroundImage:[UIImage imageNamed:@"bg-appheader"] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
 }
 
 #pragma mark - Status Bar Overlay
