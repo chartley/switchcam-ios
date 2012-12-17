@@ -293,12 +293,13 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
     
     if (![[[self captureManager] recorder] isRecording]) {
         // Start collecting data of our new video
-        NSManagedObjectContext *context = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
+        NSManagedObjectContext *context = [RKManagedObjectStore defaultStore].persistentStoreManagedObjectContext;
         Recording *currentRecording = [NSEntityDescription
                                           insertNewObjectForEntityForName:@"Recording"
                                           inManagedObjectContext:context];
         
         [currentRecording setRecordStart:[NSDate date]];
+        [currentRecording setIsUploaded:[NSNumber numberWithBool:NO]];
         
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd-HH-mm-ss"];
@@ -335,6 +336,7 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
         timerCount = 0;
         videoLengthTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(increaseAndDisplayTime) userInfo:nil repeats:YES];
         
+        [context processPendingChanges];
         NSError *error = nil;
         if (![context save:&error]) {
             NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
@@ -353,7 +355,8 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
         // Stop recording
         [[[self captureManager] currentRecording] setRecordEnd:[NSDate date]];
         
-        NSManagedObjectContext *context = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
+        NSManagedObjectContext *context = [RKManagedObjectStore defaultStore].persistentStoreManagedObjectContext;
+        [context processPendingChanges];
         NSError *error = nil;
         if (![context save:&error]) {
             NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
