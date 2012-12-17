@@ -178,6 +178,27 @@ enum { kTagTabBase = 100 };
     
     [self _makeTabViewCurrent:[self.tabsContainerView.tabViews objectAtIndex:0]];
     
+    // Add Menu button
+    UIButton *menuButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [menuButton setFrame:CGRectMake(0, 0, 30, 30)];
+    
+    [menuButton setImage:[UIImage imageNamed:@"btn-sidemenu"] forState:UIControlStateNormal];
+    [menuButton addTarget:self action:@selector(menuButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *menuBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:menuButton];
+    [self.navigationItem setLeftBarButtonItem:menuBarButtonItem];
+    [self.navigationItem setHidesBackButton:YES];
+    
+    // Set Font / Color
+    [self.shareNoteLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:12]];
+    [self.shareNoteLabel setTextColor:[UIColor whiteColor]];
+    [self.shareNoteLabel setShadowColor:[UIColor blackColor]];
+    [self.shareNoteLabel setShadowOffset:CGSizeMake(0, -1)];
+    
+    [self.sharePhotoLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:12]];
+    [self.sharePhotoLabel setTextColor:[UIColor whiteColor]];
+    [self.sharePhotoLabel setShadowColor:[UIColor blackColor]];
+    [self.sharePhotoLabel setShadowOffset:CGSizeMake(0, -1)];
+    
     // Adjust drawer toolbar to be set to the correct origin depending on screen size
     [self.toolbarDrawer setFrame:CGRectMake(0, self.view.frame.size.height - self.toolbarDrawer.frame.size.height, self.toolbarDrawer.frame.size.width, self.toolbarDrawer.frame.size.height)];
     [self.view bringSubviewToFront:self.toolbarDrawer];
@@ -208,18 +229,14 @@ enum { kTagTabBase = 100 };
 }
 
 - (IBAction)photoButtonAction:(id)sender {
-    [self.slidingViewController anchorTopViewTo:ECRight];
 }
 
 - (IBAction)recordButtonAction:(id)sender {
     SCCamViewController *viewController = [[SCCamViewController alloc] init];
-    //UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
-    //[navController setNavigationBarHidden:YES];
     [self presentModalViewController:viewController animated:YES];
 }
 
 - (IBAction)noteButtonAction:(id)sender {
-    [self.slidingViewController anchorTopViewTo:ECRight];
 }
 
 -(IBAction)chooseFromLibrary:(id)sender {

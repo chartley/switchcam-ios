@@ -26,6 +26,10 @@
 @property (nonatomic, retain) SPTabStyle *style;
 @property (strong, nonatomic) Event *event;
 @property (strong, nonatomic) IBOutlet UIView *toolbarDrawer;
+@property (strong, nonatomic) IBOutlet UIButton *sharePhotoButton;
+@property (strong, nonatomic) IBOutlet UILabel *sharePhotoLabel;
+@property (strong, nonatomic) IBOutlet UIButton *shareNoteButton;
+@property (strong, nonatomic) IBOutlet UILabel *shareNoteLabel;
 
 - (id)initWithViewControllers:(NSArray *)viewControllers
                         style:(SPTabStyle *)style;
