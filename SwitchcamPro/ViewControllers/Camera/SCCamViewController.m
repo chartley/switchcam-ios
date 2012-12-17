@@ -335,7 +335,7 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
         timerCount = 0;
         videoLengthTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(increaseAndDisplayTime) userInfo:nil repeats:YES];
         
-        NSError *error;
+        NSError *error = nil;
         if (![context save:&error]) {
             NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
         }
@@ -354,7 +354,7 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
         [[[self captureManager] currentRecording] setRecordEnd:[NSDate date]];
         
         NSManagedObjectContext *context = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
-        NSError *error;
+        NSError *error = nil;
         if (![context save:&error]) {
             NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
         }
