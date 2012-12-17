@@ -222,23 +222,4 @@
     [self getMyEvents];
 }
 
-- (void)stateChanged:(NSNotification*)notification {
-    FBSession *session = (FBSession *) [notification object];
-    
-    switch (session.state) {
-        case FBSessionStateOpen: {
-            [self getMyEvents];
-        }
-            break;
-        case FBSessionStateClosed: {
-        }
-            break;
-        case FBSessionStateClosedLoginFailed: {
-        }
-            break;
-        default:
-            break;
-    }
-}
-
 @end
