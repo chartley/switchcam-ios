@@ -41,10 +41,6 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     // Initialize Push
     //[self initAirship:launchOptions];
     
-    // Initialize Toast and Progress
-    //TODO find the right place for this, since statusbar will get us rejected, disabled for now
-    //[self initalizeStatusBarToastAndProgressView];
-    
     // Initialize Custom Navigation Bar
     [self initializeNavigationBarAppearance];
     
@@ -75,6 +71,9 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     self.window.rootViewController = self.slidingViewController;
 
     [self.window makeKeyAndVisible];
+    
+    // Initialize Toast and Progress
+    [self initalizeStatusBarToastAndProgressView];
     
     // See if we have a valid token for the current state.
     if (![self openReadSessionWithAllowLoginUI:NO]) {
@@ -454,14 +453,16 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
 #pragma mark - Status Bar Overlay
 
 - (void)initalizeStatusBarToastAndProgressView {
+    CGRect statusBarFrame = [UIApplication sharedApplication].statusBarFrame;
+    
     // Create View
-    self.statusBarToastAndProgressView = [[StatusBarToastAndProgressView alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
-    [self.window addSubview:self.statusBarToastAndProgressView];
+    self.statusBarToastAndProgressView = [[StatusBarToastAndProgressView alloc] initWithFrame:statusBarFrame];
+    [self.statusBarToastAndProgressView makeKeyAndVisible];
     
     // Setup listeners
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadStarted) name:kSCS3UploadStartedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadCompleted) name:kSCS3UploadCompletedNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadStarted) name:kSCS3UploadPercentCompleteNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadProgress:) name:kSCS3UploadPercentCompleteNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadFailed) name:kSCS3UploadFailedNotification object:nil];
 }
 

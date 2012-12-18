@@ -35,7 +35,7 @@
         
         S3PutObjectRequest *por = [[[S3PutObjectRequest alloc] initWithKey:key inBucket:bucket] autorelease];
         NSInputStream *stream = [NSInputStream inputStreamWithData:dataToUpload];
-        por.contentType = @"video/quicktime";
+        por.contentType = @"video/mp4";
         por.contentLength = [dataToUpload length];
         por.stream = stream;
         
@@ -71,7 +71,7 @@ const int PART_SIZE = (5 * 1024 * 1024); // 5MB is the smallest part size allowe
             S3UploadPartRequest *upReq = [[S3UploadPartRequest alloc] initWithMultipartUpload:upload];
             upReq.partNumber = ( part + 1 );
             upReq.contentLength = [dataForPart length];
-            upReq.contentType = @"video/quicktime";
+            upReq.contentType = @"video/mp4";
             upReq.stream = stream;
             
             S3UploadPartResponse *response = [s3 uploadPart:upReq];
@@ -114,7 +114,7 @@ const int PART_SIZE = (5 * 1024 * 1024); // 5MB is the smallest part size allowe
     //[AmazonLogger verboseLogging];
     
     NSNumber *percentComplete = [NSNumber numberWithFloat:0.4 * 100];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kSCS3UploadPercentCompleteNotification object:percentComplete];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSCS3UploadStartedNotification object:percentComplete];
     
     if ([self countParts:videoData] == 1) {
         AmazonS3Client *s3 = [[[AmazonS3Client alloc] initWithAccessKey:kAWS_ACCESS_KEY_ID withSecretKey:kAWS_SECRET_KEY] autorelease];
@@ -126,8 +126,11 @@ const int PART_SIZE = (5 * 1024 * 1024); // 5MB is the smallest part size allowe
             
             // Upload image data.  Remember to set the content type.
             S3PutObjectRequest *por = [[[S3PutObjectRequest alloc] initWithKey:videoKey inBucket:self.bucketName] autorelease];
-            por.contentType = @"video/quicktime";
+            por.contentType = @"video/mp4";
             por.data        = videoData;
+            
+            // Show some percent complete
+            [[NSNotificationCenter defaultCenter] postNotificationName:kSCS3UploadPercentCompleteNotification object:percentComplete];
             
             // Put the image data into the specified s3 bucket and object.
             [s3 putObject:por];
@@ -166,7 +169,7 @@ const int PART_SIZE = (5 * 1024 * 1024); // 5MB is the smallest part size allowe
                 S3UploadPartRequest *upReq = [[S3UploadPartRequest alloc] initWithMultipartUpload:upload];
                 upReq.partNumber = ( part + 1 );
                 upReq.contentLength = [dataForPart length];
-                upReq.contentType = @"video/quicktime";
+                upReq.contentType = @"video/mp4";
                 upReq.stream = stream;
                 
                 S3UploadPartResponse *response = [s3 uploadPart:upReq];

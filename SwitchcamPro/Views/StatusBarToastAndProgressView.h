@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface StatusBarToastAndProgressView : UIView
+@interface StatusBarToastAndProgressView : UIWindow
 
 - (void)showProgressView;
 - (void)updateProgressLabelWithAmount:(float)progress;
