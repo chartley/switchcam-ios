@@ -125,7 +125,7 @@
     float progress = [progressNumber floatValue];
     [self.statusBarProgressView setProgress:(progress/100)];
     
-    NSString *progressString = [NSString stringWithFormat:NSLocalizedString(@"%@%% Uploaded", @""), [progressNumber stringValue]];
+    NSString *progressString = [NSString stringWithFormat:NSLocalizedString(@"%d%% Uploaded", @""), [progressNumber intValue]];
     [self.statusBarProgressLabel setText:progressString];
 }
 

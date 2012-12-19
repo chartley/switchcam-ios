@@ -6,12 +6,17 @@
 //  Copyright (c) 2012 William Ketterer. All rights reserved.
 //
 
-#import <AWSiOSSDK/S3/AmazonS3Client.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "SCS3Uploader.h"
 #import "Reachability.h"
 #import "SPConstants.h"
 #import "SCBucketNameGenerator.h"
+
+@interface SCS3Uploader () {
+    BOOL        _doneUploadingToS3;
+}
+
+@end
 
 @implementation SCS3Uploader
 
@@ -110,17 +115,14 @@ const int PART_SIZE = (5 * 1024 * 1024); // 5MB is the smallest part size allowe
 
 - (void)uploadVideo:(NSData*)videoData withKey:(NSString*)videoKey;
 {
-    
     //[AmazonLogger verboseLogging];
-    
-    NSNumber *percentComplete = [NSNumber numberWithFloat:0.4 * 100];
+    NSNumber *percentComplete = [NSNumber numberWithFloat:0];
     [[NSNotificationCenter defaultCenter] postNotificationName:kSCS3UploadStartedNotification object:percentComplete];
     
     if ([self countParts:videoData] == 1) {
+        _doneUploadingToS3 = NO;
         AmazonS3Client *s3 = [[[AmazonS3Client alloc] initWithAccessKey:kAWS_ACCESS_KEY_ID withSecretKey:kAWS_SECRET_KEY] autorelease];
         @try {
-            
-            
             // Create the picture bucket.
             [s3 createBucket:[[[S3CreateBucketRequest alloc] initWithName:self.bucketName] autorelease]];
             
@@ -128,21 +130,23 @@ const int PART_SIZE = (5 * 1024 * 1024); // 5MB is the smallest part size allowe
             S3PutObjectRequest *por = [[[S3PutObjectRequest alloc] initWithKey:videoKey inBucket:self.bucketName] autorelease];
             por.contentType = @"video/mp4";
             por.data        = videoData;
-            
-            // Show some percent complete
-            [[NSNotificationCenter defaultCenter] postNotificationName:kSCS3UploadPercentCompleteNotification object:percentComplete];
+            [por setDelegate:self];
             
             // Put the image data into the specified s3 bucket and object.
             [s3 putObject:por];
-            //     NSLog( @"single part Upload Completed"  );
-            [[NSNotificationCenter defaultCenter] postNotificationName:kSCS3UploadCompletedNotification object:nil];
+            
+            do {
+                [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+            } while (!_doneUploadingToS3);
+            
+            por.delegate = nil;
         }
         @catch (AmazonClientException *exception) {
             [[NSNotificationCenter defaultCenter] postNotificationName:kSCS3UploadFailedNotification object:nil];
             //  NSLog( @"single part Upload Failed"  );
             // TODO FIX ME
             //[Constants showAlertMessage:exception.message withTitle:@"Upload Error"];
-            
+            _doneUploadingToS3 = YES;
         }
     } else {
         
@@ -184,14 +188,33 @@ const int PART_SIZE = (5 * 1024 * 1024); // 5MB is the smallest part size allowe
             [[NSNotificationCenter defaultCenter] postNotificationName:kSCS3UploadFailedNotification object:nil];
         }
     }
-    // Initial the S3 Client.
-    
-    
 }
 
 -(BOOL)isWifiAvailable {
     Reachability *r = [Reachability reachabilityForLocalWiFi];
     return !( [r currentReachabilityStatus] == NotReachable); 
+}
+
+#pragma mark - AWS Delegate Methods
+
+-(void)request:(AmazonServiceRequest *)request didSendData:(NSInteger)bytesWritten
+totalBytesWritten:(NSInteger)totalBytesWritten
+totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
+    NSNumber *percentComplete = [NSNumber numberWithFloat:(float)(((float)totalBytesWritten) / ((float)totalBytesExpectedToWrite))  * 100.0];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSCS3UploadPercentCompleteNotification object:percentComplete];
+}
+
+-(void)request:(AmazonServiceRequest *)request didCompleteWithResponse:(AmazonServiceResponse *)response {
+    _doneUploadingToS3 = YES;
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSCS3UploadCompletedNotification object:nil];
+}
+
+-(void)request:(AmazonServiceRequest *)request didFailWithError:(NSError *)error {
+    _doneUploadingToS3 = YES;
+}
+
+-(void)request:(AmazonServiceRequest *)request didFailWithServiceException:(NSException *)exception {
+    _doneUploadingToS3 = YES;
 }
 
 @end

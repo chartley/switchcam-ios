@@ -17,6 +17,7 @@
 		C90847AA167FDD7300DEF94E /* icn-preview-pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C90847A0167FDD7300DEF94E /* icn-preview-pressed@2x.png */; };
 		C90847AB167FDD7300DEF94E /* icn-upload-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = C90847A1167FDD7300DEF94E /* icn-upload-pressed.png */; };
 		C90847AC167FDD7300DEF94E /* icn-upload-pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C90847A2167FDD7300DEF94E /* icn-upload-pressed@2x.png */; };
+		C90847CC16803C7700DEF94E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C90847CB16803C7700DEF94E /* QuartzCore.framework */; };
 		C97B0CB2166DBDC3005BB65F /* libUAirship-1.3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C97BFFC2166DBDC0005BB65F /* libUAirship-1.3.3.a */; };
 		C97B132F166DBFA8005BB65F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97B132E166DBFA8005BB65F /* SystemConfiguration.framework */; };
 		C97B1331166DBFB8005BB65F /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97B1330166DBFB8005BB65F /* CFNetwork.framework */; };
@@ -370,6 +371,7 @@
 		C90847A0167FDD7300DEF94E /* icn-preview-pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icn-preview-pressed@2x.png"; sourceTree = "<group>"; };
 		C90847A1167FDD7300DEF94E /* icn-upload-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icn-upload-pressed.png"; sourceTree = "<group>"; };
 		C90847A2167FDD7300DEF94E /* icn-upload-pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icn-upload-pressed@2x.png"; sourceTree = "<group>"; };
+		C90847CB16803C7700DEF94E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		C97B132E166DBFA8005BB65F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		C97B1330166DBFB8005BB65F /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		C97B1332166DBFC5005BB65F /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -804,6 +806,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C90847CC16803C7700DEF94E /* QuartzCore.framework in Frameworks */,
 				C9F49116167D43CE00C75C6F /* ImageIO.framework in Frameworks */,
 				C97B1946167405C8005BB65F /* CoreMedia.framework in Frameworks */,
 				C97B194416740596005BB65F /* MediaPlayer.framework in Frameworks */,
@@ -836,6 +839,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C90847BA1680355A00DEF94E /* Playback */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Playback;
+			sourceTree = "<group>";
+		};
 		C97B1342166DC118005BB65F /* AirshipLib */ = {
 			isa = PBXGroup;
 			children = (
@@ -1065,6 +1075,7 @@
 		C97BFEE5166D909D005BB65F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C90847CB16803C7700DEF94E /* QuartzCore.framework */,
 				C9F49115167D43CB00C75C6F /* ImageIO.framework */,
 				C97B1945167405C6005BB65F /* CoreMedia.framework */,
 				C97B194316740594005BB65F /* MediaPlayer.framework */,
@@ -1229,6 +1240,7 @@
 		C97BFF33166D9826005BB65F /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				C90847BA1680355A00DEF94E /* Playback */,
 				C9E9B6AB16741AEB00487A72 /* Upload */,
 				C97B19241673F4B2005BB65F /* Camera */,
 				C97B191A1673E638005BB65F /* Friends */,

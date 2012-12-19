@@ -7,13 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <AWSiOSSDK/S3/AmazonS3Client.h>
 
 #define kSCS3UploadStartedNotification @"SCS3UploadStartedNotification"
 #define kSCS3UploadPercentCompleteNotification @"SCS3UploadPercentCompleteNotification"
 #define kSCS3UploadCompletedNotification @"SCS3UploadCompletedNotification"
 #define kSCS3UploadFailedNotification @"SCS3UploadFailedNotification"
 
-@interface SCS3Uploader : NSObject
+@interface SCS3Uploader : NSObject <AmazonServiceRequestDelegate> 
 
 @property (nonatomic, strong) NSURL *uploadVideoURL; //the video;
 @property (nonatomic, strong) NSString *s3VideoURL; //the video;
