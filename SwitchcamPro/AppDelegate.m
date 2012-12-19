@@ -20,6 +20,7 @@
 #import "SPConstants.h"
 #import "StatusBarToastAndProgressView.h"
 #import "SCS3Uploader.h"
+#import "UIImage+H568.h"
 
 NSString *const SCSessionStateChangedNotification = @"com.switchcam.switchcampro:SCSessionStateChangedNotification";
 NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switchcampro:SCAPINetworkRequestCanStartNotification";
@@ -51,18 +52,6 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     [self initializeRestKit];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    
-    // Fade out splash screen
-    UIImageView *splashScreen = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Default.png"]];
-    [self.window addSubview:splashScreen];
-    [self.window makeKeyAndVisible];
-    
-    [UIView animateWithDuration:0.3 animations:^{splashScreen.alpha = 0.0;}
-                     completion:(void (^)(BOOL)) ^{
-                         [splashScreen removeFromSuperview];
-                         [[NSNotificationCenter defaultCenter] postNotificationName:kAppFadeInCompleteNotification object:nil];
-                     }
-     ];
     
     MyEventsViewController *myEventsViewController = [[MyEventsViewController alloc] initWithNibName:@"MyEventsViewController" bundle:nil];
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:myEventsViewController];
@@ -105,6 +94,18 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
          }];
     }
     
+    // Fade out splash screen
+    UIImageView *splashScreen = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Default"]];
+    [splashScreen setFrame:CGRectMake(splashScreen.frame.origin.x, 20, splashScreen.frame.size.width, splashScreen.frame.size.height)];
+    [self.window addSubview:splashScreen];
+    
+    [UIView animateWithDuration:1.0 animations:^{splashScreen.alpha = 0.0;}
+                     completion:(void (^)(BOOL)) ^{
+                         [splashScreen removeFromSuperview];
+                         [[NSNotificationCenter defaultCenter] postNotificationName:kAppFadeInCompleteNotification object:nil];
+                     }
+     ];
+    
     return YES;
 }
 
@@ -139,7 +140,12 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     // if the app is going away, we close the session object; this is a good idea because
     // things may be hanging off the session, that need releasing (completion block, etc.) and
     // other components in the app may be awaiting close notification in order to do cleanup
-    [FBSession.activeSession close];
+    
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:kSPStaySignedInKey]) {
+        [FBSession.activeSession closeAndClearTokenInformation];
+    } else {
+        [FBSession.activeSession close];
+    }
 }
 
 #pragma mark - Facebook

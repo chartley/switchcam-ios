@@ -19,6 +19,7 @@
 @interface CompleteLoginViewController ()
 
 @property (strong, nonatomic) MBProgressHUD *loadingIndicator;
+@property (strong, nonatomic) UISwitch *staySignedInSwitch;
 
 @end
 
@@ -39,6 +40,16 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    // Add Back button
+    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [backButton setFrame:CGRectMake(0, 0, 30, 30)];
+    [backButton setImage:[UIImage imageNamed:@"btn-back"] forState:UIControlStateNormal];
+    [backButton addTarget:self action:@selector(backButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    [self.navigationItem setLeftBarButtonItem:backBarButtonItem];
+    [self.navigationItem setHidesBackButton:YES];
+    [self.navigationItem setTitle:NSLocalizedString(@"Complete sign up...", @"")];
 }
 
 - (void)didReceiveMemoryWarning
@@ -87,14 +98,15 @@
 
 - (IBAction)switchcamUserLogin:(id)sender {
     // Save switch setting
+    [[NSUserDefaults standardUserDefaults] setBool:self.staySignedInSwitch.isOn forKey:kSPStaySignedInKey];
     
     // Start App
     AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     [appDelegate successfulLoginViewControllerChange];
 }
 
-- (IBAction)valueChanged:(id)sender {
-    
+- (IBAction)backButtonAction:(id)sender {
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 #pragma mark - Helper Methods
@@ -119,8 +131,7 @@
         case 2:
         {
             LabelSwitchCell *labelSwitchCell = (LabelSwitchCell *)cell;
-            labelSwitchCell.staySignedInSwitch = labelSwitchCell.staySignedInSwitch;
-            [labelSwitchCell.staySignedInSwitch addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
+            self.staySignedInSwitch = labelSwitchCell.staySignedInSwitch;
             break;
         }
         case 3:
@@ -196,6 +207,20 @@
             {
                 NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"ButtonCell" owner:self options:nil];
                 cell = [nibArray objectAtIndex:0];
+                // Set Button Image
+                UIImage *buttonImage = [[UIImage imageNamed:@"btn-orange-lg"]
+                                        resizableImageWithCapInsets:UIEdgeInsetsMake(20, 15, 20, 15)];
+                UIImage *buttonImageHighlight = [[UIImage imageNamed:@"btn-orange-lg-pressed"]
+                                                 resizableImageWithCapInsets:UIEdgeInsetsMake(20, 15, 20, 15)];
+                // Set the background for any states you plan to use
+                [((ButtonCell*)cell).bigButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
+                [((ButtonCell*)cell).bigButton setBackgroundImage:buttonImageHighlight forState:UIControlStateHighlighted];
+                
+                // Set Font / Color
+                [((ButtonCell*)cell).bigButton.titleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:17]];
+                [((ButtonCell*)cell).bigButton.titleLabel setTextColor:[UIColor whiteColor]];
+                [((ButtonCell*)cell).bigButton.titleLabel setShadowColor:[UIColor blackColor]];
+                [((ButtonCell*)cell).bigButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
                 break;
             }
             default:
@@ -204,6 +229,18 @@
     }
     
     [self configureCell:cell forTableView:tableView atIndexPath:indexPath];
+    
+    // Set backgrounds
+    if (indexPath.row == 0) {
+        // Top
+        [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grptableview-top"]]];
+    } else if (indexPath.row == 3) {
+        // Bottom
+        [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grptableview-bottom"]]];
+    } else {
+        // Middle
+        [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grptableview-middle"]]];
+    }
     
     return cell;
 }
@@ -217,6 +254,35 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+}
+
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath: (NSIndexPath *) indexPath {
+    switch (indexPath.row) {
+        case 0:
+        {
+            return kLabelProfileCellRowHeight;
+            break;
+        }
+            
+        case 1:
+        {
+            return kLabelSubLabelCellRowHeight;
+            break;
+        }
+        case 2:
+        {
+            return kLabelSwitchCellRowHeight;
+            break;
+        }
+        case 3:
+        {
+            return kButtonCellRowHeight;
+            break;
+        }
+        default:
+            return 0;
+            break;
+    }
 }
 
 

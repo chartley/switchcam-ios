@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #define kButtonCellIdentifier @"ButtonCellIdentifier"
-#define kButtonCellRowHeight 44
+#define kButtonCellRowHeight 60
 
 @interface ButtonCell : UITableViewCell
 
