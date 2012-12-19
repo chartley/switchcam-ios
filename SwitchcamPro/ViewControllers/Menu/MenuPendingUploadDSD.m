@@ -8,6 +8,7 @@
 
 #import <RestKit/RestKit.h>
 #import <RestKit/CoreData.h>
+#import <MediaPlayer/MediaPlayer.h>
 #import "UploadVideoViewController.h"
 #import "MenuPendingUploadDSD.h"
 #import "Recording.h"
@@ -163,8 +164,11 @@
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
     
     Recording *recording = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    NSURL *previewRecordingURL = [NSURL URLWithString:[recording localVideoAssetURL]];
     
-    //TODO Playback
+    // Preview
+    MPMoviePlayerViewController *viewController = [[MPMoviePlayerViewController alloc] initWithContentURL: previewRecordingURL];
+    [self.menuViewController presentModalViewController:viewController animated:YES];
 }
 
 - (void)uploadButtonPressed:(PendingUploadCell*)pendingUploadCell {
