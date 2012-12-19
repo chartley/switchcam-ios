@@ -117,6 +117,9 @@ enum { kTagTabBase = 100 };
     NSAssert(index < [self.viewControllers count], @"invalid tapped view");
     
     [self _makeTabViewCurrent:tappedView];
+    
+    // Make sure drawer is still present
+    [self.view bringSubviewToFront:self.toolbarDrawer];
 }
 
 - (void)viewDidLoad {
@@ -155,8 +158,21 @@ enum { kTagTabBase = 100 };
         
         SPTabView *tabView = [[SPTabView alloc] initWithFrame:tabFrame title:viewController.title];
         tabView.tag = kTagTabBase + tabIndex;
-        tabView.titleLabel.font = self.style.unselectedTitleFont;
+        [tabView.titleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:17]];
+        [tabView.titleLabel setTextColor:[UIColor whiteColor]];
+        [tabView.titleLabel setShadowColor:[UIColor blackColor]];
+        [tabView.titleLabel setShadowOffset:CGSizeMake(0, -1)];
         tabView.delegate = self;
+        
+        if ([viewController isKindOfClass:[EventInfoViewController class]]) {
+            [tabView.titleLabel setText:NSLocalizedString(@"Info", @"")];
+        } else if ([viewController isKindOfClass:[EventActivityViewController class]]) {
+            [tabView.titleLabel setText:NSLocalizedString(@"Activity", @"")];
+        } else if ([viewController isKindOfClass:[EventPeopleViewController class]]) {
+            [tabView.titleLabel setText:NSLocalizedString(@"People", @"")];
+        } else if ([viewController isKindOfClass:[EventVideosViewController class]]) {
+            [tabView.titleLabel setText:NSLocalizedString(@"Videos", @"")];
+        }
         
         [self.tabsContainerView addSubview:tabView];
         [allTabViews addObject:tabView];

@@ -1,4 +1,5 @@
 #import "SPTabStyle.h"
+#import "SPConstants.h"
 
 @implementation SPTabStyle
 
@@ -26,18 +27,17 @@
     self.overlapAsPercentageOfTabWidth = 0.20;
     self.shadowRadius = 3;
 
-    self.selectedTabColor = [UIColor colorWithWhite:220/255.0 alpha:1];
-    self.selectedTitleFont = [UIFont boldSystemFontOfSize:14];
-    self.selectedTitleTextColor = [UIColor colorWithWhite:80/255.0 alpha:1];
-    self.selectedTitleShadowOffset = CGSizeMake(0, 0.5);
-    self.selectedTitleShadowColor = [UIColor colorWithWhite:1 alpha:0.5];
+    self.selectedTabColor = RGBA(36, 38, 39, 1);
+    self.selectedTitleFont = [UIFont fontWithName:@"SourceSansPro-Regular" size:15];
+    self.selectedTitleTextColor = RGBA(233, 110, 62, 1);
+    self.selectedTitleShadowOffset = CGSizeMake(0, -1);
+    self.selectedTitleShadowColor = [UIColor blackColor];
 
-    CGFloat unselectedAlpha = 0.7;
-    self.unselectedTabColor = [self.selectedTabColor colorWithAlphaComponent:unselectedAlpha];
-    self.unselectedTitleFont = [UIFont boldSystemFontOfSize:14];
-    self.unselectedTitleTextColor = [self.selectedTitleTextColor colorWithAlphaComponent:unselectedAlpha];
-    self.unselectedTitleShadowOffset = CGSizeMake(0, 0.5);
-    self.unselectedTitleShadowColor = [UIColor colorWithWhite:1 alpha:0.5];
+    self.unselectedTabColor = RGBA(30, 32, 32, 1);
+    self.unselectedTitleFont = [UIFont fontWithName:@"SourceSansPro-Regular" size:15];
+    self.unselectedTitleTextColor = [UIColor whiteColor];
+    self.unselectedTitleShadowOffset = CGSizeMake(0, -1);
+    self.unselectedTitleShadowColor = [UIColor blackColor];
   }
 
   return self;

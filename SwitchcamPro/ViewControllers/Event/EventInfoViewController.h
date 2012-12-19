@@ -11,6 +11,8 @@
 
 @interface EventInfoViewController : EventTabViewController
 
+@property (strong, nonatomic) IBOutlet UIButton *imGoingButton;
+@property (strong, nonatomic) IBOutlet UIButton *imNotGoingButton;
 @property (strong, nonatomic) IBOutlet UILabel *goingDetailLabel;
 
 @end

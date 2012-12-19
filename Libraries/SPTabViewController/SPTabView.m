@@ -26,7 +26,6 @@ static inline CGFloat radians(CGFloat degrees) {
 - (CGFloat)_sectionWidth;
 - (CGSize)_gridSize;
 - (CGRect)_tabRect;
-- (CGMutablePathRef)_makeTabPath;
 
 @end
 
@@ -63,17 +62,17 @@ static inline CGFloat radians(CGFloat degrees) {
 }
 
 - (void)_configureTitleLabel {
-  if (self.selected) {
-    self.titleLabel.textColor    = self.style.selectedTitleTextColor;
-    self.titleLabel.shadowColor  = self.style.selectedTitleShadowColor;
-    self.titleLabel.shadowOffset = self.style.selectedTitleShadowOffset;
-    self.titleLabel.font         = self.style.selectedTitleFont;
-  } else {
-    self.titleLabel.textColor    = self.style.unselectedTitleTextColor;
-    self.titleLabel.shadowColor  = self.style.unselectedTitleShadowColor;
-    self.titleLabel.shadowOffset = self.style.unselectedTitleShadowOffset;
-    self.titleLabel.font         = self.style.unselectedTitleFont;
-  }
+    if (self.selected) {
+        self.titleLabel.textColor    = self.style.selectedTitleTextColor;
+        self.titleLabel.shadowColor  = self.style.selectedTitleShadowColor;
+        self.titleLabel.shadowOffset = self.style.selectedTitleShadowOffset;
+        self.titleLabel.font         = self.style.selectedTitleFont;
+    } else {
+        self.titleLabel.textColor    = self.style.unselectedTitleTextColor;
+        self.titleLabel.shadowColor  = self.style.unselectedTitleShadowColor;
+        self.titleLabel.shadowOffset = self.style.unselectedTitleShadowOffset;
+        self.titleLabel.font         = self.style.unselectedTitleFont;
+    }
 }
 
 - (void)_onTap:(UIGestureRecognizer *)gesture {
@@ -101,84 +100,84 @@ static inline CGFloat radians(CGFloat degrees) {
 }
 
 - (CGMutablePathRef)_makeTabPath {
-  CGFloat sectionWidth = [self _sectionWidth];
-  CGSize  gridSize     = [self _gridSize];
-  CGRect  tabRect      = [self _tabRect];
-
-  CGFloat tabLeft   = tabRect.origin.x + 0.5;
-  CGFloat tabRight  = tabRect.origin.x + tabRect.size.width - 0.5;
-  CGFloat tabTop    = tabRect.origin.y + 0.5;
-  CGFloat tabBottom = tabRect.origin.y + tabRect.size.height - 0.5;
-
-  CGFloat bottomControlPointDX = gridSize.width  * kBottomControlPointDXInGridUnits;
-  CGFloat bottomControlPointDY = gridSize.height * kBottomControlPointDYInGridUnits;
-  CGFloat topControlPointDX    = gridSize.width  * kTopControlPointDXInGridUnits;
-
-  CGMutablePathRef path = CGPathCreateMutable();
-
-  CGPathMoveToPoint(path, NULL, tabLeft, tabBottom);
-
-  CGPathAddCurveToPoint(path, NULL,
-                        bottomControlPointDX, tabBottom - bottomControlPointDY,
-                        sectionWidth - topControlPointDX, tabTop,
-                        sectionWidth, tabTop);
-
-  CGPathAddLineToPoint(path, NULL, tabRight - sectionWidth, tabTop);
-
-  CGPathAddCurveToPoint(path, NULL,
-                        tabRight - sectionWidth + topControlPointDX, tabTop,
-                        tabRight - bottomControlPointDX, tabBottom - bottomControlPointDY,
-                        tabRight, tabBottom);
-
-  return path;
+    CGFloat sectionWidth = [self _sectionWidth];
+    CGSize  gridSize     = [self _gridSize];
+    CGRect  tabRect      = [self _tabRect];
+    
+    CGFloat tabLeft   = tabRect.origin.x + 0.5;
+    CGFloat tabRight  = tabRect.origin.x + tabRect.size.width - 0.5;
+    CGFloat tabTop    = tabRect.origin.y + 0.5;
+    CGFloat tabBottom = tabRect.origin.y + tabRect.size.height - 0.5;
+    
+    CGFloat bottomControlPointDX = gridSize.width  * kBottomControlPointDXInGridUnits;
+    CGFloat bottomControlPointDY = gridSize.height * kBottomControlPointDYInGridUnits;
+    CGFloat topControlPointDX    = gridSize.width  * kTopControlPointDXInGridUnits;
+    
+    CGMutablePathRef path = CGPathCreateMutable();
+    
+    CGPathMoveToPoint(path, NULL, tabLeft, tabBottom);
+    
+    CGPathAddCurveToPoint(path, NULL,
+                          bottomControlPointDX, tabBottom - bottomControlPointDY,
+                          sectionWidth - topControlPointDX, tabTop,
+                          sectionWidth, tabTop);
+    
+    CGPathAddLineToPoint(path, NULL, tabRight - sectionWidth, tabTop);
+    
+    CGPathAddCurveToPoint(path, NULL,
+                          tabRight - sectionWidth + topControlPointDX, tabTop,
+                          tabRight - bottomControlPointDX, tabBottom - bottomControlPointDY,
+                          tabRight, tabBottom);
+    
+    return path;
 }
 
 - (void)drawRect:(CGRect)rect {
-  CGMutablePathRef path = [self _makeTabPath];
-
-  CGContextRef context = UIGraphicsGetCurrentContext();
-
-  // Configure a linear gradient which adds a simple white highlight on the top.
-
-  CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-  CGFloat locations[] = { 0.0, 0.4 };
-
-  CGColorRef tabColor = (self.selected
-                         ? self.style.selectedTabColor.CGColor
-                         : self.style.unselectedTabColor.CGColor);
-
-  CGColorRef startColor = [UIColor whiteColor].CGColor;
-  CGColorRef endColor   = tabColor;
-  NSArray    *colors    = [NSArray arrayWithObjects:(id)startColor, (id)endColor, nil];
-
-  CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, (CFArrayRef)colors, locations);
-
-  CGRect  tabRect    = [self _tabRect];
-  CGPoint startPoint = CGPointMake(CGRectGetMidX(tabRect), tabRect.origin.y);
-  CGPoint endPoint   = CGPointMake(CGRectGetMidX(tabRect), tabRect.origin.y + tabRect.size.height);
-
-  // Fill with current tab color
-
-  CGContextSaveGState(context);
-  CGContextAddPath(context, path);
-  CGContextSetFillColorWithColor(context, tabColor);
-  CGContextSetShadow(context, CGSizeMake(0, -1), self.style.shadowRadius);
-  CGContextFillPath(context);
-  CGContextRestoreGState(context);
-
-  // Render the interior of the tab path using the gradient.
-
-  CGContextSaveGState(context);
-  CGContextAddPath(context, path);
-  CGContextClip(context);
-  CGContextDrawLinearGradient(context, gradient, startPoint, endPoint, 0);
-  CGContextRestoreGState(context);
-  CGGradientRelease(gradient);
-  CGColorSpaceRelease(colorSpace);
-
-  CFRelease(path);
-
-  [self _configureTitleLabel];
+    CGMutablePathRef path = [self _makeTabPath];
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    // Configure a linear gradient which adds a simple white highlight on the top.
+    
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    CGFloat locations[] = { 0.0, 0.4 };
+    
+    CGColorRef tabColor = (self.selected
+                           ? self.style.selectedTabColor.CGColor
+                           : self.style.unselectedTabColor.CGColor);
+    
+    CGColorRef startColor = [UIColor whiteColor].CGColor;
+    CGColorRef endColor   = tabColor;
+    NSArray    *colors    = [NSArray arrayWithObjects:(id)startColor, (id)endColor, nil];
+    
+    CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, (CFArrayRef)colors, locations);
+    
+    CGRect  tabRect    = [self _tabRect];
+    CGPoint startPoint = CGPointMake(CGRectGetMidX(tabRect), tabRect.origin.y);
+    CGPoint endPoint   = CGPointMake(CGRectGetMidX(tabRect), tabRect.origin.y + tabRect.size.height);
+    
+    // Fill with current tab color
+    
+    CGContextSaveGState(context);
+    CGContextAddPath(context, path);
+    CGContextSetFillColorWithColor(context, tabColor);
+    CGContextSetShadow(context, CGSizeMake(0, -1), self.style.shadowRadius);
+    CGContextFillPath(context);
+    CGContextRestoreGState(context);
+    
+    // Render the interior of the tab path using the gradient.
+    
+    CGContextSaveGState(context);
+    CGContextAddPath(context, path);
+    CGContextClip(context);
+    CGContextDrawLinearGradient(context, gradient, startPoint, endPoint, 0);
+    CGContextRestoreGState(context);
+    CGGradientRelease(gradient);
+    CGColorSpaceRelease(colorSpace);
+    
+    CFRelease(path);
+    
+    [self _configureTitleLabel];
 }
 
 - (void)setSelected:(BOOL)isSelected {
