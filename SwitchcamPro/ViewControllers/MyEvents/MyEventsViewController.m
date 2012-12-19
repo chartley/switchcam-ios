@@ -40,6 +40,11 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    // Add background
+    UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bgfull-fullapp"]];
+    [self.view addSubview:backgroundImageView];
+    [self.view sendSubviewToBack:backgroundImageView];
+    
     [self.myEventsTableView setTableFooterView:[[UIView alloc] init]];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stateChangedFromNotification) name:SCAPINetworkRequestCanStartNotification object:nil];
