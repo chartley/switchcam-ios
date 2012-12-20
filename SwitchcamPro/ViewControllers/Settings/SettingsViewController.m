@@ -33,6 +33,13 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    // Add background
+    UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bgfull-fullapp"]];
+    [self.view addSubview:backgroundImageView];
+    [self.view sendSubviewToBack:backgroundImageView];
+    
+    // Set Font
+    [self.settingsTitleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Semibold" size:17]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -66,38 +73,76 @@
 #pragma mark - Helper Methods
 
 - (void)configureCell:(UITableViewCell *)cell forTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
-    //TODO Tag switches
-    switch (indexPath.row) {
+    switch (indexPath.section) {
         case 0:
-        {
-            LabelSwitchCell *labelSwitchCell = (LabelSwitchCell *)cell;
-            [labelSwitchCell.leftLabel setText:NSLocalizedString(@"Upload over 3G", @"")];
-            labelSwitchCell.staySignedInSwitch = labelSwitchCell.staySignedInSwitch;
-            [labelSwitchCell.staySignedInSwitch addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
+            switch (indexPath.row) {
+                case 0:
+                {
+                    LabelSwitchCell *labelSwitchCell = (LabelSwitchCell *)cell;
+                    [labelSwitchCell.leftLabel setText:NSLocalizedString(@"Upload over 3G", @"")];
+                    labelSwitchCell.staySignedInSwitch = labelSwitchCell.staySignedInSwitch;
+                    [labelSwitchCell.staySignedInSwitch addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
+                    break;
+                }
+                    
+                case 1:
+                {
+                    LabelSwitchCell *labelSwitchCell = (LabelSwitchCell *)cell;
+                    [labelSwitchCell.leftLabel setText:NSLocalizedString(@"Push Notification 1", @"")];
+                    labelSwitchCell.tag = indexPath.row;
+                    [labelSwitchCell.staySignedInSwitch addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
+                    break;
+                }
+                case 2:
+                {
+                    LabelSwitchCell *labelSwitchCell = (LabelSwitchCell *)cell;
+                    [labelSwitchCell.leftLabel setText:NSLocalizedString(@"Push Notification 2", @"")];
+                    labelSwitchCell.tag = indexPath.row;
+                    [labelSwitchCell.staySignedInSwitch addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
+                    break;
+                }
+                case 3:
+                {
+                    LabelSwitchCell *labelSwitchCell = (LabelSwitchCell *)cell;
+                    [labelSwitchCell.leftLabel setText:NSLocalizedString(@"Push Notification 3", @"")];
+                    labelSwitchCell.tag = indexPath.row;
+                    [labelSwitchCell.staySignedInSwitch addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
+                    break;
+                }
+                default:
+                    break;
+            }
             break;
-        }
-            
         case 1:
-        {
-            LabelSwitchCell *labelSwitchCell = (LabelSwitchCell *)cell;
-            labelSwitchCell.staySignedInSwitch = labelSwitchCell.staySignedInSwitch;
-            [labelSwitchCell.staySignedInSwitch addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
+            switch (indexPath.row) {
+                case 0:
+                {
+                    ProfileCell *profileCell = (ProfileCell *)cell;
+                    [profileCell.profileNameLabel setText:@""];
+                    [profileCell.profileImageView setImage:nil];
+                    break;
+                }
+                    
+                case 1:
+                {
+                    ButtonCell *buttonCell = (ButtonCell *)cell;
+                    // Set Button Image
+                    UIImage *buttonImage = [[UIImage imageNamed:@"btn-fb-lg"]
+                                            resizableImageWithCapInsets:UIEdgeInsetsMake(20, 15, 20, 15)];
+                    UIImage *buttonImageHighlight = [[UIImage imageNamed:@"btn-fb-lg-pressed"]
+                                                     resizableImageWithCapInsets:UIEdgeInsetsMake(20, 15, 20, 15)];
+                    // Set the background for any states you plan to use
+                    [buttonCell.bigButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
+                    [buttonCell.bigButton setBackgroundImage:buttonImageHighlight forState:UIControlStateHighlighted];
+                    [buttonCell.bigButton setTitle:NSLocalizedString(@" Disconnect Facebook", @"") forState:UIControlStateNormal];
+                    [buttonCell.bigButton setImage:[UIImage imageNamed:@"icn-fb"] forState:UIControlStateNormal];
+                    break;
+                }
+                default:
+                    break;
+            }
             break;
-        }
-        case 2:
-        {
-            LabelSwitchCell *labelSwitchCell = (LabelSwitchCell *)cell;
-            labelSwitchCell.staySignedInSwitch = labelSwitchCell.staySignedInSwitch;
-            [labelSwitchCell.staySignedInSwitch addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
-            break;
-        }
-        case 3:
-        {
-            LabelSwitchCell *labelSwitchCell = (LabelSwitchCell *)cell;
-            labelSwitchCell.staySignedInSwitch = labelSwitchCell.staySignedInSwitch;
-            [labelSwitchCell.staySignedInSwitch addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
-            break;
-        }
+            
         default:
             break;
     }
@@ -122,6 +167,7 @@
         case 0:
         {
             cell = [tableView dequeueReusableCellWithIdentifier:kLabelSwitchCellIdentifier];
+            [((LabelSwitchCell*)cell).leftLabel setFont:[UIFont fontWithName:@"SourceSansPro-Bold" size:17]];
             break;
         }
             
@@ -183,11 +229,33 @@
     
     [self configureCell:cell forTableView:tableView atIndexPath:indexPath];
     
+    // Set backgrounds
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            // Top
+            [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grptableview-top"]]];
+        } else if (indexPath.row == 3) {
+            // Bottom
+            [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grptableview-bottom"]]];
+        } else {
+            // Middle
+            [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grptableview-middle"]]];
+        }
+    } else {
+        if (indexPath.row == 0) {
+            // Top
+            [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grptableview-top"]]];
+        } else {
+            // Bottom
+            [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grptableview-bottom"]]];
+        }
+    }
+    
     return cell;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 2;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -195,6 +263,39 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+}
+
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath: (NSIndexPath *) indexPath {
+    switch (indexPath.section) {
+        case 0:
+        {
+            return kLabelSwitchCellRowHeight;
+            break;
+        }
+            
+        case 1:
+        {
+            switch (indexPath.row) {
+                case 0:
+                {
+                    return kProfileCellRowHeight;
+                    break;
+                }
+                case 1:
+                {
+                    return kButtonCellRowHeight;
+                    break;
+                }
+                    
+                default:
+                    break;
+            }
+            break;
+        }
+        default:
+            return 0;
+            break;
+    }
 }
 
 @end
