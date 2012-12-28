@@ -30,6 +30,33 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    // Add background
+    UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bgfull-fullapp"]];
+    [self.view addSubview:backgroundImageView];
+    [self.view sendSubviewToBack:backgroundImageView];
+    
+    [self.eventsTableView setTableFooterView:[[UIView alloc] init]];
+    
+    // Set Button Image
+    UIImage *buttonImage = [[UIImage imageNamed:@"btn-orange-lg"]
+                            resizableImageWithCapInsets:UIEdgeInsetsMake(20, 15, 20, 15)];
+    UIImage *buttonImageHighlight = [[UIImage imageNamed:@"btn-orange-lg-pressed"]
+                                     resizableImageWithCapInsets:UIEdgeInsetsMake(20, 15, 20, 15)];
+    // Set the background for any states you plan to use
+    [self.findEventsButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    [self.findEventsButton setBackgroundImage:buttonImageHighlight forState:UIControlStateHighlighted];
+    
+    // Set Font / Color
+    [self.findEventsButton.titleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:17]];
+    [self.findEventsButton.titleLabel setTextColor:[UIColor whiteColor]];
+    [self.findEventsButton.titleLabel setShadowColor:[UIColor blackColor]];
+    [self.findEventsButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
+    
+    [self.titleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:17]];
+    [self.titleLabel setTextColor:[UIColor whiteColor]];
+    [self.titleLabel setShadowColor:[UIColor blackColor]];
+    [self.titleLabel setShadowOffset:CGSizeMake(0, -1)];
 }
 
 - (void)didReceiveMemoryWarning
@@ -58,6 +85,11 @@
 
 - (IBAction)menuButtonAction:(id)sender {
     [self.slidingViewController anchorTopViewTo:ECRight];
+}
+
+- (IBAction)locationButtonAction:(id)sender {
+    // Fire off request for events near user
+    //TODO
 }
 
 @end
