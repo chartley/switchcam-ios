@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		24256089168392F400632139 /* ActivityVideoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24256088168392F400632139 /* ActivityVideoCell.xib */; };
 		C90847A3167FDD7300DEF94E /* camswitch-off.png in Resources */ = {isa = PBXBuildFile; fileRef = C9084799167FDD7300DEF94E /* camswitch-off.png */; };
 		C90847A4167FDD7300DEF94E /* camswitch-off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C908479A167FDD7300DEF94E /* camswitch-off@2x.png */; };
 		C90847A5167FDD7300DEF94E /* camswitch-on.png in Resources */ = {isa = PBXBuildFile; fileRef = C908479B167FDD7300DEF94E /* camswitch-on.png */; };
@@ -360,6 +361,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		24256088168392F400632139 /* ActivityVideoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ActivityVideoCell.xib; path = TableViewCells/Activity/ActivityVideoCell.xib; sourceTree = "<group>"; };
 		A19C79BD691C4B088E80A4B3 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		C9084799167FDD7300DEF94E /* camswitch-off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camswitch-off.png"; sourceTree = "<group>"; };
 		C908479A167FDD7300DEF94E /* camswitch-off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camswitch-off@2x.png"; sourceTree = "<group>"; };
@@ -998,6 +1000,7 @@
 			children = (
 				C97B14AC16710E94005BB65F /* ActivityVideoCell.h */,
 				C97B14AD16710E94005BB65F /* ActivityVideoCell.m */,
+				24256088168392F400632139 /* ActivityVideoCell.xib */,
 			);
 			name = Activity;
 			sourceTree = "<group>";
@@ -1909,6 +1912,7 @@
 				C90847AA167FDD7300DEF94E /* icn-preview-pressed@2x.png in Resources */,
 				C90847AB167FDD7300DEF94E /* icn-upload-pressed.png in Resources */,
 				C90847AC167FDD7300DEF94E /* icn-upload-pressed@2x.png in Resources */,
+				24256089168392F400632139 /* ActivityVideoCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2061,8 +2065,8 @@
 		C97BFF07166D909D005BB65F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Chris Hartley (7J7EDWHC8U)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Chris Hartley (7J7EDWHC8U)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: William Ketterer (3JF86DFDB3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: William Ketterer (3JF86DFDB3)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Libraries/facebook-facebook-ios-sdk-a4c745f\"",
@@ -2079,8 +2083,8 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "DEE97D94-3539-431F-8BA6-0063FBE29E35";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DEE97D94-3539-431F-8BA6-0063FBE29E35";
+				PROVISIONING_PROFILE = "AB7C04A8-710F-47BD-980F-6A5CEB2D2E01";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AB7C04A8-710F-47BD-980F-6A5CEB2D2E01";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;

@@ -15,7 +15,7 @@
 @class SPTabStyle;
 @class SPTabsView;
 
-@interface EventViewController : UIViewController <SPTabViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate> {
+@interface EventViewController : UIViewController <SPTabViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate> {
     NSArray *viewControllers;
     SPTabsView *tabsContainerView;
     SPTabsFooterView *footerView;
@@ -30,6 +30,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *sharePhotoLabel;
 @property (strong, nonatomic) IBOutlet UIButton *shareNoteButton;
 @property (strong, nonatomic) IBOutlet UILabel *shareNoteLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *eventImageView;
+@property (strong, nonatomic) IBOutlet UIScrollView *eventScrollView;
 
 - (id)initWithViewControllers:(NSArray *)viewControllers
                         style:(SPTabStyle *)style;

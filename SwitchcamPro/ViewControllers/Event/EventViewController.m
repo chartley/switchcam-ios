@@ -19,7 +19,7 @@ enum { kTagTabBase = 100 };
 @interface EventViewController ()
 
 @property (nonatomic, retain) NSArray *viewControllers;
-@property (nonatomic, assign, readwrite) UIView *currentView;
+@property (nonatomic, assign, readwrite) UIScrollView *currentView;
 @property (nonatomic, retain) SPTabsView *tabsContainerView;
 @property (nonatomic, retain) SPTabsFooterView *footerView;
 
@@ -102,12 +102,13 @@ enum { kTagTabBase = 100 };
     UIViewController *viewController = [self.viewControllers objectAtIndex:currentTabIndex];
     
     [self.currentView removeFromSuperview];
-    self.currentView = viewController.view;
+    self.currentView = (UIScrollView*)viewController.view;
     
     self.currentView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     self.currentView.frame = CGRectMake(0, kTopPictureHeight + self.tabsContainerView.bounds.size.height, self.view.bounds.size.width, self.view.bounds.size.height);
     
-    [self.view addSubview:self.currentView];
+    [self.eventScrollView addSubview:self.currentView];
+    [self.currentView setDelegate:self];
     
     [self _reconfigureTabs];
 }
@@ -133,7 +134,7 @@ enum { kTagTabBase = 100 };
     self.tabsContainerView.backgroundColor = [UIColor clearColor];
     self.tabsContainerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     self.tabsContainerView.style = self.style;
-    [self.view addSubview:tabsContainerView];
+    [self.eventScrollView addSubview:tabsContainerView];
     
     // Tabs are resized such that all fit in the view's width.
     // We position the tab views from left to right, with some overlapping after the first one.
@@ -217,6 +218,9 @@ enum { kTagTabBase = 100 };
     // Adjust drawer toolbar to be set to the correct origin depending on screen size
     [self.toolbarDrawer setFrame:CGRectMake(0, self.view.frame.size.height - self.toolbarDrawer.frame.size.height, self.toolbarDrawer.frame.size.width, self.toolbarDrawer.frame.size.height)];
     [self.view bringSubviewToFront:self.toolbarDrawer];
+    
+    // Adjust content size of scrollview for ez scrolling between event scrollview and tabs scrollview
+    [self.eventScrollView setContentSize:CGSizeMake(320, self.eventScrollView.frame.size.height + self.eventImageView.frame.size.height)];
 
     [super viewDidLoad];
 }
@@ -283,5 +287,72 @@ enum { kTagTabBase = 100 };
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     [self dismissModalViewControllerAnimated:YES];
 }
+
+#pragma mark - ScrollView Delegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if ([scrollView isEqual: self.eventScrollView]) {
+        // Check if we have scrolled past the image pass the rest of the scroll to tab scrollview
+        int offset = self.eventScrollView.contentOffset.y - self.eventImageView.frame.size.height;
+        NSLog(@"Event Offset:%d", offset);
+ 	    if (offset > 0) {
+            // Keep the tabs at the top
+            [self.eventScrollView setContentOffset:CGPointMake(0, self.eventImageView.frame.size.height)];
+            [self.eventScrollView setScrollEnabled:NO];
+            
+            // Scroll the bottom view
+            [self.currentView setContentOffset:CGPointMake(0, offset)];
+        }
+    } else {
+        NSLog(@"Event Tab ScrollView");
+        // Check if the image is still visible, if so scroll the event scroll view first
+        if (self.eventScrollView.contentOffset.y < self.eventImageView.frame.size.height) {
+            int offsetAdjustment = self.currentView.contentOffset.y + self.eventScrollView.contentOffset.y;
+            if (offsetAdjustment > 0) {
+                [self.eventScrollView setContentOffset:CGPointMake(0, offsetAdjustment)];
+            }
+        } else if (self.currentView.contentOffset.y <= 0) {
+            // If we are scrolling up past the content offset, start scrolling event image into view
+            // Re-enable scrollview
+            [self.eventScrollView setScrollEnabled:YES];
+            int offsetAdjustment = self.currentView.contentOffset.y + self.eventScrollView.contentOffset.y;
+            [self.eventScrollView setContentOffset:CGPointMake(0, offsetAdjustment)];
+        }
+    }
+}
+
+/*
+ 
+ - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+ if ([scrollView isEqual: self.eventScrollView]) {
+ // Check if we have scrolled past the image pass the rest of the scroll to tab scrollview
+ int offset = self.eventScrollView.contentOffset.y - self.eventImageView.frame.size.height;
+ NSLog(@"Event Offset:%d", offset);
+ if (offset > 0) {
+ // Keep the tabs at the top
+ [self.eventScrollView setContentOffset:CGPointMake(0, self.eventImageView.frame.size.height)];
+ [self.eventScrollView setScrollEnabled:NO];
+ 
+ // Scroll the bottom view
+ [self.currentView setContentOffset:CGPointMake(0, offset)];
+ }
+ } else {
+ NSLog(@"Event Tab ScrollView");
+ // Check if the image is still visible, if so scroll the event scroll view first
+ if (self.eventScrollView.contentOffset.y < self.eventImageView.frame.size.height) {
+ int offsetAdjustment = self.currentView.contentOffset.y + self.eventScrollView.contentOffset.y;
+ if (offsetAdjustment > 0) {
+ [self.eventScrollView setContentOffset:CGPointMake(0, offsetAdjustment)];
+ }
+ } else if (self.currentView.contentOffset.y <= 0) {
+ // If we are scrolling up past the content offset, start scrolling event image into view
+ // Re-enable scrollview
+ [self.eventScrollView setScrollEnabled:YES];
+ int offsetAdjustment = self.currentView.contentOffset.y + self.eventScrollView.contentOffset.y;
+ [self.eventScrollView setContentOffset:CGPointMake(0, offsetAdjustment)];
+ }
+ }
+ }
+ */
 
 @end
