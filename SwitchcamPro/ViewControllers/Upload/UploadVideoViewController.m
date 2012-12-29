@@ -8,7 +8,6 @@
 
 #import <AVFoundation/AVFoundation.h>
 #import <Foundation/Foundation.h>
-#import "AFNetworking.h"
 #import "SPConstants.h"
 #import "UploadVideoViewController.h"
 #import "LabelInvisibleButtonCell.h"

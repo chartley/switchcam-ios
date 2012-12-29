@@ -13,7 +13,6 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import "UAirship.h"
 #import "UAPush.h"
-#import "AFNetworking.h"
 #import "MyEventsViewController.h"
 #import "ECSlidingViewController.h"
 #import "LoginViewController.h"

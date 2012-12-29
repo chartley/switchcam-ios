@@ -15,7 +15,6 @@
 #import "MenuViewController.h"
 #import "MyEventCell.h"
 #import "AppDelegate.h"
-#import "AFNetworking.h"
 #import "SPConstants.h"
 #import "Mission.h"
 
