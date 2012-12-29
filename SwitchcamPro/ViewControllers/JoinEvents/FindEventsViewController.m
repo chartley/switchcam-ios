@@ -261,7 +261,7 @@
         UIImage *highlightButtonImage = [[UIImage imageNamed:@"btn-orange-lg-pressed"]
                                          resizableImageWithCapInsets:UIEdgeInsetsMake(20, 15, 20, 15)];
         
-        [findEventCell.joinButton.titleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:18]];
+        [findEventCell.joinButton.titleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Bold" size:17]];
         
         // Set the background for any states you plan to use
         [findEventCell.joinButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
