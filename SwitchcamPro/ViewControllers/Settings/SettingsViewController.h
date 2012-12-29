@@ -10,6 +10,7 @@
 
 @interface SettingsViewController : UIViewController
 
+@property (strong, nonatomic) IBOutlet UILabel *settingsTitleLabel;
 @property (strong, nonatomic) IBOutlet UITableView *settingsTableView;
 
 @end
