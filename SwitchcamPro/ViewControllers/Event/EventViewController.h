@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SPTabView.h"
 
-@class Event;
+@class Mission;
 @class SPTabsViewController;
 @class SPTabsFooterView;
 @class SPTabStyle;
@@ -24,7 +24,7 @@
 }
 
 @property (nonatomic, retain) SPTabStyle *style;
-@property (strong, nonatomic) Event *event;
+@property (strong, nonatomic) Mission *mission;
 @property (strong, nonatomic) IBOutlet UIView *toolbarDrawer;
 @property (strong, nonatomic) IBOutlet UIButton *sharePhotoButton;
 @property (strong, nonatomic) IBOutlet UILabel *sharePhotoLabel;

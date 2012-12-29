@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		24256089168392F400632139 /* ActivityVideoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24256088168392F400632139 /* ActivityVideoCell.xib */; };
+		2456C42B168E64FD00F49C70 /* FindEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2456C42A168E64FD00F49C70 /* FindEventCell.m */; };
+		2456C42F168E653400F49C70 /* FindEventCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2456C42E168E653400F49C70 /* FindEventCell.xib */; };
 		C90847A3167FDD7300DEF94E /* camswitch-off.png in Resources */ = {isa = PBXBuildFile; fileRef = C9084799167FDD7300DEF94E /* camswitch-off.png */; };
 		C90847A4167FDD7300DEF94E /* camswitch-off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C908479A167FDD7300DEF94E /* camswitch-off@2x.png */; };
 		C90847A5167FDD7300DEF94E /* camswitch-on.png in Resources */ = {isa = PBXBuildFile; fileRef = C908479B167FDD7300DEF94E /* camswitch-on.png */; };
@@ -362,6 +364,9 @@
 
 /* Begin PBXFileReference section */
 		24256088168392F400632139 /* ActivityVideoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ActivityVideoCell.xib; path = TableViewCells/Activity/ActivityVideoCell.xib; sourceTree = "<group>"; };
+		2456C429168E64FD00F49C70 /* FindEventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FindEventCell.h; path = TableViewCells/FindEvents/FindEventCell.h; sourceTree = "<group>"; };
+		2456C42A168E64FD00F49C70 /* FindEventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FindEventCell.m; path = TableViewCells/FindEvents/FindEventCell.m; sourceTree = "<group>"; };
+		2456C42E168E653400F49C70 /* FindEventCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FindEventCell.xib; path = TableViewCells/FindEvents/FindEventCell.xib; sourceTree = "<group>"; };
 		A19C79BD691C4B088E80A4B3 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		C9084799167FDD7300DEF94E /* camswitch-off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camswitch-off.png"; sourceTree = "<group>"; };
 		C908479A167FDD7300DEF94E /* camswitch-off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camswitch-off@2x.png"; sourceTree = "<group>"; };
@@ -841,6 +846,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2456C42D168E650100F49C70 /* Find Events */ = {
+			isa = PBXGroup;
+			children = (
+				2456C429168E64FD00F49C70 /* FindEventCell.h */,
+				2456C42A168E64FD00F49C70 /* FindEventCell.m */,
+				2456C42E168E653400F49C70 /* FindEventCell.xib */,
+			);
+			name = "Find Events";
+			sourceTree = "<group>";
+		};
 		C90847BA1680355A00DEF94E /* Playback */ = {
 			isa = PBXGroup;
 			children = (
@@ -1200,6 +1215,7 @@
 		C97BFF2D166D94FD005BB65F /* TableViewCells */ = {
 			isa = PBXGroup;
 			children = (
+				2456C42D168E650100F49C70 /* Find Events */,
 				C9856D2C167EB02300C5B708 /* Pending Uploads */,
 				C97B14AB16710E70005BB65F /* Activity */,
 				C97B1411166EFA5C005BB65F /* ButtonCell.h */,
@@ -1913,6 +1929,7 @@
 				C90847AB167FDD7300DEF94E /* icn-upload-pressed.png in Resources */,
 				C90847AC167FDD7300DEF94E /* icn-upload-pressed@2x.png in Resources */,
 				24256089168392F400632139 /* ActivityVideoCell.xib in Resources */,
+				2456C42F168E653400F49C70 /* FindEventCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1995,6 +2012,7 @@
 				C99E97ED167E4494006B3BBC /* StatusBarToastAndProgressView.m in Sources */,
 				C9856D10167E734C00C5B708 /* SlideView.m in Sources */,
 				C9856D32167EB27900C5B708 /* MenuPendingUploadDSD.m in Sources */,
+				2456C42B168E64FD00F49C70 /* FindEventCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

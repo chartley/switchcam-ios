@@ -288,6 +288,7 @@
                 }
                     
                 default:
+                    return 0;
                     break;
             }
             break;

@@ -113,8 +113,10 @@
 #pragma mark - Network Calls
 
 - (void)getMyEvents {
+    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:@"true", @"followed_only", nil];
+    
     // Load the object model via RestKit
-    [[RKObjectManager sharedManager] getObjectsAtPath:@"mission/" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+    [[RKObjectManager sharedManager] getObjectsAtPath:@"mission/" parameters:parameters success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         // Mark these missions as following
         for (Mission *mission in [mappingResult array]) {
             mission.following = [NSNumber numberWithBool:YES];
@@ -206,15 +208,15 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    Event *event = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    Mission *mission = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     EventViewController *viewController = [[EventViewController alloc] init];
-    [viewController setEvent:event];
+    [viewController setMission:mission];
     [self.navigationController pushViewController:viewController animated:YES];
     
 }
 
-#pragma mark NSFetchedResultsControllerDelegate methods
+#pragma mark - NSFetchedResultsControllerDelegate methods
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     [self.myEventsTableView reloadData];
