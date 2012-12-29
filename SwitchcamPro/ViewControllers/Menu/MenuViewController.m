@@ -119,6 +119,8 @@
             [self.slidingViewController resetTopView];
         }];
     }
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 @end
