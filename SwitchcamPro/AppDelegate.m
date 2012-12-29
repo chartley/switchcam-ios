@@ -464,6 +464,9 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     self.statusBarToastAndProgressView = [[StatusBarToastAndProgressView alloc] initWithFrame:statusBarFrame];
     [self.statusBarToastAndProgressView makeKeyAndVisible];
     
+    // Keep all input coming to Main Window
+    [self.window makeKeyWindow];
+    
     // Setup listeners
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadStarted) name:kSCS3UploadStartedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadCompleted) name:kSCS3UploadCompletedNotification object:nil];
