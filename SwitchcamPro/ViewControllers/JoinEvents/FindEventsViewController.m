@@ -11,15 +11,16 @@
 #import "FindEventsViewController.h"
 #import "ECSlidingViewController.h"
 #import "MenuViewController.h"
-#import "FindEventCell.h"
 #import "AppDelegate.h"
 #import "AFNetworking.h"
 #import "SPConstants.h"
 #import "Mission.h"
+#import "MBProgressHUD.h"
 
 @interface FindEventsViewController () <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate>
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+@property (strong, nonatomic) MBProgressHUD *blockingLoadingIndicator;
 
 @end
 
@@ -40,7 +41,8 @@
     // Do any additional setup after loading the view from its nib.
     
     // Add background
-    UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bgfull-fullapp"]];
+    UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bgfull-signin"]];
+    [backgroundImageView setFrame:CGRectMake(0, 175, backgroundImageView.frame.size.width, backgroundImageView.frame.size.height)];
     [self.view addSubview:backgroundImageView];
     [self.view sendSubviewToBack:backgroundImageView];
     
@@ -69,6 +71,21 @@
     [self.titleLabel setShadowColor:[UIColor blackColor]];
     [self.titleLabel setShadowOffset:CGSizeMake(0, -1)];
     
+    [self.noEventsFoundHeaderLabel setFont:[UIFont fontWithName:@"SourceSansPro-SemiBold" size:17]];
+    [self.noEventsFoundHeaderLabel setTextColor:[UIColor whiteColor]];
+    [self.noEventsFoundHeaderLabel setShadowColor:[UIColor blackColor]];
+    [self.noEventsFoundHeaderLabel setShadowOffset:CGSizeMake(0, -1)];
+    
+    [self.noEventsFoundDetailLabel setFont:[UIFont fontWithName:@"SourceSansPro-Light" size:17]];
+    [self.noEventsFoundDetailLabel setTextColor:[UIColor whiteColor]];
+    [self.noEventsFoundDetailLabel setShadowColor:[UIColor blackColor]];
+    [self.noEventsFoundDetailLabel setShadowOffset:CGSizeMake(0, -1)];
+    
+    // Add loading indicator
+    AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    self.blockingLoadingIndicator = [[MBProgressHUD alloc] initWithWindow:appDelegate.window];
+    [appDelegate.window addSubview:self.blockingLoadingIndicator];
+    
     // Load up any cached events
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Mission"];
     NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"startDatetime" ascending:NO];
@@ -86,7 +103,12 @@
     [self.fetchedResultsController setDelegate:self];
     [self.fetchedResultsController performFetch:&error];
     
-    [self findEvents];
+    [self findEventsWithLocation:NO];
+}
+
+- (void)viewDidUnload {
+    // Remove Loading Indicator
+    [self.blockingLoadingIndicator removeFromSuperview];
 }
 
 - (void)didReceiveMemoryWarning
@@ -118,19 +140,45 @@
 }
 
 - (IBAction)locationButtonAction:(id)sender {
+    // Resign first responder if up
+    [self.eventSearchTextField resignFirstResponder];
+    
     // Fire off request for events near user
-    //TODO
+    [self findEventsWithLocation:YES];
 }
 
 - (IBAction)findYourEventButtonAction:(id)sender {
-    [self findEvents];
+    [self.eventSearchTextField resignFirstResponder];
+    [self findEventsWithLocation:NO];
 }
 
 #pragma mark - Network Calls
 
-- (void)findEvents {
+- (void)findEventsWithLocation:(BOOL)usingLocation {
+    NSDictionary *parameters = nil;
+    
+    // Check if we have search text
+    if (self.eventSearchTextField.text != nil && ![self.eventSearchTextField.text isEqualToString:@""]) {
+        parameters = [NSDictionary dictionaryWithObjectsAndKeys:self.eventSearchTextField.text, @"terms", nil];
+    }
+    
+    //TODO Location
+    if (usingLocation) {
+        
+    }
+    
     // Load the object model via RestKit
-    [[RKObjectManager sharedManager] getObjectsAtPath:@"mission/" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+    [[RKObjectManager sharedManager] getObjectsAtPath:@"mission/" parameters:parameters success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        
+        // Show correct view depending on result count
+        if ([[mappingResult array] count] == 0) {
+            [self.noEventsFoundView setHidden:NO];
+            [self.eventsTableView setHidden:YES];
+        } else {
+            [self.noEventsFoundView setHidden:YES];
+            [self.eventsTableView setHidden:NO];
+        }
+        
         // Mark these missions as following
         for (Mission *mission in [mappingResult array]) {
             if (mission.following == nil) {
@@ -142,8 +190,60 @@
         [self.eventsTableView reloadData];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         RKLogError(@"Load failed with error: %@", error);
-        //TODO Error message
+        // Error message
+        if ([error code] == NSURLErrorNotConnectedToInternet) {
+            NSString *title = NSLocalizedString(@"No Network Connection", @"");
+            NSString *message = NSLocalizedString(@"Please check your internet connection and try again.", @"");
+            
+            // Show alert
+            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alertView show];
+        } else {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Oops", @"") message:NSLocalizedString(@"We're having trouble connecting to the server, please try again.", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles:nil];
+            [alertView show];
+        }
     }];
+}
+
+- (void)joinEvent:(Mission*)missionToJoin {
+    NSString *facebookId = [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookIdKey];
+    NSString *facebookToken = [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookTokenKey];
+    
+    // Completion Blocks
+    void (^followMissionSuccessBlock)(AFHTTPRequestOperation *operation, id responseObject);
+    void (^followMissionFailureBlock)(AFHTTPRequestOperation *operation, NSError *error);
+    
+    followMissionSuccessBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self.blockingLoadingIndicator hide:YES];
+    };
+    
+    followMissionFailureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self.blockingLoadingIndicator hide:YES];
+        
+        if ([error code] == NSURLErrorNotConnectedToInternet) {
+            NSString *title = NSLocalizedString(@"No Network Connection", @"");
+            NSString *message = NSLocalizedString(@"Please check your internet connection and try again.", @"");
+            
+            // Show alert
+            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alertView show];
+        } else {        
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Oops", @"") message:NSLocalizedString(@"We're having trouble connecting to the server, please try again.", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles:nil];
+            [alertView show];
+        }
+    };
+    
+    // Make Request and set params
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:kAPIHost]];
+    [httpClient setAuthorizationHeaderWithUsername:facebookId password:facebookToken];
+    
+    NSString *path = [NSString stringWithFormat:@"mission/%@/follower", [missionToJoin missionId]];
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:path parameters:nil];
+    
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    [operation setCompletionBlockWithSuccess:followMissionSuccessBlock failure:followMissionFailureBlock];
+    
+    [operation start];
 }
 
 #pragma mark - Helper Methods
@@ -158,9 +258,10 @@
     NSString *detailString = [NSString stringWithFormat:@"%@ %@", @"San Francisco", startEventTimeString];
     
     FindEventCell *findEventCell = (FindEventCell *)cell;
-    
     [findEventCell.locationLabel setText:[mission title]];
     [findEventCell.detailLabel setText:detailString];
+    [findEventCell setDelegate:self];
+    [findEventCell setTag:indexPath.row];
     
     if ([[mission following] boolValue]) {
         [findEventCell.joinButton setEnabled:NO];
@@ -232,6 +333,27 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     [self.eventsTableView reloadData];
+}
+
+#pragma mark - FindEventCellDelegate methods
+
+- (void)joinButtonPressed:(FindEventCell*)findEventCell {
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:findEventCell.tag inSection:0];
+    Mission *mission = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    [self joinEvent:mission];
+}
+
+#pragma mark - UITextField Delegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    
+    if (textField == self.eventSearchTextField) {
+        [self findEventsWithLocation:NO];
+    }
+    
+    return YES;
 }
 
 @end
