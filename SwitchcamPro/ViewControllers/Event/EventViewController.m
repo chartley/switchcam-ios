@@ -46,12 +46,16 @@ enum { kTagTabBase = 100 };
 - (id) init {
     // Tabs
     EventInfoViewController *eventInfoViewController = [[EventInfoViewController alloc] init];
+    [eventInfoViewController setSelectedMission:self.mission];
     
     EventActivityViewController *eventActivityViewController = [[EventActivityViewController alloc] init];
+    [eventActivityViewController setSelectedMission:self.mission];
     
     EventPeopleViewController *eventPeopleViewController = [[EventPeopleViewController alloc] init];
+    [eventPeopleViewController setSelectedMission:self.mission];
     
     EventVideosViewController *eventVideosViewController = [[EventVideosViewController alloc] init];
+    [eventVideosViewController setSelectedMission:self.mission];
     
     NSArray *viewController = [NSArray arrayWithObjects:eventInfoViewController, eventActivityViewController, eventPeopleViewController, eventVideosViewController, nil];
     

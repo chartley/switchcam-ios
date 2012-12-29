@@ -26,7 +26,6 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
 
 @interface AppDelegate ()
 
-@property (strong, nonatomic) ECSlidingViewController *slidingViewController;
 @property (strong, nonatomic) UINavigationController* loginViewController;
 @property (strong, nonatomic) StatusBarToastAndProgressView* statusBarToastAndProgressView;
 

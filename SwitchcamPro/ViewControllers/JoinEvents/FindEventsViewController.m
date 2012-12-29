@@ -10,17 +10,16 @@
 #import <QuartzCore/QuartzCore.h>
 #import "FindEventsViewController.h"
 #import "ECSlidingViewController.h"
+#import "EventViewController.h"
 #import "MenuViewController.h"
 #import "AppDelegate.h"
 #import "AFNetworking.h"
 #import "SPConstants.h"
 #import "Mission.h"
-#import "MBProgressHUD.h"
 
 @interface FindEventsViewController () <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate>
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
-@property (strong, nonatomic) MBProgressHUD *blockingLoadingIndicator;
 
 @end
 
@@ -81,11 +80,6 @@
     [self.noEventsFoundDetailLabel setShadowColor:[UIColor blackColor]];
     [self.noEventsFoundDetailLabel setShadowOffset:CGSizeMake(0, -1)];
     
-    // Add loading indicator
-    AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-    self.blockingLoadingIndicator = [[MBProgressHUD alloc] initWithWindow:appDelegate.window];
-    [appDelegate.window addSubview:self.blockingLoadingIndicator];
-    
     // Load up any cached events
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Mission"];
     NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"startDatetime" ascending:NO];
@@ -104,11 +98,6 @@
     [self.fetchedResultsController performFetch:&error];
     
     [self findEventsWithLocation:NO];
-}
-
-- (void)viewDidUnload {
-    // Remove Loading Indicator
-    [self.blockingLoadingIndicator removeFromSuperview];
 }
 
 - (void)didReceiveMemoryWarning
@@ -203,47 +192,6 @@
             [alertView show];
         }
     }];
-}
-
-- (void)joinEvent:(Mission*)missionToJoin {
-    NSString *facebookId = [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookIdKey];
-    NSString *facebookToken = [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookTokenKey];
-    
-    // Completion Blocks
-    void (^followMissionSuccessBlock)(AFHTTPRequestOperation *operation, id responseObject);
-    void (^followMissionFailureBlock)(AFHTTPRequestOperation *operation, NSError *error);
-    
-    followMissionSuccessBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
-        [self.blockingLoadingIndicator hide:YES];
-    };
-    
-    followMissionFailureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
-        [self.blockingLoadingIndicator hide:YES];
-        
-        if ([error code] == NSURLErrorNotConnectedToInternet) {
-            NSString *title = NSLocalizedString(@"No Network Connection", @"");
-            NSString *message = NSLocalizedString(@"Please check your internet connection and try again.", @"");
-            
-            // Show alert
-            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            [alertView show];
-        } else {        
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Oops", @"") message:NSLocalizedString(@"We're having trouble connecting to the server, please try again.", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles:nil];
-            [alertView show];
-        }
-    };
-    
-    // Make Request and set params
-    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:kAPIHost]];
-    [httpClient setAuthorizationHeaderWithUsername:facebookId password:facebookToken];
-    
-    NSString *path = [NSString stringWithFormat:@"mission/%@/follower", [missionToJoin missionId]];
-    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:path parameters:nil];
-    
-    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    [operation setCompletionBlockWithSuccess:followMissionSuccessBlock failure:followMissionFailureBlock];
-    
-    [operation start];
 }
 
 #pragma mark - Helper Methods
@@ -341,7 +289,18 @@
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:findEventCell.tag inSection:0];
     Mission *mission = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
-    [self joinEvent:mission];
+    // Load Event View Controller
+    EventViewController *viewController = [[EventViewController alloc] init];
+    [viewController setMission:mission];
+    
+    [self.slidingViewController anchorTopViewOffScreenTo:ECRight animations:nil onComplete:^{
+        AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+
+        CGRect frame = appDelegate.slidingViewController.topViewController.view.frame;
+        appDelegate.slidingViewController.topViewController = viewController;
+        appDelegate.slidingViewController.topViewController.view.frame = frame;
+        [appDelegate.slidingViewController resetTopView];
+    }];
 }
 
 #pragma mark - UITextField Delegate

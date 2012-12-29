@@ -215,7 +215,6 @@
     EventViewController *viewController = [[EventViewController alloc] init];
     [viewController setMission:mission];
     [self.navigationController pushViewController:viewController animated:YES];
-    
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate methods
