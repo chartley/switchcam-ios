@@ -66,7 +66,7 @@
     [self.findEventsButton.titleLabel setShadowColor:[UIColor blackColor]];
     [self.findEventsButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
     
-    [self.titleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Bold" size:17]];
+    [self.titleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:18]];
     [self.titleLabel setTextColor:[UIColor whiteColor]];
     [self.titleLabel setShadowColor:[UIColor blackColor]];
     [self.titleLabel setShadowOffset:CGSizeMake(0, -1)];

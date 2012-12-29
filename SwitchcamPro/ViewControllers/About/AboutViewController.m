@@ -87,7 +87,7 @@
     [self.facebookButton.titleLabel setShadowColor:[UIColor blackColor]];
     [self.facebookButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
     
-    [self.aboutTitleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Semibold" size:17]];
+    [self.aboutTitleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:18]];
     
     [self.aboutLabel setFont:[UIFont fontWithName:@"SourceSansPro-Semibold" size:15]];
     [self.aboutLabel setTextColor:[UIColor whiteColor]];

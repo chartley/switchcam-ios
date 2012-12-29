@@ -44,6 +44,9 @@
     [self.view addSubview:backgroundImageView];
     [self.view sendSubviewToBack:backgroundImageView];
     
+    // Add title
+    [self.navigationItem setTitle:NSLocalizedString(@"My Events", @"")];
+    
     [self.myEventsTableView setTableFooterView:[[UIView alloc] init]];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stateChangedFromNotification) name:SCAPINetworkRequestCanStartNotification object:nil];
