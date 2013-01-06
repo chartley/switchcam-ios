@@ -11,6 +11,7 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import "MyEventsViewController.h"
 #import "EventViewController.h"
+#import "FindEventsViewController.h"
 #import "ECSlidingViewController.h"
 #import "MenuViewController.h"
 #import "MyEventCell.h"
@@ -51,13 +52,24 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stateChangedFromNotification) name:SCAPINetworkRequestCanStartNotification object:nil];
     
+    // Set Fonts / Colors
+    [self.noEventsFoundHeaderLabel setFont:[UIFont fontWithName:@"SourceSansPro-Bold" size:17]];
+    [self.noEventsFoundHeaderLabel setTextColor:[UIColor whiteColor]];
+    [self.noEventsFoundHeaderLabel setShadowColor:[UIColor blackColor]];
+    [self.noEventsFoundHeaderLabel setShadowOffset:CGSizeMake(0, -1)];
+    
+    [self.noEventsFoundDetailLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:17]];
+    [self.noEventsFoundDetailLabel setTextColor:[UIColor whiteColor]];
+    [self.noEventsFoundDetailLabel setShadowColor:[UIColor blackColor]];
+    [self.noEventsFoundDetailLabel setShadowOffset:CGSizeMake(0, -1)];
+    
     // Set debug logging level. Set to 'RKLogLevelTrace' to see JSON payload
     RKLogConfigureByName("RestKit/Network", RKLogLevelTrace);
     
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Mission"];
     NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"startDatetime" ascending:NO];
     fetchRequest.sortDescriptors = @[descriptor];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"following == YES"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isFollowing == YES || isCameraCrew == YES"];
     fetchRequest.predicate = predicate;
     fetchRequest.fetchLimit = 30;
     NSError *error = nil;
@@ -101,6 +113,15 @@
     UIBarButtonItem *menuBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:menuButton];
     [self.navigationItem setLeftBarButtonItem:menuBarButtonItem];
     
+    // Add Plus button
+    UIButton *plusButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [plusButton setFrame:CGRectMake(0, 0, 30, 30)];
+    
+    [plusButton setImage:[UIImage imageNamed:@"btn-add"] forState:UIControlStateNormal];
+    [plusButton addTarget:self action:@selector(plusButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *plusBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:plusButton];
+    [self.navigationItem setRightBarButtonItem:plusBarButtonItem];
+    
     if ([FBSession.activeSession isOpen]) {
         [self getMyEvents];
     }
@@ -112,16 +133,40 @@
     [self.slidingViewController anchorTopViewTo:ECRight];
 }
 
+- (IBAction)plusButtonAction:(id)sender {
+    // Load Find Event View Controller
+    FindEventsViewController *viewController = [[FindEventsViewController alloc] init];
+    
+    [self.slidingViewController anchorTopViewOffScreenTo:ECRight animations:nil onComplete:^{
+        AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+        
+        CGRect frame = appDelegate.slidingViewController.topViewController.view.frame;
+        appDelegate.slidingViewController.topViewController = viewController;
+        appDelegate.slidingViewController.topViewController.view.frame = frame;
+        [appDelegate.slidingViewController resetTopView];
+    }];
+}
+
 #pragma mark - Network Calls
 
 - (void)getMyEvents {
-    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:@"true", @"followed_only", nil];
+    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:@"true", @"followed_or_camera_crew_only", nil];
     
     // Load the object model via RestKit
     [[RKObjectManager sharedManager] getObjectsAtPath:@"mission/" parameters:parameters success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-        // Mark these missions as following
+        
+        // Show correct view depending on result count
+        if ([[mappingResult array] count] == 0) {
+            [self.noEventsFoundView setHidden:NO];
+            [self.myEventsTableView setHidden:YES];
+        } else {
+            [self.noEventsFoundView setHidden:YES];
+            [self.myEventsTableView setHidden:NO];
+        }
+        
+        // Mark these missions as following or camera crew
         for (Mission *mission in [mappingResult array]) {
-            mission.following = [NSNumber numberWithBool:YES];
+            mission.isFollowing = [NSNumber numberWithBool:YES];
         }
         
         RKLogInfo(@"Load complete: Table should refresh...");
@@ -212,8 +257,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     Mission *mission = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
-    EventViewController *viewController = [[EventViewController alloc] init];
-    [viewController setMission:mission];
+    EventViewController *viewController = [[EventViewController alloc] initWithMission:mission];
     [self.navigationController pushViewController:viewController animated:YES];
 }
 

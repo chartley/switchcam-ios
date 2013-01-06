@@ -14,4 +14,8 @@
 
 @property (strong, nonatomic) NSArray *myEventsArray;
 
+@property (strong, nonatomic) IBOutlet UIView *noEventsFoundView;
+@property (strong, nonatomic) IBOutlet UILabel *noEventsFoundHeaderLabel;
+@property (strong, nonatomic) IBOutlet UILabel *noEventsFoundDetailLabel;
+
 @end

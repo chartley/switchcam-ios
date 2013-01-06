@@ -35,5 +35,6 @@
 
 - (id)initWithViewControllers:(NSArray *)viewControllers
                         style:(SPTabStyle *)style;
+- (id)initWithMission:(Mission*)mission;
 
 @end

@@ -136,7 +136,7 @@
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:kAPIHost]];
     [httpClient setAuthorizationHeaderWithUsername:facebookId password:facebookToken];
     
-    NSString *path = [NSString stringWithFormat:@"mission/%@/camera_crew", self.selectedMission.missionId];
+    NSString *path = [NSString stringWithFormat:@"mission/%@/camera_crew/", self.selectedMission.missionId];
     NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:path parameters:nil];
     
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
@@ -180,7 +180,7 @@
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:kAPIHost]];
     [httpClient setAuthorizationHeaderWithUsername:facebookId password:facebookToken];
     
-    NSString *path = [NSString stringWithFormat:@"mission/%@/follower", self.selectedMission.missionId];
+    NSString *path = [NSString stringWithFormat:@"mission/%@/follower/", self.selectedMission.missionId];
     NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:path parameters:nil];
     
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];

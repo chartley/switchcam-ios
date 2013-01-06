@@ -16,6 +16,8 @@
 #import "AFNetworking.h"
 #import "SPConstants.h"
 #import "Mission.h"
+#import "Venue.h"
+#import "Artist.h"
 
 @interface FindEventsViewController () <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate>
 
@@ -84,7 +86,7 @@
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Mission"];
     NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"startDatetime" ascending:NO];
     fetchRequest.sortDescriptors = @[descriptor];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"following == NO"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isFollowing == NO && isCameraCrew == NO"];
     fetchRequest.predicate = predicate;
     fetchRequest.fetchLimit = 30;
     NSError *error = nil;
@@ -168,10 +170,14 @@
             [self.eventsTableView setHidden:NO];
         }
         
-        // Mark these missions as following
+        // Mark these missions not following or camera crew if not set
         for (Mission *mission in [mappingResult array]) {
-            if (mission.following == nil) {
-                mission.following = [NSNumber numberWithBool:NO];
+            if (mission.isFollowing == nil) {
+                mission.isFollowing = [NSNumber numberWithBool:NO];
+            }
+            
+            if (mission.isCameraCrew == nil) {
+                mission.isCameraCrew = [NSNumber numberWithBool:NO];
             }
         }
         
@@ -203,7 +209,7 @@
     [dateFormatter setDateFormat:@"d. MMMM YYYY"];
     NSString *startEventTimeString = [dateFormatter stringFromDate:[mission startDatetime]];
     
-    NSString *detailString = [NSString stringWithFormat:@"%@ %@", @"San Francisco", startEventTimeString];
+    NSString *detailString = [NSString stringWithFormat:@"%@ %@", [mission venue].city, startEventTimeString];
     
     FindEventCell *findEventCell = (FindEventCell *)cell;
     [findEventCell.locationLabel setText:[mission title]];
@@ -211,7 +217,7 @@
     [findEventCell setDelegate:self];
     [findEventCell setTag:indexPath.row];
     
-    if ([[mission following] boolValue]) {
+    if ([[mission isFollowing] boolValue]) {
         [findEventCell.joinButton setEnabled:NO];
     } else {
         [findEventCell.joinButton setEnabled:YES];
@@ -266,6 +272,7 @@
         // Set the background for any states you plan to use
         [findEventCell.joinButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
         [findEventCell.joinButton setBackgroundImage:highlightButtonImage forState:UIControlStateHighlighted];
+        [findEventCell setSelectionStyle:UITableViewCellSelectionStyleNone];
     }
     
     [self configureCell:cell forTableView:tableView atIndexPath:indexPath];
@@ -290,14 +297,15 @@
     Mission *mission = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     // Load Event View Controller
-    EventViewController *viewController = [[EventViewController alloc] init];
-    [viewController setMission:mission];
+    EventViewController *viewController = [[EventViewController alloc] initWithMission:mission];
+    
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
     
     [self.slidingViewController anchorTopViewOffScreenTo:ECRight animations:nil onComplete:^{
         AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
 
         CGRect frame = appDelegate.slidingViewController.topViewController.view.frame;
-        appDelegate.slidingViewController.topViewController = viewController;
+        appDelegate.slidingViewController.topViewController = navController;
         appDelegate.slidingViewController.topViewController.view.frame = frame;
         [appDelegate.slidingViewController resetTopView];
     }];

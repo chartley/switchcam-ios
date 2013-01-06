@@ -3,6 +3,7 @@
 #import "SPTabStyle.h"
 #import "SPTabsView.h"
 #import "Mission.h"
+#import "Artist.h"
 #import "ECSlidingViewController.h"
 #import "MenuViewController.h"
 #import "SCCamViewController.h"
@@ -43,19 +44,19 @@ enum { kTagTabBase = 100 };
     return self;
 }
 
-- (id) init {
+- (id)initWithMission:(Mission*)mission {
     // Tabs
     EventInfoViewController *eventInfoViewController = [[EventInfoViewController alloc] init];
-    [eventInfoViewController setSelectedMission:self.mission];
+    [eventInfoViewController setSelectedMission:mission];
     
     EventActivityViewController *eventActivityViewController = [[EventActivityViewController alloc] init];
-    [eventActivityViewController setSelectedMission:self.mission];
+    [eventActivityViewController setSelectedMission:mission];
     
     EventPeopleViewController *eventPeopleViewController = [[EventPeopleViewController alloc] init];
-    [eventPeopleViewController setSelectedMission:self.mission];
+    [eventPeopleViewController setSelectedMission:mission];
     
     EventVideosViewController *eventVideosViewController = [[EventVideosViewController alloc] init];
-    [eventVideosViewController setSelectedMission:self.mission];
+    [eventVideosViewController setSelectedMission:mission];
     
     NSArray *viewController = [NSArray arrayWithObjects:eventInfoViewController, eventActivityViewController, eventPeopleViewController, eventVideosViewController, nil];
     
@@ -63,7 +64,8 @@ enum { kTagTabBase = 100 };
     
     if (self) {
         // Custom initialization
-        
+        self.mission = mission;
+        self.navigationItem.title = self.mission.artist.artistName;
     }
     return self;
 }
