@@ -50,9 +50,6 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     // Initialize RestKit
     [self initializeRestKit];
     
-    // Start location
-    [[SPLocationManager sharedInstance] start];
-    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     MyEventsViewController *myEventsViewController = [[MyEventsViewController alloc] initWithNibName:@"MyEventsViewController" bundle:nil];
@@ -71,6 +68,9 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
         // No? Display the login page.
         [self showLoginView];
     } else {
+        // Start location
+        [[SPLocationManager sharedInstance] start];
+        
         // Save Facebook id and token for API access
         [[FBRequest requestForMe] startWithCompletionHandler:
          ^(FBRequestConnection *connection,
@@ -194,10 +194,13 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
         UIViewController *topViewController = [self.slidingViewController topViewController];
         [topViewController dismissModalViewControllerAnimated:YES];
         self.loginViewController = nil;
+        
+        // Start location
+        [[SPLocationManager sharedInstance] start];
     }
 }
 
-#pragma mark Facebook Login Code
+#pragma mark - Facebook Login Code
 
 - (void)createAndPresentLoginView {
     if (self.loginViewController == nil) {
