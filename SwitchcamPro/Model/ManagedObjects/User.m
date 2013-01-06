@@ -2,8 +2,8 @@
 //  User.m
 //  SwitchcamPro
 //
-//  Created by William Ketterer on 12/15/12.
-//  Copyright (c) 2012 William Ketterer. All rights reserved.
+//  Created by William Ketterer on 1/6/13.
+//  Copyright (c) 2013 William Ketterer. All rights reserved.
 //
 
 #import "User.h"

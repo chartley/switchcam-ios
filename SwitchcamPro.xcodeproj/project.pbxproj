@@ -25,6 +25,11 @@
 		C90847AB167FDD7300DEF94E /* icn-upload-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = C90847A1167FDD7300DEF94E /* icn-upload-pressed.png */; };
 		C90847AC167FDD7300DEF94E /* icn-upload-pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C90847A2167FDD7300DEF94E /* icn-upload-pressed@2x.png */; };
 		C90847CC16803C7700DEF94E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C90847CB16803C7700DEF94E /* QuartzCore.framework */; };
+		C94F7C0D1699F3DF00D65EDC /* Venue.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F7C0C1699F3DF00D65EDC /* Venue.m */; };
+		C94F7C111699F3E000D65EDC /* Artist.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F7C101699F3E000D65EDC /* Artist.m */; };
+		C94F7C141699F40800D65EDC /* Recording.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F7C131699F40800D65EDC /* Recording.m */; };
+		C94F7C171699F40800D65EDC /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F7C161699F40800D65EDC /* User.m */; };
+		C94F7C1A1699F40900D65EDC /* Mission.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F7C191699F40900D65EDC /* Mission.m */; };
 		C97B0CB2166DBDC3005BB65F /* libUAirship-1.3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C97BFFC2166DBDC0005BB65F /* libUAirship-1.3.3.a */; };
 		C97B132F166DBFA8005BB65F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97B132E166DBFA8005BB65F /* SystemConfiguration.framework */; };
 		C97B1331166DBFB8005BB65F /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97B1330166DBFB8005BB65F /* CFNetwork.framework */; };
@@ -348,9 +353,6 @@
 		C9DDF34D167D24DD000399EA /* slide5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9DDF27B167D24DD000399EA /* slide5@2x.png */; };
 		C9DDF34E167D24DD000399EA /* slide6.png in Resources */ = {isa = PBXBuildFile; fileRef = C9DDF27C167D24DD000399EA /* slide6.png */; };
 		C9DDF34F167D24DD000399EA /* slide6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9DDF27D167D24DD000399EA /* slide6@2x.png */; };
-		C9DDF352167D2728000399EA /* Mission.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DDF351167D2728000399EA /* Mission.m */; };
-		C9DDF355167D2735000399EA /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DDF354167D2735000399EA /* User.m */; };
-		C9DDF358167D2736000399EA /* Recording.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DDF357167D2736000399EA /* Recording.m */; };
 		C9E9B6AF16741B1800487A72 /* UploadVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E9B6AD16741B1800487A72 /* UploadVideoViewController.m */; };
 		C9E9B6B016741B1800487A72 /* UploadVideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9E9B6AE16741B1800487A72 /* UploadVideoViewController.xib */; };
 		C9E9B6B316741D0E00487A72 /* LabelTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E9B6B216741D0E00487A72 /* LabelTextFieldCell.m */; };
@@ -387,6 +389,16 @@
 		C90847A1167FDD7300DEF94E /* icn-upload-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icn-upload-pressed.png"; sourceTree = "<group>"; };
 		C90847A2167FDD7300DEF94E /* icn-upload-pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icn-upload-pressed@2x.png"; sourceTree = "<group>"; };
 		C90847CB16803C7700DEF94E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		C94F7C0B1699F3DF00D65EDC /* Venue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Venue.h; path = Model/ManagedObjects/Venue.h; sourceTree = "<group>"; };
+		C94F7C0C1699F3DF00D65EDC /* Venue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Venue.m; path = Model/ManagedObjects/Venue.m; sourceTree = "<group>"; };
+		C94F7C0F1699F3DF00D65EDC /* Artist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Artist.h; path = Model/ManagedObjects/Artist.h; sourceTree = "<group>"; };
+		C94F7C101699F3E000D65EDC /* Artist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Artist.m; path = Model/ManagedObjects/Artist.m; sourceTree = "<group>"; };
+		C94F7C121699F40800D65EDC /* Recording.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Recording.h; path = Model/ManagedObjects/Recording.h; sourceTree = "<group>"; };
+		C94F7C131699F40800D65EDC /* Recording.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Recording.m; path = Model/ManagedObjects/Recording.m; sourceTree = "<group>"; };
+		C94F7C151699F40800D65EDC /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = User.h; path = Model/ManagedObjects/User.h; sourceTree = "<group>"; };
+		C94F7C161699F40800D65EDC /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = Model/ManagedObjects/User.m; sourceTree = "<group>"; };
+		C94F7C181699F40900D65EDC /* Mission.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mission.h; path = Model/ManagedObjects/Mission.h; sourceTree = "<group>"; };
+		C94F7C191699F40900D65EDC /* Mission.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Mission.m; path = Model/ManagedObjects/Mission.m; sourceTree = "<group>"; };
 		C97B132E166DBFA8005BB65F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		C97B1330166DBFB8005BB65F /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		C97B1332166DBFC5005BB65F /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -788,12 +800,6 @@
 		C9DDF27B167D24DD000399EA /* slide5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slide5@2x.png"; sourceTree = "<group>"; };
 		C9DDF27C167D24DD000399EA /* slide6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slide6.png; sourceTree = "<group>"; };
 		C9DDF27D167D24DD000399EA /* slide6@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slide6@2x.png"; sourceTree = "<group>"; };
-		C9DDF350167D2728000399EA /* Mission.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mission.h; path = Model/ManagedObjects/Mission.h; sourceTree = "<group>"; };
-		C9DDF351167D2728000399EA /* Mission.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Mission.m; path = Model/ManagedObjects/Mission.m; sourceTree = "<group>"; };
-		C9DDF353167D2735000399EA /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
-		C9DDF354167D2735000399EA /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
-		C9DDF356167D2735000399EA /* Recording.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Recording.h; sourceTree = "<group>"; };
-		C9DDF357167D2736000399EA /* Recording.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Recording.m; sourceTree = "<group>"; };
 		C9E9B6AC16741B1800487A72 /* UploadVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UploadVideoViewController.h; path = ViewControllers/Upload/UploadVideoViewController.h; sourceTree = "<group>"; };
 		C9E9B6AD16741B1800487A72 /* UploadVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UploadVideoViewController.m; path = ViewControllers/Upload/UploadVideoViewController.m; sourceTree = "<group>"; };
 		C9E9B6AE16741B1800487A72 /* UploadVideoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UploadVideoViewController.xib; path = ViewControllers/Upload/UploadVideoViewController.xib; sourceTree = "<group>"; };
@@ -1040,12 +1046,16 @@
 		C97B18FB1671A964005BB65F /* ManagedObjects */ = {
 			isa = PBXGroup;
 			children = (
-				C9DDF350167D2728000399EA /* Mission.h */,
-				C9DDF351167D2728000399EA /* Mission.m */,
-				C9DDF356167D2735000399EA /* Recording.h */,
-				C9DDF357167D2736000399EA /* Recording.m */,
-				C9DDF353167D2735000399EA /* User.h */,
-				C9DDF354167D2735000399EA /* User.m */,
+				C94F7C0F1699F3DF00D65EDC /* Artist.h */,
+				C94F7C101699F3E000D65EDC /* Artist.m */,
+				C94F7C0B1699F3DF00D65EDC /* Venue.h */,
+				C94F7C0C1699F3DF00D65EDC /* Venue.m */,
+				C94F7C181699F40900D65EDC /* Mission.h */,
+				C94F7C191699F40900D65EDC /* Mission.m */,
+				C94F7C151699F40800D65EDC /* User.h */,
+				C94F7C161699F40800D65EDC /* User.m */,
+				C94F7C121699F40800D65EDC /* Recording.h */,
+				C94F7C131699F40800D65EDC /* Recording.m */,
 			);
 			name = ManagedObjects;
 			sourceTree = "<group>";
@@ -2020,15 +2030,17 @@
 				C9E9B6B916741D5000487A72 /* ButtonToProgressCell.m in Sources */,
 				C9E9B6D01675DF4200487A72 /* SPSerializable.m in Sources */,
 				C9DDF1751676C88B000399EA /* EventTabViewController.m in Sources */,
-				C9DDF352167D2728000399EA /* Mission.m in Sources */,
-				C9DDF355167D2735000399EA /* User.m in Sources */,
-				C9DDF358167D2736000399EA /* Recording.m in Sources */,
 				C9F49114167D389F00C75C6F /* UIImage+H568.m in Sources */,
 				C9F4911A167D506700C75C6F /* UploadTextField.m in Sources */,
 				C99E97ED167E4494006B3BBC /* StatusBarToastAndProgressView.m in Sources */,
 				C9856D10167E734C00C5B708 /* SlideView.m in Sources */,
 				C9856D32167EB27900C5B708 /* MenuPendingUploadDSD.m in Sources */,
 				2456C42B168E64FD00F49C70 /* FindEventCell.m in Sources */,
+				C94F7C0D1699F3DF00D65EDC /* Venue.m in Sources */,
+				C94F7C111699F3E000D65EDC /* Artist.m in Sources */,
+				C94F7C141699F40800D65EDC /* Recording.m in Sources */,
+				C94F7C171699F40800D65EDC /* User.m in Sources */,
+				C94F7C1A1699F40900D65EDC /* Mission.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -2,22 +2,22 @@
 //  Mission.h
 //  SwitchcamPro
 //
-//  Created by William Ketterer on 12/15/12.
-//  Copyright (c) 2012 William Ketterer. All rights reserved.
+//  Created by William Ketterer on 1/6/13.
+//  Copyright (c) 2013 William Ketterer. All rights reserved.
 //
 
 #import <RestKit/RestKit.h>
 #import <RestKit/CoreData.h>
 
-@class Recording, User;
+@class Artist, Recording, User, Venue;
 
 @interface Mission : NSManagedObject
 
 @property (nonatomic, retain) NSDate * endDatetime;
-@property (nonatomic, retain) NSNumber * missionId;
 @property (nonatomic, retain) NSNumber * following;
 @property (nonatomic, retain) NSNumber * latitude;
 @property (nonatomic, retain) NSNumber * longitude;
+@property (nonatomic, retain) NSNumber * missionId;
 @property (nonatomic, retain) NSDate * startDatetime;
 @property (nonatomic, retain) NSDate * submissionDeadline;
 @property (nonatomic, retain) NSString * title;
@@ -25,6 +25,8 @@
 @property (nonatomic, retain) User *createdBy;
 @property (nonatomic, retain) NSSet *followers;
 @property (nonatomic, retain) Recording *myRecordings;
+@property (nonatomic, retain) Venue *venue;
+@property (nonatomic, retain) Artist *artist;
 @end
 
 @interface Mission (CoreDataGeneratedAccessors)

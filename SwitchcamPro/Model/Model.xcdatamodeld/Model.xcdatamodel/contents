@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1811" systemVersion="12C60" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Artist" representedClassName="Artist" syncable="YES">
+        <attribute name="artistId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="artistName" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="missions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mission" inverseName="artist" inverseEntity="Mission" syncable="YES"/>
+    </entity>
     <entity name="Mission" representedClassName="Mission" syncable="YES">
         <attribute name="endDatetime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="following" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -9,10 +14,12 @@
         <attribute name="startDatetime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="submissionDeadline" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="artist" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Artist" inverseName="missions" inverseEntity="Artist" syncable="YES"/>
         <relationship name="cameraCrew" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="attendedMission" inverseEntity="User" syncable="YES"/>
         <relationship name="createdBy" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="createdMission" inverseEntity="User" syncable="YES"/>
         <relationship name="followers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="followedMission" inverseEntity="User" syncable="YES"/>
         <relationship name="myRecordings" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Recording" inverseName="mission" inverseEntity="Recording" syncable="YES"/>
+        <relationship name="venue" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Venue" inverseName="missions" inverseEntity="Venue" syncable="YES"/>
     </entity>
     <entity name="Recording" representedClassName="Recording" syncable="YES">
         <attribute name="compressedVideoURL" optional="YES" attributeType="String" syncable="YES"/>
@@ -42,9 +49,20 @@
         <relationship name="createdMission" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mission" inverseName="createdBy" inverseEntity="Mission" syncable="YES"/>
         <relationship name="followedMission" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mission" inverseName="followers" inverseEntity="Mission" syncable="YES"/>
     </entity>
+    <entity name="Venue" representedClassName="Venue" syncable="YES">
+        <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="foursquareId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="street" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="venueName" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="missions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mission" inverseName="venue" inverseEntity="Mission" syncable="YES"/>
+    </entity>
     <elements>
-        <element name="Mission" positionX="160" positionY="192" width="128" height="225"/>
+        <element name="Mission" positionX="160" positionY="192" width="128" height="255"/>
         <element name="Recording" positionX="160" positionY="192" width="128" height="300"/>
         <element name="User" positionX="160" positionY="192" width="128" height="150"/>
+        <element name="Artist" positionX="160" positionY="192" width="128" height="90"/>
+        <element name="Venue" positionX="160" positionY="192" width="128" height="150"/>
     </elements>
 </model>
