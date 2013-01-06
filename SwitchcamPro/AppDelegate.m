@@ -13,6 +13,7 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import "UAirship.h"
 #import "UAPush.h"
+#import "SPLocationManager.h"
 #import "MyEventsViewController.h"
 #import "ECSlidingViewController.h"
 #import "LoginViewController.h"
@@ -48,6 +49,9 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     
     // Initialize RestKit
     [self initializeRestKit];
+    
+    // Start location
+    [[SPLocationManager sharedInstance] start];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     

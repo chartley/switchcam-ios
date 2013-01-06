@@ -8,6 +8,7 @@
 
 #import <RestKit/RestKit.h>
 #import <QuartzCore/QuartzCore.h>
+#import "SPLocationManager.h"
 #import "FindEventsViewController.h"
 #import "ECSlidingViewController.h"
 #import "EventViewController.h"
@@ -146,16 +147,24 @@
 #pragma mark - Network Calls
 
 - (void)findEventsWithLocation:(BOOL)usingLocation {
-    NSDictionary *parameters = nil;
+    NSMutableDictionary *parameters = nil;
     
     // Check if we have search text
     if (self.eventSearchTextField.text != nil && ![self.eventSearchTextField.text isEqualToString:@""]) {
-        parameters = [NSDictionary dictionaryWithObjectsAndKeys:self.eventSearchTextField.text, @"terms", nil];
+        parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:self.eventSearchTextField.text, @"terms", nil];
     }
     
-    //TODO Location
+    // Location
     if (usingLocation) {
+        CLLocationCoordinate2D coordinate = [[SPLocationManager sharedInstance] currentLocation].coordinate;
+        // Build Coords String
+        NSString *coordsString = [NSString stringWithFormat:@"%f,%f", coordinate.longitude, coordinate.latitude];
         
+        if (parameters != nil) {
+            [parameters setObject:coordsString forKey:@"coordinates"];
+        } else {
+            parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:coordsString, @"coordinates", nil];
+        }
     }
     
     // Load the object model via RestKit
