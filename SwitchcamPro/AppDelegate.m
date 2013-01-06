@@ -393,10 +393,34 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     // If source and destination key path are the same, we can simply add a string to the array
     [missionMapping addAttributeMappingsFromArray:@[ @"title" ]];
     
+    RKEntityMapping *artistMapping = [RKEntityMapping mappingForEntityForName:@"Artist" inManagedObjectStore:managedObjectStore];
+    artistMapping.identificationAttributes = @[ @"artistId" ];
+    
+    [artistMapping addAttributeMappingsFromDictionary:@{
+     @"id": @"artistId",
+     @"name": @"artistName",
+     @"pic_link": @"pictureURL",
+     }];
+    
+    RKEntityMapping *venueMapping = [RKEntityMapping mappingForEntityForName:@"Venue" inManagedObjectStore:managedObjectStore];
+    venueMapping.identificationAttributes = @[ @"foursquareId" ];
+    
+    [venueMapping addAttributeMappingsFromDictionary:@{
+     @"foursquare_id": @"foursquareId",
+     @"name": @"venueName",
+     }];
+    // If source and destination key path are the same, we can simply add a string to the array
+    [venueMapping addAttributeMappingsFromArray:@[ @"street" ]];
+    [venueMapping addAttributeMappingsFromArray:@[ @"city" ]];
+    [venueMapping addAttributeMappingsFromArray:@[ @"state" ]];
+    [venueMapping addAttributeMappingsFromArray:@[ @"country" ]];
+    
     // Relationships
     [missionMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"camera_crew" toKeyPath:@"cameraCrew" withMapping:userMapping]];
     [missionMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"created_by" toKeyPath:@"createdBy" withMapping:userMapping]];    
     [missionMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"followers" toKeyPath:@"followers" withMapping:userMapping]];
+    [missionMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"venue" toKeyPath:@"venue" withMapping:venueMapping]];
+    [missionMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"artist" toKeyPath:@"artist" withMapping:artistMapping]];
     
     [userMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"attendedMissions" toKeyPath:@"cameraCrew" withMapping:missionMapping]];
     [userMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"createdMissions" toKeyPath:@"createdBy" withMapping:missionMapping]];

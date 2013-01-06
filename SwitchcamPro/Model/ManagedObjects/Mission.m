@@ -16,13 +16,14 @@
 @implementation Mission
 
 @dynamic endDatetime;
-@dynamic following;
+@dynamic isFollowing;
 @dynamic latitude;
 @dynamic longitude;
 @dynamic missionId;
 @dynamic startDatetime;
 @dynamic submissionDeadline;
 @dynamic title;
+@dynamic isCameraCrew;
 @dynamic cameraCrew;
 @dynamic createdBy;
 @dynamic followers;
