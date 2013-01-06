@@ -9,13 +9,14 @@
 #import <UIKit/UIKit.h>
 
 #define kMyEventCellIdentifier @""
-#define kMyEventCellRowHeight 120
+#define kMyEventCellRowHeight 200
 
 @interface MyEventCell : UITableViewCell
 
 @property (strong, nonatomic) IBOutlet UILabel *eventNameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *eventLocationLabel;
 @property (strong, nonatomic) IBOutlet UILabel *eventDateLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *eventImageView;
 @property (strong, nonatomic) IBOutlet UIButton *eventLocationButton;
 
 @end

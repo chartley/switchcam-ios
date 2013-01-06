@@ -18,6 +18,8 @@
 #import "AppDelegate.h"
 #import "SPConstants.h"
 #import "Mission.h"
+#import "Artist.h"
+#import "Venue.h"
 
 @interface MyEventsViewController () <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate>
 
@@ -191,19 +193,20 @@
 #pragma mark - Helper Methods
 
 - (void)configureCell:(UITableViewCell *)cell forTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
-    Mission *mission
-    = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    Mission *mission = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"d. MMMM YYYY"];
+    [dateFormatter setDateFormat:@"MMMM d. YYYY @ ha"];
     NSString *startEventTimeString = [dateFormatter stringFromDate:[mission startDatetime]];
 
     MyEventCell *myEventCell = (MyEventCell *)cell;
     
+    NSString *locationString = [NSString stringWithFormat:@"%@, %@", [mission venue].venueName, [mission venue].city];
     
-    [myEventCell.eventNameLabel setText:[mission title]];
-    [myEventCell.eventLocationLabel setText:@"Magik"];
+    [myEventCell.eventNameLabel setText:[mission artist].artistName];
+    [myEventCell.eventLocationLabel setText:locationString];
     [myEventCell.eventDateLabel setText:startEventTimeString];
+    [myEventCell.eventImageView setImageWithURL:[NSURL URLWithString:[mission picURL]]];
 }
 
 #pragma mark - UITableViewDataSource methods
@@ -232,9 +235,9 @@
         
         // Set Custom Font
         MyEventCell *myEventCell = (MyEventCell *)cell;
-        [myEventCell.eventNameLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:18]];
-        [myEventCell.eventLocationLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:16]];
-        [myEventCell.eventDateLabel setFont:[UIFont fontWithName:@"SourceSansPro-Light" size:14]];
+        [myEventCell.eventNameLabel setFont:[UIFont fontWithName:@"SourceSansPro-Bold" size:22]];
+        [myEventCell.eventLocationLabel setFont:[UIFont fontWithName:@"SourceSansPro-Semibold" size:14]];
+        [myEventCell.eventDateLabel setFont:[UIFont fontWithName:@"SourceSansPro-Semibold" size:12]];
         
         [myEventCell.eventNameLabel setShadowColor:[UIColor blackColor]];
         [myEventCell.eventLocationLabel setShadowColor:[UIColor blackColor]];

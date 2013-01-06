@@ -30,6 +30,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *sharePhotoLabel;
 @property (strong, nonatomic) IBOutlet UIButton *shareNoteButton;
 @property (strong, nonatomic) IBOutlet UILabel *shareNoteLabel;
+@property (strong, nonatomic) IBOutlet UILabel *eventLocationLabel;
+@property (strong, nonatomic) IBOutlet UILabel *eventDateLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *eventImageView;
 @property (strong, nonatomic) IBOutlet UIScrollView *eventScrollView;
 

@@ -24,6 +24,7 @@
 @dynamic submissionDeadline;
 @dynamic title;
 @dynamic isCameraCrew;
+@dynamic picURL;
 @dynamic cameraCrew;
 @dynamic createdBy;
 @dynamic followers;

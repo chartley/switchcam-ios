@@ -4,6 +4,7 @@
 #import "SPTabsView.h"
 #import "Mission.h"
 #import "Artist.h"
+#import "Venue.h"
 #import "ECSlidingViewController.h"
 #import "MenuViewController.h"
 #import "SCCamViewController.h"
@@ -210,6 +211,19 @@ enum { kTagTabBase = 100 };
     [self.navigationItem setLeftBarButtonItem:menuBarButtonItem];
     [self.navigationItem setHidesBackButton:YES];
     
+    // Add Event Image
+    [self.eventImageView setImageWithURL:[NSURL URLWithString:[self.mission picURL]]];
+    
+    // Set Event Info
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"MMMM d. YYYY @ ha"];
+    NSString *startEventTimeString = [dateFormatter stringFromDate:[self.mission startDatetime]];
+    
+    NSString *locationString = [NSString stringWithFormat:@"@ %@", [self.mission venue].venueName];
+    
+    [self.eventLocationLabel setText:locationString];
+    [self.eventDateLabel setText:startEventTimeString];
+    
     // Set Font / Color
     [self.shareNoteLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:12]];
     [self.shareNoteLabel setTextColor:[UIColor whiteColor]];
@@ -220,6 +234,16 @@ enum { kTagTabBase = 100 };
     [self.sharePhotoLabel setTextColor:[UIColor whiteColor]];
     [self.sharePhotoLabel setShadowColor:[UIColor blackColor]];
     [self.sharePhotoLabel setShadowOffset:CGSizeMake(0, -1)];
+    
+    [self.eventLocationLabel setFont:[UIFont fontWithName:@"SourceSansPro-Semibold" size:14]];
+    [self.eventLocationLabel setTextColor:[UIColor whiteColor]];
+    [self.eventLocationLabel setShadowColor:[UIColor blackColor]];
+    [self.eventLocationLabel setShadowOffset:CGSizeMake(0, -1)];
+    
+    [self.eventDateLabel setFont:[UIFont fontWithName:@"SourceSansPro-Semibold" size:12]];
+    [self.eventDateLabel setTextColor:[UIColor whiteColor]];
+    [self.eventDateLabel setShadowColor:[UIColor blackColor]];
+    [self.eventDateLabel setShadowOffset:CGSizeMake(0, -1)];
     
     // Adjust drawer toolbar to be set to the correct origin depending on screen size
     [self.toolbarDrawer setFrame:CGRectMake(0, self.view.frame.size.height - self.toolbarDrawer.frame.size.height, self.toolbarDrawer.frame.size.width, self.toolbarDrawer.frame.size.height)];

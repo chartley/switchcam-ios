@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 William Ketterer. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
+#import <RestKit/RestKit.h>
+#import <RestKit/CoreData.h>
 
 @class Artist, Recording, User, Venue;
 
@@ -22,6 +22,7 @@
 @property (nonatomic, retain) NSDate * submissionDeadline;
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSNumber * isCameraCrew;
+@property (nonatomic, retain) NSString * picURL;
 @property (nonatomic, retain) NSSet *cameraCrew;
 @property (nonatomic, retain) User *createdBy;
 @property (nonatomic, retain) NSSet *followers;

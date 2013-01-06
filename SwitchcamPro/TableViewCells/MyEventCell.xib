@@ -43,7 +43,7 @@
 							<object class="IBUIImageView" id="607839118">
 								<reference key="NSNextResponder" ref="733864539"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrameSize">{320, 120}</string>
+								<string key="NSFrameSize">{320, 199}</string>
 								<reference key="NSSuperview" ref="733864539"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="508029720"/>
@@ -58,7 +58,7 @@
 							<object class="IBUILabel" id="508029720">
 								<reference key="NSNextResponder" ref="733864539"/>
 								<int key="NSvFlags">293</int>
-								<string key="NSFrame">{{20, 49}, {280, 48}}</string>
+								<string key="NSFrame">{{20, 117}, {280, 48}}</string>
 								<reference key="NSSuperview" ref="733864539"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="999434633"/>
@@ -95,7 +95,7 @@
 							<object class="IBUILabel" id="999434633">
 								<reference key="NSNextResponder" ref="733864539"/>
 								<int key="NSvFlags">293</int>
-								<string key="NSFrame">{{20, 81}, {280, 21}}</string>
+								<string key="NSFrame">{{20, 152}, {280, 21}}</string>
 								<reference key="NSSuperview" ref="733864539"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="741195120"/>
@@ -120,10 +120,9 @@
 							<object class="IBUILabel" id="741195120">
 								<reference key="NSNextResponder" ref="733864539"/>
 								<int key="NSvFlags">293</int>
-								<string key="NSFrame">{{20, 98}, {280, 21}}</string>
+								<string key="NSFrame">{{20, 172}, {280, 21}}</string>
 								<reference key="NSSuperview" ref="733864539"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -143,7 +142,7 @@
 								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 							</object>
 						</array>
-						<string key="NSFrameSize">{320, 119}</string>
+						<string key="NSFrameSize">{320, 199}</string>
 						<reference key="NSSuperview" ref="777886867"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="607839118"/>
@@ -159,7 +158,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
 				</array>
-				<string key="NSFrameSize">{320, 120}</string>
+				<string key="NSFrameSize">{320, 200}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="733864539"/>
@@ -167,7 +166,7 @@
 				<reference key="IBUIBackgroundColor" ref="736405424"/>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<reference key="IBUIContentView" ref="733864539"/>
-				<integer value="120" key="IBUIRowHeight"/>
+				<integer value="200" key="IBUIRowHeight"/>
 			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
@@ -195,6 +194,14 @@
 						<reference key="destination" ref="508029720"/>
 					</object>
 					<int key="connectionID">45</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">eventImageView</string>
+						<reference key="source" ref="777886867"/>
+						<reference key="destination" ref="607839118"/>
+					</object>
+					<int key="connectionID">57</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -267,7 +274,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">56</int>
+			<int key="maxID">57</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -276,6 +283,7 @@
 					<string key="superclassName">UITableViewCell</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="eventDateLabel">UILabel</string>
+						<string key="eventImageView">UIImageView</string>
 						<string key="eventLocationButton">UIButton</string>
 						<string key="eventLocationLabel">UILabel</string>
 						<string key="eventNameLabel">UILabel</string>
@@ -284,6 +292,10 @@
 						<object class="IBToOneOutletInfo" key="eventDateLabel">
 							<string key="name">eventDateLabel</string>
 							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="eventImageView">
+							<string key="name">eventImageView</string>
+							<string key="candidateClassName">UIImageView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="eventLocationButton">
 							<string key="name">eventLocationButton</string>
