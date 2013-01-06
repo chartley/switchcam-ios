@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SPTabView.h"
+#import "SCCamViewController.h"
 
 @class Mission;
 @class SPTabsViewController;
@@ -15,7 +16,7 @@
 @class SPTabStyle;
 @class SPTabsView;
 
-@interface EventViewController : UIViewController <SPTabViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate> {
+@interface EventViewController : UIViewController <SPTabViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate, SCCamViewControllerDelegate> {
     NSArray *viewControllers;
     SPTabsView *tabsContainerView;
     SPTabsFooterView *footerView;

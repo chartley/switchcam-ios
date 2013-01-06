@@ -129,6 +129,7 @@
 								<string key="NSFrame">{{443, 284}, {68, 22}}</string>
 								<reference key="NSSuperview" ref="197392939"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="34207833"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -423,6 +424,27 @@
 								<reference key="IBUIFontDescription" ref="684730106"/>
 								<reference key="IBUIFont" ref="406268077"/>
 							</object>
+							<object class="IBUIButton" id="34207833">
+								<reference key="NSNextResponder" ref="197392939"/>
+								<int key="NSvFlags">292</int>
+								<string key="NSFrame">{{528, 271}, {30, 30}}</string>
+								<reference key="NSSuperview" ref="197392939"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
+								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<bool key="IBUIOpaque">NO</bool>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<int key="IBUIContentHorizontalAlignment">0</int>
+								<int key="IBUIContentVerticalAlignment">0</int>
+								<reference key="IBUIHighlightedTitleColor" ref="770142078"/>
+								<object class="NSColor" key="IBUINormalTitleColor">
+									<int key="NSColorSpace">1</int>
+									<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
+								</object>
+								<reference key="IBUINormalTitleShadowColor" ref="224916528"/>
+								<reference key="IBUIFontDescription" ref="684730106"/>
+								<reference key="IBUIFont" ref="406268077"/>
+							</object>
 						</object>
 						<string key="NSFrameSize">{568, 320}</string>
 						<reference key="NSSuperview" ref="774585933"/>
@@ -598,6 +620,14 @@
 					<int key="connectionID">352</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">selectExistingButton</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="34207833"/>
+					</object>
+					<int key="connectionID">354</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">toggleRecording:</string>
 						<reference key="source" ref="125315282"/>
@@ -669,6 +699,15 @@
 					</object>
 					<int key="connectionID">351</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">selectExistingButtonAction:</string>
+						<reference key="source" ref="34207833"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">355</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -723,6 +762,7 @@
 							<reference ref="1047828686"/>
 							<reference ref="145014210"/>
 							<reference ref="13357920"/>
+							<reference ref="34207833"/>
 						</object>
 						<reference key="parent" ref="774585933"/>
 					</object>
@@ -812,6 +852,11 @@
 						<reference key="object" ref="145014210"/>
 						<reference key="parent" ref="197392939"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">353</int>
+						<reference key="object" ref="34207833"/>
+						<reference key="parent" ref="197392939"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -844,6 +889,7 @@
 					<string>341.IBUIButtonInspectorSelectedStateConfigurationMetadataKey</string>
 					<string>350.IBPluginDependency</string>
 					<string>350.IBUIButtonInspectorSelectedStateConfigurationMetadataKey</string>
+					<string>353.IBPluginDependency</string>
 					<string>46.IBPluginDependency</string>
 					<string>6.IBPluginDependency</string>
 				</object>
@@ -877,6 +923,7 @@
 					<real value="1"/>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="unlocalizedProperties">
@@ -891,7 +938,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">352</int>
+			<int key="maxID">355</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -904,6 +951,8 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>captureStillImage:</string>
+							<string>closeButtonAction:</string>
+							<string>selectExistingButtonAction:</string>
 							<string>toggleCamera:</string>
 							<string>toggleFlashAction:</string>
 							<string>toggleFlashAutoAction:</string>
@@ -913,6 +962,8 @@
 						</object>
 						<object class="NSArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -927,6 +978,8 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>captureStillImage:</string>
+							<string>closeButtonAction:</string>
+							<string>selectExistingButtonAction:</string>
 							<string>toggleCamera:</string>
 							<string>toggleFlashAction:</string>
 							<string>toggleFlashAutoAction:</string>
@@ -938,6 +991,14 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBActionInfo">
 								<string key="name">captureStillImage:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">closeButtonAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">selectExistingButtonAction:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -983,6 +1044,7 @@
 							<string>focusModeLabel</string>
 							<string>recordButton</string>
 							<string>recorderGlow</string>
+							<string>selectExistingButton</string>
 							<string>stillButton</string>
 							<string>timerBackgroundLandscape</string>
 							<string>timerCountLabelLandscape</string>
@@ -1003,6 +1065,7 @@
 							<string>UILabel</string>
 							<string>UIButton</string>
 							<string>UIImageView</string>
+							<string>UIButton</string>
 							<string>UIButton</string>
 							<string>UIImageView</string>
 							<string>UILabel</string>
@@ -1026,6 +1089,7 @@
 							<string>focusModeLabel</string>
 							<string>recordButton</string>
 							<string>recorderGlow</string>
+							<string>selectExistingButton</string>
 							<string>stillButton</string>
 							<string>timerBackgroundLandscape</string>
 							<string>timerCountLabelLandscape</string>
@@ -1084,6 +1148,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">recorderGlow</string>
 								<string key="candidateClassName">UIImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">selectExistingButton</string>
+								<string key="candidateClassName">UIButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">stillButton</string>

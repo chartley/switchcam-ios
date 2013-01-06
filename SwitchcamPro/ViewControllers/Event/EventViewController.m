@@ -7,7 +7,6 @@
 #import "Venue.h"
 #import "ECSlidingViewController.h"
 #import "MenuViewController.h"
-#import "SCCamViewController.h"
 #import "EventInfoViewController.h"
 #import "EventActivityViewController.h"
 #import "EventPeopleViewController.h"
@@ -282,13 +281,14 @@ enum { kTagTabBase = 100 };
 
 - (IBAction)recordButtonAction:(id)sender {
     SCCamViewController *viewController = [[SCCamViewController alloc] init];
+    [viewController setDelegate:self];
     [self presentModalViewController:viewController animated:YES];
 }
 
 - (IBAction)noteButtonAction:(id)sender {
 }
 
--(IBAction)chooseFromLibrary:(id)sender {
+- (IBAction)chooseFromLibrary:(id)sender {
     // Pick from library, only videos
     UIImagePickerController *viewController = [[UIImagePickerController alloc] init];
     viewController.mediaTypes = [[NSArray alloc] initWithObjects: (NSString *) kUTTypeMovie, nil];
@@ -349,6 +349,14 @@ enum { kTagTabBase = 100 };
             [self.eventScrollView setContentOffset:CGPointMake(0, offsetAdjustment)];
         }
     }
+}
+
+#pragma mark - Camera Delegate
+
+- (void)selectExistingButtonPressed {
+    [self dismissViewControllerAnimated:YES completion:^(void){
+        [self chooseFromLibrary:nil];
+    }];
 }
 
 /*
