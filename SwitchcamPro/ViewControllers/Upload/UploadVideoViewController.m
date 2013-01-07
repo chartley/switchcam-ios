@@ -125,37 +125,41 @@
 #pragma mark - Network Requests
 
 - (void)createUserVideo {
-    NSString *facebookId = [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookIdKey];
-    NSString *facebookToken = [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookTokenKey];
+    // Create Key
+    NSString *videoKey = [NSString stringWithFormat:@"%@-%@", [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookIdKey] , [SPSerializable formattedStringFromDate: self.recordingToUpload.recordStart]];
+    
+    // Set S3 Info
+    self.recordingToUpload.uploadDestination = @"S3";
+    self.recordingToUpload.uploadS3Bucket = @"upload-switchcam-ios";
+    self.recordingToUpload.uploadPath = videoKey;
+    
+    // Save
+    NSManagedObjectContext *context = [RKManagedObjectStore defaultStore].persistentStoreManagedObjectContext;
+    [context processPendingChanges];
+    NSError *error = nil;
+    if (![context save:&error]) {
+        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+    }
     
     // Completion Blocks
-    void (^createUserVideoSuccessBlock)(AFHTTPRequestOperation *operation, id responseObject);
-    void (^createUserVideoFailureBlock)(AFHTTPRequestOperation *operation, NSError *error);
+    void (^createUserVideoSuccessBlock)(RKObjectRequestOperation *operation, RKMappingResult *responseObject);
+    void (^createUserVideoFailureBlock)(RKObjectRequestOperation *operation, NSError *error);
     
-    createUserVideoSuccessBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    createUserVideoSuccessBlock = ^(RKObjectRequestOperation *operation, RKMappingResult *responseObject) {
         // Start Upload in background
         [self performSelectorInBackground:@selector(startUpload) withObject:nil];
         
         [self dismissModalViewControllerAnimated:YES];
     };
     
-    createUserVideoFailureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
+    createUserVideoFailureBlock = ^(RKObjectRequestOperation *operation, NSError *error) {
         //TODO better error handling
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Oops", @"") message:NSLocalizedString(@"Something went wrong, please try again.", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles:nil];
         [alertView show];
     };
     
-    // Make Request and set params
-    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:kAPIHost]];
-    [httpClient setAuthorizationHeaderWithUsername:facebookId password:facebookToken];
-    //TODO Need payload
-
-    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"uservideo/" parameters:nil];
-    
-    AFJSONRequestOperation *operation = [[AFJSONRequestOperation alloc] initWithRequest:request];
-    [operation setCompletionBlockWithSuccess:createUserVideoSuccessBlock failure:createUserVideoFailureBlock];
-    
-    [operation start];
+    [[RKObjectManager sharedManager] postObject:self.recordingToUpload path:@"uservideo/" parameters:nil success:createUserVideoSuccessBlock failure:createUserVideoFailureBlock];
 }
 
 
@@ -197,15 +201,12 @@
 #pragma mark - Helper Methods
 
 - (void)startUpload {
-    // Create Key
-    NSString *videoKey = [NSString stringWithFormat:@"%@-%@", [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookIdKey] , [SPSerializable formattedStringFromDate: self.recordingToUpload.recordStart]];
-    
     NSError *error;
     // Get Data
     NSData *uploadData = [[NSData alloc] initWithContentsOfFile:[self.recordingToUpload compressedVideoURL] options:NSDataReadingMapped error:&error];
     
     SCS3Uploader *uploader = [[SCS3Uploader alloc] init];
-    [uploader uploadVideo:uploadData withKey:videoKey];
+    [uploader uploadVideo:uploadData withKey:self.recordingToUpload.uploadPath];
 }
 
 - (void)startVideoCompressionWithSuccessHandler:(void (^)())successHandler failureHandler:(void (^)(NSError *))failureHandler  {

@@ -53,6 +53,7 @@
 #import "SCCamRecorder.h"
 #import "SCCamUtilities.h"
 #import "Recording.h"
+#import "SPImageHelper.h"
 
 #import "AppDelegate.h"
 
@@ -428,20 +429,6 @@ bail:
 			}
 		}
 	}
-}
-
-#pragma mark - Helper Methods
-
-void CGImageWriteToFile(CGImageRef image, NSString *path) {
-    CFURLRef url = (CFURLRef)[NSURL fileURLWithPath:path];
-    CGImageDestinationRef destination = CGImageDestinationCreateWithURL(url, kUTTypePNG, 1, NULL);
-    CGImageDestinationAddImage(destination, image, nil);
-    
-    if (!CGImageDestinationFinalize(destination)) {
-        NSLog(@"Failed to write image to %@", path);
-    }
-    
-    CFRelease(destination);
 }
 
 @end

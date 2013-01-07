@@ -1,3 +1,6 @@
+#import <AssetsLibrary/AssetsLibrary.h>
+#import <ImageIO/ImageIO.h>
+#import <AVFoundation/AVFoundation.h>
 #import "EventViewController.h"
 #import "SPTabsFooterView.h"
 #import "SPTabStyle.h"
@@ -5,6 +8,7 @@
 #import "Mission.h"
 #import "Artist.h"
 #import "Venue.h"
+#import "Recording.h"
 #import "ECSlidingViewController.h"
 #import "MenuViewController.h"
 #import "EventInfoViewController.h"
@@ -12,6 +16,7 @@
 #import "EventPeopleViewController.h"
 #import "EventVideosViewController.h"
 #import "UploadVideoViewController.h"
+#import "SPImageHelper.h"
 
 enum { kTagTabBase = 100 };
 
@@ -302,16 +307,107 @@ enum { kTagTabBase = 100 };
 #pragma mark - UIImagePicker Delegate Methods
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    [self dismissModalViewControllerAnimated:YES];
-    
-    // Create Recording
-    //TODO
-    Recording *recording = nil;
-    
-    // Upload
-    UploadVideoViewController *viewController = [[UploadVideoViewController alloc] init];
-    [viewController setRecordingToUpload:recording];
-    [self.navigationController pushViewController:viewController animated:YES];
+    [self dismissViewControllerAnimated:YES completion:^(void) {
+        NSURL *assetURL = [info objectForKey:UIImagePickerControllerReferenceURL];
+        
+        // Check if existing recording exists
+        Recording *recording = nil;
+        NSManagedObjectContext *managedObjectContext = [RKManagedObjectStore defaultStore].persistentStoreManagedObjectContext;
+        
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Recording" inManagedObjectContext:managedObjectContext];
+        [fetchRequest setEntity:entity];
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"localVideoAssetURL == %@", [assetURL absoluteString]];
+        [fetchRequest setPredicate:predicate];
+        
+        NSError *error = nil;
+        NSArray *results = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
+        
+        if (error == nil && [results count] > 0) {
+            recording = [results objectAtIndex:0];
+            
+            if ([[recording isUploaded] boolValue]) {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Already Uploaded", @"") message:NSLocalizedString(@"You've already uploaded this piece of media!", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles: nil];
+                [alertView show];
+            } else {
+                // Upload
+                UploadVideoViewController *viewController = [[UploadVideoViewController alloc] init];
+                [viewController setRecordingToUpload:recording];
+                [self presentModalViewController:viewController animated:YES];
+            }
+        } else {
+            // Create Recording
+            Recording *recording = [NSEntityDescription
+                                    insertNewObjectForEntityForName:@"Recording"
+                                    inManagedObjectContext:managedObjectContext];
+            
+            
+            // Set record location
+            recording.localVideoAssetURL = [assetURL absoluteString];
+            recording.isUploaded = [NSNumber numberWithBool:NO];
+            
+            // Set time and length
+            recording.recordStart = [NSDate date];
+            recording.recordEnd = recording.recordStart;
+            
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"yyyy-MM-dd-HH-mm-ss"];
+            NSString *dateString = [dateFormatter stringFromDate:[recording recordStart]];
+            
+            // Make sure we don't overwrite
+            NSUInteger count = 0;
+            NSString *outputURLString = nil;
+            do {
+                NSString *videoExtension = (__bridge NSString *)UTTypeCopyPreferredTagWithClass(( CFStringRef)AVFileTypeMPEG4, kUTTagClassFilenameExtension);
+                NSString *photoExtension = (__bridge NSString *)UTTypeCopyPreferredTagWithClass(( CFStringRef)kUTTypePNG, kUTTagClassFilenameExtension);
+                NSString *fileNameNoExtension = @"capture";
+                NSString *fileName = [NSString stringWithFormat:@"%@-%@-%u",fileNameNoExtension , dateString, count];
+                outputURLString = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+                outputURLString = [outputURLString stringByAppendingPathComponent:fileName];
+                NSString *videoURLString = [outputURLString stringByAppendingPathExtension:videoExtension];
+                NSString *thumbnailURLString = [outputURLString stringByAppendingPathExtension:photoExtension];
+                
+                [recording setCompressedVideoURL:videoURLString];
+                [recording setThumbnailURL:thumbnailURLString];
+                [recording setFilename:fileName];
+                count++;
+                
+            } while ([[NSFileManager defaultManager] fileExistsAtPath:outputURLString]);
+            
+            ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+            
+            // Set size when we access info from library and capture thumbnail
+            ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *myasset) {
+                ALAssetRepresentation *rep = [myasset defaultRepresentation];
+                recording.sizeBytes =  [NSNumber numberWithLongLong:rep.size];
+                recording.sizeMegaBytes = [NSNumber numberWithLongLong:((rep.size/1024)/1024)];
+                
+                // Save Thumbnail
+                CGImageWriteToFile([myasset aspectRatioThumbnail], [recording thumbnailURL]);
+                [managedObjectContext processPendingChanges];
+                NSError *error = nil;
+                if (![managedObjectContext save:&error]) {
+                    NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+                }
+                
+                // Upload
+                UploadVideoViewController *viewController = [[UploadVideoViewController alloc] init];
+                [viewController setRecordingToUpload:recording];
+                [self presentModalViewController:viewController animated:YES];
+            };
+            
+            ALAssetsLibraryAccessFailureBlock failureblock  = ^(NSError *myerror) {
+                
+            };
+            
+            [library assetForURL:assetURL
+                     resultBlock:resultblock
+                    failureBlock:failureblock];
+        }
+
+    }];
+        
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {

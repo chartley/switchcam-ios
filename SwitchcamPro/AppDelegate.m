@@ -11,6 +11,7 @@
 #import <RestKit/RestKit.h>
 #import <RestKit/CoreData.h>
 #import <FacebookSDK/FacebookSDK.h>
+#import "Recording.h"
 #import "UAirship.h"
 #import "UAPush.h"
 #import "SPLocationManager.h"
@@ -447,16 +448,39 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     [recordingMapping addAttributeMappingsFromArray:@[ @"filename" ]];
     [recordingMapping addAttributeMappingsFromArray:@[ @"mimetype" ]];
     
-    
     // Register json serialization
     [RKMIMETypeSerialization registerClass:[RKNSJSONSerialization class] forMIMEType:@"application/json"];
     
+    RKObjectMapping *recordingRequestMapping = [RKObjectMapping requestMapping]; // objectClass == NSMutableDictionary
+    [recordingRequestMapping addAttributeMappingsFromDictionary:@{
+     @"uploadDestination": @"upload_destination",
+     @"uploadS3Bucket": @"upload_s3_bucket",
+     @"uploadPath": @"upload_path",
+     @"sizeMegaBytes": @"size_mb",
+     }];
+    
     // Register our mappings with the provider
+    RKRequestDescriptor *recordingRequestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:recordingRequestMapping objectClass:[Recording class] rootKeyPath:@"uservideo"];
+    RKObjectMapping *recordingResponseMapping = [RKObjectMapping mappingForClass:[Recording class]];
+    [recordingResponseMapping addAttributeMappingsFromDictionary:@{
+     @"upload_destination": @"uploadDestination",
+     @"upload_s3_bucket": @"uploadS3Bucket",
+     @"upload_path": @"uploadPath",
+     @"size_mb": @"sizeMegaBytes",
+     }];
+    NSIndexSet *statusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful); // Anything in 2xx
+    RKResponseDescriptor *recordingResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:recordingResponseMapping pathPattern:@"uservideo/" keyPath:@"uservideo" statusCodes:statusCodes];
+    
     RKResponseDescriptor *missionResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:missionMapping
                                                                                             pathPattern:@"mission/"
                                                                                                 keyPath:@"data"
                                                                                             statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    [objectManager addRequestDescriptor:recordingRequestDescriptor];
+    [objectManager addResponseDescriptor:recordingResponseDescriptor];
     [objectManager addResponseDescriptor:missionResponseDescriptor];
+    
+    [objectManager setRequestSerializationMIMEType:RKMIMETypeJSON];
+    
     
     /**
      Complete Core Data stack initialization
