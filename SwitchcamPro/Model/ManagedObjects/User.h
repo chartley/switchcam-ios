@@ -2,7 +2,7 @@
 //  User.h
 //  SwitchcamPro
 //
-//  Created by William Ketterer on 1/6/13.
+//  Created by William Ketterer on 1/7/13.
 //  Copyright (c) 2013 William Ketterer. All rights reserved.
 //
 
@@ -20,6 +20,7 @@
 @property (nonatomic, retain) NSSet *attendedMission;
 @property (nonatomic, retain) NSSet *createdMission;
 @property (nonatomic, retain) NSSet *followedMission;
+@property (nonatomic, retain) NSSet *activities;
 @end
 
 @interface User (CoreDataGeneratedAccessors)
@@ -38,5 +39,10 @@
 - (void)removeFollowedMissionObject:(Mission *)value;
 - (void)addFollowedMission:(NSSet *)values;
 - (void)removeFollowedMission:(NSSet *)values;
+
+- (void)addActivitiesObject:(NSManagedObject *)value;
+- (void)removeActivitiesObject:(NSManagedObject *)value;
+- (void)addActivities:(NSSet *)values;
+- (void)removeActivities:(NSSet *)values;
 
 @end

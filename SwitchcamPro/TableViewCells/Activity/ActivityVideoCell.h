@@ -7,35 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ActivityCell.h"
 
-#define kPendingUploadCellIdentifier @"PendingUploadCellIdentifier"
-#define kPendingUploadCellRowHeight 200
+#define kActivityVideoCellIdentifier @"ActivityVideoCellIdentifier"
+#define kActivityVideoCellRowHeight 200
 
-@class ActivityVideoCell;
-
-@protocol ActivityVideoCellDelegate <NSObject>
-
-- (void)previewButtonPressed:(ActivityVideoCell*)pendingUploadCell;
-- (void)likeButtonPressed:(ActivityVideoCell*)pendingUploadCell;
-- (void)commentButtonPressed:(ActivityVideoCell*)pendingUploadCell;
-
-@end
-
-@interface ActivityVideoCell : UITableViewCell
+@interface ActivityVideoCell : ActivityCell
 
 @property (strong, nonatomic) IBOutlet UIImageView *videoThumbnailImageView;
-@property (strong, nonatomic) IBOutlet UIImageView *contributorImageView;
 @property (strong, nonatomic) IBOutlet UIButton *previewButton;
-@property (strong, nonatomic) IBOutlet UIButton *likeButton;
-@property (strong, nonatomic) IBOutlet UIButton *commentButton;
-@property (strong, nonatomic) IBOutlet UILabel *contributorLabel;
-@property (strong, nonatomic) IBOutlet UILabel *addedAVideoLabel;
-@property (strong, nonatomic) IBOutlet UILabel *addedTimeLabel;
-
-@property (weak, nonatomic) id<ActivityVideoCellDelegate> delegate;
-
-- (IBAction)previewButtonAction:(id)sender;
-- (IBAction)likeButtonAction:(id)sender;
-- (IBAction)commentButtonAction:(id)sender;
 
 @end

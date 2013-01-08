@@ -2,7 +2,7 @@
 //  User.m
 //  SwitchcamPro
 //
-//  Created by William Ketterer on 1/6/13.
+//  Created by William Ketterer on 1/7/13.
 //  Copyright (c) 2013 William Ketterer. All rights reserved.
 //
 
@@ -19,5 +19,6 @@
 @dynamic attendedMission;
 @dynamic createdMission;
 @dynamic followedMission;
+@dynamic activities;
 
 @end

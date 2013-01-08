@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1811" systemVersion="12C60" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Activity" representedClassName="Activity" syncable="YES">
+        <attribute name="actionObjectContentType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="actionObjectId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="activityId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="activityType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="commentCount" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="deletable" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="likeCount" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="rowHeight" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="targetContentType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="targetId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="timesince" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="timestamp" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="verb" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="person" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="activities" inverseEntity="User" syncable="YES"/>
+    </entity>
     <entity name="Artist" representedClassName="Artist" syncable="YES">
         <attribute name="artistId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="artistName" optional="YES" attributeType="String" syncable="YES"/>
@@ -47,6 +64,7 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="pictureURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userId" optional="YES" attributeType="Integer 64" defaultValueString="0.0" syncable="YES"/>
+        <relationship name="activities" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Activity" inverseName="person" inverseEntity="Activity" syncable="YES"/>
         <relationship name="attendedMission" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mission" inverseName="cameraCrew" inverseEntity="Mission" syncable="YES"/>
         <relationship name="createdMission" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mission" inverseName="createdBy" inverseEntity="Mission" syncable="YES"/>
         <relationship name="followedMission" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mission" inverseName="followers" inverseEntity="Mission" syncable="YES"/>
@@ -63,8 +81,9 @@
     <elements>
         <element name="Mission" positionX="160" positionY="192" width="128" height="285"/>
         <element name="Recording" positionX="160" positionY="192" width="128" height="300"/>
-        <element name="User" positionX="160" positionY="192" width="128" height="150"/>
+        <element name="User" positionX="160" positionY="192" width="128" height="165"/>
         <element name="Artist" positionX="160" positionY="192" width="128" height="90"/>
         <element name="Venue" positionX="160" positionY="192" width="128" height="150"/>
+        <element name="Activity" positionX="160" positionY="192" width="128" height="270"/>
     </elements>
 </model>

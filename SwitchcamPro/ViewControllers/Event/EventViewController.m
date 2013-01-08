@@ -119,7 +119,7 @@ enum { kTagTabBase = 100 };
     self.currentView.frame = CGRectMake(0, kTopPictureHeight + self.tabsContainerView.bounds.size.height, self.view.bounds.size.width, self.view.bounds.size.height);
     
     [self.eventScrollView addSubview:self.currentView];
-    [self.currentView setDelegate:self];
+    //[self.currentView setDelegate:self];
     
     [self _reconfigureTabs];
 }
