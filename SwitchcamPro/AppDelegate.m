@@ -53,7 +53,7 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     [self initializeRestKit];
     
     // Initialize TestFlight
-    [TestFlight takeOff:@"5f8f3598224c8ad82864cc5069245884_MTQ5MTI3MjAxMi0xMC0yOSAyMTowMDo0Ny42MTEzODU"];
+    [TestFlight takeOff:@"2acb3bce-2531-4584-b080-013af6bd4993"];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
