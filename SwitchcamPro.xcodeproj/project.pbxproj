@@ -40,6 +40,7 @@
 		C94F7C59169B707E00D65EDC /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F7C58169B707E00D65EDC /* Activity.m */; };
 		C94F7C5C169B726A00D65EDC /* ActivityActionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F7C5B169B726900D65EDC /* ActivityActionCell.m */; };
 		C94F7C5E169B72C100D65EDC /* ActivityActionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C94F7C5D169B72C100D65EDC /* ActivityActionCell.xib */; };
+		C94F7C61169BF5B500D65EDC /* SPModelHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F7C60169BF5B500D65EDC /* SPModelHelper.m */; };
 		C97B0CB2166DBDC3005BB65F /* libUAirship-1.3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C97BFFC2166DBDC0005BB65F /* libUAirship-1.3.3.a */; };
 		C97B132F166DBFA8005BB65F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97B132E166DBFA8005BB65F /* SystemConfiguration.framework */; };
 		C97B1331166DBFB8005BB65F /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97B1330166DBFB8005BB65F /* CFNetwork.framework */; };
@@ -426,6 +427,8 @@
 		C94F7C5A169B726900D65EDC /* ActivityActionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActivityActionCell.h; path = TableViewCells/Activity/ActivityActionCell.h; sourceTree = "<group>"; };
 		C94F7C5B169B726900D65EDC /* ActivityActionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActivityActionCell.m; path = TableViewCells/Activity/ActivityActionCell.m; sourceTree = "<group>"; };
 		C94F7C5D169B72C100D65EDC /* ActivityActionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ActivityActionCell.xib; path = TableViewCells/Activity/ActivityActionCell.xib; sourceTree = "<group>"; };
+		C94F7C5F169BF5B500D65EDC /* SPModelHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPModelHelper.h; path = Helpers/SPModelHelper.h; sourceTree = "<group>"; };
+		C94F7C60169BF5B500D65EDC /* SPModelHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPModelHelper.m; path = Helpers/SPModelHelper.m; sourceTree = "<group>"; };
 		C97B132E166DBFA8005BB65F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		C97B1330166DBFB8005BB65F /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		C97B1332166DBFC5005BB65F /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -1371,6 +1374,8 @@
 				C94F7C22169A0A3200D65EDC /* SPLocationManager.m */,
 				C94F7C24169A234400D65EDC /* SPImageHelper.h */,
 				C94F7C25169A234400D65EDC /* SPImageHelper.m */,
+				C94F7C5F169BF5B500D65EDC /* SPModelHelper.h */,
+				C94F7C60169BF5B500D65EDC /* SPModelHelper.m */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -2095,6 +2100,7 @@
 				C94F7C56169B4A9600D65EDC /* ActivityCell.m in Sources */,
 				C94F7C59169B707E00D65EDC /* Activity.m in Sources */,
 				C94F7C5C169B726A00D65EDC /* ActivityActionCell.m in Sources */,
+				C94F7C61169BF5B500D65EDC /* SPModelHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

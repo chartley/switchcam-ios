@@ -23,6 +23,7 @@
 @interface FindEventsViewController () <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate>
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, strong) NSArray *eventsArray;
 
 @end
 
@@ -135,6 +136,9 @@
     // Resign first responder if up
     [self.eventSearchTextField resignFirstResponder];
     
+    // Clear text field
+    [self.eventSearchTextField setText:@""];
+    
     // Fire off request for events near user
     [self findEventsWithLocation:YES];
 }
@@ -158,14 +162,19 @@
     if (usingLocation) {
         CLLocationCoordinate2D coordinate = [[SPLocationManager sharedInstance] currentLocation].coordinate;
         // Build Coords String
-        NSString *coordsString = [NSString stringWithFormat:@"%f,%f", coordinate.longitude, coordinate.latitude];
+        NSString *lonString = [NSString stringWithFormat:@"%f", coordinate.longitude];
+        NSString *latString = [NSString stringWithFormat:@"%f", coordinate.latitude];
         
         if (parameters != nil) {
-            [parameters setObject:coordsString forKey:@"coordinates"];
+            [parameters setObject:latString forKey:@"lat"];
+            [parameters setObject:lonString forKey:@"lon"];
         } else {
-            parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:coordsString, @"coordinates", nil];
+            parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:latString, @"lat",
+                          lonString, @"lon", nil];
         }
     }
+    
+    // Reset the cache
     
     // Load the object model via RestKit
     [[RKObjectManager sharedManager] getObjectsAtPath:@"mission/" parameters:parameters success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
@@ -189,6 +198,7 @@
                 mission.isCameraCrew = [NSNumber numberWithBool:NO];
             }
         }
+        self.eventsArray = [mappingResult array];
         
         RKLogInfo(@"Load complete: Table should refresh...");
         [self.eventsTableView reloadData];
@@ -212,7 +222,7 @@
 #pragma mark - Helper Methods
 
 - (void)configureCell:(UITableViewCell *)cell forTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
-    Mission *mission = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    Mission *mission = [self.eventsArray objectAtIndex:indexPath.row];
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"d. MMMM YYYY"];
@@ -240,12 +250,11 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [self.fetchedResultsController.sections count];
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)table numberOfRowsInSection:(NSInteger)section {
-    id<NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController.sections objectAtIndex:section];
-    return [sectionInfo numberOfObjects];
+    return [self.eventsArray count];
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -296,6 +305,7 @@
 #pragma mark - NSFetchedResultsControllerDelegate methods
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    self.eventsArray = [controller fetchedObjects];
     [self.eventsTableView reloadData];
 }
 
@@ -303,7 +313,7 @@
 
 - (void)joinButtonPressed:(FindEventCell*)findEventCell {
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:findEventCell.tag inSection:0];
-    Mission *mission = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    Mission *mission = [self.eventsArray objectAtIndex:indexPath.row];
     
     // Load Event View Controller
     EventViewController *viewController = [[EventViewController alloc] initWithMission:mission];
