@@ -119,7 +119,6 @@ enum { kTagTabBase = 100 };
     self.currentView.frame = CGRectMake(0, kTopPictureHeight + self.tabsContainerView.bounds.size.height, self.view.bounds.size.width, self.view.bounds.size.height);
     
     [self.eventScrollView addSubview:self.currentView];
-    //[self.currentView setDelegate:self];
     
     [self _reconfigureTabs];
 }
@@ -420,7 +419,6 @@ enum { kTagTabBase = 100 };
     if ([scrollView isEqual: self.eventScrollView]) {
         // Check if we have scrolled past the image pass the rest of the scroll to tab scrollview
         int offset = self.eventScrollView.contentOffset.y - self.eventImageView.frame.size.height;
-        NSLog(@"Event Offset:%d", offset);
  	    if (offset > 0) {
             // Keep the tabs at the top
             [self.eventScrollView setContentOffset:CGPointMake(0, self.eventImageView.frame.size.height)];
@@ -428,21 +426,6 @@ enum { kTagTabBase = 100 };
             
             // Scroll the bottom view
             [self.currentView setContentOffset:CGPointMake(0, offset)];
-        }
-    } else {
-        NSLog(@"Event Tab ScrollView");
-        // Check if the image is still visible, if so scroll the event scroll view first
-        if (self.eventScrollView.contentOffset.y < self.eventImageView.frame.size.height) {
-            int offsetAdjustment = self.currentView.contentOffset.y + self.eventScrollView.contentOffset.y;
-            if (offsetAdjustment > 0) {
-                [self.eventScrollView setContentOffset:CGPointMake(0, offsetAdjustment)];
-            }
-        } else if (self.currentView.contentOffset.y <= 0) {
-            // If we are scrolling up past the content offset, start scrolling event image into view
-            // Re-enable scrollview
-            [self.eventScrollView setScrollEnabled:YES];
-            int offsetAdjustment = self.currentView.contentOffset.y + self.eventScrollView.contentOffset.y;
-            [self.eventScrollView setContentOffset:CGPointMake(0, offsetAdjustment)];
         }
     }
 }
@@ -454,39 +437,5 @@ enum { kTagTabBase = 100 };
         [self chooseFromLibrary:nil];
     }];
 }
-
-/*
- 
- - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
- if ([scrollView isEqual: self.eventScrollView]) {
- // Check if we have scrolled past the image pass the rest of the scroll to tab scrollview
- int offset = self.eventScrollView.contentOffset.y - self.eventImageView.frame.size.height;
- NSLog(@"Event Offset:%d", offset);
- if (offset > 0) {
- // Keep the tabs at the top
- [self.eventScrollView setContentOffset:CGPointMake(0, self.eventImageView.frame.size.height)];
- [self.eventScrollView setScrollEnabled:NO];
- 
- // Scroll the bottom view
- [self.currentView setContentOffset:CGPointMake(0, offset)];
- }
- } else {
- NSLog(@"Event Tab ScrollView");
- // Check if the image is still visible, if so scroll the event scroll view first
- if (self.eventScrollView.contentOffset.y < self.eventImageView.frame.size.height) {
- int offsetAdjustment = self.currentView.contentOffset.y + self.eventScrollView.contentOffset.y;
- if (offsetAdjustment > 0) {
- [self.eventScrollView setContentOffset:CGPointMake(0, offsetAdjustment)];
- }
- } else if (self.currentView.contentOffset.y <= 0) {
- // If we are scrolling up past the content offset, start scrolling event image into view
- // Re-enable scrollview
- [self.eventScrollView setScrollEnabled:YES];
- int offsetAdjustment = self.currentView.contentOffset.y + self.eventScrollView.contentOffset.y;
- [self.eventScrollView setContentOffset:CGPointMake(0, offsetAdjustment)];
- }
- }
- }
- */
 
 @end
