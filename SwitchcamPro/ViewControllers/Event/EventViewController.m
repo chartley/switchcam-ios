@@ -425,7 +425,17 @@ enum { kTagTabBase = 100 };
             [self.eventScrollView setScrollEnabled:NO];
             
             // Scroll the bottom view
-            [self.currentView setContentOffset:CGPointMake(0, offset)];
+            int scrollableAmount = self.currentView.contentSize.height - self.currentView.frame.size.height;
+            if (scrollableAmount < 0) {
+                scrollableAmount = 0;
+            }
+            
+            // Are we further than we scan scroll down
+            if ((self.currentView.contentOffset.y + offset) > scrollableAmount) {
+                [self.currentView setContentOffset:CGPointMake(0, scrollableAmount)];
+            } else {
+                [self.currentView setContentOffset:CGPointMake(0, offset)];
+            }
         }
     }
 }
