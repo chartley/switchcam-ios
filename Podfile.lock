@@ -1,6 +1,22 @@
 
 COCOAPODS: 0.16.0
 
+EXTERNAL SOURCES: 
+  RestKit: 
+    :git: https://github.com/RestKit/RestKit.git
+    :branch: master
+
+SPEC CHECKSUMS: 
+  RestKit/Network: 6e73b5a3e8445637fb46124bc45ed7d91958238a
+  RestKit/CoreData: 6e73b5a3e8445637fb46124bc45ed7d91958238a
+  RestKit/Core: 6e73b5a3e8445637fb46124bc45ed7d91958238a
+  RestKit: 6e73b5a3e8445637fb46124bc45ed7d91958238a
+  SOCKit: 179515c1a621dd5652a60e9be02ea4adcd25bc9b
+  RestKit/Support: 6e73b5a3e8445637fb46124bc45ed7d91958238a
+  RestKit/ObjectMapping: 6e73b5a3e8445637fb46124bc45ed7d91958238a
+  AFNetworking: 204f4b3d3a3ea7b38737c3fbf2646ba8c9719eea
+  TestFlightSDK: 29e194fb148e4861f92e4c1195b9697e1f3ad19a
+
 PODS: 
 - AFNetworking (1.0)
 - RestKit (0.20.0pre2): 
@@ -18,21 +34,8 @@ PODS:
 - RestKit/ObjectMapping (0.20.0pre2)
 - RestKit/Support (0.20.0pre2)
 - SOCKit (1.1)
-
-EXTERNAL SOURCES: 
-  RestKit: 
-    :git: https://github.com/RestKit/RestKit.git
-    :branch: master
+- TestFlightSDK (1.2)
 
 DEPENDENCIES: 
 - RestKit (from `https://github.com/RestKit/RestKit.git', branch `master')
-
-SPEC CHECKSUMS: 
-  RestKit/Network: 6e73b5a3e8445637fb46124bc45ed7d91958238a
-  RestKit: 6e73b5a3e8445637fb46124bc45ed7d91958238a
-  RestKit/Support: 6e73b5a3e8445637fb46124bc45ed7d91958238a
-  RestKit/ObjectMapping: 6e73b5a3e8445637fb46124bc45ed7d91958238a
-  RestKit/CoreData: 6e73b5a3e8445637fb46124bc45ed7d91958238a
-  AFNetworking: 758a1cb1ab5a0d22795ba1c44abb9cad395bc126
-  SOCKit: 179515c1a621dd5652a60e9be02ea4adcd25bc9b
-  RestKit/Core: 6e73b5a3e8445637fb46124bc45ed7d91958238a
+- TestFlightSDK (~> 1.2)

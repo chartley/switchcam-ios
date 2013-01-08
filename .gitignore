@@ -4,3 +4,6 @@ Breakpoints.xcbkptlist
 xcuserdata*
 
 .DS_Store
+/Pods/BuildHeaders/TestFlightSDK/
+/Pods/Headers/TestFlightSDK/
+/Pods/TestFlightSDK/
