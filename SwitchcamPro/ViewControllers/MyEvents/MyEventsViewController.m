@@ -206,7 +206,9 @@
     [myEventCell.eventNameLabel setText:[mission artist].artistName];
     [myEventCell.eventLocationLabel setText:locationString];
     [myEventCell.eventDateLabel setText:startEventTimeString];
-    [myEventCell.eventImageView setImageWithURL:[NSURL URLWithString:[mission picURL]]];
+    if ([mission picURL] != nil) {
+        [myEventCell.eventImageView setImageWithURL:[NSURL URLWithString:[mission picURL]]];
+    }
 }
 
 #pragma mark - UITableViewDataSource methods

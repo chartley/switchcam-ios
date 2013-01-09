@@ -41,7 +41,7 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Initialize Push
-    //[self initAirship:launchOptions];
+    [self initAirship:launchOptions];
     
     // Initialize Custom Navigation Bar
     [self initializeNavigationBarAppearance];

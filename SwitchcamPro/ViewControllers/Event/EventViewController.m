@@ -215,7 +215,9 @@ enum { kTagTabBase = 100 };
     [self.navigationItem setHidesBackButton:YES];
     
     // Add Event Image
-    [self.eventImageView setImageWithURL:[NSURL URLWithString:[self.mission picURL]]];
+    if ([self.mission picURL] != nil) {
+        [self.eventImageView setImageWithURL:[NSURL URLWithString:[self.mission picURL]]];
+    }
     
     // Set Event Info
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];

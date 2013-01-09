@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 William Ketterer. All rights reserved.
 //
 
+#import "UAPush.h"
 #import "CompleteLoginViewController.h"
 #import "LabelProfileCell.h"
 #import "LabelSubLabelCell.h"
@@ -60,38 +61,43 @@
 
 #pragma mark - Network Calls
 
-- (void)login {    
-    // Completion Blocks
-    void (^userLoginSuccessBlock)(AFHTTPRequestOperation *operation, id responseObject);
-    void (^userLoginFailureBlock)(AFHTTPRequestOperation *operation, NSError *error);
+- (void)login {
+    [loadingIndicator show:YES];
     
-    userLoginSuccessBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSString *facebookId = [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookIdKey];
+    NSString *facebookToken = [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookTokenKey];
+    
+    // Completion Blocks
+    void (^apnRegistrationSuccessBlock)(AFHTTPRequestOperation *operation, id responseObject);
+    void (^apnRegistrationFailureBlock)(AFHTTPRequestOperation *operation, NSError *error);
+    
+    apnRegistrationSuccessBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
         [loadingIndicator hide:YES];
-        NSLog(@"%@",[[operation response] allHeaderFields]);
+        
         AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
         [appDelegate successfulLoginViewControllerChange];
     };
     
-    userLoginFailureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
+    apnRegistrationFailureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
         [loadingIndicator hide:YES];
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Oops", @"") message:NSLocalizedString(@"Your username/password did not match, please try again.", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles:nil];
         [alertView show];
     };
     
-    // Some push registration
-    /*
     // Make Request and set params
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:kAPIHost]];
     [httpClient setAuthorizationHeaderWithUsername:facebookId password:facebookToken];
     
-    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"api/v1/mission/" parameters:nil];
+    NSString *apnToken = [[UAPush shared] deviceToken];
+    NSString *path = [NSString stringWithFormat:@"api/v1/person/me/token/%@/", apnToken];
+    
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:path parameters:nil];
     
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    [operation setCompletionBlockWithSuccess:userLoginSuccessBlock failure:userLoginFailureBlock];
+    [operation setCompletionBlockWithSuccess:apnRegistrationSuccessBlock failure:apnRegistrationFailureBlock];
     
     [operation start];
-     */
 }
 
 #pragma mark - IBActions
@@ -100,9 +106,8 @@
     // Save switch setting
     [[NSUserDefaults standardUserDefaults] setBool:self.staySignedInSwitch.isOn forKey:kSPStaySignedInKey];
     
-    // Start App
-    AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-    [appDelegate successfulLoginViewControllerChange];
+    // APN Registration with Switchcam API
+    [self login];
 }
 
 - (IBAction)backButtonAction:(id)sender {

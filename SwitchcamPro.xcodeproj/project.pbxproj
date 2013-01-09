@@ -2171,8 +2171,8 @@
 		C97BFF07166D909D005BB65F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Chris Hartley (7J7EDWHC8U)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Chris Hartley (7J7EDWHC8U)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Libraries/facebook-facebook-ios-sdk-a4c745f\"",
@@ -2189,8 +2189,8 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "8DDF3A8E-502D-438E-B881-B55C3BC1AC85";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8DDF3A8E-502D-438E-B881-B55C3BC1AC85";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2216,8 +2216,8 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3D2A184B-BD24-479B-A130-44CB17CEC563";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3D2A184B-BD24-479B-A130-44CB17CEC563";
+				PROVISIONING_PROFILE = "9FCBB47E-DDF3-4C85-8DA2-C5472EE8D31B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9FCBB47E-DDF3-4C85-8DA2-C5472EE8D31B";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
