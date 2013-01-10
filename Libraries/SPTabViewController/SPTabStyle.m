@@ -22,9 +22,9 @@
 - (id)init {
   if ((self = [super init])) {
     self.tabsViewHeight = 50;
-    self.tabHeight = 40;
-    self.tabBarHeight = 5;
-    self.overlapAsPercentageOfTabWidth = 0.20;
+    self.tabHeight = 50;
+    self.tabBarHeight = 0;
+    self.overlapAsPercentageOfTabWidth = 0;
     self.shadowRadius = 3;
 
     self.selectedTabColor = RGBA(36, 38, 39, 1);

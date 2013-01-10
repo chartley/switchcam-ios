@@ -21,6 +21,7 @@
 enum { kTagTabBase = 100 };
 
 #define kTopPictureHeight 169
+#define kBottomBarHeight 44
 
 @interface EventViewController ()
 
@@ -118,7 +119,7 @@ enum { kTagTabBase = 100 };
     self.currentTabScrollView = (UIScrollView*)viewController.tabScrollView;
     
     self.currentView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-    self.currentView.frame = CGRectMake(0, kTopPictureHeight + self.tabsContainerView.bounds.size.height, self.view.bounds.size.width, self.view.bounds.size.height);
+    self.currentView.frame = CGRectMake(0, kTopPictureHeight + self.tabsContainerView.bounds.size.height, self.view.bounds.size.width, self.eventScrollView.bounds.size.height - self.tabsContainerView.bounds.size.height);
     
     [self.eventScrollView addSubview:self.currentView];
     
