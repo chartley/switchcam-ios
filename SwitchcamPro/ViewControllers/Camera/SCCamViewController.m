@@ -53,7 +53,7 @@
 #import "SCCamCaptureManager.h"
 #import "SCCamRecorder.h"
 #import "UploadVideoViewController.h"
-#import "Recording.h"
+#import "UserVideo.h"
 
 static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
 
@@ -328,8 +328,8 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
     if (![[[self captureManager] recorder] isRecording]) {
         // Start collecting data of our new video
         NSManagedObjectContext *context = [RKManagedObjectStore defaultStore].persistentStoreManagedObjectContext;
-        Recording *currentRecording = [NSEntityDescription
-                                          insertNewObjectForEntityForName:@"Recording"
+        UserVideo *currentRecording = [NSEntityDescription
+                                          insertNewObjectForEntityForName:@"UserVideo"
                                           inManagedObjectContext:context];
         
         [currentRecording setRecordStart:[NSDate date]];
@@ -353,7 +353,7 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
             NSString *thumbnailURLString = [outputURLString stringByAppendingPathExtension:photoExtension];
             
             [currentRecording setCompressedVideoURL:videoURLString];
-            [currentRecording setThumbnailURL:thumbnailURLString];
+            [currentRecording setThumbnailLocalURL:thumbnailURLString];
             [currentRecording setFilename:fileName];
             count++;
             

@@ -10,8 +10,17 @@
 
 #define kPendingUploadCellIdentifier @"PendingUploadCellIdentifier"
 #define kPendingUploadCellTopIdentifier @"PendingUploadCellTopIdentifier"
+#define kPendingUploadCellEventVideoIdentifier @"PendingUploadCellEventVideoIdentifier"
+#define kPendingUploadCellEventVideoTopIdentifier @"PendingUploadCellEventVideoTopIdentifier"
+#define kHostedEventVideoCellIdentifier @"HostedEventVideoCellIdentifier"
+
 #define kPendingUploadCellRowHeight 134
 #define kPendingUploadCellTopRowHeight 181
+#define kPendingUploadCellEventVideoTopRowHeight 208
+#define kPendingUploadCellEventVideoRowHeight 174
+#define kHostedEventVideoCellRowHeight 174
+
+#define kBufferBetweenThumbnailLabels 10
 
 @class PendingUploadCell;
 

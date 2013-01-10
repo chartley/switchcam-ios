@@ -52,7 +52,7 @@
 #import "SCCamCaptureManager.h"
 #import "SCCamRecorder.h"
 #import "SCCamUtilities.h"
-#import "Recording.h"
+#import "UserVideo.h"
 #import "SPImageHelper.h"
 
 #import "AppDelegate.h"
@@ -588,7 +588,7 @@ bail:
         self.currentRecording.sizeMegaBytes = [NSNumber numberWithLongLong:((rep.size/1024)/1024)];
         
         // Save Thumbnail
-        CGImageWriteToFile([myasset aspectRatioThumbnail], [self.currentRecording thumbnailURL]);
+        CGImageWriteToFile([myasset aspectRatioThumbnail], [self.currentRecording thumbnailLocalURL]);
         
         // Fire that we are finished to perform next action
         if ([[self delegate] respondsToSelector:@selector(captureManagerRecordingFinished:)]) {

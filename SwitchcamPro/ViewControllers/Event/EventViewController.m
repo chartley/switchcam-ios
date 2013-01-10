@@ -8,7 +8,7 @@
 #import "Mission.h"
 #import "Artist.h"
 #import "Venue.h"
-#import "Recording.h"
+#import "UserVideo.h"
 #import "ECSlidingViewController.h"
 #import "MenuViewController.h"
 #import "EventInfoViewController.h"
@@ -26,6 +26,7 @@ enum { kTagTabBase = 100 };
 
 @property (nonatomic, retain) NSArray *viewControllers;
 @property (nonatomic, assign, readwrite) UIScrollView *currentView;
+@property (nonatomic, assign, readwrite) UIScrollView *currentTabScrollView;
 @property (nonatomic, retain) SPTabsView *tabsContainerView;
 @property (nonatomic, retain) SPTabsFooterView *footerView;
 
@@ -33,7 +34,7 @@ enum { kTagTabBase = 100 };
 
 @implementation EventViewController
 
-@synthesize style, viewControllers, currentView,
+@synthesize style, viewControllers, currentView, currentTabScrollView,
   tabsContainerView, footerView;
 
 - (id)initWithViewControllers:(NSArray *)theViewControllers
@@ -110,10 +111,11 @@ enum { kTagTabBase = 100 };
     
     currentTabIndex = tabView.tag - kTagTabBase;
     
-    UIViewController *viewController = [self.viewControllers objectAtIndex:currentTabIndex];
+    EventTabViewController *viewController = [self.viewControllers objectAtIndex:currentTabIndex];
     
     [self.currentView removeFromSuperview];
     self.currentView = (UIScrollView*)viewController.view;
+    self.currentTabScrollView = (UIScrollView*)viewController.tabScrollView;
     
     self.currentView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     self.currentView.frame = CGRectMake(0, kTopPictureHeight + self.tabsContainerView.bounds.size.height, self.view.bounds.size.width, self.view.bounds.size.height);
@@ -311,12 +313,12 @@ enum { kTagTabBase = 100 };
     [self dismissViewControllerAnimated:YES completion:^(void) {
         NSURL *assetURL = [info objectForKey:UIImagePickerControllerReferenceURL];
         
-        // Check if existing recording exists
-        Recording *recording = nil;
+        // Check if existing user video exists
+        UserVideo *userVideo = nil;
         NSManagedObjectContext *managedObjectContext = [RKManagedObjectStore defaultStore].persistentStoreManagedObjectContext;
         
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Recording" inManagedObjectContext:managedObjectContext];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"UserVideo" inManagedObjectContext:managedObjectContext];
         [fetchRequest setEntity:entity];
         
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"localVideoAssetURL == %@", [assetURL absoluteString]];
@@ -326,35 +328,35 @@ enum { kTagTabBase = 100 };
         NSArray *results = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
         
         if (error == nil && [results count] > 0) {
-            recording = [results objectAtIndex:0];
+            userVideo = [results objectAtIndex:0];
             
-            if ([[recording isUploaded] boolValue]) {
+            if ([[userVideo isUploaded] boolValue]) {
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Already Uploaded", @"") message:NSLocalizedString(@"You've already uploaded this piece of media!", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles: nil];
                 [alertView show];
             } else {
                 // Upload
                 UploadVideoViewController *viewController = [[UploadVideoViewController alloc] init];
-                [viewController setRecordingToUpload:recording];
+                [viewController setUserVideoToUpload:userVideo];
                 [self presentModalViewController:viewController animated:YES];
             }
         } else {
             // Create Recording
-            Recording *recording = [NSEntityDescription
-                                    insertNewObjectForEntityForName:@"Recording"
+            UserVideo *userVideo = [NSEntityDescription
+                                    insertNewObjectForEntityForName:@"UserVideo"
                                     inManagedObjectContext:managedObjectContext];
             
             
             // Set record location
-            recording.localVideoAssetURL = [assetURL absoluteString];
-            recording.isUploaded = [NSNumber numberWithBool:NO];
+            userVideo.localVideoAssetURL = [assetURL absoluteString];
+            userVideo.isUploaded = [NSNumber numberWithBool:NO];
             
             // Set time and length
-            recording.recordStart = [NSDate date];
-            recording.recordEnd = recording.recordStart;
+            userVideo.recordStart = [NSDate date];
+            userVideo.recordEnd = userVideo.recordStart;
             
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
             [dateFormatter setDateFormat:@"yyyy-MM-dd-HH-mm-ss"];
-            NSString *dateString = [dateFormatter stringFromDate:[recording recordStart]];
+            NSString *dateString = [dateFormatter stringFromDate:[userVideo recordStart]];
             
             // Make sure we don't overwrite
             NSUInteger count = 0;
@@ -369,9 +371,9 @@ enum { kTagTabBase = 100 };
                 NSString *videoURLString = [outputURLString stringByAppendingPathExtension:videoExtension];
                 NSString *thumbnailURLString = [outputURLString stringByAppendingPathExtension:photoExtension];
                 
-                [recording setCompressedVideoURL:videoURLString];
-                [recording setThumbnailURL:thumbnailURLString];
-                [recording setFilename:fileName];
+                [userVideo setCompressedVideoURL:videoURLString];
+                [userVideo setThumbnailLocalURL:thumbnailURLString];
+                [userVideo setFilename:fileName];
                 count++;
                 
             } while ([[NSFileManager defaultManager] fileExistsAtPath:outputURLString]);
@@ -381,11 +383,11 @@ enum { kTagTabBase = 100 };
             // Set size when we access info from library and capture thumbnail
             ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *myasset) {
                 ALAssetRepresentation *rep = [myasset defaultRepresentation];
-                recording.sizeBytes =  [NSNumber numberWithLongLong:rep.size];
-                recording.sizeMegaBytes = [NSNumber numberWithLongLong:((rep.size/1024)/1024)];
+                userVideo.sizeBytes =  [NSNumber numberWithLongLong:rep.size];
+                userVideo.sizeMegaBytes = [NSNumber numberWithLongLong:((rep.size/1024)/1024)];
                 
                 // Save Thumbnail
-                CGImageWriteToFile([myasset aspectRatioThumbnail], [recording thumbnailURL]);
+                CGImageWriteToFile([myasset aspectRatioThumbnail], [userVideo thumbnailLocalURL]);
                 [managedObjectContext processPendingChanges];
                 NSError *error = nil;
                 if (![managedObjectContext save:&error]) {
@@ -394,7 +396,7 @@ enum { kTagTabBase = 100 };
                 
                 // Upload
                 UploadVideoViewController *viewController = [[UploadVideoViewController alloc] init];
-                [viewController setRecordingToUpload:recording];
+                [viewController setUserVideoToUpload:userVideo];
                 [self presentModalViewController:viewController animated:YES];
             };
             
@@ -427,16 +429,16 @@ enum { kTagTabBase = 100 };
             [self.eventScrollView setScrollEnabled:NO];
             
             // Scroll the bottom view
-            int scrollableAmount = self.currentView.contentSize.height - self.currentView.frame.size.height;
+            int scrollableAmount = self.currentTabScrollView.contentSize.height - self.currentTabScrollView.frame.size.height;
             if (scrollableAmount < 0) {
                 scrollableAmount = 0;
             }
             
             // Are we further than we scan scroll down
-            if ((self.currentView.contentOffset.y + offset) > scrollableAmount) {
-                [self.currentView setContentOffset:CGPointMake(0, scrollableAmount)];
+            if ((self.currentTabScrollView.contentOffset.y + offset) > scrollableAmount) {
+                [self.currentTabScrollView setContentOffset:CGPointMake(0, scrollableAmount)];
             } else {
-                [self.currentView setContentOffset:CGPointMake(0, offset)];
+                [self.currentTabScrollView setContentOffset:CGPointMake(0, offset)];
             }
         }
     }

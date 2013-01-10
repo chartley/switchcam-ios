@@ -12,7 +12,7 @@
 #import <RestKit/CoreData.h>
 #import <FacebookSDK/FacebookSDK.h>
 #import <TestFlightSDK/TestFlight.h>
-#import "Recording.h"
+#import "UserVideo.h"
 #import "UAirship.h"
 #import "UAPush.h"
 #import "SPLocationManager.h"
@@ -462,24 +462,35 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     [userMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"createdMissions" toKeyPath:@"createdBy" withMapping:missionMapping]];
     [userMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"followedMissions" toKeyPath:@"followers" withMapping:missionMapping]];
     
-    // Recording Object Mapping
-    RKEntityMapping *recordingMapping = [RKEntityMapping mappingForEntityForName:@"Recording" inManagedObjectStore:managedObjectStore];
-    recordingMapping.identificationAttributes = @[ @"uploadedVideoId" ];
-    [recordingMapping addAttributeMappingsFromDictionary:@{
+    // User Video Object Mapping
+    RKEntityMapping *userVideoMapping = [RKEntityMapping mappingForEntityForName:@"UserVideo" inManagedObjectStore:managedObjectStore];
+    userVideoMapping.identificationAttributes = @[ @"videoId" ];
+    [userVideoMapping addAttributeMappingsFromDictionary:@{
+     @"upload_date": @"uploadDate",
+     @"video_id": @"videoId",
+     @"input_title": @"inputTitle",
+     @"thumbnail_sd": @"thumbnailSDURL",
+     @"thumbnail_hd": @"thumbnailHDURL",
+     @"duration_seconds": @"durationSeconds",
+     @"lon": @"longitude",
+     @"lat": @"latitude",
+     @"state": @"state",
+     @"record_date": @"recordStart",
      @"upload_destination": @"uploadDestination",
      @"upload_s3_bucket": @"uploadS3Bucket",
      @"upload_path": @"uploadPath",
      @"size_mb": @"sizeMegaBytes",
      }];
+    [userVideoMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"uploaded_by" toKeyPath:@"uploadedBy" withMapping:userMapping]];
     // If source and destination key path are the same, we can simply add a string to the array
-    [recordingMapping addAttributeMappingsFromArray:@[ @"filename" ]];
-    [recordingMapping addAttributeMappingsFromArray:@[ @"mimetype" ]];
+    [userVideoMapping addAttributeMappingsFromArray:@[ @"filename" ]];
+    [userVideoMapping addAttributeMappingsFromArray:@[ @"mimetype" ]];
     
     // Register json serialization
     [RKMIMETypeSerialization registerClass:[RKNSJSONSerialization class] forMIMEType:@"application/json"];
     
-    RKObjectMapping *recordingRequestMapping = [RKObjectMapping requestMapping]; // objectClass == NSMutableDictionary
-    [recordingRequestMapping addAttributeMappingsFromDictionary:@{
+    RKObjectMapping *userVideoRequestMapping = [RKObjectMapping requestMapping]; // objectClass == NSMutableDictionary
+    [userVideoRequestMapping addAttributeMappingsFromDictionary:@{
      @"uploadDestination": @"upload_destination",
      @"uploadS3Bucket": @"upload_s3_bucket",
      @"uploadPath": @"upload_path",
@@ -487,16 +498,10 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
      }];
     
     // Register our mappings with the provider
-    RKRequestDescriptor *recordingRequestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:recordingRequestMapping objectClass:[Recording class] rootKeyPath:@"uservideo"];
-    RKObjectMapping *recordingResponseMapping = [RKObjectMapping mappingForClass:[Recording class]];
-    [recordingResponseMapping addAttributeMappingsFromDictionary:@{
-     @"upload_destination": @"uploadDestination",
-     @"upload_s3_bucket": @"uploadS3Bucket",
-     @"upload_path": @"uploadPath",
-     @"size_mb": @"sizeMegaBytes",
-     }];
+    RKRequestDescriptor *userVideoRequestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:userVideoRequestMapping objectClass:[UserVideo class] rootKeyPath:@"uservideo"];
+    
     NSIndexSet *statusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful); // Anything in 2xx
-    RKResponseDescriptor *recordingResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:recordingResponseMapping pathPattern:@"uservideo/" keyPath:@"uservideo" statusCodes:statusCodes];
+    RKResponseDescriptor *userVideoResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userVideoMapping pathPattern:@"uservideo/" keyPath:@"data" statusCodes:statusCodes];
     
     RKResponseDescriptor *missionResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:missionMapping
                                                                                             pathPattern:@"mission/"
@@ -507,8 +512,8 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
                                                                                               pathPattern:@"mission/:missionId/activity/"
                                                                                                   keyPath:@"data"
                                                                                               statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
-    [objectManager addRequestDescriptor:recordingRequestDescriptor];
-    [objectManager addResponseDescriptor:recordingResponseDescriptor];
+    [objectManager addRequestDescriptor:userVideoRequestDescriptor];
+    [objectManager addResponseDescriptor:userVideoResponseDescriptor];
     [objectManager addResponseDescriptor:missionResponseDescriptor];
     [objectManager addResponseDescriptor:activityResponseDescriptor];
     

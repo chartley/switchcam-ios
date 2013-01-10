@@ -13,7 +13,7 @@
 #import "LabelInvisibleButtonCell.h"
 #import "LabelTextFieldCell.h"
 #import "ButtonToProgressCell.h"
-#import "Recording.h"
+#import "UserVideo.h"
 #import "SCS3Uploader.h"
 #import "SPSerializable.h"
 #import "UIImage+H568.h"
@@ -79,12 +79,12 @@
     // Set Labels
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 	[dateFormatter setDateFormat:@"h:mm a"];
-    [self.timeLabel setText:[dateFormatter stringFromDate:[self.recordingToUpload recordStart]]];
+    [self.timeLabel setText:[dateFormatter stringFromDate:[self.userVideoToUpload recordStart]]];
     
     NSString *lengthString = [NSString stringWithFormat:NSLocalizedString(@"Length: %@", @""), @""];
     [self.lengthLabel setText:lengthString];
     
-    NSString *sizeString = [NSString stringWithFormat:NSLocalizedString(@"Size: %@MB", @""), [[self.recordingToUpload sizeMegaBytes] stringValue]];
+    NSString *sizeString = [NSString stringWithFormat:NSLocalizedString(@"Size: %@MB", @""), [[self.userVideoToUpload sizeMegaBytes] stringValue]];
     [self.sizeLabel setText:sizeString];
     
     // Size to fit labels and set their origins
@@ -97,7 +97,7 @@
     [self.sizeLabel sizeToFit];
     
     // Load thumbnail image
-    UIImage *thumbnailImage = [UIImage imageWithContentsOfFile:[self.recordingToUpload thumbnailURL]];
+    UIImage *thumbnailImage = [UIImage imageWithContentsOfFile:[self.userVideoToUpload thumbnailLocalURL]];
     
     // Set Thumbnail
     [self.videoThumbnailImageView setImage:thumbnailImage];
@@ -126,12 +126,12 @@
 
 - (void)createUserVideo {
     // Create Key
-    NSString *videoKey = [NSString stringWithFormat:@"%@-%@", [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookIdKey] , [SPSerializable formattedStringFromDate: self.recordingToUpload.recordStart]];
+    NSString *videoKey = [NSString stringWithFormat:@"%@-%@.mp4", [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookIdKey] , [SPSerializable formattedStringFromDate: self.userVideoToUpload.recordStart]];
     
     // Set S3 Info
-    self.recordingToUpload.uploadDestination = @"S3";
-    self.recordingToUpload.uploadS3Bucket = @"upload-switchcam-ios";
-    self.recordingToUpload.uploadPath = videoKey;
+    self.userVideoToUpload.uploadDestination = @"S3";
+    self.userVideoToUpload.uploadS3Bucket = @"upload-switchcam-ios";
+    self.userVideoToUpload.uploadPath = videoKey;
     
     // Save
     NSManagedObjectContext *context = [RKManagedObjectStore defaultStore].persistentStoreManagedObjectContext;
@@ -159,7 +159,7 @@
         [alertView show];
     };
     
-    [[RKObjectManager sharedManager] postObject:self.recordingToUpload path:@"uservideo/" parameters:nil success:createUserVideoSuccessBlock failure:createUserVideoFailureBlock];
+    [[RKObjectManager sharedManager] postObject:self.userVideoToUpload path:@"uservideo/" parameters:nil success:createUserVideoSuccessBlock failure:createUserVideoFailureBlock];
 }
 
 
@@ -180,7 +180,7 @@
     void (^compressionFailureBlock)(NSError *error);
     
     compressionSuccessBlock = ^() {
-        // Notify Switchcam of new recording
+        // Notify Switchcam of new user video
         [self createUserVideo];
     };
     
@@ -203,15 +203,15 @@
 - (void)startUpload {
     NSError *error;
     // Get Data
-    NSData *uploadData = [[NSData alloc] initWithContentsOfFile:[self.recordingToUpload compressedVideoURL] options:NSDataReadingMapped error:&error];
+    NSData *uploadData = [[NSData alloc] initWithContentsOfFile:[self.userVideoToUpload compressedVideoURL] options:NSDataReadingMapped error:&error];
     
     SCS3Uploader *uploader = [[SCS3Uploader alloc] init];
-    [uploader uploadVideo:uploadData withKey:self.recordingToUpload.uploadPath];
+    [uploader uploadVideo:uploadData withKey:self.userVideoToUpload.uploadPath];
 }
 
 - (void)startVideoCompressionWithSuccessHandler:(void (^)())successHandler failureHandler:(void (^)(NSError *))failureHandler  {
-    NSString *outputURLString = [self.recordingToUpload compressedVideoURL];
-    NSURL *inputURL = [NSURL URLWithString:[self.recordingToUpload localVideoAssetURL]];
+    NSString *outputURLString = [self.userVideoToUpload compressedVideoURL];
+    NSURL *inputURL = [NSURL URLWithString:[self.userVideoToUpload localVideoAssetURL]];
     NSURL *outputURL = [NSURL fileURLWithPath:outputURLString];
     
     if ([[NSFileManager defaultManager] fileExistsAtPath:outputURLString]) {

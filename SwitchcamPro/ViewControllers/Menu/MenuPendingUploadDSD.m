@@ -11,10 +11,8 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import "UploadVideoViewController.h"
 #import "MenuPendingUploadDSD.h"
-#import "Recording.h"
+#import "UserVideo.h"
 #import "MenuViewController.h"
-
-#define kBufferBetweenThumbnailLabels 10
 
 @interface MenuPendingUploadDSD () <NSFetchedResultsControllerDelegate>
 
@@ -35,7 +33,7 @@
 #pragma mark - Helper Methods
 
 - (void)refreshUploads {
-    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Recording"];
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"UserVideo"];
     NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"recordStart" ascending:NO];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isUploaded == NO"];
     fetchRequest.predicate = predicate;
@@ -53,7 +51,7 @@
 }
 
 - (void)configureCell:(UITableViewCell *)cell forTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
-    Recording *recording = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    UserVideo *recording = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     PendingUploadCell *pendingUploadCell = (PendingUploadCell*)cell;
     
@@ -72,7 +70,7 @@
     [pendingUploadCell setDelegate:self];
     
     // Load thumbnail image
-    UIImage *thumbnailImage = [UIImage imageWithContentsOfFile:[recording thumbnailURL]];
+    UIImage *thumbnailImage = [UIImage imageWithContentsOfFile:[recording thumbnailLocalURL]];
     
     // Set Thumbnail
     [pendingUploadCell.videoThumbnailImageView setImage:thumbnailImage];
@@ -163,7 +161,7 @@
     int row = [pendingUploadCell tag];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
     
-    Recording *recording = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    UserVideo *recording = [self.fetchedResultsController objectAtIndexPath:indexPath];
     NSURL *previewRecordingURL = [NSURL URLWithString:[recording localVideoAssetURL]];
     
     // Preview
@@ -175,11 +173,11 @@
     int row = [pendingUploadCell tag];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
     
-    Recording *recording = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    UserVideo *userVideo = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     // Upload
     UploadVideoViewController *viewController = [[UploadVideoViewController alloc] init];
-    [viewController setRecordingToUpload:recording];
+    [viewController setUserVideoToUpload:userVideo];
     [self.menuViewController presentModalViewController:viewController animated:YES];
     
     // Reset Top view
@@ -191,7 +189,7 @@
     int row = [pendingUploadCell tag];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
     
-    Recording *recording = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    UserVideo *recording = [self.fetchedResultsController objectAtIndexPath:indexPath];
     [context deleteObject:recording];
     [context processPendingChanges];
     

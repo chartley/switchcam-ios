@@ -1,19 +1,22 @@
 //
-//  Recording.m
+//  UserVideo.m
 //  SwitchcamPro
 //
-//  Created by William Ketterer on 1/6/13.
+//  Created by William Ketterer on 1/9/13.
 //  Copyright (c) 2013 William Ketterer. All rights reserved.
 //
 
-#import "Recording.h"
+#import "UserVideo.h"
 #import "Mission.h"
+#import "User.h"
 
 
-@implementation Recording
+@implementation UserVideo
 
 @dynamic compressedVideoURL;
+@dynamic durationSeconds;
 @dynamic filename;
+@dynamic inputTitle;
 @dynamic isUploaded;
 @dynamic latitude;
 @dynamic localVideoAssetURL;
@@ -23,11 +26,16 @@
 @dynamic recordStart;
 @dynamic sizeBytes;
 @dynamic sizeMegaBytes;
-@dynamic thumbnailURL;
+@dynamic thumbnailHDURL;
+@dynamic thumbnailLocalURL;
+@dynamic thumbnailSDURL;
+@dynamic uploadDate;
 @dynamic uploadDestination;
-@dynamic uploadedVideoId;
 @dynamic uploadPath;
 @dynamic uploadS3Bucket;
+@dynamic videoId;
+@dynamic state;
 @dynamic mission;
+@dynamic uploadedBy;
 
 @end

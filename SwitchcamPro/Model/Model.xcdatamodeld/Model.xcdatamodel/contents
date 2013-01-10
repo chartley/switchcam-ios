@@ -37,27 +37,8 @@
         <relationship name="cameraCrew" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="attendedMission" inverseEntity="User" syncable="YES"/>
         <relationship name="createdBy" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="createdMission" inverseEntity="User" syncable="YES"/>
         <relationship name="followers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="followedMission" inverseEntity="User" syncable="YES"/>
-        <relationship name="myRecordings" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Recording" inverseName="mission" inverseEntity="Recording" syncable="YES"/>
+        <relationship name="userVideos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="UserVideo" inverseName="mission" inverseEntity="UserVideo" syncable="YES"/>
         <relationship name="venue" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Venue" inverseName="missions" inverseEntity="Venue" syncable="YES"/>
-    </entity>
-    <entity name="Recording" representedClassName="Recording" syncable="YES">
-        <attribute name="compressedVideoURL" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="filename" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="isUploaded" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="localVideoAssetURL" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="mimetype" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="recordEnd" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="recordStart" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="sizeBytes" optional="YES" attributeType="Integer 64" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="sizeMegaBytes" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="thumbnailURL" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="uploadDestination" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="uploadedVideoId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="uploadPath" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="uploadS3Bucket" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="mission" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Mission" inverseName="myRecordings" inverseEntity="Mission" syncable="YES"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES">
         <attribute name="legalTermsAcceptDate" optional="YES" attributeType="Date" syncable="YES"/>
@@ -68,6 +49,33 @@
         <relationship name="attendedMission" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mission" inverseName="cameraCrew" inverseEntity="Mission" syncable="YES"/>
         <relationship name="createdMission" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mission" inverseName="createdBy" inverseEntity="Mission" syncable="YES"/>
         <relationship name="followedMission" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mission" inverseName="followers" inverseEntity="Mission" syncable="YES"/>
+        <relationship name="uploads" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="UserVideo" inverseName="uploadedBy" inverseEntity="UserVideo" syncable="YES"/>
+    </entity>
+    <entity name="UserVideo" representedClassName="UserVideo" syncable="YES">
+        <attribute name="compressedVideoURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="durationSeconds" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="filename" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="inputTitle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isUploaded" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="localVideoAssetURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="mimetype" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="recordEnd" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="recordStart" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="sizeBytes" optional="YES" attributeType="Integer 64" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="sizeMegaBytes" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="state" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="thumbnailHDURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="thumbnailLocalURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="thumbnailSDURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uploadDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="uploadDestination" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uploadPath" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uploadS3Bucket" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="videoId" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="mission" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Mission" inverseName="userVideos" inverseEntity="Mission" syncable="YES"/>
+        <relationship name="uploadedBy" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="uploads" inverseEntity="User" syncable="YES"/>
     </entity>
     <entity name="Venue" representedClassName="Venue" syncable="YES">
         <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
@@ -79,11 +87,11 @@
         <relationship name="missions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mission" inverseName="venue" inverseEntity="Mission" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Mission" positionX="160" positionY="192" width="128" height="285"/>
-        <element name="Recording" positionX="160" positionY="192" width="128" height="300"/>
-        <element name="User" positionX="160" positionY="192" width="128" height="165"/>
-        <element name="Artist" positionX="160" positionY="192" width="128" height="90"/>
-        <element name="Venue" positionX="160" positionY="192" width="128" height="150"/>
         <element name="Activity" positionX="160" positionY="192" width="128" height="270"/>
+        <element name="Artist" positionX="160" positionY="192" width="128" height="90"/>
+        <element name="Mission" positionX="160" positionY="192" width="128" height="285"/>
+        <element name="User" positionX="160" positionY="192" width="128" height="180"/>
+        <element name="UserVideo" positionX="160" positionY="192" width="128" height="405"/>
+        <element name="Venue" positionX="160" positionY="192" width="128" height="150"/>
     </elements>
 </model>
