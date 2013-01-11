@@ -87,7 +87,7 @@
                 if ([activity.targetContentType isEqualToString:@"director.mission"]) {
                     if (activity.actionObjectContentType == nil || [activity.actionObjectContentType isEqualToString:@""]) {
                         activity.rowHeight = [NSNumber numberWithInt:kActivityActionCellRowHeight];
-                    } else if ([activity.actionObjectContentType isEqualToString:@"video"]) {
+                    } else if ([activity.actionObjectContentType isEqualToString:@"director.recordingsession"]) {
                         activity.rowHeight = [NSNumber numberWithInt:kActivityVideoCellRowHeight];
                     } else if ([activity.actionObjectContentType isEqualToString:@"photo"]) {
                         activity.rowHeight = [NSNumber numberWithInt:kActivityPhotoCellRowHeight];
@@ -129,8 +129,10 @@
         if ([activity.targetContentType isEqualToString:@"director.mission"]) {
             if (activity.actionObjectContentType == nil || [activity.actionObjectContentType isEqualToString:@""]) {
                 
-            } else if ([activity.actionObjectContentType isEqualToString:@"video"]) {
-                
+            } else if ([activity.actionObjectContentType isEqualToString:@"director.recordingsession"]) {
+                //TODO need thumbnail from API
+                //ActivityVideoCell *activityVideoCell = (ActivityVideoCell*) cell;
+                //[activityVideoCell.videoThumbnailImageView setImageWithURL:<#(NSURL *)#>]
             } else if ([activity.actionObjectContentType isEqualToString:@"photo"]) {
                 
             }
@@ -202,7 +204,7 @@
         if ([activity.targetContentType isEqualToString:@"director.mission"]) {
             if (activity.actionObjectContentType == nil || [activity.actionObjectContentType isEqualToString:@""]) {
                 cell = [tableView dequeueReusableCellWithIdentifier:kActivityActionCellIdentifier];
-            } else if ([activity.actionObjectContentType isEqualToString:@"video"]) {
+            } else if ([activity.actionObjectContentType isEqualToString:@"director.recordingsession"]) {
                 cell = [tableView dequeueReusableCellWithIdentifier:kActivityVideoCellIdentifier];
             } else if ([activity.actionObjectContentType isEqualToString:@"photo"]) {
                 cell = [tableView dequeueReusableCellWithIdentifier:kActivityPhotoCellIdentifier];
@@ -220,7 +222,7 @@
                 if (activity.actionObjectContentType == nil || [activity.actionObjectContentType isEqualToString:@""]) {
                     NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"ActivityActionCell" owner:self options:nil];
                     cell = [nibArray objectAtIndex:0];
-                } else if ([activity.actionObjectContentType isEqualToString:@"video"]) {
+                } else if ([activity.actionObjectContentType isEqualToString:@"director.recordingsession"]) {
                     NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"ActivityVideoCell" owner:self options:nil];
                     cell = [nibArray objectAtIndex:0];
                 } else if ([activity.actionObjectContentType isEqualToString:@"photo"]) {
