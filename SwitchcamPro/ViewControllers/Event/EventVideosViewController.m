@@ -111,11 +111,6 @@
             if (userVideo.mission == nil) {
                 userVideo.mission = self.selectedMission;
             }
-            
-            // Check state to see if we've uploaded
-            if ([[userVideo state] intValue] > kUserVideoStateUSER_UPLOADING) {
-                [userVideo setIsUploaded:[NSNumber numberWithBool:YES]];
-            }
         }
         
         [context processPendingChanges];

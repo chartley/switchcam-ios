@@ -340,7 +340,6 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
         [currentRecording setLongitude:[NSNumber numberWithDouble:coordinate.longitude]];
         [currentRecording setMission:self.selectedMission];
         [currentRecording setRecordStart:[NSDate date]];
-        [currentRecording setIsUploaded:[NSNumber numberWithBool:NO]];
         
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd-HH-mm-ss"];

@@ -35,7 +35,7 @@
 - (void)refreshUploads {
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"UserVideo"];
     NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"recordStart" ascending:NO];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isUploaded == NO"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"state < 10"];
     fetchRequest.predicate = predicate;
     fetchRequest.sortDescriptors = @[descriptor];
     fetchRequest.fetchLimit = 30;

@@ -480,7 +480,6 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
      @"duration_seconds": @"durationSeconds",
      @"lon": @"longitude",
      @"lat": @"latitude",
-     @"state": @"state",
      @"record_date": @"recordStart",
      @"upload_destination": @"uploadDestination",
      @"upload_s3_bucket": @"uploadS3Bucket",
@@ -491,6 +490,7 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     // If source and destination key path are the same, we can simply add a string to the array
     [userVideoMapping addAttributeMappingsFromArray:@[ @"filename" ]];
     [userVideoMapping addAttributeMappingsFromArray:@[ @"mimetype" ]];
+    [userVideoMapping addAttributeMappingsFromArray:@[ @"state" ]];
     
     // User Video Object Mapping
     RKEntityMapping *createUserVideoMapping = [RKEntityMapping mappingForEntityForName:@"UserVideo" inManagedObjectStore:managedObjectStore];
@@ -504,7 +504,6 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
      @"duration_seconds": @"durationSeconds",
      @"lon": @"longitude",
      @"lat": @"latitude",
-     @"state": @"state",
      @"record_date": @"recordStart",
      @"upload_destination": @"uploadDestination",
      @"upload_s3_bucket": @"uploadS3Bucket",
@@ -515,6 +514,7 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     // If source and destination key path are the same, we can simply add a string to the array
     [createUserVideoMapping addAttributeMappingsFromArray:@[ @"filename" ]];
     [createUserVideoMapping addAttributeMappingsFromArray:@[ @"mimetype" ]];
+    [createUserVideoMapping addAttributeMappingsFromArray:@[ @"state" ]];
     
     // Register json serialization
     [RKMIMETypeSerialization registerClass:[RKNSJSONSerialization class] forMIMEType:@"application/json"];
@@ -530,6 +530,7 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
      @"mission.missionId": @"mission_id",
      @"latitude": @"lat",
      @"longitude": @"lon",
+     @"state": @"state",
      }];
     
     // Register our mappings with the provider
@@ -653,6 +654,7 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     userVideoToUpload.uploadDestination = @"S3";
     userVideoToUpload.uploadS3Bucket = @"upload-switchcam-ios";
     userVideoToUpload.uploadPath = videoKey;
+    userVideoToUpload.state = [NSNumber numberWithInt:20];
     
     // Save
     NSManagedObjectContext *context = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;

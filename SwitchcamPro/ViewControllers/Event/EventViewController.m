@@ -332,7 +332,7 @@ enum { kTagTabBase = 100 };
         if (error == nil && [results count] > 0) {
             userVideo = [results objectAtIndex:0];
             
-            if ([[userVideo isUploaded] boolValue]) {
+            if ([[userVideo state] intValue] > 10) {
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Already Uploaded", @"") message:NSLocalizedString(@"You've already uploaded this piece of media!", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles: nil];
                 [alertView show];
             } else {
@@ -350,7 +350,6 @@ enum { kTagTabBase = 100 };
             
             // Set record location
             userVideo.localVideoAssetURL = [assetURL absoluteString];
-            userVideo.isUploaded = [NSNumber numberWithBool:NO];
             
             // Set time and length
             userVideo.recordStart = [NSDate date];

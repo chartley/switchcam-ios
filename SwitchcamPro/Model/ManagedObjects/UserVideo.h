@@ -30,7 +30,6 @@
 @property (nonatomic, retain) NSNumber * durationSeconds;
 @property (nonatomic, retain) NSString * filename;
 @property (nonatomic, retain) NSString * inputTitle;
-@property (nonatomic, retain) NSNumber * isUploaded;
 @property (nonatomic, retain) NSNumber * latitude;
 @property (nonatomic, retain) NSString * localVideoAssetURL;
 @property (nonatomic, retain) NSNumber * longitude;

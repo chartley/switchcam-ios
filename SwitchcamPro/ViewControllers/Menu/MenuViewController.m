@@ -47,6 +47,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [self.pendingDataSourceDelegate refreshUploads];
     [self.pendingUploadTableView reloadData];
 }
 

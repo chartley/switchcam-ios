@@ -17,7 +17,6 @@
 @dynamic durationSeconds;
 @dynamic filename;
 @dynamic inputTitle;
-@dynamic isUploaded;
 @dynamic latitude;
 @dynamic localVideoAssetURL;
 @dynamic longitude;

@@ -146,8 +146,6 @@ const int PART_SIZE = (5 * 1024 * 1024); // 5MB is the smallest part size allowe
         @catch (AmazonClientException *exception) {
             [[NSNotificationCenter defaultCenter] postNotificationName:kSCS3UploadFailedNotification object:nil];
             //  NSLog( @"single part Upload Failed"  );
-            // TODO FIX ME
-            //[Constants showAlertMessage:exception.message withTitle:@"Upload Error"];
             _doneUploadingToS3 = YES;
         }
     } else {
@@ -213,6 +211,7 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
 
 -(void)request:(AmazonServiceRequest *)request didFailWithError:(NSError *)error {
     _doneUploadingToS3 = YES;
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSCS3UploadFailedNotification object:uploadVideoKey];
 }
 
 -(void)request:(AmazonServiceRequest *)request didFailWithServiceException:(NSException *)exception {

@@ -14,4 +14,6 @@
 
 @property (weak, nonatomic) MenuViewController *menuViewController;
 
+- (void)refreshUploads;
+
 @end
