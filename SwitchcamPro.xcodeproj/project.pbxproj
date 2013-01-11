@@ -14,6 +14,7 @@
 		2456C469168F6F0D00F49C70 /* img-shoot-thumb-placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2456C465168F6F0D00F49C70 /* img-shoot-thumb-placeholder@2x.png */; };
 		2456C46A168F6F0D00F49C70 /* results-shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 2456C466168F6F0D00F49C70 /* results-shadow.png */; };
 		2456C46B168F6F0D00F49C70 /* results-shadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2456C467168F6F0D00F49C70 /* results-shadow@2x.png */; };
+		C906ADBB16A019DE001E5E5C /* HostedEventVideoTopCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C906ADBA16A019DE001E5E5C /* HostedEventVideoTopCell.xib */; };
 		C90847A3167FDD7300DEF94E /* camswitch-off.png in Resources */ = {isa = PBXBuildFile; fileRef = C9084799167FDD7300DEF94E /* camswitch-off.png */; };
 		C90847A4167FDD7300DEF94E /* camswitch-off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C908479A167FDD7300DEF94E /* camswitch-off@2x.png */; };
 		C90847A5167FDD7300DEF94E /* camswitch-on.png in Resources */ = {isa = PBXBuildFile; fileRef = C908479B167FDD7300DEF94E /* camswitch-on.png */; };
@@ -392,6 +393,7 @@
 		2456C466168F6F0D00F49C70 /* results-shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "results-shadow.png"; sourceTree = "<group>"; };
 		2456C467168F6F0D00F49C70 /* results-shadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "results-shadow@2x.png"; sourceTree = "<group>"; };
 		A19C79BD691C4B088E80A4B3 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		C906ADBA16A019DE001E5E5C /* HostedEventVideoTopCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HostedEventVideoTopCell.xib; path = TableViewCells/PendingUploads/HostedEventVideoTopCell.xib; sourceTree = "<group>"; };
 		C9084799167FDD7300DEF94E /* camswitch-off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camswitch-off.png"; sourceTree = "<group>"; };
 		C908479A167FDD7300DEF94E /* camswitch-off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camswitch-off@2x.png"; sourceTree = "<group>"; };
 		C908479B167FDD7300DEF94E /* camswitch-on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camswitch-on.png"; sourceTree = "<group>"; };
@@ -1420,6 +1422,7 @@
 				C9AED0A9169E987E00A6A09D /* PendingUploadCellEventVideoTop.xib */,
 				C9AED0AE169E9BD700A6A09D /* PendingUploadCellEventVideo.xib */,
 				C9AED0B0169EA17100A6A09D /* HostedEventVideoCell.xib */,
+				C906ADBA16A019DE001E5E5C /* HostedEventVideoTopCell.xib */,
 			);
 			name = "Pending Uploads";
 			sourceTree = "<group>";
@@ -2020,6 +2023,7 @@
 				C9AED0AA169E987E00A6A09D /* PendingUploadCellEventVideoTop.xib in Resources */,
 				C9AED0AF169E9BD700A6A09D /* PendingUploadCellEventVideo.xib in Resources */,
 				C9AED0B1169EA17100A6A09D /* HostedEventVideoCell.xib in Resources */,
+				C906ADBB16A019DE001E5E5C /* HostedEventVideoTopCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

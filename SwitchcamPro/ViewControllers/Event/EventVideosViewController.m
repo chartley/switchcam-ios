@@ -204,10 +204,21 @@
 #pragma mark - UITableViewDataSource methods
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath: (NSIndexPath *) indexPath {
+    UserVideo *userVideo = [self.fetchedResultsController objectAtIndexPath:indexPath];
+
     if (indexPath.row == 0) {
-        return kPendingUploadCellEventVideoTopRowHeight;
+        if ([[userVideo state] intValue] > 10) {
+            return kHostedEventVideoCellTopRowHeight;
+        } else {
+            return kPendingUploadCellEventVideoTopRowHeight;
+        }
+        
     } else {
-        return kPendingUploadCellEventVideoRowHeight;
+        if ([[userVideo state] intValue] > 10) {
+            return kHostedEventVideoCellRowHeight;
+        } else {
+            return kPendingUploadCellEventVideoRowHeight;
+        }
     }
 }
 
@@ -222,13 +233,22 @@
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    UserVideo *userVideo = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     NSString *identifier = nil;
     
     if (indexPath.row == 0) {
-        identifier = kPendingUploadCellEventVideoTopIdentifier;
+        if ([[userVideo state] intValue] > 10) {
+            identifier = kHostedEventVideoTopCellIdentifier;
+        } else {
+            identifier = kPendingUploadCellEventVideoTopIdentifier;
+        }
     } else {
-        identifier = kPendingUploadCellEventVideoIdentifier;
+        if ([[userVideo state] intValue] > 10) {
+            identifier = kHostedEventVideoCellIdentifier;
+        } else {
+            identifier = kPendingUploadCellEventVideoIdentifier;
+        }
     }
     
     PendingUploadCell *cell = (PendingUploadCell *)[tableView dequeueReusableCellWithIdentifier:identifier];
@@ -236,9 +256,17 @@
     if (cell == nil) {
         NSArray *nibArray = nil;
         if (indexPath.row == 0) {
-            nibArray = [[NSBundle mainBundle] loadNibNamed:@"PendingUploadCellEventVideoTop" owner:self options:nil];
+            if ([[userVideo state] intValue] > 10) {
+                nibArray = [[NSBundle mainBundle] loadNibNamed:@"HostedEventVideoTopCell" owner:self options:nil];
+            } else {
+                nibArray = [[NSBundle mainBundle] loadNibNamed:@"PendingUploadCellEventVideoTop" owner:self options:nil];
+            }
         } else {
-            nibArray = [[NSBundle mainBundle] loadNibNamed:@"PendingUploadCellEventVideo" owner:self options:nil];
+            if ([[userVideo state] intValue] > 10) {
+                nibArray = [[NSBundle mainBundle] loadNibNamed:@"HostedEventVideoCell" owner:self options:nil];
+            } else {
+                nibArray = [[NSBundle mainBundle] loadNibNamed:@"PendingUploadCellEventVideo" owner:self options:nil];
+            }
         }
         
         cell = [nibArray objectAtIndex:0];
@@ -274,9 +302,10 @@
     
     NSURL *previewRecordingURL = nil;
     if ([recording localVideoAssetURL] != nil) {
+        //TODO Verify asset url is good 
         previewRecordingURL = [NSURL URLWithString:[recording localVideoAssetURL]];
     } else {
-        previewRecordingURL = [NSURL URLWithString:[recording localVideoAssetURL]];
+        previewRecordingURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://s3.amazonaws.com/%@/%@", [recording uploadS3Bucket], [recording uploadPath]]];
     }
     
     // Preview

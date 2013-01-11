@@ -12,12 +12,14 @@
 #define kPendingUploadCellTopIdentifier @"PendingUploadCellTopIdentifier"
 #define kPendingUploadCellEventVideoIdentifier @"PendingUploadCellEventVideoIdentifier"
 #define kPendingUploadCellEventVideoTopIdentifier @"PendingUploadCellEventVideoTopIdentifier"
+#define kHostedEventVideoTopCellIdentifier @"HostedEventVideoTopCellIdentifier"
 #define kHostedEventVideoCellIdentifier @"HostedEventVideoCellIdentifier"
 
 #define kPendingUploadCellRowHeight 134
 #define kPendingUploadCellTopRowHeight 181
 #define kPendingUploadCellEventVideoTopRowHeight 208
 #define kPendingUploadCellEventVideoRowHeight 174
+#define kHostedEventVideoCellTopRowHeight 208
 #define kHostedEventVideoCellRowHeight 174
 
 #define kBufferBetweenThumbnailLabels 10
@@ -45,6 +47,9 @@
 @property (strong, nonatomic) IBOutlet UILabel *deleteLabel;
 @property (strong, nonatomic) IBOutlet UILabel *pendingUploadTimeLabel;
 @property (strong, nonatomic) IBOutlet UILabel *pendingUploadLengthLabel;
+
+@property (strong, nonatomic) IBOutlet UILabel *yourVideosLabel;
+@property (strong, nonatomic) IBOutlet UILabel *yourVideosCountLabel;
 
 
 
