@@ -654,7 +654,7 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     userVideoToUpload.uploadDestination = @"S3";
     userVideoToUpload.uploadS3Bucket = @"upload-switchcam-ios";
     userVideoToUpload.uploadPath = videoKey;
-    userVideoToUpload.state = [NSNumber numberWithInt:20];
+    userVideoToUpload.state = [NSNumber numberWithInt:10];
     
     // Save
     NSManagedObjectContext *context = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
