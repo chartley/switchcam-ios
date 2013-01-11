@@ -307,7 +307,7 @@
 }
 
 - (void)deleteButtonPressed:(PendingUploadCell*)pendingUploadCell {
-    NSManagedObjectContext *context = [RKManagedObjectStore defaultStore].persistentStoreManagedObjectContext;
+    NSManagedObjectContext *context = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
     int row = [pendingUploadCell tag];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
     
@@ -317,7 +317,7 @@
     
     // This delete should trigger the results controller in a change and delete automagically
     NSError *error = nil;
-    if (![context save:&error]) {
+    if (![context saveToPersistentStore:&error]) {
         NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
     }
 }

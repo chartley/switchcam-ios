@@ -73,8 +73,11 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
         // No? Display the login page.
         [self showLoginView];
     } else {
-        // Start location
-        [[SPLocationManager sharedInstance] start];
+        // Start location if we haven't yet
+        NSTimeInterval secondsSinceManagerStarted = [[NSDate date] timeIntervalSinceDate:[[SPLocationManager sharedInstance] locationManagerStartDate]];
+        if (secondsSinceManagerStarted > 120) {
+            [[SPLocationManager sharedInstance] start];
+        }
         
         // Save Facebook id and token for API access
         [[FBRequest requestForMe] startWithCompletionHandler:
@@ -200,8 +203,11 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
         [topViewController dismissModalViewControllerAnimated:YES];
         self.loginViewController = nil;
         
-        // Start location
-        [[SPLocationManager sharedInstance] start];
+        // Start location if we haven't yet
+        NSTimeInterval secondsSinceManagerStarted = [[NSDate date] timeIntervalSinceDate:[[SPLocationManager sharedInstance] locationManagerStartDate]];
+        if (secondsSinceManagerStarted > 120) {
+            [[SPLocationManager sharedInstance] start];
+        }
     }
 }
 
@@ -486,6 +492,30 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     [userVideoMapping addAttributeMappingsFromArray:@[ @"filename" ]];
     [userVideoMapping addAttributeMappingsFromArray:@[ @"mimetype" ]];
     
+    // User Video Object Mapping
+    RKEntityMapping *createUserVideoMapping = [RKEntityMapping mappingForEntityForName:@"UserVideo" inManagedObjectStore:managedObjectStore];
+    createUserVideoMapping.identificationAttributes = @[ @"uploadPath" ];
+    [createUserVideoMapping addAttributeMappingsFromDictionary:@{
+     @"upload_date": @"uploadDate",
+     @"video_id": @"videoId",
+     @"input_title": @"inputTitle",
+     @"thumbnail_sd": @"thumbnailSDURL",
+     @"thumbnail_hd": @"thumbnailHDURL",
+     @"duration_seconds": @"durationSeconds",
+     @"lon": @"longitude",
+     @"lat": @"latitude",
+     @"state": @"state",
+     @"record_date": @"recordStart",
+     @"upload_destination": @"uploadDestination",
+     @"upload_s3_bucket": @"uploadS3Bucket",
+     @"upload_path": @"uploadPath",
+     @"size_mb": @"sizeMegaBytes",
+     }];
+    [createUserVideoMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"uploaded_by" toKeyPath:@"uploadedBy" withMapping:userMapping]];
+    // If source and destination key path are the same, we can simply add a string to the array
+    [createUserVideoMapping addAttributeMappingsFromArray:@[ @"filename" ]];
+    [createUserVideoMapping addAttributeMappingsFromArray:@[ @"mimetype" ]];
+    
     // Register json serialization
     [RKMIMETypeSerialization registerClass:[RKNSJSONSerialization class] forMIMEType:@"application/json"];
     
@@ -495,13 +525,18 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
      @"uploadS3Bucket": @"upload_s3_bucket",
      @"uploadPath": @"upload_path",
      @"sizeMegaBytes": @"size_mb",
+     @"recordStart": @"record_date",
+     @"durationSeconds": @"duration_seconds",
+     @"mission.missionId": @"mission_id",
+     @"latitude": @"lat",
+     @"longitude": @"lon",
      }];
     
     // Register our mappings with the provider
     RKRequestDescriptor *userVideoRequestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:userVideoRequestMapping objectClass:[UserVideo class] rootKeyPath:@"uservideo"];
     
-    NSIndexSet *statusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful); // Anything in 2xx
-    RKResponseDescriptor *userVideoResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userVideoMapping pathPattern:@"uservideo/" keyPath:@"data" statusCodes:statusCodes];
+    RKResponseDescriptor *userVideoResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userVideoMapping pathPattern:@"uservideo/" keyPath:@"data" statusCodes:[NSIndexSet indexSetWithIndex:200]];
+    RKResponseDescriptor *createUserVideoResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:createUserVideoMapping pathPattern:@"uservideo/" keyPath:@"" statusCodes:[NSIndexSet indexSetWithIndex:201]];
     
     RKResponseDescriptor *missionResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:missionMapping
                                                                                             pathPattern:@"mission/"
@@ -514,6 +549,7 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
                                                                                               statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
     [objectManager addRequestDescriptor:userVideoRequestDescriptor];
     [objectManager addResponseDescriptor:userVideoResponseDescriptor];
+    [objectManager addResponseDescriptor:createUserVideoResponseDescriptor];
     [objectManager addResponseDescriptor:missionResponseDescriptor];
     [objectManager addResponseDescriptor:activityResponseDescriptor];
     
@@ -533,7 +569,7 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     [managedObjectStore createManagedObjectContexts];
     
     // Configure a managed object cache to ensure we do not create duplicate objects
-    managedObjectStore.managedObjectCache = [[RKInMemoryManagedObjectCache alloc] initWithManagedObjectContext:managedObjectStore.persistentStoreManagedObjectContext];
+    managedObjectStore.managedObjectCache = [[RKInMemoryManagedObjectCache alloc] initWithManagedObjectContext:managedObjectStore.mainQueueManagedObjectContext];
 }
 
 #pragma mark - NavigationBar
@@ -561,15 +597,15 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     [self.window makeKeyWindow];
     
     // Setup listeners
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadStarted) name:kSCS3UploadStartedNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadCompleted) name:kSCS3UploadCompletedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadStarted:) name:kSCS3UploadStartedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadCompleted:) name:kSCS3UploadCompletedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadProgress:) name:kSCS3UploadPercentCompleteNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadFailed) name:kSCS3UploadFailedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadFailed:) name:kSCS3UploadFailedNotification object:nil];
 }
 
 #pragma mark - Observer Methods
 
-- (void)uploadStarted {
+- (void)uploadStarted:(NSNotification*)notification {
     [self.statusBarToastAndProgressView showProgressView];
 }
 
@@ -578,14 +614,69 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     [self.statusBarToastAndProgressView updateProgressLabelWithAmount:[progress floatValue]];
 }
 
-- (void)uploadCompleted {
-    [self.statusBarToastAndProgressView showToastWithMessage:NSLocalizedString(@"Upload Complete!", @"")];
+- (void)uploadCompleted:(NSNotification*)notification {
+    NSString *videoKey = (NSString*)[notification object];
+    [self createUserVideo:videoKey];
+}
+
+- (void)uploadFailed:(NSNotification*)notification {
+    [self.statusBarToastAndProgressView showToastWithMessage:NSLocalizedString(@"Upload Failed!", @"")];
     [self.statusBarToastAndProgressView hideProgressView];
 }
 
-- (void)uploadFailed {
-    [self.statusBarToastAndProgressView showToastWithMessage:NSLocalizedString(@"Upload Failed!", @"")];
-    [self.statusBarToastAndProgressView hideProgressView];
+#pragma mark - Create User Video
+
+- (void)createUserVideo:(NSString*)videoKey {
+    // Get UserVideo with videoKey
+    UserVideo *userVideoToUpload = nil;
+    NSManagedObjectContext *managedObjectContext = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"UserVideo" inManagedObjectContext:managedObjectContext];
+    [fetchRequest setEntity:entity];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"uploadPath == %@", videoKey];
+    [fetchRequest setPredicate:predicate];
+    
+    NSError *error = nil;
+    NSArray *results = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    
+    if (error == nil && [results count] > 0) {
+        userVideoToUpload = [results objectAtIndex:0];
+    } else {
+        [self.statusBarToastAndProgressView showToastWithMessage:NSLocalizedString(@"Upload Failed!", @"")];
+        [self.statusBarToastAndProgressView hideProgressView];
+        return;
+    }
+    
+    // Set S3 Info
+    userVideoToUpload.uploadDestination = @"S3";
+    userVideoToUpload.uploadS3Bucket = @"upload-switchcam-ios";
+    userVideoToUpload.uploadPath = videoKey;
+    
+    // Save
+    NSManagedObjectContext *context = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
+    [context processPendingChanges];
+    if (![context saveToPersistentStore:&error]) {
+        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+    }
+    
+    // Completion Blocks
+    void (^createUserVideoSuccessBlock)(RKObjectRequestOperation *operation, RKMappingResult *responseObject);
+    void (^createUserVideoFailureBlock)(RKObjectRequestOperation *operation, NSError *error);
+    
+    
+    createUserVideoSuccessBlock = ^(RKObjectRequestOperation *operation, RKMappingResult *responseObject) {
+        [self.statusBarToastAndProgressView showToastWithMessage:NSLocalizedString(@"Upload Complete!", @"")];
+        [self.statusBarToastAndProgressView hideProgressView];
+    };
+    
+    createUserVideoFailureBlock = ^(RKObjectRequestOperation *operation, NSError *error) {
+        [self.statusBarToastAndProgressView showToastWithMessage:NSLocalizedString(@"Upload Failed!", @"")];
+        [self.statusBarToastAndProgressView hideProgressView];
+    };
+    
+    [[RKObjectManager sharedManager] postObject:userVideoToUpload path:@"uservideo/" parameters:nil success:createUserVideoSuccessBlock failure:createUserVideoFailureBlock];
 }
 
 @end

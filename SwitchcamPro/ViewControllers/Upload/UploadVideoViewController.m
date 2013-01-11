@@ -17,6 +17,7 @@
 #import "SCS3Uploader.h"
 #import "SPSerializable.h"
 #import "UIImage+H568.h"
+#import "Mission.h"
 
 #define kBufferBetweenThumbnailLabels 10
 
@@ -122,48 +123,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Network Requests
-
-- (void)createUserVideo {
-    // Create Key
-    NSString *videoKey = [NSString stringWithFormat:@"%@-%@.mp4", [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookIdKey] , [SPSerializable formattedStringFromDate: self.userVideoToUpload.recordStart]];
-    
-    // Set S3 Info
-    self.userVideoToUpload.uploadDestination = @"S3";
-    self.userVideoToUpload.uploadS3Bucket = @"upload-switchcam-ios";
-    self.userVideoToUpload.uploadPath = videoKey;
-    
-    // Save
-    NSManagedObjectContext *context = [RKManagedObjectStore defaultStore].persistentStoreManagedObjectContext;
-    [context processPendingChanges];
-    NSError *error = nil;
-    if (![context save:&error]) {
-        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
-    }
-    
-    // Completion Blocks
-    void (^createUserVideoSuccessBlock)(RKObjectRequestOperation *operation, RKMappingResult *responseObject);
-    void (^createUserVideoFailureBlock)(RKObjectRequestOperation *operation, NSError *error);
-    
-    
-    createUserVideoSuccessBlock = ^(RKObjectRequestOperation *operation, RKMappingResult *responseObject) {
-        // Start Upload in background
-        [self performSelectorInBackground:@selector(startUpload) withObject:nil];
-        
-        [self dismissModalViewControllerAnimated:YES];
-    };
-    
-    createUserVideoFailureBlock = ^(RKObjectRequestOperation *operation, NSError *error) {
-        //TODO better error handling
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Oops", @"") message:NSLocalizedString(@"Something went wrong, please try again.", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles:nil];
-        [alertView show];
-    };
-    
-    [[RKObjectManager sharedManager] postObject:self.userVideoToUpload path:@"uservideo/" parameters:nil success:createUserVideoSuccessBlock failure:createUserVideoFailureBlock];
-}
-
-
-
 #pragma mark - Button Actions
 
 - (void)uploadButtonAction {
@@ -180,8 +139,10 @@
     void (^compressionFailureBlock)(NSError *error);
     
     compressionSuccessBlock = ^() {
-        // Notify Switchcam of new user video
-        [self createUserVideo];
+        [self performSelectorOnMainThread:@selector(backButtonAction:) withObject:self waitUntilDone:NO];
+        
+        // Start Upload in background
+        [self performSelectorInBackground:@selector(startUpload) withObject:nil];
     };
     
     compressionFailureBlock = ^(NSError *error) {
@@ -201,12 +162,14 @@
 #pragma mark - Helper Methods
 
 - (void)startUpload {
-    NSError *error;
-    // Get Data
-    NSData *uploadData = [[NSData alloc] initWithContentsOfFile:[self.userVideoToUpload compressedVideoURL] options:NSDataReadingMapped error:&error];
-    
-    SCS3Uploader *uploader = [[SCS3Uploader alloc] init];
-    [uploader uploadVideo:uploadData withKey:self.userVideoToUpload.uploadPath];
+    @autoreleasepool {
+        NSError *error;
+        // Get Data
+        NSData *uploadData = [[NSData alloc] initWithContentsOfFile:[self.userVideoToUpload compressedVideoURL] options:NSDataReadingMapped error:&error];
+        
+        SCS3Uploader *uploader = [[SCS3Uploader alloc] init];
+        [uploader uploadVideo:uploadData withKey:self.userVideoToUpload.uploadPath];
+    }
 }
 
 - (void)startVideoCompressionWithSuccessHandler:(void (^)())successHandler failureHandler:(void (^)(NSError *))failureHandler  {
@@ -248,6 +211,7 @@
             [labelTextFieldCell.leftLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:17]];
             [labelTextFieldCell.textField setTextColor:[UIColor whiteColor]];
             [labelTextFieldCell.textField setFont:[UIFont fontWithName:@"SourceSansPro-Light" size:17]];
+            [labelTextFieldCell.textField setDelegate:self];
             break;
         }
             
@@ -432,6 +396,14 @@
     // Update label
     NSString *progressString = [NSString stringWithFormat:NSLocalizedString(@"Processing Video - %d%%", @""), (self.compressionSession.progress * 100)];
     [self.compressProgressLabel setText:progressString];
+}
+
+#pragma mark - UITextField Delegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    
+    return YES;
 }
 
 @end

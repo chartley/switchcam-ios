@@ -54,7 +54,7 @@
 
 @end
 
-@class SCCamCaptureManager, SCCamPreviewView, AVCaptureVideoPreviewLayer;
+@class SCCamCaptureManager, SCCamPreviewView, AVCaptureVideoPreviewLayer, Mission;
 
 @interface SCCamViewController : UIViewController <UIImagePickerControllerDelegate,UINavigationControllerDelegate, MBProgressHUDDelegate> {
 }
@@ -79,6 +79,7 @@
 @property (nonatomic,retain) IBOutlet UIButton *flashSelectedButton;
 
 @property (nonatomic,retain) IBOutlet UIButton *selectExistingButton;
+@property (nonatomic,retain) Mission *selectedMission;
 
 @property (assign, nonatomic) id<SCCamViewControllerDelegate> delegate;
 

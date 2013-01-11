@@ -290,6 +290,7 @@ enum { kTagTabBase = 100 };
 
 - (IBAction)recordButtonAction:(id)sender {
     SCCamViewController *viewController = [[SCCamViewController alloc] init];
+    [viewController setSelectedMission:self.mission];
     [viewController setDelegate:self];
     [self presentModalViewController:viewController animated:YES];
 }
@@ -316,7 +317,7 @@ enum { kTagTabBase = 100 };
         
         // Check if existing user video exists
         UserVideo *userVideo = nil;
-        NSManagedObjectContext *managedObjectContext = [RKManagedObjectStore defaultStore].persistentStoreManagedObjectContext;
+        NSManagedObjectContext *managedObjectContext = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
         
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
         NSEntityDescription *entity = [NSEntityDescription entityForName:@"UserVideo" inManagedObjectContext:managedObjectContext];

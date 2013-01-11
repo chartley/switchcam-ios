@@ -113,13 +113,39 @@ static SPLocationManager *sharedManager;
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
-                                                    message:[error description]
-                                                   delegate:nil
-                                          cancelButtonTitle:NSLocalizedString(@"OK", nil)
-                                          otherButtonTitles:nil];
+    if ([error domain] == kCLErrorDomain) {
+        
+        // We handle CoreLocation-related errors here
+        switch ([error code]) {
+                // "Don't Allow" on two successive app launches is the same as saying "never allow". The user
+                // can reset this for all apps by going to Settings > General > Reset > Reset Location Warnings.
+            case kCLErrorDenied:
+            {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Location Disabled", nil)
+                                                                message:NSLocalizedString(@"Please enable location services if you wish to search for events near you.  App restart is required.", @"")
+                                                               delegate:nil
+                                                      cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                                      otherButtonTitles:nil];
+                
+                [alert show];
+            }
+            case kCLErrorLocationUnknown:
+                // Silent
+            default:
+                break;
+        }
+    } else {
+        // We handle all non-CoreLocation errors here
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
+                                                        message:[error description]
+                                                       delegate:nil
+                                              cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                              otherButtonTitles:nil];
+        
+        [alert show];
+    }
     
-    [alert show];
+
 }
 
 @end

@@ -10,7 +10,7 @@
 
 @class UserVideo;
 
-@interface UploadVideoViewController : UIViewController
+@interface UploadVideoViewController : UIViewController <UITextFieldDelegate>
 
 @property (strong, nonatomic) UserVideo *userVideoToUpload;
 @property (strong, nonatomic) IBOutlet UILabel *timeLabel;

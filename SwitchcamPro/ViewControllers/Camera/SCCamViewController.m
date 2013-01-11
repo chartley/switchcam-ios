@@ -54,6 +54,8 @@
 #import "SCCamRecorder.h"
 #import "UploadVideoViewController.h"
 #import "UserVideo.h"
+#import "Mission.h"
+#import "SPLocationManager.h"
 
 static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
 
@@ -327,11 +329,16 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
     
     if (![[[self captureManager] recorder] isRecording]) {
         // Start collecting data of our new video
-        NSManagedObjectContext *context = [RKManagedObjectStore defaultStore].persistentStoreManagedObjectContext;
+        NSManagedObjectContext *context = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
         UserVideo *currentRecording = [NSEntityDescription
                                           insertNewObjectForEntityForName:@"UserVideo"
                                           inManagedObjectContext:context];
         
+        CLLocationCoordinate2D coordinate = [[[SPLocationManager sharedInstance] currentLocation] coordinate];
+        
+        [currentRecording setLatitude:[NSNumber numberWithDouble:coordinate.latitude]];
+        [currentRecording setLongitude:[NSNumber numberWithDouble:coordinate.longitude]];
+        [currentRecording setMission:self.selectedMission];
         [currentRecording setRecordStart:[NSDate date]];
         [currentRecording setIsUploaded:[NSNumber numberWithBool:NO]];
         
@@ -623,10 +630,10 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
         [HUD hide:YES];
         
         // Save
-        NSManagedObjectContext *context = [RKManagedObjectStore defaultStore].persistentStoreManagedObjectContext;
+        NSManagedObjectContext *context = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
         [context processPendingChanges];
         NSError *error = nil;
-        if (![context save:&error]) {
+        if (![context saveToPersistentStore:&error]) {
             NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
         }
     });

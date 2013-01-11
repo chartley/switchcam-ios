@@ -158,6 +158,7 @@
     }
     
     [activityCell.contributorImageView setImageWithURL:[NSURL URLWithString:[activity.person pictureURL]] placeholderImage:[UIImage imageNamed:@"img-shoot-thumb-placeholder"]];
+    [activityCell.timeLabel setText:activity.timesince];
     
     // Set delegate and tag
     [activityCell setTag:indexPath.row];
