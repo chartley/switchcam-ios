@@ -8,16 +8,26 @@
 
 #import <RestKit/RestKit.h>
 #import <QuartzCore/QuartzCore.h>
+#import <MediaPlayer/MediaPlayer.h>
 #import "EventActivityViewController.h"
+#import "ECSlidingViewController.h"
+#import "SPConstants.h"
+#import "AppDelegate.h"
 #import "ActivityVideoCell.h"
 #import "ActivityPhotoCell.h"
 #import "ActivityNoteCell.h"
 #import "ActivityActionCell.h"
+#import "ActivityCommentCell.h"
+#import "ActivityPostCommentCell.h"
 #import "Mission.h"
 #import "Activity.h"
 #import "User.h"
+#import "UserVideo.h"
+#import "Comment.h"
 
-@interface EventActivityViewController () <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate>
+@interface EventActivityViewController () <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate> {
+    int postCommentRow;
+}
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
 @end
@@ -29,6 +39,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        postCommentRow = 0;
     }
     return self;
 }
@@ -121,72 +132,264 @@
     }];
 }
 
+- (void)likeActivity:(Activity*)likedActivity {
+    NSString *facebookId = [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookIdKey];
+    NSString *facebookToken = [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookTokenKey];
+    
+    // Completion Blocks
+    void (^likeActivitySuccessBlock)(AFHTTPRequestOperation *operation, id responseObject);
+    void (^likeActivityFailureBlock)(AFHTTPRequestOperation *operation, NSError *error);
+    
+    likeActivitySuccessBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
+    };
+    
+    likeActivityFailureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
+        if ([error code] == NSURLErrorNotConnectedToInternet) {
+            NSString *title = NSLocalizedString(@"No Network Connection", @"");
+            NSString *message = NSLocalizedString(@"Please check your internet connection and try again.", @"");
+            
+            // Show alert
+            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alertView show];
+        }
+    };
+    
+    NSArray *idArray = [[likedActivity activityId] componentsSeparatedByString:@":"];
+    NSString *objectType = [idArray objectAtIndex:0];
+    
+    // Setup Parameters
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    
+    if ([objectType isEqualToString:@"note"]) {
+        [parameters setObject:@"" forKey:@"note_id"];
+    } else if ([objectType isEqualToString:@"action"] && [likedActivity.actionObjectContentType isEqualToString:@"director.recordingsession"]) {
+        [parameters setObject:likedActivity.userVideo.videoId forKey:@"video_id"];
+    } else if ([objectType isEqualToString:@"photo"]) {
+        [parameters setObject:@"" forKey:@"photo_id"];
+    }
+    
+    // Make Request and set params
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:kAPIHost]];
+    [httpClient setAuthorizationHeaderWithUsername:facebookId password:facebookToken];
+    
+    NSString *path = [NSString stringWithFormat:@"like/"];
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:path parameters:parameters];
+    
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    [operation setCompletionBlockWithSuccess:likeActivitySuccessBlock failure:likeActivityFailureBlock];
+    
+    [operation start];
+}
+
+- (void)unlikeActivity:(Activity*)unlikedActivity {
+    NSString *facebookId = [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookIdKey];
+    NSString *facebookToken = [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookTokenKey];
+    
+    // Completion Blocks
+    void (^unlikeActivitySuccessBlock)(AFHTTPRequestOperation *operation, id responseObject);
+    void (^unlikeActivityFailureBlock)(AFHTTPRequestOperation *operation, NSError *error);
+    
+    unlikeActivitySuccessBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
+    };
+    
+    unlikeActivityFailureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
+        if ([error code] == NSURLErrorNotConnectedToInternet) {
+            NSString *title = NSLocalizedString(@"No Network Connection", @"");
+            NSString *message = NSLocalizedString(@"Please check your internet connection and try again.", @"");
+            
+            // Show alert
+            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alertView show];
+        }
+    };
+    
+    NSArray *idArray = [[unlikedActivity activityId] componentsSeparatedByString:@":"];
+    NSString *objectType = [idArray objectAtIndex:0];
+    
+    // Setup Parameters
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    
+    if ([objectType isEqualToString:@"note"]) {
+        [parameters setObject:@"" forKey:@"note_id"];
+    } else if ([objectType isEqualToString:@"action"] && [unlikedActivity.actionObjectContentType isEqualToString:@"director.recordingsession"]) {
+        [parameters setObject:unlikedActivity.userVideo.videoId forKey:@"video_id"];
+    } else if ([objectType isEqualToString:@"photo"]) {
+        [parameters setObject:@"" forKey:@"photo_id"];
+    }
+    
+    // Make Request and set params
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:kAPIHost]];
+    [httpClient setAuthorizationHeaderWithUsername:facebookId password:facebookToken];
+    
+    NSString *path = [NSString stringWithFormat:@"like/"];
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"DELETE" path:path parameters:parameters];
+    
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    [operation setCompletionBlockWithSuccess:unlikeActivitySuccessBlock failure:unlikeActivityFailureBlock];
+    
+    [operation start];
+}
+
+- (void)addComment:(NSString *)comment toActivity:(Activity *)selectedActivity {
+    NSString *facebookId = [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookIdKey];
+    NSString *facebookToken = [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookTokenKey];
+    
+    // Completion Blocks
+    void (^commentActivitySuccessBlock)(AFHTTPRequestOperation *operation, id responseObject);
+    void (^commentActivityFailureBlock)(AFHTTPRequestOperation *operation, NSError *error);
+    
+    commentActivitySuccessBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSIndexPath *postCommentRowIndexPath = [NSIndexPath indexPathForRow:postCommentRow inSection:0];
+        
+        // Set row for height adjustment
+        postCommentRow = 0;
+        
+        // Hide Post Comment
+        [self.eventActivityTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:postCommentRowIndexPath] withRowAnimation:UITableViewRowAnimationTop];
+    };
+    
+    commentActivityFailureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
+        if ([error code] == NSURLErrorNotConnectedToInternet) {
+            NSString *title = NSLocalizedString(@"No Network Connection", @"");
+            NSString *message = NSLocalizedString(@"Please check your internet connection and try again.", @"");
+            
+            // Show alert
+            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alertView show];
+        }
+    };
+    
+    NSArray *idArray = [[selectedActivity activityId] componentsSeparatedByString:@":"];
+    NSString *objectType = [idArray objectAtIndex:0];
+    
+    // Setup Parameters
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    
+    if ([objectType isEqualToString:@"note"]) {
+        [parameters setObject:@"" forKey:@"note_id"];
+    } else if ([objectType isEqualToString:@"action"] && [selectedActivity.actionObjectContentType isEqualToString:@"director.recordingsession"]) {
+        [parameters setObject:selectedActivity.userVideo.videoId forKey:@"video_id"];
+    } else if ([objectType isEqualToString:@"photo"]) {
+        [parameters setObject:@"" forKey:@"photo_id"];
+    }
+    
+    [parameters setObject:comment forKey:@"comment"];
+    
+    // Make Request and set params
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:kAPIHost]];
+    [httpClient setAuthorizationHeaderWithUsername:facebookId password:facebookToken];
+    
+    NSString *path = [NSString stringWithFormat:@"comment/"];
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:path parameters:parameters];
+    
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    [operation setCompletionBlockWithSuccess:commentActivitySuccessBlock failure:commentActivityFailureBlock];
+    
+    [operation start];
+}
+
 #pragma mark - Helper Methods
 
 - (void)configureCell:(UITableViewCell *)cell forTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
-    Activity *activity = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    // We add rows for comments ahead of time, divide and floor to get the correct row for our fetched results
+    int row = floor(indexPath.row / 5.0);
+    NSIndexPath *fetchedResultsIndexPath = [NSIndexPath indexPathForRow:row inSection:0];
+    
+    Activity *activity = [self.fetchedResultsController objectAtIndexPath:fetchedResultsIndexPath];
+
     ActivityCell *activityCell = (ActivityCell*)cell;
     
-    if ([activity.activityType isEqualToString:@"note"]) {
-        ActivityNoteCell *activityNoteCell = (ActivityNoteCell *)cell;
-        [activityNoteCell.verbLabel setText:NSLocalizedString(@"added a note", @"")];
-        
-    } else if ([activity.activityType isEqualToString:@"action"]) {
-        if ([activity.targetContentType isEqualToString:@"director.mission"]) {
-            if (activity.actionObjectContentType == nil || [activity.actionObjectContentType isEqualToString:@""]) {
-                
-            } else if ([activity.actionObjectContentType isEqualToString:@"director.recordingsession"]) {
-                //TODO need thumbnail from API
-                //ActivityVideoCell *activityVideoCell = (ActivityVideoCell*) cell;
-                //[activityVideoCell.videoThumbnailImageView setImageWithURL:<#(NSURL *)#>]
-            } else if ([activity.actionObjectContentType isEqualToString:@"photo"]) {
-                
+    if (indexPath.row % 5 == 0) {
+        // Post row
+        if ([activity.activityType isEqualToString:@"note"]) {
+            ActivityNoteCell *activityNoteCell = (ActivityNoteCell *)cell;
+            [activityNoteCell.verbLabel setText:NSLocalizedString(@"added a note", @"")];
+            
+        } else if ([activity.activityType isEqualToString:@"action"]) {
+            if ([activity.targetContentType isEqualToString:@"director.mission"]) {
+                if (activity.actionObjectContentType == nil || [activity.actionObjectContentType isEqualToString:@""]) {
+                    
+                } else if ([activity.actionObjectContentType isEqualToString:@"director.recordingsession"]) {
+                    // Set thumbnail from API
+                    ActivityVideoCell *activityVideoCell = (ActivityVideoCell*) cell;
+                    if (activity.userVideo.thumbnailHDURL != nil) {
+                        [activityVideoCell.videoThumbnailImageView setImageWithURL:[NSURL URLWithString:activity.userVideo.thumbnailHDURL]];
+                    }
+                } else if ([activity.actionObjectContentType isEqualToString:@"photo"]) {
+                    // Set thumbnail from API
+                    ActivityPhotoCell *activityPhotoCell = (ActivityPhotoCell*) cell;
+                    if (activity.photoThumbnailURL != nil) {
+                        [activityPhotoCell.photoThumbnailImageView setImageWithURL:[NSURL URLWithString:activity.photoThumbnailURL]];
+                    }
+                }
             }
+            
+            [activityCell.verbLabel setText:activity.verb];
         }
         
-        [activityCell.verbLabel setText:activity.verb];
+        // Like and Comment counts
+        if ([activity.likeCount intValue] > 0) {
+            [activityCell.likeCountLabel setHidden:NO];
+            [activityCell.likeCountLabel setText:[NSString stringWithFormat:@"%d", [activity.likeCount intValue]]];
+        } else {
+            [activityCell.likeCountLabel setHidden:YES];
+        }
+        
+        if ([activity.commentCount intValue] > 0) {
+            [activityCell.commentCountLabel setHidden:NO];
+            [activityCell.commentCountLabel setText:[NSString stringWithFormat:@"%d", [activity.commentCount intValue]]];
+        } else {
+            [activityCell.commentCountLabel setHidden:YES];
+        }
+        
+        // Adjust verb / time layout
+        [activityCell.verbLabel sizeToFit];
+        [activityCell.timeLabel sizeToFit];
+        
+        int timeLabelOffset = activityCell.verbLabel.frame.size.width + activityCell.verbLabel.frame.origin.x + 5;
+        int timeLabelWidth = 220 - timeLabelOffset;  // Like Button Origin, set as number here to offset button frame buffer
+        [activityCell.timeLabel setFrame:CGRectMake(timeLabelOffset, activityCell.timeLabel.frame.origin.y, timeLabelWidth, activityCell.timeLabel.frame.size.height)];
+    } else if (indexPath.row % 5 == 4) {
+        // Post Comment Row
+    } else {
+        // Comment Row
     }
     
     
     // Set Contributer
     [activityCell.contributorLabel setText:activity.person.name];
-
-    if ([activity.likeCount intValue] > 0) {
-        [activityCell.likeCountLabel setHidden:NO];
-        [activityCell.likeCountLabel setText:[NSString stringWithFormat:@"%d", [activity.likeCount intValue]]];
-    } else {
-        [activityCell.likeCountLabel setHidden:YES];
-    }
-    
-    if ([activity.commentCount intValue] > 0) {
-        [activityCell.commentCountLabel setHidden:NO];
-        [activityCell.commentCountLabel setText:[NSString stringWithFormat:@"%d", [activity.commentCount intValue]]];
-    } else {
-        [activityCell.commentCountLabel setHidden:YES];
-    }
-    
     [activityCell.contributorImageView setImageWithURL:[NSURL URLWithString:[activity.person pictureURL]] placeholderImage:[UIImage imageNamed:@"img-shoot-thumb-placeholder"]];
     [activityCell.timeLabel setText:activity.timesince];
     
     // Set delegate and tag
-    [activityCell setTag:indexPath.row];
+    [activityCell setTag:(indexPath.row / 5)];
     [activityCell setDelegate:self];
-    
-    // Adjust verb / time layout
-    [activityCell.verbLabel sizeToFit];
-    [activityCell.timeLabel sizeToFit];
-    
-    int timeLabelOffset = activityCell.verbLabel.frame.size.width + activityCell.verbLabel.frame.origin.x + 5;
-    int timeLabelWidth = 220 - timeLabelOffset;  // Like Button Origin, set as number here to offset button frame buffer
-    [activityCell.timeLabel setFrame:CGRectMake(timeLabelOffset, activityCell.timeLabel.frame.origin.y, timeLabelWidth, activityCell.timeLabel.frame.size.height)];
 }
 
 #pragma mark - UITableViewDataSource methods
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    Activity *activity = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    // We add rows for comments ahead of time, divide and floor to get the correct row for our fetched results
+    int row = floor(indexPath.row / 5.0);
+    NSIndexPath *fetchedResultsIndexPath = [NSIndexPath indexPathForRow:row inSection:0];
     
-    return [activity.rowHeight floatValue];
+    Activity *activity = [self.fetchedResultsController objectAtIndexPath:fetchedResultsIndexPath];
+    
+    if (indexPath.row % 5 == 0) {
+        // Main Post
+        return [activity.rowHeight floatValue];
+    } else if (indexPath.row % 5 == 4) {
+        // Post Comment Row
+        if (postCommentRow == indexPath.row) {
+            return kActivityPostCommentCellRowHeight;
+        } else {
+            return 1;
+        }
+    } else {
+        // Comment Row
+        return 1;
+    }
+    
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -194,50 +397,91 @@
 }
 
 - (NSInteger)tableView:(UITableView *)table numberOfRowsInSection:(NSInteger)section {
+    // We will multiple the number of objects by 5 to get
+    // 1 Row Main Post
+    // 3 Rows Comments
+    // 1 Row Post Comment
     id<NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController.sections objectAtIndex:section];
-    return [sectionInfo numberOfObjects];
+    return [sectionInfo numberOfObjects] * 5;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Activity *activity = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    // We add rows for comments ahead of time, divide and floor to get the correct row for our fetched results
+    int row = floor(indexPath.row / 5.0);
+    NSIndexPath *fetchedResultsIndexPath = [NSIndexPath indexPathForRow:row inSection:0];
+    
+    Activity *activity = [self.fetchedResultsController objectAtIndexPath:fetchedResultsIndexPath];
 
     UITableViewCell *cell = nil;
-    
-    if ([activity.activityType isEqualToString:@"note"]) {
-        cell = [tableView dequeueReusableCellWithIdentifier:kActivityNoteCellIdentifier];
-    } else if ([activity.activityType isEqualToString:@"action"]) {
-        if ([activity.targetContentType isEqualToString:@"director.mission"]) {
-            if (activity.actionObjectContentType == nil || [activity.actionObjectContentType isEqualToString:@""]) {
-                cell = [tableView dequeueReusableCellWithIdentifier:kActivityActionCellIdentifier];
-            } else if ([activity.actionObjectContentType isEqualToString:@"director.recordingsession"]) {
-                cell = [tableView dequeueReusableCellWithIdentifier:kActivityVideoCellIdentifier];
-            } else if ([activity.actionObjectContentType isEqualToString:@"photo"]) {
-                cell = [tableView dequeueReusableCellWithIdentifier:kActivityPhotoCellIdentifier];
-            }
-        }
-    }
-    
-    if (cell == nil) {
+
+    if (indexPath.row % 5 == 0) {
+        // Post row
         if ([activity.activityType isEqualToString:@"note"]) {
-            NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"ActivityNoteCell" owner:self options:nil];
-            cell = [nibArray objectAtIndex:0];
-            
+            cell = [tableView dequeueReusableCellWithIdentifier:kActivityNoteCellIdentifier];
         } else if ([activity.activityType isEqualToString:@"action"]) {
             if ([activity.targetContentType isEqualToString:@"director.mission"]) {
                 if (activity.actionObjectContentType == nil || [activity.actionObjectContentType isEqualToString:@""]) {
-                    NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"ActivityActionCell" owner:self options:nil];
-                    cell = [nibArray objectAtIndex:0];
+                    cell = [tableView dequeueReusableCellWithIdentifier:kActivityActionCellIdentifier];
                 } else if ([activity.actionObjectContentType isEqualToString:@"director.recordingsession"]) {
-                    NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"ActivityVideoCell" owner:self options:nil];
-                    cell = [nibArray objectAtIndex:0];
+                    cell = [tableView dequeueReusableCellWithIdentifier:kActivityVideoCellIdentifier];
                 } else if ([activity.actionObjectContentType isEqualToString:@"photo"]) {
-                    NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"ActivityPhotoCell" owner:self options:nil];
-                    cell = [nibArray objectAtIndex:0];
+                    cell = [tableView dequeueReusableCellWithIdentifier:kActivityPhotoCellIdentifier];
                 }
             }
         }
-        
+    } else if (indexPath.row % 5 == 4) {
+        // Post Comment Row
+        cell = [tableView dequeueReusableCellWithIdentifier:kActivityPostCommentCellIdentifier];
+    } else {
+        // Comment Row
+        cell = [tableView dequeueReusableCellWithIdentifier:kActivityCommentCellIdentifier];
+    }
+    
+    if (cell == nil) {
+        if (indexPath.row % 5 == 0) {
+            if ([activity.activityType isEqualToString:@"note"]) {
+                NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"ActivityNoteCell" owner:self options:nil];
+                cell = [nibArray objectAtIndex:0];
+                
+            } else if ([activity.activityType isEqualToString:@"action"]) {
+                if ([activity.targetContentType isEqualToString:@"director.mission"]) {
+                    if (activity.actionObjectContentType == nil || [activity.actionObjectContentType isEqualToString:@""]) {
+                        NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"ActivityActionCell" owner:self options:nil];
+                        cell = [nibArray objectAtIndex:0];
+                    } else if ([activity.actionObjectContentType isEqualToString:@"director.recordingsession"]) {
+                        NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"ActivityVideoCell" owner:self options:nil];
+                        cell = [nibArray objectAtIndex:0];
+                    } else if ([activity.actionObjectContentType isEqualToString:@"photo"]) {
+                        NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"ActivityPhotoCell" owner:self options:nil];
+                        cell = [nibArray objectAtIndex:0];
+                    }
+                }
+            }
+        } else if (indexPath.row % 5 == 4) {
+            // Post Comment Row
+            NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"ActivityPostCommentCell" owner:self options:nil];
+            cell = [nibArray objectAtIndex:0];
+            ActivityPostCommentCell *activityPostCommentCell = (ActivityPostCommentCell*)cell;
+            
+            // Set Button Image
+            UIImage *buttonImage = [[UIImage imageNamed:@"btn-orange-lg"]
+                                    resizableImageWithCapInsets:UIEdgeInsetsMake(20, 15, 20, 15)];
+            
+            // Set Button Image
+            UIImage *highlightButtonImage = [[UIImage imageNamed:@"btn-orange-lg-pressed"]
+                                             resizableImageWithCapInsets:UIEdgeInsetsMake(20, 15, 20, 15)];
+            
+            // Set the background for any states you plan to use
+            [activityPostCommentCell.postCommentButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
+            [activityPostCommentCell.postCommentButton setBackgroundImage:highlightButtonImage forState:UIControlStateSelected];
+            [activityPostCommentCell.postCommentButton.titleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Semibold" size:17]];
+        } else {
+            // Comment Row
+            NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"ActivityCommentCell" owner:self options:nil];
+            cell = [nibArray objectAtIndex:0];
+        }
+    
         // Set Custom Font
         ActivityCell *activityCell = (ActivityCell *)cell;
         [activityCell.contributorLabel setFont:[UIFont fontWithName:@"SourceSansPro-Semibold" size:15]];
@@ -286,15 +530,103 @@
 #pragma mark - Activity Cell Delegate Methods
 
 - (void)previewButtonPressed:(ActivityCell*)activityCell {
+    AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     
+    int row = [activityCell tag];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+    
+    Activity *activity = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    UserVideo *userVideo = activity.userVideo;
+    
+    if (userVideo != nil) {
+        // Video
+        NSURL *previewRecordingURL = nil;
+        if ([userVideo localVideoAssetURL] != nil) {
+            //TODO Verify asset url is good
+            previewRecordingURL = [NSURL URLWithString:[userVideo localVideoAssetURL]];
+        } else {
+            previewRecordingURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://s3.amazonaws.com/%@/%@", [userVideo uploadS3Bucket], [userVideo uploadPath]]];
+        }
+        
+        // Preview
+        MPMoviePlayerViewController *viewController = [[MPMoviePlayerViewController alloc] initWithContentURL: previewRecordingURL];
+        [appDelegate.slidingViewController presentModalViewController:viewController animated:YES];
+    } else {
+        // Photo
+    }
+
 }
 
 - (void)likeButtonPressed:(ActivityCell*)activityCell {
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:activityCell.tag inSection:0];
+    Activity *selectedActivity = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
+    // Send Network Request
+    if (activityCell.likeButton.selected) {
+        [self unlikeActivity:selectedActivity];
+    } else {
+        [self likeActivity:selectedActivity];
+    }
+    
+    // Set the button
+    [activityCell.likeButton setSelected:!activityCell.likeButton.selected];
 }
 
 - (void)commentButtonPressed:(ActivityCell*)activityCell {
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:((activityCell.tag*5)+4) inSection:0];
     
+    // Send Network Request
+    if (activityCell.commentButton.selected && postCommentRow != 0) {
+        // Remove keyboard if showing
+        ActivityPostCommentCell *activityPostCommentCell = (ActivityPostCommentCell*) [self tableView:self.eventActivityTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:postCommentRow inSection:0]];
+        [activityPostCommentCell.commentTextField resignFirstResponder];
+        
+        // Set row for height adjustment
+        postCommentRow = 0;
+        
+        // Hide Post Comment
+        [self.eventActivityTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationTop];
+    } else {
+        NSArray *indexPathsToReload = nil;
+        if (postCommentRow != 0) {
+            // De-select the comment button and reload row we are removing
+            ActivityPostCommentCell *activityCell = (ActivityPostCommentCell*) [self tableView:self.eventActivityTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:(postCommentRow-4) inSection:0]];
+            activityCell.commentButton.selected = NO;
+            
+            indexPathsToReload = [NSArray arrayWithObjects:indexPath, [NSIndexPath indexPathForRow:postCommentRow inSection:0], nil];
+        } else {
+            indexPathsToReload = [NSArray arrayWithObject:indexPath];
+        }
+        
+        // Set row for height adjustment
+        postCommentRow = indexPath.row;
+        
+        // Show Post Comment / Hide previous post comment if open
+        [self.eventActivityTableView reloadRowsAtIndexPaths:indexPathsToReload withRowAnimation:UITableViewRowAnimationBottom];
+    }
+    
+    // Set the button
+    [activityCell.commentButton setSelected:!activityCell.commentButton.selected];
+}
+
+- (void)postCommentButtonPressed:(ActivityPostCommentCell*)activityPostCommentCell {
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:activityPostCommentCell.tag inSection:0];
+    Activity *selectedActivity = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    NSString *commentToPost = activityPostCommentCell.commentTextField.text;
+    
+    // Remove keyboard
+    [activityPostCommentCell.commentTextField resignFirstResponder];
+    
+    // Validation
+    if (commentToPost == nil || [commentToPost isEqualToString:@""]) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Oops", @"") message:NSLocalizedString(@"You must add a comment before you can post it.", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles:nil];
+        [alertView show];
+        return;
+    }
+    
+    [self addComment:commentToPost toActivity:selectedActivity];
 }
 
 @end

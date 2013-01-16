@@ -2,7 +2,7 @@
 //  User.h
 //  SwitchcamPro
 //
-//  Created by William Ketterer on 1/9/13.
+//  Created by William Ketterer on 1/15/13.
 //  Copyright (c) 2013 William Ketterer. All rights reserved.
 //
 
@@ -22,6 +22,7 @@
 @property (nonatomic, retain) NSSet *createdMission;
 @property (nonatomic, retain) NSSet *followedMission;
 @property (nonatomic, retain) NSSet *uploads;
+@property (nonatomic, retain) NSSet *comments;
 @end
 
 @interface User (CoreDataGeneratedAccessors)
@@ -50,5 +51,10 @@
 - (void)removeUploadsObject:(UserVideo *)value;
 - (void)addUploads:(NSSet *)values;
 - (void)removeUploads:(NSSet *)values;
+
+- (void)addCommentsObject:(NSManagedObject *)value;
+- (void)removeCommentsObject:(NSManagedObject *)value;
+- (void)addComments:(NSSet *)values;
+- (void)removeComments:(NSSet *)values;
 
 @end

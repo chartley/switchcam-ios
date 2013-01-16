@@ -398,29 +398,6 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     // If source and destination key path are the same, we can simply add a string to the array
     [userMapping addAttributeMappingsFromArray:@[ @"name" ]];
     
-    RKEntityMapping *activityMapping = [RKEntityMapping mappingForEntityForName:@"Activity" inManagedObjectStore:managedObjectStore];
-    activityMapping.identificationAttributes = @[ @"activityId" ];
-    
-    [activityMapping addAttributeMappingsFromDictionary:@{
-     @"id": @"activityId",
-     @"action_object_content_type": @"actionObjectContentType",
-     @"action_object_id": @"actionObjectId",
-     @"activity_type": @"activityType",
-     @"target_content_type": @"targetContentType",
-     @"target_id": @"targetId",
-     @"like_count": @"likeCount",
-     @"comment_count": @"commentCount",
-     }];
-    // If source and destination key path are the same, we can simply add a string to the array
-    [activityMapping addAttributeMappingsFromArray:@[ @"text" ]];
-    [activityMapping addAttributeMappingsFromArray:@[ @"verb" ]];
-    [activityMapping addAttributeMappingsFromArray:@[ @"timestamp" ]];
-    [activityMapping addAttributeMappingsFromArray:@[ @"timesince" ]];
-    [activityMapping addAttributeMappingsFromArray:@[ @"deletable" ]];
-    
-    // Relationships
-    [activityMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"person" toKeyPath:@"person" withMapping:userMapping]];
-    
     RKEntityMapping *missionMapping = [RKEntityMapping mappingForEntityForName:@"Mission" inManagedObjectStore:managedObjectStore];
     missionMapping.identificationAttributes = @[ @"missionId" ];
     [missionMapping addAttributeMappingsFromDictionary:@{
@@ -463,10 +440,6 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     [missionMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"followers" toKeyPath:@"followers" withMapping:userMapping]];
     [missionMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"venue" toKeyPath:@"venue" withMapping:venueMapping]];
     [missionMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"artist" toKeyPath:@"artist" withMapping:artistMapping]];
-    
-    [userMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"attendedMissions" toKeyPath:@"cameraCrew" withMapping:missionMapping]];
-    [userMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"createdMissions" toKeyPath:@"createdBy" withMapping:missionMapping]];
-    [userMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"followedMissions" toKeyPath:@"followers" withMapping:missionMapping]];
     
     // User Video Object Mapping
     RKEntityMapping *userVideoMapping = [RKEntityMapping mappingForEntityForName:@"UserVideo" inManagedObjectStore:managedObjectStore];
@@ -516,8 +489,30 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     [createUserVideoMapping addAttributeMappingsFromArray:@[ @"mimetype" ]];
     [createUserVideoMapping addAttributeMappingsFromArray:@[ @"state" ]];
     
-    // Register json serialization
-    [RKMIMETypeSerialization registerClass:[RKNSJSONSerialization class] forMIMEType:@"application/json"];
+    RKEntityMapping *activityMapping = [RKEntityMapping mappingForEntityForName:@"Activity" inManagedObjectStore:managedObjectStore];
+    activityMapping.identificationAttributes = @[ @"activityId" ];
+    
+    [activityMapping addAttributeMappingsFromDictionary:@{
+     @"id": @"activityId",
+     @"action_object_content_type": @"actionObjectContentType",
+     @"action_object_id": @"actionObjectId",
+     @"activity_type": @"activityType",
+     @"target_content_type": @"targetContentType",
+     @"target_id": @"targetId",
+     @"like_count": @"likeCount",
+     @"comment_count": @"commentCount",
+     @"url": @"photoThumbnailURL",
+     }];
+    // If source and destination key path are the same, we can simply add a string to the array
+    [activityMapping addAttributeMappingsFromArray:@[ @"text" ]];
+    [activityMapping addAttributeMappingsFromArray:@[ @"verb" ]];
+    [activityMapping addAttributeMappingsFromArray:@[ @"timestamp" ]];
+    [activityMapping addAttributeMappingsFromArray:@[ @"timesince" ]];
+    [activityMapping addAttributeMappingsFromArray:@[ @"deletable" ]];
+    
+    // Relationships
+    [activityMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"person" toKeyPath:@"person" withMapping:userMapping]];
+    [activityMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"action_object.uservideo" toKeyPath:@"userVideo" withMapping:userVideoMapping]];
     
     RKObjectMapping *userVideoRequestMapping = [RKObjectMapping requestMapping]; // objectClass == NSMutableDictionary
     [userVideoRequestMapping addAttributeMappingsFromDictionary:@{
@@ -554,7 +549,10 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     [objectManager addResponseDescriptor:missionResponseDescriptor];
     [objectManager addResponseDescriptor:activityResponseDescriptor];
     
+    // Register json serialization
+    [RKMIMETypeSerialization registerClass:[RKNSJSONSerialization class] forMIMEType:@"application/json"];
     [objectManager setRequestSerializationMIMEType:RKMIMETypeJSON];
+    
     
     
     /**

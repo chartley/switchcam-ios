@@ -15,6 +15,7 @@
 - (void)previewButtonPressed:(ActivityCell*)activityCell;
 - (void)likeButtonPressed:(ActivityCell*)activityCell;
 - (void)commentButtonPressed:(ActivityCell*)activityCell;
+- (void)postCommentButtonPressed:(ActivityCell*)activityCell;
 
 @end
 
@@ -35,5 +36,6 @@
 - (IBAction)previewButtonAction:(id)sender;
 - (IBAction)likeButtonAction:(id)sender;
 - (IBAction)commentButtonAction:(id)sender;
+- (IBAction)postCommentButtonAction:(id)sender;
 
 @end

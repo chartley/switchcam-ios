@@ -180,10 +180,11 @@
 									<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 								</object>
 								<reference key="IBUINormalTitleShadowColor" ref="81920002"/>
-								<object class="NSCustomResource" key="IBUIHighlightedImage">
+								<object class="NSCustomResource" key="IBUIHighlightedImage" id="882016659">
 									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">icn-upload-pressed.png</string>
+									<string key="NSResourceName">icn-like-liked.png</string>
 								</object>
+								<reference key="IBUISelectedImage" ref="882016659"/>
 								<object class="NSCustomResource" key="IBUINormalImage">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">icn-link-inactive.png</string>
@@ -197,6 +198,7 @@
 								<string key="NSFrame">{{259, 147}, {45, 45}}</string>
 								<reference key="NSSuperview" ref="995971189"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="377912196"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -208,11 +210,15 @@
 									<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 								</object>
 								<reference key="IBUINormalTitleShadowColor" ref="81920002"/>
-								<object class="NSCustomResource" key="IBUIHighlightedImage" id="925170062">
+								<object class="NSCustomResource" key="IBUIHighlightedImage" id="343727397">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">icn-comment-commented.png</string>
+								</object>
+								<reference key="IBUISelectedImage" ref="343727397"/>
+								<object class="NSCustomResource" key="IBUINormalImage">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">icn-comment-inactive.png</string>
 								</object>
-								<reference key="IBUINormalImage" ref="925170062"/>
 								<reference key="IBUIFontDescription" ref="790767284"/>
 								<reference key="IBUIFont" ref="446110224"/>
 							</object>
@@ -292,6 +298,7 @@
 								<string key="NSFrame">{{260, 179}, {42, 21}}</string>
 								<reference key="NSSuperview" ref="995971189"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -558,7 +565,7 @@
 				<string key="2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="3.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<real value="0.0" key="4.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
+				<real value="2" key="4.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<real value="0.0" key="5.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -678,11 +685,12 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<string key="icn-comment-commented.png">{25, 24}</string>
 			<string key="icn-comment-inactive.png">{25, 24}</string>
+			<string key="icn-like-liked.png">{19, 26}</string>
 			<string key="icn-link-inactive.png">{19, 26}</string>
 			<string key="icn-preview-pressed.png">{21, 25}</string>
 			<string key="icn-preview.png">{21, 25}</string>
-			<string key="icn-upload-pressed.png">{36, 29}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1930</string>
 	</data>

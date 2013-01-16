@@ -46,4 +46,10 @@
 	}
 }
 
+- (IBAction)postCommentButtonAction:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(postCommentButtonPressed:)]) {
+		[self.delegate performSelector:@selector(postCommentButtonPressed:) withObject:self];
+	}
+}
+
 @end

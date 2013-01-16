@@ -9,6 +9,7 @@
 #import "UserVideo.h"
 #import "Mission.h"
 #import "User.h"
+#import "Activity.h"
 
 
 @implementation UserVideo
@@ -36,5 +37,6 @@
 @dynamic state;
 @dynamic mission;
 @dynamic uploadedBy;
+@dynamic activities;
 
 @end

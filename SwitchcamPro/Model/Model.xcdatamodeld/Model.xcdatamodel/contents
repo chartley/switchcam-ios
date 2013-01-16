@@ -8,6 +8,8 @@
         <attribute name="commentCount" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="deletable" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="likeCount" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="liked" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="photoThumbnailURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="rowHeight" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="targetContentType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="targetId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
@@ -16,11 +18,18 @@
         <attribute name="timestamp" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="verb" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="person" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="activities" inverseEntity="User" syncable="YES"/>
+        <relationship name="userVideo" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="UserVideo" inverseName="activities" inverseEntity="UserVideo" syncable="YES"/>
     </entity>
     <entity name="Artist" representedClassName="Artist" syncable="YES">
         <attribute name="artistId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="artistName" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="missions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mission" inverseName="artist" inverseEntity="Mission" syncable="YES"/>
+    </entity>
+    <entity name="Comment" representedClassName="Comment" syncable="YES">
+        <attribute name="comment" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="commentId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="submit_date" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="user" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="comments" inverseEntity="User" syncable="YES"/>
     </entity>
     <entity name="Mission" representedClassName="Mission" syncable="YES">
         <attribute name="endDatetime" optional="YES" attributeType="Date" syncable="YES"/>
@@ -47,6 +56,7 @@
         <attribute name="userId" optional="YES" attributeType="Integer 64" defaultValueString="0.0" syncable="YES"/>
         <relationship name="activities" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Activity" inverseName="person" inverseEntity="Activity" syncable="YES"/>
         <relationship name="attendedMission" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mission" inverseName="cameraCrew" inverseEntity="Mission" syncable="YES"/>
+        <relationship name="comments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Comment" inverseName="user" inverseEntity="Comment" syncable="YES"/>
         <relationship name="createdMission" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mission" inverseName="createdBy" inverseEntity="Mission" syncable="YES"/>
         <relationship name="followedMission" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mission" inverseName="followers" inverseEntity="Mission" syncable="YES"/>
         <relationship name="uploads" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="UserVideo" inverseName="uploadedBy" inverseEntity="UserVideo" syncable="YES"/>
@@ -73,6 +83,7 @@
         <attribute name="uploadPath" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="uploadS3Bucket" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="videoId" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="activities" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Activity" inverseName="userVideo" inverseEntity="Activity" syncable="YES"/>
         <relationship name="mission" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Mission" inverseName="userVideos" inverseEntity="Mission" syncable="YES"/>
         <relationship name="uploadedBy" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="uploads" inverseEntity="User" syncable="YES"/>
     </entity>
@@ -86,11 +97,12 @@
         <relationship name="missions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mission" inverseName="venue" inverseEntity="Mission" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Activity" positionX="160" positionY="192" width="128" height="270"/>
+        <element name="Activity" positionX="160" positionY="192" width="128" height="315"/>
         <element name="Artist" positionX="160" positionY="192" width="128" height="90"/>
         <element name="Mission" positionX="160" positionY="192" width="128" height="285"/>
-        <element name="User" positionX="160" positionY="192" width="128" height="180"/>
-        <element name="UserVideo" positionX="160" positionY="192" width="128" height="390"/>
+        <element name="User" positionX="160" positionY="192" width="128" height="195"/>
+        <element name="UserVideo" positionX="160" positionY="192" width="128" height="405"/>
         <element name="Venue" positionX="160" positionY="192" width="128" height="150"/>
+        <element name="Comment" positionX="160" positionY="192" width="128" height="105"/>
     </elements>
 </model>

@@ -22,7 +22,7 @@
 #define kUserVideoStateANALYZING        60          // analyzing content to allow placement
 #define kUserVideoStateSERVING          70          // deployed to edge server(s) and serving video
 
-@class Mission, User;
+@class Mission, User, Activity;
 
 @interface UserVideo : NSManagedObject
 
@@ -49,5 +49,15 @@
 @property (nonatomic, retain) NSNumber * state;
 @property (nonatomic, retain) Mission *mission;
 @property (nonatomic, retain) User *uploadedBy;
+@property (nonatomic, retain) NSSet *activities;
+
+@end
+
+@interface UserVideo (CoreDataGeneratedAccessors)
+
+- (void)addActivitiesObject:(Activity *)value;
+- (void)removeActivitiesObject:(Activity *)value;
+- (void)addActivities:(NSSet *)values;
+- (void)removeActivities:(NSSet *)values;
 
 @end

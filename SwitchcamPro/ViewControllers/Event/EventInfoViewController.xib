@@ -104,16 +104,17 @@
 							<object class="IBUILabel" id="428553148">
 								<reference key="NSNextResponder" ref="191373211"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{17, 97}, {278, 78}}</string>
+								<string key="NSFrame">{{17, 97}, {278, 94}}</string>
 								<reference key="NSSuperview" ref="191373211"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<int key="IBUIContentMode">7</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<string key="IBUIText">We'll send you updates during the shoot and notify you when to start shooting.</string>
+								<string key="IBUIText">Let us know if you're attending or not and we'll notify you when to start shooting or when the event video is complete!</string>
 								<object class="NSColor" key="IBUITextColor">
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MCAwIDAAA</bytes>
@@ -322,6 +323,20 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">EventInfoViewController</string>
 					<string key="superclassName">EventTabViewController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="imGoingButtonAction:">id</string>
+						<string key="imNotGoingButtonAction:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="imGoingButtonAction:">
+							<string key="name">imGoingButtonAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="imNotGoingButtonAction:">
+							<string key="name">imNotGoingButtonAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="goingDetailLabel">UILabel</string>
 						<string key="imGoingButton">UIButton</string>
