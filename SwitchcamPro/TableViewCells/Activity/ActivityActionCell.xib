@@ -252,6 +252,7 @@
 								<string key="NSFrame">{{260, 40}, {42, 21}}</string>
 								<reference key="NSSuperview" ref="975199096"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -296,7 +297,7 @@
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<int key="IBUISelectionStyle">0</int>
 				<reference key="IBUIContentView" ref="975199096"/>
-				<string key="IBUIReuseIdentifier">ActivityVideoCellIdentifier</string>
+				<string key="IBUIReuseIdentifier">ActivityActionCellIdentifier</string>
 				<integer value="62" key="IBUIRowHeight"/>
 			</object>
 		</array>

@@ -298,7 +298,7 @@
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<int key="IBUISelectionStyle">0</int>
 				<reference key="IBUIContentView" ref="1035678540"/>
-				<string key="IBUIReuseIdentifier">ActivityVideoCellIdentifier</string>
+				<string key="IBUIReuseIdentifier">ActivityNoteCellIdentifier</string>
 				<real value="200" key="IBUIRowHeight"/>
 			</object>
 		</array>
