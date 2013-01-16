@@ -96,6 +96,12 @@
             }
         }
         
+        // Save row height data
+        NSError *error = nil;
+        if (![[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext saveToPersistentStore:&error]) {
+            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+        }
+        
         RKLogInfo(@"Load complete: Table should refresh...");
         [self.eventActivityTableView reloadData];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
