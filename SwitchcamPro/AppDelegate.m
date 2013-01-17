@@ -489,19 +489,32 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     [createUserVideoMapping addAttributeMappingsFromArray:@[ @"mimetype" ]];
     [createUserVideoMapping addAttributeMappingsFromArray:@[ @"state" ]];
     
+    RKEntityMapping *commentMapping = [RKEntityMapping mappingForEntityForName:@"Comment" inManagedObjectStore:managedObjectStore];
+    commentMapping.identificationAttributes = @[ @"commentId" ];
+    
+    [commentMapping addAttributeMappingsFromDictionary:@{
+     @"id": @"commentId",
+     @"submit_date": @"submitDate",
+     }];
+    [commentMapping addAttributeMappingsFromArray:@[ @"comment" ]];
+    [commentMapping addAttributeMappingsFromArray:@[ @"timesince" ]];
+    
+    // Relationships
+    [commentMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"person" toKeyPath:@"person" withMapping:userMapping]];
+
+    
     RKEntityMapping *activityMapping = [RKEntityMapping mappingForEntityForName:@"Activity" inManagedObjectStore:managedObjectStore];
     activityMapping.identificationAttributes = @[ @"activityId" ];
     
     [activityMapping addAttributeMappingsFromDictionary:@{
      @"id": @"activityId",
-     @"action_object_content_type": @"actionObjectContentType",
-     @"action_object_id": @"actionObjectId",
-     @"activity_type": @"activityType",
-     @"target_content_type": @"targetContentType",
-     @"target_id": @"targetId",
+     @"action_object_content_type_name": @"actionObjectContentTypeName",
+     @"action_object_object_id": @"actionObjectId",
      @"like_count": @"likeCount",
      @"comment_count": @"commentCount",
      @"url": @"photoThumbnailURL",
+     @"i_liked": @"iLiked",
+     @"i_commented": @"iCommented",
      }];
     // If source and destination key path are the same, we can simply add a string to the array
     [activityMapping addAttributeMappingsFromArray:@[ @"text" ]];
@@ -513,6 +526,7 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     // Relationships
     [activityMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"person" toKeyPath:@"person" withMapping:userMapping]];
     [activityMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"action_object.uservideo" toKeyPath:@"userVideo" withMapping:userVideoMapping]];
+    [activityMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"latest_3_comments" toKeyPath:@"latestComments" withMapping:commentMapping]];
     
     RKObjectMapping *userVideoRequestMapping = [RKObjectMapping requestMapping]; // objectClass == NSMutableDictionary
     [userVideoRequestMapping addAttributeMappingsFromDictionary:@{

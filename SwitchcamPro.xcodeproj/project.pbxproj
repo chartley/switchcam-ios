@@ -15,13 +15,11 @@
 		2456C46A168F6F0D00F49C70 /* results-shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 2456C466168F6F0D00F49C70 /* results-shadow.png */; };
 		2456C46B168F6F0D00F49C70 /* results-shadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2456C467168F6F0D00F49C70 /* results-shadow@2x.png */; };
 		C906ADBB16A019DE001E5E5C /* HostedEventVideoTopCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C906ADBA16A019DE001E5E5C /* HostedEventVideoTopCell.xib */; };
-		C906ADC616A67A00001E5E5C /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = C906ADC516A67A00001E5E5C /* Activity.m */; };
 		C906ADC916A6833C001E5E5C /* ActivityPostCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C906ADC816A6833B001E5E5C /* ActivityPostCommentCell.m */; };
 		C906ADCC16A68353001E5E5C /* ActivityCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C906ADCB16A68352001E5E5C /* ActivityCommentCell.m */; };
 		C906ADCE16A68448001E5E5C /* ActivityPostCommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C906ADCD16A68447001E5E5C /* ActivityPostCommentCell.xib */; };
 		C906ADD016A68459001E5E5C /* ActivityCommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C906ADCF16A68459001E5E5C /* ActivityCommentCell.xib */; };
 		C906ADD316A6896C001E5E5C /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = C906ADD216A6896B001E5E5C /* User.m */; };
-		C906ADD616A6896D001E5E5C /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = C906ADD516A6896C001E5E5C /* Comment.m */; };
 		C90847A3167FDD7300DEF94E /* camswitch-off.png in Resources */ = {isa = PBXBuildFile; fileRef = C9084799167FDD7300DEF94E /* camswitch-off.png */; };
 		C90847A4167FDD7300DEF94E /* camswitch-off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C908479A167FDD7300DEF94E /* camswitch-off@2x.png */; };
 		C90847A5167FDD7300DEF94E /* camswitch-on.png in Resources */ = {isa = PBXBuildFile; fileRef = C908479B167FDD7300DEF94E /* camswitch-on.png */; };
@@ -33,6 +31,9 @@
 		C90847AB167FDD7300DEF94E /* icn-upload-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = C90847A1167FDD7300DEF94E /* icn-upload-pressed.png */; };
 		C90847AC167FDD7300DEF94E /* icn-upload-pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C90847A2167FDD7300DEF94E /* icn-upload-pressed@2x.png */; };
 		C90847CC16803C7700DEF94E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C90847CB16803C7700DEF94E /* QuartzCore.framework */; };
+		C90EC9F016A744060085DF8C /* Mission.m in Sources */ = {isa = PBXBuildFile; fileRef = C90EC9EF16A744060085DF8C /* Mission.m */; };
+		C90ECA0516A7D67D0085DF8C /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = C90ECA0416A7D67D0085DF8C /* Comment.m */; };
+		C90ECA0816A7D68D0085DF8C /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = C90ECA0716A7D68C0085DF8C /* Activity.m */; };
 		C94F7C0D1699F3DF00D65EDC /* Venue.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F7C0C1699F3DF00D65EDC /* Venue.m */; };
 		C94F7C111699F3E000D65EDC /* Artist.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F7C101699F3E000D65EDC /* Artist.m */; };
 		C94F7C23169A0A3200D65EDC /* SPLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F7C22169A0A3200D65EDC /* SPLocationManager.m */; };
@@ -159,7 +160,6 @@
 		C99E97ED167E4494006B3BBC /* StatusBarToastAndProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = C99E97EC167E4494006B3BBC /* StatusBarToastAndProgressView.m */; };
 		C9AED0A8169E6B9A00A6A09D /* UserVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = C9AED0A7169E6B9A00A6A09D /* UserVideo.m */; };
 		C9AED0AA169E987E00A6A09D /* PendingUploadCellEventVideoTop.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9AED0A9169E987E00A6A09D /* PendingUploadCellEventVideoTop.xib */; };
-		C9AED0AD169E9B5100A6A09D /* Mission.m in Sources */ = {isa = PBXBuildFile; fileRef = C9AED0AC169E9B5100A6A09D /* Mission.m */; };
 		C9AED0AF169E9BD700A6A09D /* PendingUploadCellEventVideo.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9AED0AE169E9BD700A6A09D /* PendingUploadCellEventVideo.xib */; };
 		C9AED0B1169EA17100A6A09D /* HostedEventVideoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9AED0B0169EA17100A6A09D /* HostedEventVideoCell.xib */; };
 		C9DDF1751676C88B000399EA /* EventTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DDF1741676C88B000399EA /* EventTabViewController.m */; };
@@ -399,8 +399,6 @@
 		2456C467168F6F0D00F49C70 /* results-shadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "results-shadow@2x.png"; sourceTree = "<group>"; };
 		A19C79BD691C4B088E80A4B3 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		C906ADBA16A019DE001E5E5C /* HostedEventVideoTopCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HostedEventVideoTopCell.xib; path = TableViewCells/PendingUploads/HostedEventVideoTopCell.xib; sourceTree = "<group>"; };
-		C906ADC416A67A00001E5E5C /* Activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Activity.h; path = Model/ManagedObjects/Activity.h; sourceTree = "<group>"; };
-		C906ADC516A67A00001E5E5C /* Activity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Activity.m; path = Model/ManagedObjects/Activity.m; sourceTree = "<group>"; };
 		C906ADC716A6833B001E5E5C /* ActivityPostCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActivityPostCommentCell.h; path = TableViewCells/Activity/ActivityPostCommentCell.h; sourceTree = "<group>"; };
 		C906ADC816A6833B001E5E5C /* ActivityPostCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActivityPostCommentCell.m; path = TableViewCells/Activity/ActivityPostCommentCell.m; sourceTree = "<group>"; };
 		C906ADCA16A68352001E5E5C /* ActivityCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActivityCommentCell.h; path = TableViewCells/Activity/ActivityCommentCell.h; sourceTree = "<group>"; };
@@ -409,8 +407,6 @@
 		C906ADCF16A68459001E5E5C /* ActivityCommentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ActivityCommentCell.xib; path = TableViewCells/Activity/ActivityCommentCell.xib; sourceTree = "<group>"; };
 		C906ADD116A6896B001E5E5C /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = User.h; path = Model/ManagedObjects/User.h; sourceTree = "<group>"; };
 		C906ADD216A6896B001E5E5C /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = Model/ManagedObjects/User.m; sourceTree = "<group>"; };
-		C906ADD416A6896C001E5E5C /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Comment.h; path = Model/ManagedObjects/Comment.h; sourceTree = "<group>"; };
-		C906ADD516A6896C001E5E5C /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Comment.m; path = Model/ManagedObjects/Comment.m; sourceTree = "<group>"; };
 		C9084799167FDD7300DEF94E /* camswitch-off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camswitch-off.png"; sourceTree = "<group>"; };
 		C908479A167FDD7300DEF94E /* camswitch-off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camswitch-off@2x.png"; sourceTree = "<group>"; };
 		C908479B167FDD7300DEF94E /* camswitch-on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camswitch-on.png"; sourceTree = "<group>"; };
@@ -422,6 +418,12 @@
 		C90847A1167FDD7300DEF94E /* icn-upload-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icn-upload-pressed.png"; sourceTree = "<group>"; };
 		C90847A2167FDD7300DEF94E /* icn-upload-pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icn-upload-pressed@2x.png"; sourceTree = "<group>"; };
 		C90847CB16803C7700DEF94E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		C90EC9EE16A744060085DF8C /* Mission.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mission.h; path = Model/ManagedObjects/Mission.h; sourceTree = "<group>"; };
+		C90EC9EF16A744060085DF8C /* Mission.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Mission.m; path = Model/ManagedObjects/Mission.m; sourceTree = "<group>"; };
+		C90ECA0316A7D67D0085DF8C /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Comment.h; path = Model/ManagedObjects/Comment.h; sourceTree = "<group>"; };
+		C90ECA0416A7D67D0085DF8C /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Comment.m; path = Model/ManagedObjects/Comment.m; sourceTree = "<group>"; };
+		C90ECA0616A7D68C0085DF8C /* Activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Activity.h; path = Model/ManagedObjects/Activity.h; sourceTree = "<group>"; };
+		C90ECA0716A7D68C0085DF8C /* Activity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Activity.m; path = Model/ManagedObjects/Activity.m; sourceTree = "<group>"; };
 		C94F7C0B1699F3DF00D65EDC /* Venue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Venue.h; path = Model/ManagedObjects/Venue.h; sourceTree = "<group>"; };
 		C94F7C0C1699F3DF00D65EDC /* Venue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Venue.m; path = Model/ManagedObjects/Venue.m; sourceTree = "<group>"; };
 		C94F7C0F1699F3DF00D65EDC /* Artist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Artist.h; path = Model/ManagedObjects/Artist.h; sourceTree = "<group>"; };
@@ -635,8 +637,6 @@
 		C9AED0A6169E6B9A00A6A09D /* UserVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserVideo.h; path = Model/ManagedObjects/UserVideo.h; sourceTree = "<group>"; };
 		C9AED0A7169E6B9A00A6A09D /* UserVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserVideo.m; path = Model/ManagedObjects/UserVideo.m; sourceTree = "<group>"; };
 		C9AED0A9169E987E00A6A09D /* PendingUploadCellEventVideoTop.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PendingUploadCellEventVideoTop.xib; path = TableViewCells/PendingUploads/PendingUploadCellEventVideoTop.xib; sourceTree = "<group>"; };
-		C9AED0AB169E9B5100A6A09D /* Mission.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mission.h; path = Model/ManagedObjects/Mission.h; sourceTree = "<group>"; };
-		C9AED0AC169E9B5100A6A09D /* Mission.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Mission.m; path = Model/ManagedObjects/Mission.m; sourceTree = "<group>"; };
 		C9AED0AE169E9BD700A6A09D /* PendingUploadCellEventVideo.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PendingUploadCellEventVideo.xib; path = TableViewCells/PendingUploads/PendingUploadCellEventVideo.xib; sourceTree = "<group>"; };
 		C9AED0B0169EA17100A6A09D /* HostedEventVideoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HostedEventVideoCell.xib; path = TableViewCells/PendingUploads/HostedEventVideoCell.xib; sourceTree = "<group>"; };
 		C9DDF1731676C88B000399EA /* EventTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventTabViewController.h; path = ViewControllers/Event/EventTabViewController.h; sourceTree = "<group>"; };
@@ -1120,14 +1120,14 @@
 				C94F7C0C1699F3DF00D65EDC /* Venue.m */,
 				C9AED0A6169E6B9A00A6A09D /* UserVideo.h */,
 				C9AED0A7169E6B9A00A6A09D /* UserVideo.m */,
-				C9AED0AB169E9B5100A6A09D /* Mission.h */,
-				C9AED0AC169E9B5100A6A09D /* Mission.m */,
-				C906ADC416A67A00001E5E5C /* Activity.h */,
-				C906ADC516A67A00001E5E5C /* Activity.m */,
-				C906ADD416A6896C001E5E5C /* Comment.h */,
-				C906ADD516A6896C001E5E5C /* Comment.m */,
 				C906ADD116A6896B001E5E5C /* User.h */,
 				C906ADD216A6896B001E5E5C /* User.m */,
+				C90EC9EE16A744060085DF8C /* Mission.h */,
+				C90EC9EF16A744060085DF8C /* Mission.m */,
+				C90ECA0316A7D67D0085DF8C /* Comment.h */,
+				C90ECA0416A7D67D0085DF8C /* Comment.m */,
+				C90ECA0616A7D68C0085DF8C /* Activity.h */,
+				C90ECA0716A7D68C0085DF8C /* Activity.m */,
 			);
 			name = ManagedObjects;
 			sourceTree = "<group>";
@@ -2137,12 +2137,12 @@
 				C94F7C5C169B726A00D65EDC /* ActivityActionCell.m in Sources */,
 				C94F7C61169BF5B500D65EDC /* SPModelHelper.m in Sources */,
 				C9AED0A8169E6B9A00A6A09D /* UserVideo.m in Sources */,
-				C9AED0AD169E9B5100A6A09D /* Mission.m in Sources */,
-				C906ADC616A67A00001E5E5C /* Activity.m in Sources */,
 				C906ADC916A6833C001E5E5C /* ActivityPostCommentCell.m in Sources */,
 				C906ADCC16A68353001E5E5C /* ActivityCommentCell.m in Sources */,
 				C906ADD316A6896C001E5E5C /* User.m in Sources */,
-				C906ADD616A6896D001E5E5C /* Comment.m in Sources */,
+				C90EC9F016A744060085DF8C /* Mission.m in Sources */,
+				C90ECA0516A7D67D0085DF8C /* Comment.m in Sources */,
+				C90ECA0816A7D68D0085DF8C /* Activity.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

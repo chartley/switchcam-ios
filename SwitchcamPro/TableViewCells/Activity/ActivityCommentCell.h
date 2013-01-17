@@ -15,5 +15,6 @@
 @interface ActivityCommentCell : ActivityCell
 
 @property (strong, nonatomic) IBOutlet UILabel *commentLabel;
+@property (strong, nonatomic) IBOutlet UIView *commentBubbleBackground;
 
 @end

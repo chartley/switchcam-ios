@@ -90,20 +90,22 @@
         
         // Set the row height for each activity
         for (Activity *activity in [mappingResult array]) {
-            if ([activity.activityType isEqualToString:@"note"]) {
+            if (activity.actionObjectContentTypeName == nil || [activity.actionObjectContentTypeName isEqualToString:@""]) {
+                activity.rowHeight = [NSNumber numberWithInt:kActivityActionCellRowHeight];
+            } else if ([activity.actionObjectContentTypeName isEqualToString:@"director.recordingsession"]) {
+                activity.rowHeight = [NSNumber numberWithInt:kActivityVideoCellRowHeight];
+            } else if ([activity.actionObjectContentTypeName isEqualToString:@"director.missionphoto"]) {
+                activity.rowHeight = [NSNumber numberWithInt:kActivityPhotoCellRowHeight];
+            } else if ([activity.actionObjectContentTypeName isEqualToString:@"director.missionnote"]) {
                 CGSize labelSize = [activity.text sizeWithFont:[UIFont fontWithName:@"" size:17.0] constrainedToSize:CGSizeMake(264, 600) lineBreakMode:NSLineBreakByWordWrapping];
                 int rowHeight = labelSize.height + 65 + 20; // Label size, fixed bottom, fixed top
                 activity.rowHeight = [NSNumber numberWithInt:rowHeight];
-            } else if ([activity.activityType isEqualToString:@"action"]) {
-                if ([activity.targetContentType isEqualToString:@"director.mission"]) {
-                    if (activity.actionObjectContentType == nil || [activity.actionObjectContentType isEqualToString:@""]) {
-                        activity.rowHeight = [NSNumber numberWithInt:kActivityActionCellRowHeight];
-                    } else if ([activity.actionObjectContentType isEqualToString:@"director.recordingsession"]) {
-                        activity.rowHeight = [NSNumber numberWithInt:kActivityVideoCellRowHeight];
-                    } else if ([activity.actionObjectContentType isEqualToString:@"photo"]) {
-                        activity.rowHeight = [NSNumber numberWithInt:kActivityPhotoCellRowHeight];
-                    }
-                }
+            }
+            
+            for (Comment *comment in activity.latestComments) {
+                CGSize labelSize = [activity.text sizeWithFont:[UIFont fontWithName:@"" size:17.0] constrainedToSize:CGSizeMake(264, 600) lineBreakMode:NSLineBreakByWordWrapping];
+                int rowHeight = labelSize.height + 65 + 20; // Label size, fixed bottom, fixed top
+                comment.rowHeight = [NSNumber numberWithInt:rowHeight];
             }
         }
         
@@ -154,19 +156,11 @@
         }
     };
     
-    NSArray *idArray = [[likedActivity activityId] componentsSeparatedByString:@":"];
-    NSString *objectType = [idArray objectAtIndex:0];
-    
     // Setup Parameters
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     
-    if ([objectType isEqualToString:@"note"]) {
-        [parameters setObject:@"" forKey:@"note_id"];
-    } else if ([objectType isEqualToString:@"action"] && [likedActivity.actionObjectContentType isEqualToString:@"director.recordingsession"]) {
-        [parameters setObject:likedActivity.userVideo.videoId forKey:@"video_id"];
-    } else if ([objectType isEqualToString:@"photo"]) {
-        [parameters setObject:@"" forKey:@"photo_id"];
-    }
+    [parameters setObject:@"actstream.action" forKey:@"content_type"];
+    [parameters setObject:likedActivity.activityId forKey:@"object_id"];
     
     // Make Request and set params
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:kAPIHost]];
@@ -203,19 +197,11 @@
         }
     };
     
-    NSArray *idArray = [[unlikedActivity activityId] componentsSeparatedByString:@":"];
-    NSString *objectType = [idArray objectAtIndex:0];
-    
     // Setup Parameters
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     
-    if ([objectType isEqualToString:@"note"]) {
-        [parameters setObject:@"" forKey:@"note_id"];
-    } else if ([objectType isEqualToString:@"action"] && [unlikedActivity.actionObjectContentType isEqualToString:@"director.recordingsession"]) {
-        [parameters setObject:unlikedActivity.userVideo.videoId forKey:@"video_id"];
-    } else if ([objectType isEqualToString:@"photo"]) {
-        [parameters setObject:@"" forKey:@"photo_id"];
-    }
+    [parameters setObject:@"actstream.action" forKey:@"content_type"];
+    [parameters setObject:unlikedActivity.activityId forKey:@"object_id"];
     
     // Make Request and set params
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:kAPIHost]];
@@ -259,21 +245,12 @@
         }
     };
     
-    NSArray *idArray = [[selectedActivity activityId] componentsSeparatedByString:@":"];
-    NSString *objectType = [idArray objectAtIndex:0];
-    
     // Setup Parameters
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     
-    if ([objectType isEqualToString:@"note"]) {
-        [parameters setObject:@"" forKey:@"note_id"];
-    } else if ([objectType isEqualToString:@"action"] && [selectedActivity.actionObjectContentType isEqualToString:@"director.recordingsession"]) {
-        [parameters setObject:selectedActivity.userVideo.videoId forKey:@"video_id"];
-    } else if ([objectType isEqualToString:@"photo"]) {
-        [parameters setObject:@"" forKey:@"photo_id"];
-    }
-    
+    [parameters setObject:@"actstream.action" forKey:@"content_type"];
     [parameters setObject:comment forKey:@"comment"];
+    [parameters setObject:selectedActivity.activityId forKey:@"object_id"];
     
     // Make Request and set params
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:kAPIHost]];
@@ -301,31 +278,27 @@
     
     if (indexPath.row % 5 == 0) {
         // Post row
-        if ([activity.activityType isEqualToString:@"note"]) {
+
+        if (activity.actionObjectContentTypeName == nil || [activity.actionObjectContentTypeName isEqualToString:@""]) {
+            
+        } else if ([activity.actionObjectContentTypeName isEqualToString:@"director.recordingsession"]) {
+            // Set thumbnail from API
+            ActivityVideoCell *activityVideoCell = (ActivityVideoCell*) cell;
+            if (activity.userVideo.thumbnailHDURL != nil) {
+                [activityVideoCell.videoThumbnailImageView setImageWithURL:[NSURL URLWithString:activity.userVideo.thumbnailHDURL]];
+            }
+        } else if ([activity.actionObjectContentTypeName isEqualToString:@"director.missionphoto"]) {
+            // Set thumbnail from API
+            ActivityPhotoCell *activityPhotoCell = (ActivityPhotoCell*) cell;
+            if (activity.photoThumbnailURL != nil) {
+                [activityPhotoCell.photoThumbnailImageView setImageWithURL:[NSURL URLWithString:activity.photoThumbnailURL]];
+            }
+        } else if ([activity.actionObjectContentTypeName isEqualToString:@"director.missionnote"]) {
             ActivityNoteCell *activityNoteCell = (ActivityNoteCell *)cell;
             [activityNoteCell.verbLabel setText:NSLocalizedString(@"added a note", @"")];
-            
-        } else if ([activity.activityType isEqualToString:@"action"]) {
-            if ([activity.targetContentType isEqualToString:@"director.mission"]) {
-                if (activity.actionObjectContentType == nil || [activity.actionObjectContentType isEqualToString:@""]) {
-                    
-                } else if ([activity.actionObjectContentType isEqualToString:@"director.recordingsession"]) {
-                    // Set thumbnail from API
-                    ActivityVideoCell *activityVideoCell = (ActivityVideoCell*) cell;
-                    if (activity.userVideo.thumbnailHDURL != nil) {
-                        [activityVideoCell.videoThumbnailImageView setImageWithURL:[NSURL URLWithString:activity.userVideo.thumbnailHDURL]];
-                    }
-                } else if ([activity.actionObjectContentType isEqualToString:@"photo"]) {
-                    // Set thumbnail from API
-                    ActivityPhotoCell *activityPhotoCell = (ActivityPhotoCell*) cell;
-                    if (activity.photoThumbnailURL != nil) {
-                        [activityPhotoCell.photoThumbnailImageView setImageWithURL:[NSURL URLWithString:activity.photoThumbnailURL]];
-                    }
-                }
-            }
-            
-            [activityCell.verbLabel setText:activity.verb];
         }
+        
+        [activityCell.verbLabel setText:activity.verb];
         
         // Like and Comment counts
         if ([activity.likeCount intValue] > 0) {
@@ -349,16 +322,40 @@
         int timeLabelOffset = activityCell.verbLabel.frame.size.width + activityCell.verbLabel.frame.origin.x + 5;
         int timeLabelWidth = 220 - timeLabelOffset;  // Like Button Origin, set as number here to offset button frame buffer
         [activityCell.timeLabel setFrame:CGRectMake(timeLabelOffset, activityCell.timeLabel.frame.origin.y, timeLabelWidth, activityCell.timeLabel.frame.size.height)];
+        
+        // Set Contributer
+        [activityCell.contributorLabel setText:activity.person.name];
+        [activityCell.contributorImageView setImageWithURL:[NSURL URLWithString:[activity.person pictureURL]] placeholderImage:[UIImage imageNamed:@"img-shoot-thumb-placeholder"]];
     } else if (indexPath.row % 5 == 4) {
         // Post Comment Row
     } else {
         // Comment Row
+        ActivityCommentCell *activityCommentCell = (ActivityCommentCell*)cell;
+        
+        NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"submitDate" ascending:NO];
+        NSArray *commentArray = [activity.latestComments sortedArrayUsingDescriptors:@[descriptor]];
+        
+        if ([commentArray count] >= (indexPath.row % 5)) {
+            Comment *comment = [commentArray objectAtIndex:(indexPath.row % 5) - 1];
+            
+            // Set Commenter and comment
+            [activityCommentCell.commentLabel setText:comment.comment];
+            
+            [activityCell.contributorLabel setText:comment.person.name];
+            [activityCell.contributorImageView setImageWithURL:[NSURL URLWithString:[comment.person pictureURL]] placeholderImage:[UIImage imageNamed:@"img-shoot-thumb-placeholder"]];
+            
+            // Adjust verb / time layout
+            [activityCell.contributorLabel sizeToFit];
+            [activityCell.timeLabel sizeToFit];
+            
+            int timeLabelOffset = activityCell.contributorLabel.frame.size.width + activityCell.contributorLabel.frame.origin.x + 5;
+            int timeLabelWidth = 220 - timeLabelOffset;  // Like Button Origin, set as number here to offset button frame buffer
+            [activityCell.timeLabel setFrame:CGRectMake(timeLabelOffset, activityCell.timeLabel.frame.origin.y, timeLabelWidth, activityCell.timeLabel.frame.size.height)];
+        }
     }
     
     
-    // Set Contributer
-    [activityCell.contributorLabel setText:activity.person.name];
-    [activityCell.contributorImageView setImageWithURL:[NSURL URLWithString:[activity.person pictureURL]] placeholderImage:[UIImage imageNamed:@"img-shoot-thumb-placeholder"]];
+
     [activityCell.timeLabel setText:activity.timesince];
     
     // Set delegate and tag
@@ -387,7 +384,20 @@
         }
     } else {
         // Comment Row
-        return 1;
+        // Sort set
+        NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"submitDate" ascending:NO];
+        NSArray *commentArray = [activity.latestComments sortedArrayUsingDescriptors:@[descriptor]];
+        
+        if ([commentArray count] >= (indexPath.row % 5)) {
+            Comment *comment = [commentArray objectAtIndex:(indexPath.row % 5) - 1];
+            if (comment.rowHeight > 0) {
+                return [comment.rowHeight floatValue];
+            } else {
+                return 1;
+            }
+        } else {
+            return 1;
+        }
     }
     
 }
@@ -416,19 +426,15 @@
     UITableViewCell *cell = nil;
 
     if (indexPath.row % 5 == 0) {
-        // Post row
-        if ([activity.activityType isEqualToString:@"note"]) {
+        // Post row        
+        if (activity.actionObjectContentTypeName == nil || [activity.actionObjectContentTypeName isEqualToString:@""]) {
+            cell = [tableView dequeueReusableCellWithIdentifier:kActivityActionCellIdentifier];
+        } else if ([activity.actionObjectContentTypeName isEqualToString:@"director.recordingsession"]) {
+            cell = [tableView dequeueReusableCellWithIdentifier:kActivityVideoCellIdentifier];
+        } else if ([activity.actionObjectContentTypeName isEqualToString:@"director.missionphoto"]) {
+            cell = [tableView dequeueReusableCellWithIdentifier:kActivityPhotoCellIdentifier];
+        } else if ([activity.actionObjectContentTypeName isEqualToString:@"director.missionnote"]) {
             cell = [tableView dequeueReusableCellWithIdentifier:kActivityNoteCellIdentifier];
-        } else if ([activity.activityType isEqualToString:@"action"]) {
-            if ([activity.targetContentType isEqualToString:@"director.mission"]) {
-                if (activity.actionObjectContentType == nil || [activity.actionObjectContentType isEqualToString:@""]) {
-                    cell = [tableView dequeueReusableCellWithIdentifier:kActivityActionCellIdentifier];
-                } else if ([activity.actionObjectContentType isEqualToString:@"director.recordingsession"]) {
-                    cell = [tableView dequeueReusableCellWithIdentifier:kActivityVideoCellIdentifier];
-                } else if ([activity.actionObjectContentType isEqualToString:@"photo"]) {
-                    cell = [tableView dequeueReusableCellWithIdentifier:kActivityPhotoCellIdentifier];
-                }
-            }
         }
     } else if (indexPath.row % 5 == 4) {
         // Post Comment Row
@@ -440,23 +446,18 @@
     
     if (cell == nil) {
         if (indexPath.row % 5 == 0) {
-            if ([activity.activityType isEqualToString:@"note"]) {
+            if (activity.actionObjectContentTypeName == nil || [activity.actionObjectContentTypeName isEqualToString:@""]) {
+                NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"ActivityActionCell" owner:self options:nil];
+                cell = [nibArray objectAtIndex:0];
+            } else if ([activity.actionObjectContentTypeName isEqualToString:@"director.recordingsession"]) {
+                NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"ActivityVideoCell" owner:self options:nil];
+                cell = [nibArray objectAtIndex:0];
+            } else if ([activity.actionObjectContentTypeName isEqualToString:@"director.missionphoto"]) {
+                NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"ActivityPhotoCell" owner:self options:nil];
+                cell = [nibArray objectAtIndex:0];
+            } else if ([activity.actionObjectContentTypeName isEqualToString:@"director.missionnote"]) {
                 NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"ActivityNoteCell" owner:self options:nil];
                 cell = [nibArray objectAtIndex:0];
-                
-            } else if ([activity.activityType isEqualToString:@"action"]) {
-                if ([activity.targetContentType isEqualToString:@"director.mission"]) {
-                    if (activity.actionObjectContentType == nil || [activity.actionObjectContentType isEqualToString:@""]) {
-                        NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"ActivityActionCell" owner:self options:nil];
-                        cell = [nibArray objectAtIndex:0];
-                    } else if ([activity.actionObjectContentType isEqualToString:@"director.recordingsession"]) {
-                        NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"ActivityVideoCell" owner:self options:nil];
-                        cell = [nibArray objectAtIndex:0];
-                    } else if ([activity.actionObjectContentType isEqualToString:@"photo"]) {
-                        NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"ActivityPhotoCell" owner:self options:nil];
-                        cell = [nibArray objectAtIndex:0];
-                    }
-                }
             }
         } else if (indexPath.row % 5 == 4) {
             // Post Comment Row
@@ -476,10 +477,19 @@
             [activityPostCommentCell.postCommentButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
             [activityPostCommentCell.postCommentButton setBackgroundImage:highlightButtonImage forState:UIControlStateSelected];
             [activityPostCommentCell.postCommentButton.titleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Semibold" size:17]];
+            
+
         } else {
             // Comment Row
             NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"ActivityCommentCell" owner:self options:nil];
             cell = [nibArray objectAtIndex:0];
+            ActivityCommentCell *activityCommentCell = (ActivityCommentCell*)cell;
+            
+            // Set Custom Font
+            [activityCommentCell.commentLabel setFont:[UIFont fontWithName:@"SourceSansPro-Semibold" size:15]];
+            [activityCommentCell.commentLabel setTextColor:[UIColor whiteColor]];
+            [activityCommentCell.commentLabel setShadowColor:[UIColor blackColor]];
+            [activityCommentCell.commentLabel setShadowOffset:CGSizeMake(0, 1)];
         }
     
         // Set Custom Font

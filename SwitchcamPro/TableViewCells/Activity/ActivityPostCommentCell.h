@@ -10,11 +10,12 @@
 #import "ActivityCell.h"
 
 #define kActivityPostCommentCellIdentifier @"ActivityPostCommentCellIdentifier"
-#define kActivityPostCommentCellRowHeight 62
+#define kActivityPostCommentCellRowHeight 72
 
 @interface ActivityPostCommentCell : ActivityCell
 
 @property (strong, nonatomic) IBOutlet UITextField *commentTextField;
 @property (strong, nonatomic) IBOutlet UIButton *postCommentButton;
+@property (strong, nonatomic) IBOutlet UIView *commentBubbleBackground;
 
 @end

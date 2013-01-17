@@ -45,14 +45,28 @@
 								<reference key="NSNextResponder" ref="589209791"/>
 								<int key="NSvFlags">274</int>
 								<array class="NSMutableArray" key="NSSubviews"/>
-								<string key="NSFrameSize">{320, 62}</string>
+								<string key="NSFrameSize">{320, 72}</string>
+								<reference key="NSSuperview" ref="589209791"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="324175913"/>
+								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<object class="NSColor" key="IBUIBackgroundColor">
+									<int key="NSColorSpace">1</int>
+									<bytes key="NSRGB">MC4yMDM5MjE1Njg2IDAuMjAzOTIxNTY4NiAwLjIwMzkyMTU2ODYAA</bytes>
+								</object>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+							</object>
+							<object class="IBUIView" id="324175913">
+								<reference key="NSNextResponder" ref="589209791"/>
+								<int key="NSvFlags">274</int>
+								<string key="NSFrame">{{10, 0}, {300, 52}}</string>
 								<reference key="NSSuperview" ref="589209791"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="340251165"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MC4yMDM5MjE1Njg2IDAuMjAzOTIxNTY4NiAwLjIwMzkyMTU2ODYAA</bytes>
+									<bytes key="NSRGB">MC4xODQzMTM3MjU1IDAuMTk2MDc4NDMxNCAwLjIAA</bytes>
 								</object>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
@@ -91,7 +105,7 @@
 							<object class="IBUITextField" id="340251165">
 								<reference key="NSNextResponder" ref="589209791"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{20, 16}, {206, 30}}</string>
+								<string key="NSFrame">{{16, 16}, {210, 30}}</string>
 								<reference key="NSSuperview" ref="589209791"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="357862738"/>
@@ -100,7 +114,7 @@
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentVerticalAlignment">0</int>
-								<string key="IBUIText"/>
+								<string key="IBUIText">Leave a comment</string>
 								<int key="IBUIBorderStyle">3</int>
 								<object class="NSColor" key="IBUITextColor">
 									<int key="NSColorSpace">3</int>
@@ -125,7 +139,7 @@
 								</object>
 							</object>
 						</array>
-						<string key="NSFrameSize">{320, 61}</string>
+						<string key="NSFrameSize">{320, 71}</string>
 						<reference key="NSSuperview" ref="993484254"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="223655681"/>
@@ -141,7 +155,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
 				</array>
-				<string key="NSFrameSize">{320, 62}</string>
+				<string key="NSFrameSize">{320, 72}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="589209791"/>
@@ -155,7 +169,7 @@
 				<int key="IBUISelectionStyle">0</int>
 				<reference key="IBUIContentView" ref="589209791"/>
 				<string key="IBUIReuseIdentifier">ActivityPostCommentCellIdentifier</string>
-				<integer value="62" key="IBUIRowHeight"/>
+				<integer value="72" key="IBUIRowHeight"/>
 			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
@@ -175,6 +189,14 @@
 						<reference key="destination" ref="340251165"/>
 					</object>
 					<int key="connectionID">59</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">commentBubbleBackground</string>
+						<reference key="source" ref="993484254"/>
+						<reference key="destination" ref="324175913"/>
+					</object>
+					<int key="connectionID">63</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -220,6 +242,7 @@
 							<reference ref="340251165"/>
 							<reference ref="223655681"/>
 							<reference ref="357862738"/>
+							<reference ref="324175913"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -239,6 +262,11 @@
 						<reference key="object" ref="340251165"/>
 						<reference key="parent" ref="993484254"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">62</int>
+						<reference key="object" ref="324175913"/>
+						<reference key="parent" ref="993484254"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -250,12 +278,13 @@
 				<string key="2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="56.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="57.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="62.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">61</int>
+			<int key="maxID">63</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -339,10 +368,15 @@
 					<string key="className">ActivityPostCommentCell</string>
 					<string key="superclassName">ActivityCell</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="commentBubbleBackground">UIView</string>
 						<string key="commentTextField">UITextField</string>
 						<string key="postCommentButton">UIButton</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="commentBubbleBackground">
+							<string key="name">commentBubbleBackground</string>
+							<string key="candidateClassName">UIView</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="commentTextField">
 							<string key="name">commentTextField</string>
 							<string key="candidateClassName">UITextField</string>
