@@ -2,7 +2,6 @@
 #import <ImageIO/ImageIO.h>
 #import <AVFoundation/AVFoundation.h>
 #import "EventViewController.h"
-#import "SPTabsFooterView.h"
 #import "SPTabStyle.h"
 #import "SPTabsView.h"
 #import "Mission.h"
@@ -29,14 +28,13 @@ enum { kTagTabBase = 100 };
 @property (nonatomic, assign, readwrite) UIScrollView *currentView;
 @property (nonatomic, assign, readwrite) UIScrollView *currentTabScrollView;
 @property (nonatomic, retain) SPTabsView *tabsContainerView;
-@property (nonatomic, retain) SPTabsFooterView *footerView;
 
 @end
 
 @implementation EventViewController
 
 @synthesize style, viewControllers, currentView, currentTabScrollView,
-  tabsContainerView, footerView;
+  tabsContainerView;
 
 - (id)initWithViewControllers:(NSArray *)theViewControllers
                         style:(SPTabStyle *)theStyle {
@@ -137,7 +135,10 @@ enum { kTagTabBase = 100 };
 }
 
 - (void)viewDidLoad {
-    self.view.backgroundColor = [UIColor clearColor];
+    // Add background
+    UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bgfull-fullapp"]];
+    [self.view addSubview:backgroundImageView];
+    [self.view sendSubviewToBack:backgroundImageView];
     self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     
     // The view that contains the tab views is located across the top.
@@ -193,18 +194,6 @@ enum { kTagTabBase = 100 };
     }
     
     self.tabsContainerView.tabViews = allTabViews;
-    
-    CGRect footerFrame = CGRectMake(0, tabsViewFrame.size.height - self.style.tabBarHeight - self.style.shadowRadius,
-                                    tabsViewFrame.size.width,
-                                    self.style.tabBarHeight + self.style.shadowRadius);
-    
-    self.footerView = [[SPTabsFooterView alloc] initWithFrame:footerFrame];
-    self.footerView.backgroundColor = [UIColor clearColor];
-    self.footerView.style = self.style;
-    self.footerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    
-    [self.tabsContainerView addSubview:footerView];
-    [self.tabsContainerView bringSubviewToFront:footerView];
     
     [self _makeTabViewCurrent:[self.tabsContainerView.tabViews objectAtIndex:0]];
     

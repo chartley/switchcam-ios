@@ -16,7 +16,6 @@
 			<string>IBUIImageView</string>
 			<string>IBUILabel</string>
 			<string>IBUITableViewCell</string>
-			<string>IBUIView</string>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -42,20 +41,6 @@
 						<reference key="NSNextResponder" ref="429071167"/>
 						<int key="NSvFlags">256</int>
 						<array class="NSMutableArray" key="NSSubviews">
-							<object class="IBUIView" id="1000494864">
-								<reference key="NSNextResponder" ref="182642243"/>
-								<int key="NSvFlags">274</int>
-								<string key="NSFrameSize">{320, 174}</string>
-								<reference key="NSSuperview" ref="182642243"/>
-								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="921727956"/>
-								<string key="NSReuseIdentifierKey">_NS:9</string>
-								<object class="NSColor" key="IBUIBackgroundColor">
-									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MC4yMDM5MjE1Njg2IDAuMjAzOTIxNTY4NiAwLjIwMzkyMTU2ODYAA</bytes>
-								</object>
-								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-							</object>
 							<object class="IBUIImageView" id="921727956">
 								<reference key="NSNextResponder" ref="182642243"/>
 								<int key="NSvFlags">264</int>
@@ -193,9 +178,9 @@
 						<string key="NSFrameSize">{320, 173}</string>
 						<reference key="NSSuperview" ref="429071167"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="1000494864"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:11</string>
-						<object class="NSColor" key="IBUIBackgroundColor">
+						<object class="NSColor" key="IBUIBackgroundColor" id="1000115472">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MCAwAA</bytes>
 						</object>
@@ -211,10 +196,7 @@
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="182642243"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
-				<object class="NSColor" key="IBUIBackgroundColor">
-					<int key="NSColorSpace">1</int>
-					<bytes key="NSRGB">MC4yMDM5MjE1Njg2IDAuMjAzOTIxNTY4NiAwLjIwMzkyMTU2ODYAA</bytes>
-				</object>
+				<reference key="IBUIBackgroundColor" ref="1000115472"/>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<int key="IBUISelectionStyle">0</int>
 				<reference key="IBUIContentView" ref="182642243"/>
@@ -296,7 +278,6 @@
 						<int key="objectID">2</int>
 						<reference key="object" ref="429071167"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="1000494864"/>
 							<reference ref="670700811"/>
 							<reference ref="921727956"/>
 							<reference ref="865361593"/>
@@ -306,38 +287,28 @@
 						<reference key="parent" ref="0"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">3</int>
-						<reference key="object" ref="1000494864"/>
-						<reference key="parent" ref="429071167"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">6</int>
-						<reference key="object" ref="670700811"/>
-						<array class="NSMutableArray" key="children"/>
-						<reference key="parent" ref="429071167"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">7</int>
-						<reference key="object" ref="921727956"/>
-						<array class="NSMutableArray" key="children"/>
-						<reference key="parent" ref="429071167"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">8</int>
-						<reference key="object" ref="865361593"/>
-						<array class="NSMutableArray" key="children"/>
+						<int key="objectID">10</int>
+						<reference key="object" ref="726233066"/>
 						<reference key="parent" ref="429071167"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">9</int>
 						<reference key="object" ref="980799164"/>
-						<array class="NSMutableArray" key="children"/>
 						<reference key="parent" ref="429071167"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">10</int>
-						<reference key="object" ref="726233066"/>
-						<array class="NSMutableArray" key="children"/>
+						<int key="objectID">8</int>
+						<reference key="object" ref="865361593"/>
+						<reference key="parent" ref="429071167"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">7</int>
+						<reference key="object" ref="921727956"/>
+						<reference key="parent" ref="429071167"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">6</int>
+						<reference key="object" ref="670700811"/>
 						<reference key="parent" ref="429071167"/>
 					</object>
 				</array>
@@ -350,7 +321,6 @@
 				<real value="1" key="10.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="2.CustomClassName">PendingUploadCell</string>
 				<string key="2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="3.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="7.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="8.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -398,6 +368,8 @@
 						<string key="uploadButton">UIButton</string>
 						<string key="uploadLabel">UILabel</string>
 						<string key="videoThumbnailImageView">UIImageView</string>
+						<string key="yourVideosCountLabel">UILabel</string>
+						<string key="yourVideosLabel">UILabel</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="deleteButtonButton">
@@ -443,6 +415,14 @@
 						<object class="IBToOneOutletInfo" key="videoThumbnailImageView">
 							<string key="name">videoThumbnailImageView</string>
 							<string key="candidateClassName">UIImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="yourVideosCountLabel">
+							<string key="name">yourVideosCountLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="yourVideosLabel">
+							<string key="name">yourVideosLabel</string>
+							<string key="candidateClassName">UILabel</string>
 						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">

@@ -107,7 +107,6 @@
 								<string key="NSFrame">{{17, 97}, {278, 94}}</string>
 								<reference key="NSSuperview" ref="191373211"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -141,7 +140,7 @@
 						<reference key="NSSuperview" ref="524921378"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="479331149"/>
-						<object class="NSColor" key="IBUIBackgroundColor">
+						<object class="NSColor" key="IBUIBackgroundColor" id="518937183">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MCAwAA</bytes>
 						</object>
@@ -171,10 +170,7 @@
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="191373211"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
-				<object class="NSColor" key="IBUIBackgroundColor">
-					<int key="NSColorSpace">1</int>
-					<bytes key="NSRGB">MC4xMzcyNTQ5MDIgMC4xMzcyNTQ5MDIgMC4xMzcyNTQ5MDIAA</bytes>
-				</object>
+				<reference key="IBUIBackgroundColor" ref="518937183"/>
 				<bool key="IBUIClipsSubviews">YES</bool>
 				<bool key="IBUIMultipleTouchEnabled">YES</bool>
 				<reference key="IBUISimulatedDestinationMetrics" ref="606229243"/>
@@ -323,20 +319,6 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">EventInfoViewController</string>
 					<string key="superclassName">EventTabViewController</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="imGoingButtonAction:">id</string>
-						<string key="imNotGoingButtonAction:">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="imGoingButtonAction:">
-							<string key="name">imGoingButtonAction:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="imNotGoingButtonAction:">
-							<string key="name">imNotGoingButtonAction:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="goingDetailLabel">UILabel</string>
 						<string key="imGoingButton">UIButton</string>

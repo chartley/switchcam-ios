@@ -16,7 +16,6 @@
 			<string>IBUIImageView</string>
 			<string>IBUILabel</string>
 			<string>IBUITableViewCell</string>
-			<string>IBUIView</string>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -42,21 +41,6 @@
 						<reference key="NSNextResponder" ref="497789610"/>
 						<int key="NSvFlags">256</int>
 						<array class="NSMutableArray" key="NSSubviews">
-							<object class="IBUIView" id="586692151">
-								<reference key="NSNextResponder" ref="397862900"/>
-								<int key="NSvFlags">274</int>
-								<array class="NSMutableArray" key="NSSubviews"/>
-								<string key="NSFrameSize">{320, 200}</string>
-								<reference key="NSSuperview" ref="397862900"/>
-								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="447581827"/>
-								<string key="NSReuseIdentifierKey">_NS:9</string>
-								<object class="NSColor" key="IBUIBackgroundColor">
-									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MC4yMDM5MjE1Njg2IDAuMjAzOTIxNTY4NiAwLjIwMzkyMTU2ODYAA</bytes>
-								</object>
-								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-							</object>
 							<object class="IBUILabel" id="453541198">
 								<reference key="NSNextResponder" ref="397862900"/>
 								<int key="NSvFlags">292</int>
@@ -280,9 +264,9 @@
 						<string key="NSFrameSize">{320, 199}</string>
 						<reference key="NSSuperview" ref="497789610"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="586692151"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:11</string>
-						<object class="NSColor" key="IBUIBackgroundColor">
+						<object class="NSColor" key="IBUIBackgroundColor" id="700297608">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MCAwAA</bytes>
 						</object>
@@ -298,10 +282,7 @@
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="397862900"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
-				<object class="NSColor" key="IBUIBackgroundColor">
-					<int key="NSColorSpace">1</int>
-					<bytes key="NSRGB">MC4yMDM5MjE1Njg2IDAuMjAzOTIxNTY4NiAwLjIwMzkyMTU2ODYAA</bytes>
-				</object>
+				<reference key="IBUIBackgroundColor" ref="700297608"/>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<int key="IBUISelectionStyle">0</int>
 				<reference key="IBUIContentView" ref="397862900"/>
@@ -431,7 +412,6 @@
 							<reference ref="357254262"/>
 							<reference ref="440750637"/>
 							<reference ref="804065590"/>
-							<reference ref="586692151"/>
 							<reference ref="453541198"/>
 							<reference ref="371368060"/>
 						</array>
@@ -474,12 +454,6 @@
 						<reference key="parent" ref="497789610"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">11</int>
-						<reference key="object" ref="586692151"/>
-						<array class="NSMutableArray" key="children"/>
-						<reference key="parent" ref="497789610"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">59</int>
 						<reference key="object" ref="453541198"/>
 						<reference key="parent" ref="497789610"/>
@@ -502,7 +476,6 @@
 				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="10.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<real value="0.0" key="10.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
-				<string key="11.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="2.CustomClassName">ActivityPhotoCell</string>
 				<string key="2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="3.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -529,6 +502,7 @@
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="commentButtonAction:">id</string>
 						<string key="likeButtonAction:">id</string>
+						<string key="postCommentButtonAction:">id</string>
 						<string key="previewButtonAction:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
@@ -538,6 +512,10 @@
 						</object>
 						<object class="IBActionInfo" key="likeButtonAction:">
 							<string key="name">likeButtonAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="postCommentButtonAction:">
+							<string key="name">postCommentButtonAction:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="previewButtonAction:">

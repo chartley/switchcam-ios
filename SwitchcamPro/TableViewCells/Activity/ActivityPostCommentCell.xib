@@ -41,22 +41,7 @@
 						<reference key="NSNextResponder" ref="993484254"/>
 						<int key="NSvFlags">256</int>
 						<array class="NSMutableArray" key="NSSubviews">
-							<object class="IBUIView" id="223655681">
-								<reference key="NSNextResponder" ref="589209791"/>
-								<int key="NSvFlags">274</int>
-								<array class="NSMutableArray" key="NSSubviews"/>
-								<string key="NSFrameSize">{320, 72}</string>
-								<reference key="NSSuperview" ref="589209791"/>
-								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="324175913"/>
-								<string key="NSReuseIdentifierKey">_NS:9</string>
-								<object class="NSColor" key="IBUIBackgroundColor">
-									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MC4yMDM5MjE1Njg2IDAuMjAzOTIxNTY4NiAwLjIwMzkyMTU2ODYAA</bytes>
-								</object>
-								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-							</object>
-							<object class="IBUIView" id="324175913">
+							<object class="IBUIView" id="560302084">
 								<reference key="NSNextResponder" ref="589209791"/>
 								<int key="NSvFlags">274</int>
 								<string key="NSFrame">{{10, 0}, {300, 52}}</string>
@@ -142,9 +127,9 @@
 						<string key="NSFrameSize">{320, 71}</string>
 						<reference key="NSSuperview" ref="993484254"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="223655681"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:11</string>
-						<object class="NSColor" key="IBUIBackgroundColor">
+						<object class="NSColor" key="IBUIBackgroundColor" id="620782279">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MCAwAA</bytes>
 						</object>
@@ -160,10 +145,7 @@
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="589209791"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
-				<object class="NSColor" key="IBUIBackgroundColor">
-					<int key="NSColorSpace">1</int>
-					<bytes key="NSRGB">MC4yMDM5MjE1Njg2IDAuMjAzOTIxNTY4NiAwLjIwMzkyMTU2ODYAA</bytes>
-				</object>
+				<reference key="IBUIBackgroundColor" ref="620782279"/>
 				<bool key="IBUIClipsSubviews">YES</bool>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<int key="IBUISelectionStyle">0</int>
@@ -194,7 +176,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">commentBubbleBackground</string>
 						<reference key="source" ref="993484254"/>
-						<reference key="destination" ref="324175913"/>
+						<reference key="destination" ref="560302084"/>
 					</object>
 					<int key="connectionID">63</int>
 				</object>
@@ -240,17 +222,10 @@
 						<reference key="object" ref="993484254"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="340251165"/>
-							<reference ref="223655681"/>
 							<reference ref="357862738"/>
-							<reference ref="324175913"/>
+							<reference ref="560302084"/>
 						</array>
 						<reference key="parent" ref="0"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">11</int>
-						<reference key="object" ref="223655681"/>
-						<array class="NSMutableArray" key="children"/>
-						<reference key="parent" ref="993484254"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">56</int>
@@ -264,7 +239,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">62</int>
-						<reference key="object" ref="324175913"/>
+						<reference key="object" ref="560302084"/>
 						<reference key="parent" ref="993484254"/>
 					</object>
 				</array>
@@ -273,7 +248,6 @@
 				<string key="-1.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="-2.CustomClassName">UIResponder</string>
 				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="11.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="2.CustomClassName">ActivityPostCommentCell</string>
 				<string key="2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="56.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>

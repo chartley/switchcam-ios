@@ -12,14 +12,12 @@
 
 @class Mission;
 @class SPTabsViewController;
-@class SPTabsFooterView;
 @class SPTabStyle;
 @class SPTabsView;
 
 @interface EventViewController : UIViewController <SPTabViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate, SCCamViewControllerDelegate> {
     NSArray *viewControllers;
     SPTabsView *tabsContainerView;
-    SPTabsFooterView *footerView;
     SPTabStyle *tabStyle;
     NSUInteger currentTabIndex;
 }

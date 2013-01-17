@@ -143,6 +143,14 @@
     void (^likeActivityFailureBlock)(AFHTTPRequestOperation *operation, NSError *error);
     
     likeActivitySuccessBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
+        likedActivity.iLiked = [NSNumber numberWithBool:YES];
+        
+        NSError *error = nil;
+        if (![[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext saveToPersistentStore:&error]) {
+            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+        }
+        
+        [self.eventActivityTableView reloadData];
     };
     
     likeActivityFailureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -184,6 +192,14 @@
     void (^unlikeActivityFailureBlock)(AFHTTPRequestOperation *operation, NSError *error);
     
     unlikeActivitySuccessBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
+        unlikedActivity.iLiked = [NSNumber numberWithBool:NO];
+        
+        NSError *error = nil;
+        if (![[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext saveToPersistentStore:&error]) {
+            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+        }
+        
+        [self.eventActivityTableView reloadData];
     };
     
     unlikeActivityFailureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -225,13 +241,18 @@
     void (^commentActivityFailureBlock)(AFHTTPRequestOperation *operation, NSError *error);
     
     commentActivitySuccessBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSIndexPath *postCommentRowIndexPath = [NSIndexPath indexPathForRow:postCommentRow inSection:0];
+        //TODO insert comment
+        NSMutableArray *indexPathsToReload = [NSMutableArray array];
+        // Reload all rows pertaining to this post
+        for (int i = postCommentRow; i < i - 5; i--) {
+            [indexPathsToReload addObject:[NSIndexPath indexPathForRow:i inSection:0]];
+        }
         
         // Set row for height adjustment
         postCommentRow = 0;
         
         // Hide Post Comment
-        [self.eventActivityTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:postCommentRowIndexPath] withRowAnimation:UITableViewRowAnimationTop];
+        [self.eventActivityTableView reloadRowsAtIndexPaths:indexPathsToReload withRowAnimation:UITableViewRowAnimationTop];
     };
     
     commentActivityFailureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -313,6 +334,24 @@
             [activityCell.commentCountLabel setText:[NSString stringWithFormat:@"%d", [activity.commentCount intValue]]];
         } else {
             [activityCell.commentCountLabel setHidden:YES];
+        }
+        
+        if ([activity.iLiked boolValue]) {
+            [activityCell.likeButton setSelected:YES];
+        } else if ([activity.likeCount intValue]) {
+            [activityCell.likeButton setSelected:NO];
+            [activityCell.likeButton setImage:[UIImage imageNamed:@"icn-like-haslikes"] forState:UIControlStateNormal];
+        } else {
+            [activityCell.likeButton setSelected:NO];
+            [activityCell.likeButton setImage:[UIImage imageNamed:@"icn-link-inactive"] forState:UIControlStateNormal];
+        }
+        
+        if ([activity.iCommented boolValue]) {
+            [activityCell.commentButton setSelected:YES];
+        } else if ([activity.likeCount intValue]) {
+            [activityCell.commentButton setSelected:NO];
+        } else {
+            [activityCell.commentButton setSelected:NO];
         }
         
         // Adjust verb / time layout

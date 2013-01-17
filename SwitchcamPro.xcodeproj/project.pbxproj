@@ -111,7 +111,6 @@
 		C97B149516710676005BB65F /* EventPeopleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C97B149316710676005BB65F /* EventPeopleViewController.xib */; };
 		C97B14991671068E005BB65F /* EventVideosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C97B14971671068E005BB65F /* EventVideosViewController.m */; };
 		C97B149A1671068E005BB65F /* EventVideosViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C97B14981671068E005BB65F /* EventVideosViewController.xib */; };
-		C97B14A616710898005BB65F /* SPTabsFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = C97B149D16710898005BB65F /* SPTabsFooterView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C97B14A716710898005BB65F /* SPTabStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = C97B149F16710898005BB65F /* SPTabStyle.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C97B14A816710898005BB65F /* SPTabsView.m in Sources */ = {isa = PBXBuildFile; fileRef = C97B14A116710898005BB65F /* SPTabsView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C97B14AA16710898005BB65F /* SPTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = C97B14A516710898005BB65F /* SPTabView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -560,8 +559,6 @@
 		C97B14961671068D005BB65F /* EventVideosViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventVideosViewController.h; path = ViewControllers/Event/EventVideosViewController.h; sourceTree = "<group>"; };
 		C97B14971671068E005BB65F /* EventVideosViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EventVideosViewController.m; path = ViewControllers/Event/EventVideosViewController.m; sourceTree = "<group>"; };
 		C97B14981671068E005BB65F /* EventVideosViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EventVideosViewController.xib; path = ViewControllers/Event/EventVideosViewController.xib; sourceTree = "<group>"; };
-		C97B149C16710898005BB65F /* SPTabsFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTabsFooterView.h; sourceTree = "<group>"; };
-		C97B149D16710898005BB65F /* SPTabsFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTabsFooterView.m; sourceTree = "<group>"; };
 		C97B149E16710898005BB65F /* SPTabStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTabStyle.h; sourceTree = "<group>"; };
 		C97B149F16710898005BB65F /* SPTabStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTabStyle.m; sourceTree = "<group>"; };
 		C97B14A016710898005BB65F /* SPTabsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTabsView.h; sourceTree = "<group>"; };
@@ -1062,8 +1059,6 @@
 		C97B149B16710898005BB65F /* SPTabViewController */ = {
 			isa = PBXGroup;
 			children = (
-				C97B149C16710898005BB65F /* SPTabsFooterView.h */,
-				C97B149D16710898005BB65F /* SPTabsFooterView.m */,
 				C97B149E16710898005BB65F /* SPTabStyle.h */,
 				C97B149F16710898005BB65F /* SPTabStyle.m */,
 				C97B14A016710898005BB65F /* SPTabsView.h */,
@@ -2102,7 +2097,6 @@
 				C97B148F1671064B005BB65F /* EventActivityViewController.m in Sources */,
 				C97B149416710676005BB65F /* EventPeopleViewController.m in Sources */,
 				C97B14991671068E005BB65F /* EventVideosViewController.m in Sources */,
-				C97B14A616710898005BB65F /* SPTabsFooterView.m in Sources */,
 				C97B14A716710898005BB65F /* SPTabStyle.m in Sources */,
 				C97B14A816710898005BB65F /* SPTabsView.m in Sources */,
 				C97B14AA16710898005BB65F /* SPTabView.m in Sources */,
