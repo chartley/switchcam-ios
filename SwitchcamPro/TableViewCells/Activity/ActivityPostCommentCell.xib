@@ -41,7 +41,7 @@
 						<reference key="NSNextResponder" ref="993484254"/>
 						<int key="NSvFlags">256</int>
 						<array class="NSMutableArray" key="NSSubviews">
-							<object class="IBUIView" id="560302084">
+							<object class="IBUIView" id="992622676">
 								<reference key="NSNextResponder" ref="589209791"/>
 								<int key="NSvFlags">274</int>
 								<string key="NSFrame">{{10, 0}, {300, 52}}</string>
@@ -51,7 +51,7 @@
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MC4xODQzMTM3MjU1IDAuMTk2MDc4NDMxNCAwLjIAA</bytes>
+									<bytes key="NSRGB">MC4yNDMxMzcyNTQ5IDAuMjQzMTM3MjU0OSAwLjI0MzEzNzI1NDkAA</bytes>
 								</object>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
@@ -129,7 +129,7 @@
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:11</string>
-						<object class="NSColor" key="IBUIBackgroundColor" id="620782279">
+						<object class="NSColor" key="IBUIBackgroundColor" id="13828021">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MCAwAA</bytes>
 						</object>
@@ -145,7 +145,7 @@
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="589209791"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
-				<reference key="IBUIBackgroundColor" ref="620782279"/>
+				<reference key="IBUIBackgroundColor" ref="13828021"/>
 				<bool key="IBUIClipsSubviews">YES</bool>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<int key="IBUISelectionStyle">0</int>
@@ -176,7 +176,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">commentBubbleBackground</string>
 						<reference key="source" ref="993484254"/>
-						<reference key="destination" ref="560302084"/>
+						<reference key="destination" ref="992622676"/>
 					</object>
 					<int key="connectionID">63</int>
 				</object>
@@ -223,7 +223,7 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="340251165"/>
 							<reference ref="357862738"/>
-							<reference ref="560302084"/>
+							<reference ref="992622676"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -239,7 +239,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">62</int>
-						<reference key="object" ref="560302084"/>
+						<reference key="object" ref="992622676"/>
 						<reference key="parent" ref="993484254"/>
 					</object>
 				</array>

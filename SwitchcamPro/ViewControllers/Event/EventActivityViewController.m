@@ -103,8 +103,8 @@
             }
             
             for (Comment *comment in activity.latestComments) {
-                CGSize labelSize = [activity.text sizeWithFont:[UIFont fontWithName:@"" size:17.0] constrainedToSize:CGSizeMake(264, 600) lineBreakMode:NSLineBreakByWordWrapping];
-                int rowHeight = labelSize.height + 65 + 20; // Label size, fixed bottom, fixed top
+                CGSize labelSize = [comment.comment sizeWithFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:13.0] constrainedToSize:CGSizeMake(264, 600) lineBreakMode:NSLineBreakByWordWrapping];
+                int rowHeight = labelSize.height + 28 + 15; // Label size, fixed bottom, fixed top
                 comment.rowHeight = [NSNumber numberWithInt:rowHeight];
             }
         }
@@ -244,7 +244,7 @@
         //TODO insert comment
         NSMutableArray *indexPathsToReload = [NSMutableArray array];
         // Reload all rows pertaining to this post
-        for (int i = postCommentRow; i < i - 5; i--) {
+        for (int i = postCommentRow; i > postCommentRow - 5; i--) {
             [indexPathsToReload addObject:[NSIndexPath indexPathForRow:i inSection:0]];
         }
         
@@ -347,11 +347,9 @@
         }
         
         if ([activity.iCommented boolValue]) {
-            [activityCell.commentButton setSelected:YES];
-        } else if ([activity.likeCount intValue]) {
-            [activityCell.commentButton setSelected:NO];
+            [activityCell.commentButton setImage:[UIImage imageNamed:@"icn-comment-commented"] forState:UIControlStateNormal];
         } else {
-            [activityCell.commentButton setSelected:NO];
+            [activityCell.commentButton setImage:[UIImage imageNamed:@"icn-comment-inactive"] forState:UIControlStateNormal];
         }
         
         // Adjust verb / time layout
@@ -390,6 +388,58 @@
             int timeLabelOffset = activityCell.contributorLabel.frame.size.width + activityCell.contributorLabel.frame.origin.x + 5;
             int timeLabelWidth = 220 - timeLabelOffset;  // Like Button Origin, set as number here to offset button frame buffer
             [activityCell.timeLabel setFrame:CGRectMake(timeLabelOffset, activityCell.timeLabel.frame.origin.y, timeLabelWidth, activityCell.timeLabel.frame.size.height)];
+            
+            // Cell auto shrinks when its reused, re-expand here
+            [activityCommentCell.commentBubbleBackground setFrame:CGRectMake(activityCommentCell.commentBubbleBackground.frame.origin.x, activityCommentCell.commentBubbleBackground.frame.origin.y, activityCommentCell.commentBubbleBackground.frame.size.width, [comment.rowHeight floatValue])];
+        }
+        
+        BOOL isPostCommentShowing = ((activityCell.tag*5)+4) == postCommentRow;
+
+        // Check if we should do any corner rounding
+        if (indexPath.row % 5 == 1 && indexPath.row % 5 == activity.latestComments.count && !isPostCommentShowing) {
+            // Only one cell, round everything
+            UIBezierPath *maskPath;
+            maskPath = [UIBezierPath bezierPathWithRoundedRect:activityCommentCell.commentBubbleBackground.bounds byRoundingCorners:(UIRectCornerTopLeft | UIRectCornerTopRight | UIRectCornerBottomLeft | UIRectCornerBottomRight) cornerRadii:CGSizeMake(5.0, 5.0)];
+            
+            CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+            maskLayer.frame = activityCommentCell.bounds;
+            maskLayer.path = maskPath.CGPath;
+            activityCommentCell.commentBubbleBackground.layer.mask = maskLayer;
+            [activityCommentCell.commentBubbleBackground setBackgroundColor:RGBA(62, 62, 62, 1.0)];
+            activityCommentCell.commentDivider.hidden = YES;
+        } else if (indexPath.row % 5 == 1) {
+            // This is the top comment cell, round the top
+            UIBezierPath *maskPath;
+            maskPath = [UIBezierPath bezierPathWithRoundedRect:activityCommentCell.commentBubbleBackground.bounds byRoundingCorners:(UIRectCornerTopLeft | UIRectCornerTopRight) cornerRadii:CGSizeMake(5.0, 5.0)];
+            
+            CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+            maskLayer.frame = activityCommentCell.bounds;
+            maskLayer.path = maskPath.CGPath;
+            activityCommentCell.commentBubbleBackground.layer.mask = maskLayer;
+            [activityCommentCell.commentBubbleBackground setBackgroundColor:RGBA(62, 62, 62, 1.0)];
+            activityCommentCell.commentDivider.hidden = NO;
+        } else if (indexPath.row % 5 == activity.latestComments.count && !isPostCommentShowing) {
+            // This is the bottom comment cell, round the bottom if postComment row isn't showing
+            UIBezierPath *maskPath;
+            maskPath = [UIBezierPath bezierPathWithRoundedRect:activityCommentCell.commentBubbleBackground.bounds byRoundingCorners:(UIRectCornerBottomLeft | UIRectCornerBottomRight) cornerRadii:CGSizeMake(5.0, 5.0)];
+            
+            CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+            maskLayer.frame = activityCommentCell.bounds;
+            maskLayer.path = maskPath.CGPath;
+            activityCommentCell.commentBubbleBackground.layer.mask = maskLayer;
+            [activityCommentCell.commentBubbleBackground setBackgroundColor:RGBA(62, 62, 62, 1.0)];
+            activityCommentCell.commentDivider.hidden = YES;
+        } else {
+            // No rounding, this is a middle cell
+            // Create a path and add the rectangle in it.
+            CGMutablePathRef maskPath = CGPathCreateMutable();
+            CGPathAddRect(maskPath, nil, activityCommentCell.commentBubbleBackground.bounds);
+            
+            CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+            maskLayer.frame = activityCommentCell.bounds;
+            maskLayer.path = maskPath;
+            activityCommentCell.commentBubbleBackground.layer.mask = maskLayer;
+            activityCommentCell.commentDivider.hidden = NO;
         }
     }
     
@@ -419,7 +469,7 @@
         if (postCommentRow == indexPath.row) {
             return kActivityPostCommentCellRowHeight;
         } else {
-            return 1;
+            return 0;
         }
     } else {
         // Comment Row
@@ -432,10 +482,10 @@
             if (comment.rowHeight > 0) {
                 return [comment.rowHeight floatValue];
             } else {
-                return 1;
+                return 0;
             }
         } else {
-            return 1;
+            return 0;
         }
     }
     
@@ -525,7 +575,7 @@
             ActivityCommentCell *activityCommentCell = (ActivityCommentCell*)cell;
             
             // Set Custom Font
-            [activityCommentCell.commentLabel setFont:[UIFont fontWithName:@"SourceSansPro-Semibold" size:15]];
+            [activityCommentCell.commentLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:13]];
             [activityCommentCell.commentLabel setTextColor:[UIColor whiteColor]];
             [activityCommentCell.commentLabel setShadowColor:[UIColor blackColor]];
             [activityCommentCell.commentLabel setShadowOffset:CGSizeMake(0, 1)];
@@ -535,13 +585,13 @@
         ActivityCell *activityCell = (ActivityCell *)cell;
         [activityCell.contributorLabel setFont:[UIFont fontWithName:@"SourceSansPro-Semibold" size:15]];
         [activityCell.verbLabel setFont:[UIFont fontWithName:@"SourceSansPro-Light" size:12]];
-        [activityCell.timeLabel setFont:[UIFont fontWithName:@"SourceSansPro-Light" size:12]];
+        [activityCell.timeLabel setFont:[UIFont fontWithName:@"SourceSansPro-LightIt" size:12]];
         [activityCell.likeCountLabel setFont:[UIFont fontWithName:@"SourceSansPro-Light" size:12]];
         [activityCell.commentCountLabel setFont:[UIFont fontWithName:@"SourceSansPro-Light" size:12]];
         
         [activityCell.contributorLabel setTextColor:[UIColor whiteColor]];
         [activityCell.verbLabel setTextColor:[UIColor whiteColor]];
-        [activityCell.timeLabel setTextColor:[UIColor whiteColor]];
+        [activityCell.timeLabel setTextColor:RGBA(105, 105, 105, 1)];
         [activityCell.likeCountLabel setTextColor:[UIColor whiteColor]];
         [activityCell.commentCountLabel setTextColor:[UIColor whiteColor]];
         
@@ -625,38 +675,60 @@
 - (void)commentButtonPressed:(ActivityCell*)activityCell {
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:((activityCell.tag*5)+4) inSection:0];
     
-    // Send Network Request
-    if (activityCell.commentButton.selected && postCommentRow != 0) {
-        // Remove keyboard if showing
-        ActivityPostCommentCell *activityPostCommentCell = (ActivityPostCommentCell*) [self tableView:self.eventActivityTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:postCommentRow inSection:0]];
-        [activityPostCommentCell.commentTextField resignFirstResponder];
-        
-        // Set row for height adjustment
-        postCommentRow = 0;
-        
-        // Hide Post Comment
-        [self.eventActivityTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationTop];
-    } else {
-        NSArray *indexPathsToReload = nil;
-        if (postCommentRow != 0) {
-            // De-select the comment button and reload row we are removing
-            ActivityPostCommentCell *activityCell = (ActivityPostCommentCell*) [self tableView:self.eventActivityTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:(postCommentRow-4) inSection:0]];
-            activityCell.commentButton.selected = NO;
-            
-            indexPathsToReload = [NSArray arrayWithObjects:indexPath, [NSIndexPath indexPathForRow:postCommentRow inSection:0], nil];
-        } else {
-            indexPathsToReload = [NSArray arrayWithObject:indexPath];
+
+    UITableViewRowAnimation animationType;
+    NSArray *indexPathsToShowAndHide = nil;
+    NSMutableArray *indexPathsToReload = [NSMutableArray array];
+    
+    // Is post comment currently showing somewhere?
+    if (postCommentRow != 0) {
+        // Reload all rows pertaining to this post
+        for (int i = postCommentRow - 1; i > postCommentRow - 5; i--) {
+            [indexPathsToReload addObject:[NSIndexPath indexPathForRow:i inSection:0]];
         }
         
+        // De-select the comment button and reload row we are removing
+        ActivityPostCommentCell *oldActivityCell = (ActivityPostCommentCell*) [self tableView:self.eventActivityTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:(postCommentRow-4) inSection:0]];
+        
+        NSIndexPath *indexPathForHiding = [NSIndexPath indexPathForRow:postCommentRow inSection:0];
+        
+        // Check if we are hiding the current row
+        if (![indexPathForHiding isEqual:indexPath]) {
+            indexPathsToShowAndHide = [NSArray arrayWithObjects:indexPath, [NSIndexPath indexPathForRow:postCommentRow inSection:0], nil];
+            oldActivityCell.commentButton.selected = NO;
+            
+            [activityCell.commentButton setSelected:YES];
+            
+            animationType = UITableViewRowAnimationBottom;
+        } else {
+            indexPathsToShowAndHide = [NSArray arrayWithObject:indexPath];
+            
+            // Remove keyboard if showing
+            ActivityPostCommentCell *activityPostCommentCell = (ActivityPostCommentCell*) [self tableView:self.eventActivityTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:postCommentRow inSection:0]];
+            [activityPostCommentCell.commentTextField resignFirstResponder];
+            
+            [activityCell.commentButton setSelected:NO];
+            
+            // Set row for height adjustment
+            postCommentRow = 0;
+            
+            animationType = UITableViewRowAnimationTop;
+        }
+    } else {
         // Set row for height adjustment
         postCommentRow = indexPath.row;
         
-        // Show Post Comment / Hide previous post comment if open
-        [self.eventActivityTableView reloadRowsAtIndexPaths:indexPathsToReload withRowAnimation:UITableViewRowAnimationBottom];
+        indexPathsToShowAndHide = [NSArray arrayWithObject:indexPath];
+        animationType = UITableViewRowAnimationBottom;
     }
+     
+    //TODO Make a delayed call for smooth animation
     
-    // Set the button
-    [activityCell.commentButton setSelected:!activityCell.commentButton.selected];
+    // Show Post Comment / Hide previous post comment if open
+    [self.eventActivityTableView reloadRowsAtIndexPaths:indexPathsToShowAndHide withRowAnimation:animationType];
+    
+    // Refresh other data
+    [self.eventActivityTableView reloadRowsAtIndexPaths:indexPathsToReload withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (void)postCommentButtonPressed:(ActivityPostCommentCell*)activityPostCommentCell {
