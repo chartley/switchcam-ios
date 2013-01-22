@@ -19,6 +19,7 @@
 #import "MyEventsViewController.h"
 #import "ECSlidingViewController.h"
 #import "LoginViewController.h"
+#import "TermsViewController.h"
 #import "SPConstants.h"
 #import "StatusBarToastAndProgressView.h"
 #import "SCS3Uploader.h"
@@ -72,6 +73,9 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     if (![self openReadSessionWithAllowLoginUI:NO]) {
         // No? Display the login page.
         [self showLoginView];
+    } else if(![[NSUserDefaults standardUserDefaults] boolForKey:kSPUserAcceptedTermsKey]) {
+        // No? show terms page
+        [self showTermsView];
     } else {
         // Start location if we haven't yet
         NSTimeInterval secondsSinceManagerStarted = [[NSDate date] timeIntervalSinceDate:[[SPLocationManager sharedInstance] locationManagerStartDate]];
@@ -151,11 +155,8 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     // things may be hanging off the session, that need releasing (completion block, etc.) and
     // other components in the app may be awaiting close notification in order to do cleanup
     
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:kSPStaySignedInKey]) {
-        [FBSession.activeSession closeAndClearTokenInformation];
-    } else {
-        [FBSession.activeSession close];
-    }
+
+    [FBSession.activeSession close];
 }
 
 #pragma mark - Facebook
@@ -219,6 +220,29 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
         self.loginViewController = [[UINavigationController alloc] initWithRootViewController:loginRootViewController];
         UIViewController *topViewController = [self.slidingViewController topViewController];
         [topViewController presentModalViewController:self.loginViewController animated:NO];
+    } else {
+        [self.loginViewController popToRootViewControllerAnimated:YES];
+        UIViewController *topViewController = [self.slidingViewController topViewController];
+        [topViewController presentModalViewController:self.loginViewController animated:NO];
+    }
+}
+
+- (void)createAndPresentTermsView {
+    if (self.loginViewController == nil) {
+        LoginViewController *loginRootViewController = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
+        self.loginViewController = [[UINavigationController alloc] initWithRootViewController:loginRootViewController];
+        
+        TermsViewController *termsViewController = [[TermsViewController alloc] initWithNibName:@"TermsViewController" bundle:nil];
+        [self.loginViewController pushViewController:termsViewController animated:NO];
+        UIViewController *topViewController = [self.slidingViewController topViewController];
+        [topViewController presentModalViewController:self.loginViewController animated:NO];
+    } else {
+        [self.loginViewController popToRootViewControllerAnimated:YES];
+
+        TermsViewController *termsViewController = [[TermsViewController alloc] initWithNibName:@"TermsViewController" bundle:nil];
+        [self.loginViewController pushViewController:termsViewController animated:NO];
+        UIViewController *topViewController = [self.slidingViewController topViewController];
+        [topViewController presentModalViewController:self.loginViewController animated:NO];
     }
 }
 
@@ -228,6 +252,10 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     } else {
         // State being observed at LoginViewController
     }
+}
+
+- (void)showTermsView {
+    [self createAndPresentTermsView];
 }
 
 - (void)sessionStateChanged:(FBSession *)session
@@ -262,6 +290,7 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
                      
                      [[NSUserDefaults standardUserDefaults] setObject:facebookId forKey:kSPUserFacebookIdKey];
                      [[NSUserDefaults standardUserDefaults] setObject:facebookToken forKey:kSPUserFacebookTokenKey];
+                     [[NSUserDefaults standardUserDefaults] synchronize];
                      
                      // Facebook id and token captured, we can start making network requests
                      [[NSNotificationCenter defaultCenter] postNotificationName:SCAPINetworkRequestCanStartNotification

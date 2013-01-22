@@ -19,7 +19,9 @@
 // User Defaults
 #define kSPUserFacebookIdKey @"SPUserFacebookIdKey"
 #define kSPUserFacebookTokenKey @"SPUserFacebookTokenKey"
-#define kSPStaySignedInKey @"SPStaySignedInKey"
+#define kSPUserAcceptedTermsKey @"SPUserAcceptedTermsKey"
+#define kSPUserIdKey @"SPUserIdKey"
+#define kSPHasUserPreviouslyLoggedInKey @"SPHasUserPreviouslyLoggedInKey"
 
 // Color Ease
 #define RGBA(r,g,b,a) [UIColor colorWithRed: r/255.0f green: g/255.0f \

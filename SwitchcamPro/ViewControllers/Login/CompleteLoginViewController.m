@@ -9,18 +9,18 @@
 #import "UAPush.h"
 #import "CompleteLoginViewController.h"
 #import "LabelProfileCell.h"
-#import "LabelSubLabelCell.h"
-#import "LabelSwitchCell.h"
+#import "LabelTextFieldCell.h"
 #import "ButtonCell.h"
 #import "AFNetworking.h"
 #import "MBProgressHUD.h"
 #import "AppDelegate.h"
 #import "SPConstants.h"
 
-@interface CompleteLoginViewController ()
+@interface CompleteLoginViewController () {
+    BOOL hasSetEmail;
+}
 
 @property (strong, nonatomic) MBProgressHUD *loadingIndicator;
-@property (strong, nonatomic) UISwitch *staySignedInSwitch;
 
 @end
 
@@ -51,6 +51,16 @@
     [self.navigationItem setLeftBarButtonItem:backBarButtonItem];
     [self.navigationItem setHidesBackButton:YES];
     [self.navigationItem setTitle:NSLocalizedString(@"Complete sign up...", @"")];
+    
+    // Add loading indicator
+    AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    self.loadingIndicator = [[MBProgressHUD alloc] initWithWindow:appDelegate.window];
+    [appDelegate.window addSubview:self.loadingIndicator];
+}
+
+- (void)viewDidUnload {
+    // Remove Loading Indicator
+    [self.loadingIndicator removeFromSuperview];
 }
 
 - (void)didReceiveMemoryWarning
@@ -74,15 +84,25 @@
     apnRegistrationSuccessBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
         [loadingIndicator hide:YES];
         
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kSPHasUserPreviouslyLoggedInKey];
+        
         AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
         [appDelegate successfulLoginViewControllerChange];
     };
     
     apnRegistrationFailureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
         [loadingIndicator hide:YES];
-        
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Oops", @"") message:NSLocalizedString(@"Your username/password did not match, please try again.", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles:nil];
-        [alertView show];
+        if ([error code] == NSURLErrorNotConnectedToInternet) {
+            NSString *title = NSLocalizedString(@"No Network Connection", @"");
+            NSString *message = NSLocalizedString(@"Please check your internet connection and try again.", @"");
+            
+            // Show alert
+            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alertView show];
+        } else {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Oops", @"") message:NSLocalizedString(@"We're having trouble connecting to the server, please try again.", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles:nil];
+            [alertView show];
+        }
     };
     
     // Make Request and set params
@@ -100,14 +120,63 @@
     [operation start];
 }
 
+- (void)setEmail {
+    NSString *facebookId = [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookIdKey];
+    NSString *facebookToken = [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookTokenKey];
+    
+    // Completion Blocks
+    void (^setEmailSuccessBlock)(AFHTTPRequestOperation *operation, id responseObject);
+    void (^setEmailFailureBlock)(AFHTTPRequestOperation *operation, NSError *error);
+    
+    setEmailSuccessBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
+        hasSetEmail = YES;
+        [self login];
+    };
+    
+    setEmailFailureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
+        [loadingIndicator hide:YES];
+        if ([error code] == NSURLErrorNotConnectedToInternet) {
+            NSString *title = NSLocalizedString(@"No Network Connection", @"");
+            NSString *message = NSLocalizedString(@"Please check your internet connection and try again.", @"");
+            
+            // Show alert
+            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alertView show];
+        } else {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Oops", @"") message:NSLocalizedString(@"We're having trouble connecting to the server, please try again.", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles:nil];
+            [alertView show];
+        }
+    };
+    
+    // Setup Parameters
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    
+    [parameters setObject:self.userEmailTextField.text forKey:@"email"];
+    
+    // Make Request and set params
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:kAPIHost]];
+    [httpClient setAuthorizationHeaderWithUsername:facebookId password:facebookToken];
+    
+    NSString *path = [NSString stringWithFormat:@"person/me/"];
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"PUT" path:path parameters:parameters];
+    
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    [operation setCompletionBlockWithSuccess:setEmailSuccessBlock failure:setEmailFailureBlock];
+    
+    [operation start];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)switchcamUserLogin:(id)sender {
-    // Save switch setting
-    [[NSUserDefaults standardUserDefaults] setBool:self.staySignedInSwitch.isOn forKey:kSPStaySignedInKey];
-    
-    // APN Registration with Switchcam API
-    [self login];
+    // Check if failure was after email was set
+    if (hasSetEmail) {
+        // APN Registration with Switchcam API
+        [self login];
+    } else {
+        // Set Email
+        [self setEmail];
+    }
 }
 
 - (IBAction)backButtonAction:(id)sender {
@@ -129,17 +198,12 @@
             
         case 1:
         {
-            LabelSubLabelCell *labelSubLabelCell = (LabelSubLabelCell *)cell;
-            [labelSubLabelCell.rightLabel setText:self.userEmailString];
+            LabelTextFieldCell *labelTextFieldCell = (LabelTextFieldCell *)cell;
+            self.userEmailTextField = labelTextFieldCell.textField;
+            [labelTextFieldCell.textField setText:self.userEmailString];
             break;
         }
         case 2:
-        {
-            LabelSwitchCell *labelSwitchCell = (LabelSwitchCell *)cell;
-            self.staySignedInSwitch = labelSwitchCell.staySignedInSwitch;
-            break;
-        }
-        case 3:
         {
             ButtonCell *buttonCell = (ButtonCell *)cell;
             [buttonCell.bigButton addTarget:self action:@selector(switchcamUserLogin:) forControlEvents:UIControlEventTouchUpInside];
@@ -153,7 +217,7 @@
 #pragma mark - UITableViewDataSource methods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
+    return 3;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -170,15 +234,10 @@
             
         case 1:
         {
-            cell = [tableView dequeueReusableCellWithIdentifier:kLabelSubLabelCellIdentifier];
+            cell = [tableView dequeueReusableCellWithIdentifier:kLabelTextFieldCellIdentifier];
             break;
         }
         case 2:
-        {
-            cell = [tableView dequeueReusableCellWithIdentifier:kLabelSwitchCellIdentifier];
-            break;
-        }
-        case 3:
         {
             cell = [tableView dequeueReusableCellWithIdentifier:kButtonCellIdentifier];
             break;
@@ -198,17 +257,18 @@
                 
             case 1:
             {
-                NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"LabelSubLabelCell" owner:self options:nil];
+                NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"LabelTextFieldCell" owner:self options:nil];
                 cell = [nibArray objectAtIndex:0];
+                LabelTextFieldCell *labelTextFieldCell = (LabelTextFieldCell *)cell;
+                [labelTextFieldCell.leftLabel setText:NSLocalizedString(@"Email Address", @"")];
+                [labelTextFieldCell.leftLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:17]];
+                [labelTextFieldCell.textField setTextColor:[UIColor whiteColor]];
+                [labelTextFieldCell.textField setFont:[UIFont fontWithName:@"SourceSansPro-Light" size:17]];
+                [labelTextFieldCell.textField setDelegate:self];
+                
                 break;
             }
             case 2:
-            {
-                NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"LabelSwitchCell" owner:self options:nil];
-                cell = [nibArray objectAtIndex:0];
-                break;
-            }
-            case 3:
             {
                 NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"ButtonCell" owner:self options:nil];
                 cell = [nibArray objectAtIndex:0];
@@ -239,13 +299,15 @@
     if (indexPath.row == 0) {
         // Top
         [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grptableview-top"]]];
-    } else if (indexPath.row == 3) {
+    } else if (indexPath.row == 2) {
         // Bottom
         [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grptableview-bottom"]]];
     } else {
         // Middle
         [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grptableview-middle"]]];
     }
+    
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     
     return cell;
 }
@@ -271,15 +333,10 @@
             
         case 1:
         {
-            return kLabelSubLabelCellRowHeight;
+            return kLabelTextFieldCellRowHeight;
             break;
         }
         case 2:
-        {
-            return kLabelSwitchCellRowHeight;
-            break;
-        }
-        case 3:
         {
             return kButtonCellRowHeight;
             break;
@@ -290,5 +347,12 @@
     }
 }
 
+#pragma mark - UITextField Delegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    
+    return YES;
+}
 
 @end

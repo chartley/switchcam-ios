@@ -34,6 +34,8 @@
 		C90EC9F016A744060085DF8C /* Mission.m in Sources */ = {isa = PBXBuildFile; fileRef = C90EC9EF16A744060085DF8C /* Mission.m */; };
 		C90ECA0516A7D67D0085DF8C /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = C90ECA0416A7D67D0085DF8C /* Comment.m */; };
 		C90ECA0816A7D68D0085DF8C /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = C90ECA0716A7D68C0085DF8C /* Activity.m */; };
+		C90ECA1316AE20F60085DF8C /* TermsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C90ECA1116AE20F60085DF8C /* TermsViewController.m */; };
+		C90ECA1416AE20F60085DF8C /* TermsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C90ECA1216AE20F60085DF8C /* TermsViewController.xib */; };
 		C94F7C0D1699F3DF00D65EDC /* Venue.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F7C0C1699F3DF00D65EDC /* Venue.m */; };
 		C94F7C111699F3E000D65EDC /* Artist.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F7C101699F3E000D65EDC /* Artist.m */; };
 		C94F7C23169A0A3200D65EDC /* SPLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F7C22169A0A3200D65EDC /* SPLocationManager.m */; };
@@ -46,6 +48,7 @@
 		C94F7C5C169B726A00D65EDC /* ActivityActionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F7C5B169B726900D65EDC /* ActivityActionCell.m */; };
 		C94F7C5E169B72C100D65EDC /* ActivityActionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C94F7C5D169B72C100D65EDC /* ActivityActionCell.xib */; };
 		C94F7C61169BF5B500D65EDC /* SPModelHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F7C60169BF5B500D65EDC /* SPModelHelper.m */; };
+		C9606C5D16AE4CCB00F5C76F /* TOS.html in Resources */ = {isa = PBXBuildFile; fileRef = C9606C5C16AE4CCB00F5C76F /* TOS.html */; };
 		C97B0CB2166DBDC3005BB65F /* libUAirship-1.3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C97BFFC2166DBDC0005BB65F /* libUAirship-1.3.3.a */; };
 		C97B132F166DBFA8005BB65F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97B132E166DBFA8005BB65F /* SystemConfiguration.framework */; };
 		C97B1331166DBFB8005BB65F /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97B1330166DBFB8005BB65F /* CFNetwork.framework */; };
@@ -423,6 +426,9 @@
 		C90ECA0416A7D67D0085DF8C /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Comment.m; path = Model/ManagedObjects/Comment.m; sourceTree = "<group>"; };
 		C90ECA0616A7D68C0085DF8C /* Activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Activity.h; path = Model/ManagedObjects/Activity.h; sourceTree = "<group>"; };
 		C90ECA0716A7D68C0085DF8C /* Activity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Activity.m; path = Model/ManagedObjects/Activity.m; sourceTree = "<group>"; };
+		C90ECA1016AE20F60085DF8C /* TermsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TermsViewController.h; path = ViewControllers/Login/TermsViewController.h; sourceTree = "<group>"; };
+		C90ECA1116AE20F60085DF8C /* TermsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TermsViewController.m; path = ViewControllers/Login/TermsViewController.m; sourceTree = "<group>"; };
+		C90ECA1216AE20F60085DF8C /* TermsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TermsViewController.xib; path = ViewControllers/Login/TermsViewController.xib; sourceTree = "<group>"; };
 		C94F7C0B1699F3DF00D65EDC /* Venue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Venue.h; path = Model/ManagedObjects/Venue.h; sourceTree = "<group>"; };
 		C94F7C0C1699F3DF00D65EDC /* Venue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Venue.m; path = Model/ManagedObjects/Venue.m; sourceTree = "<group>"; };
 		C94F7C0F1699F3DF00D65EDC /* Artist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Artist.h; path = Model/ManagedObjects/Artist.h; sourceTree = "<group>"; };
@@ -444,6 +450,7 @@
 		C94F7C5D169B72C100D65EDC /* ActivityActionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ActivityActionCell.xib; path = TableViewCells/Activity/ActivityActionCell.xib; sourceTree = "<group>"; };
 		C94F7C5F169BF5B500D65EDC /* SPModelHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPModelHelper.h; path = Helpers/SPModelHelper.h; sourceTree = "<group>"; };
 		C94F7C60169BF5B500D65EDC /* SPModelHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPModelHelper.m; path = Helpers/SPModelHelper.m; sourceTree = "<group>"; };
+		C9606C5C16AE4CCB00F5C76F /* TOS.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = TOS.html; path = Terms/TOS.html; sourceTree = "<group>"; };
 		C97B132E166DBFA8005BB65F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		C97B1330166DBFB8005BB65F /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		C97B1332166DBFC5005BB65F /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -925,6 +932,14 @@
 			name = Playback;
 			sourceTree = "<group>";
 		};
+		C9606C5A16AE4CC200F5C76F /* Terms */ = {
+			isa = PBXGroup;
+			children = (
+				C9606C5C16AE4CCB00F5C76F /* TOS.html */,
+			);
+			name = Terms;
+			sourceTree = "<group>";
+		};
 		C97B1342166DC118005BB65F /* AirshipLib */ = {
 			isa = PBXGroup;
 			children = (
@@ -1230,6 +1245,7 @@
 		C97BFEED166D909D005BB65F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C9606C5A16AE4CC200F5C76F /* Terms */,
 				C99E97E3167E40A6006B3BBC /* Icon.png */,
 				C99E97E4167E40A6006B3BBC /* Icon@2x.png */,
 				C97B142C166F4343005BB65F /* AirshipConfig.plist */,
@@ -1364,6 +1380,9 @@
 				C97B13D1166EEFAB005BB65F /* CompleteLoginViewController.h */,
 				C97B13D2166EEFAB005BB65F /* CompleteLoginViewController.m */,
 				C97B13D3166EEFAB005BB65F /* CompleteLoginViewController.xib */,
+				C90ECA1016AE20F60085DF8C /* TermsViewController.h */,
+				C90ECA1116AE20F60085DF8C /* TermsViewController.m */,
+				C90ECA1216AE20F60085DF8C /* TermsViewController.xib */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -2042,6 +2061,8 @@
 				C906ADBB16A019DE001E5E5C /* HostedEventVideoTopCell.xib in Resources */,
 				C906ADCE16A68448001E5E5C /* ActivityPostCommentCell.xib in Resources */,
 				C906ADD016A68459001E5E5C /* ActivityCommentCell.xib in Resources */,
+				C90ECA1416AE20F60085DF8C /* TermsViewController.xib in Resources */,
+				C9606C5D16AE4CCB00F5C76F /* TOS.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2137,6 +2158,7 @@
 				C90EC9F016A744060085DF8C /* Mission.m in Sources */,
 				C90ECA0516A7D67D0085DF8C /* Comment.m in Sources */,
 				C90ECA0816A7D68D0085DF8C /* Activity.m in Sources */,
+				C90ECA1316AE20F60085DF8C /* TermsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
