@@ -698,8 +698,11 @@
             oldActivityCell.commentButton.selected = NO;
             
             [activityCell.commentButton setSelected:YES];
+        
+            // Set row for height adjustment
+            postCommentRow = indexPath.row;
             
-            animationType = UITableViewRowAnimationBottom;
+            animationType = UITableViewRowAnimationMiddle;
         } else {
             indexPathsToShowAndHide = [NSArray arrayWithObject:indexPath];
             
@@ -712,18 +715,18 @@
             // Set row for height adjustment
             postCommentRow = 0;
             
-            animationType = UITableViewRowAnimationTop;
+            animationType = UITableViewRowAnimationMiddle;
         }
     } else {
+        indexPathsToShowAndHide = [NSArray arrayWithObject:indexPath];
+        
+        [activityCell.commentButton setSelected:YES];
+        
         // Set row for height adjustment
         postCommentRow = indexPath.row;
-        
-        indexPathsToShowAndHide = [NSArray arrayWithObject:indexPath];
-        animationType = UITableViewRowAnimationBottom;
+        animationType = UITableViewRowAnimationMiddle;
     }
      
-    //TODO Make a delayed call for smooth animation
-    
     // Show Post Comment / Hide previous post comment if open
     [self.eventActivityTableView reloadRowsAtIndexPaths:indexPathsToShowAndHide withRowAnimation:animationType];
     
