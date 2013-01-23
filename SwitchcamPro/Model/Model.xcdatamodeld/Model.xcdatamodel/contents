@@ -96,6 +96,7 @@
         <attribute name="foursquareId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="street" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="venueId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="venueName" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="missions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mission" inverseName="venue" inverseEntity="Mission" syncable="YES"/>
     </entity>
@@ -106,6 +107,6 @@
         <element name="Mission" positionX="160" positionY="192" width="128" height="285"/>
         <element name="User" positionX="160" positionY="192" width="128" height="195"/>
         <element name="UserVideo" positionX="160" positionY="192" width="128" height="405"/>
-        <element name="Venue" positionX="160" positionY="192" width="128" height="150"/>
+        <element name="Venue" positionX="160" positionY="192" width="128" height="165"/>
     </elements>
 </model>

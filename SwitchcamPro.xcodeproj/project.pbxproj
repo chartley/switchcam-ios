@@ -36,7 +36,6 @@
 		C90ECA0816A7D68D0085DF8C /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = C90ECA0716A7D68C0085DF8C /* Activity.m */; };
 		C90ECA1316AE20F60085DF8C /* TermsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C90ECA1116AE20F60085DF8C /* TermsViewController.m */; };
 		C90ECA1416AE20F60085DF8C /* TermsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C90ECA1216AE20F60085DF8C /* TermsViewController.xib */; };
-		C94F7C0D1699F3DF00D65EDC /* Venue.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F7C0C1699F3DF00D65EDC /* Venue.m */; };
 		C94F7C111699F3E000D65EDC /* Artist.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F7C101699F3E000D65EDC /* Artist.m */; };
 		C94F7C23169A0A3200D65EDC /* SPLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F7C22169A0A3200D65EDC /* SPLocationManager.m */; };
 		C94F7C26169A234400D65EDC /* SPImageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F7C25169A234400D65EDC /* SPImageHelper.m */; };
@@ -49,6 +48,7 @@
 		C94F7C5E169B72C100D65EDC /* ActivityActionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C94F7C5D169B72C100D65EDC /* ActivityActionCell.xib */; };
 		C94F7C61169BF5B500D65EDC /* SPModelHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F7C60169BF5B500D65EDC /* SPModelHelper.m */; };
 		C9606C5D16AE4CCB00F5C76F /* TOS.html in Resources */ = {isa = PBXBuildFile; fileRef = C9606C5C16AE4CCB00F5C76F /* TOS.html */; };
+		C9606C6016AFB8FE00F5C76F /* Venue.m in Sources */ = {isa = PBXBuildFile; fileRef = C9606C5F16AFB8FE00F5C76F /* Venue.m */; };
 		C97B0CB2166DBDC3005BB65F /* libUAirship-1.3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C97BFFC2166DBDC0005BB65F /* libUAirship-1.3.3.a */; };
 		C97B132F166DBFA8005BB65F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97B132E166DBFA8005BB65F /* SystemConfiguration.framework */; };
 		C97B1331166DBFB8005BB65F /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97B1330166DBFB8005BB65F /* CFNetwork.framework */; };
@@ -429,8 +429,6 @@
 		C90ECA1016AE20F60085DF8C /* TermsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TermsViewController.h; path = ViewControllers/Login/TermsViewController.h; sourceTree = "<group>"; };
 		C90ECA1116AE20F60085DF8C /* TermsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TermsViewController.m; path = ViewControllers/Login/TermsViewController.m; sourceTree = "<group>"; };
 		C90ECA1216AE20F60085DF8C /* TermsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TermsViewController.xib; path = ViewControllers/Login/TermsViewController.xib; sourceTree = "<group>"; };
-		C94F7C0B1699F3DF00D65EDC /* Venue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Venue.h; path = Model/ManagedObjects/Venue.h; sourceTree = "<group>"; };
-		C94F7C0C1699F3DF00D65EDC /* Venue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Venue.m; path = Model/ManagedObjects/Venue.m; sourceTree = "<group>"; };
 		C94F7C0F1699F3DF00D65EDC /* Artist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Artist.h; path = Model/ManagedObjects/Artist.h; sourceTree = "<group>"; };
 		C94F7C101699F3E000D65EDC /* Artist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Artist.m; path = Model/ManagedObjects/Artist.m; sourceTree = "<group>"; };
 		C94F7C21169A0A3200D65EDC /* SPLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPLocationManager.h; path = Helpers/SPLocationManager.h; sourceTree = "<group>"; };
@@ -451,6 +449,8 @@
 		C94F7C5F169BF5B500D65EDC /* SPModelHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPModelHelper.h; path = Helpers/SPModelHelper.h; sourceTree = "<group>"; };
 		C94F7C60169BF5B500D65EDC /* SPModelHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPModelHelper.m; path = Helpers/SPModelHelper.m; sourceTree = "<group>"; };
 		C9606C5C16AE4CCB00F5C76F /* TOS.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = TOS.html; path = Terms/TOS.html; sourceTree = "<group>"; };
+		C9606C5E16AFB8FE00F5C76F /* Venue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Venue.h; path = Model/ManagedObjects/Venue.h; sourceTree = "<group>"; };
+		C9606C5F16AFB8FE00F5C76F /* Venue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Venue.m; path = Model/ManagedObjects/Venue.m; sourceTree = "<group>"; };
 		C97B132E166DBFA8005BB65F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		C97B1330166DBFB8005BB65F /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		C97B1332166DBFC5005BB65F /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -1126,8 +1126,6 @@
 			children = (
 				C94F7C0F1699F3DF00D65EDC /* Artist.h */,
 				C94F7C101699F3E000D65EDC /* Artist.m */,
-				C94F7C0B1699F3DF00D65EDC /* Venue.h */,
-				C94F7C0C1699F3DF00D65EDC /* Venue.m */,
 				C9AED0A6169E6B9A00A6A09D /* UserVideo.h */,
 				C9AED0A7169E6B9A00A6A09D /* UserVideo.m */,
 				C906ADD116A6896B001E5E5C /* User.h */,
@@ -1138,6 +1136,8 @@
 				C90ECA0416A7D67D0085DF8C /* Comment.m */,
 				C90ECA0616A7D68C0085DF8C /* Activity.h */,
 				C90ECA0716A7D68C0085DF8C /* Activity.m */,
+				C9606C5E16AFB8FE00F5C76F /* Venue.h */,
+				C9606C5F16AFB8FE00F5C76F /* Venue.m */,
 			);
 			name = ManagedObjects;
 			sourceTree = "<group>";
@@ -2142,7 +2142,6 @@
 				C9856D10167E734C00C5B708 /* SlideView.m in Sources */,
 				C9856D32167EB27900C5B708 /* MenuPendingUploadDSD.m in Sources */,
 				2456C42B168E64FD00F49C70 /* FindEventCell.m in Sources */,
-				C94F7C0D1699F3DF00D65EDC /* Venue.m in Sources */,
 				C94F7C111699F3E000D65EDC /* Artist.m in Sources */,
 				C94F7C23169A0A3200D65EDC /* SPLocationManager.m in Sources */,
 				C94F7C26169A234400D65EDC /* SPImageHelper.m in Sources */,
@@ -2159,6 +2158,7 @@
 				C90ECA0516A7D67D0085DF8C /* Comment.m in Sources */,
 				C90ECA0816A7D68D0085DF8C /* Activity.m in Sources */,
 				C90ECA1316AE20F60085DF8C /* TermsViewController.m in Sources */,
+				C9606C6016AFB8FE00F5C76F /* Venue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
