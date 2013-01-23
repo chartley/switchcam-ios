@@ -11,6 +11,10 @@
 #import "MenuViewController.h"
 #import "SPConstants.h"
 
+#define kSwitchcamButtonTag 0
+#define kTwitterButtonTag 1
+#define kFacebookButtonTag 2
+
 @interface AboutViewController ()
 
 @end
@@ -124,15 +128,44 @@
 }
 
 - (IBAction)switchcamButtonAction:(id)sender {
-    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Leaving app", @"") message:NSLocalizedString(@"Pressing OK will open this link in Safari", @"") delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", @"") otherButtonTitles:NSLocalizedString(@"OK", @""), nil];
+    [alertView setTag:kSwitchcamButtonTag];
+    [alertView show];
 }
 
 - (IBAction)twitterButtonAction:(id)sender {
-    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Leaving app", @"") message:NSLocalizedString(@"Pressing OK will open this link in Safari", @"") delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", @"") otherButtonTitles:NSLocalizedString(@"OK", @""), nil];
+    [alertView setTag:kSwitchcamButtonTag];
+    [alertView show];
 }
 
 - (IBAction)facebookButtonAction:(id)sender {
-    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Leaving app", @"") message:NSLocalizedString(@"Pressing OK will open this link in Safari", @"") delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", @"") otherButtonTitles:NSLocalizedString(@"OK", @""), nil];
+    [alertView setTag:kSwitchcamButtonTag];
+    [alertView show];
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        // Canceled
+    } else {
+        // Launch Link
+        NSURL *urlToLaunch = nil;
+        if (alertView.tag == kSwitchcamButtonTag) {
+            // Switchcam.com
+            urlToLaunch = [NSURL URLWithString:@"http://www.switchcam.com"];
+        } else if (alertView.tag == kTwitterButtonTag) {
+            // Twitter
+            urlToLaunch = [NSURL URLWithString:@"http://www.twitter.com/switchcam"];
+        } else if (alertView.tag == kFacebookButtonTag) {
+            // Facebook
+            urlToLaunch = [NSURL URLWithString:@"http://www.facebook.com/switchcam"];
+        }
+        
+        [[UIApplication sharedApplication] openURL:urlToLaunch];
+    }
 }
 
 @end
