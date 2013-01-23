@@ -266,6 +266,10 @@ enum { kTagTabBase = 100 };
     }
     
     [self.view addGestureRecognizer:self.slidingViewController.panGesture];
+    
+    // Observe keyboard
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
 
 #pragma mark - IBActions
@@ -440,6 +444,22 @@ enum { kTagTabBase = 100 };
     [self dismissViewControllerAnimated:YES completion:^(void){
         [self chooseFromLibrary:nil];
     }];
+}
+
+#pragma mark - Observers
+
+- (void)keyboardWillShow:(NSNotification *)notification {
+    // Keep the tabs at the top
+    [UIView animateWithDuration:0.25 animations:^(){
+        [self.eventScrollView setContentOffset:CGPointMake(0, self.eventImageView.frame.size.height)];
+    } completion:^(BOOL finished) {
+        [self.eventScrollView setContentOffset:CGPointMake(0, self.eventImageView.frame.size.height)];
+    }];
+    
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification {
+    
 }
 
 @end
