@@ -1,9 +1,12 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <ImageIO/ImageIO.h>
 #import <AVFoundation/AVFoundation.h>
+#import <MessageUI/MessageUI.h>
+#import <Social/Social.h>
 #import "EventViewController.h"
 #import "SPTabStyle.h"
 #import "SPTabsView.h"
+#import "SPConstants.h"
 #import "Mission.h"
 #import "Artist.h"
 #import "Venue.h"
@@ -24,6 +27,7 @@ enum { kTagTabBase = 100 };
 
 @interface EventViewController () {
     int topPictureHeight;
+    BOOL isShareDrawerOpen;
 }
 
 @property (nonatomic, retain) NSArray *viewControllers;
@@ -191,7 +195,7 @@ enum { kTagTabBase = 100 };
         
         SPTabView *tabView = [[SPTabView alloc] initWithFrame:tabFrame title:viewController.title];
         tabView.tag = kTagTabBase + tabIndex;
-        [tabView.titleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:17]];
+        [tabView.titleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Semibold" size:17]];
         [tabView.titleLabel setTextColor:[UIColor whiteColor]];
         [tabView.titleLabel setShadowColor:[UIColor blackColor]];
         [tabView.titleLabel setShadowOffset:CGSizeMake(0, -1)];
@@ -240,13 +244,13 @@ enum { kTagTabBase = 100 };
     [self.eventDateLabel setText:startEventTimeString];
     
     // Set Font / Color
-    [self.shareNoteLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:12]];
-    [self.shareNoteLabel setTextColor:[UIColor whiteColor]];
+    [self.shareNoteLabel setFont:[UIFont fontWithName:@"SourceSansPro-Bold" size:11]];
+    [self.shareNoteLabel setTextColor:RGBA(185, 196, 200, 1.0)];
     [self.shareNoteLabel setShadowColor:[UIColor blackColor]];
     [self.shareNoteLabel setShadowOffset:CGSizeMake(0, -1)];
     
-    [self.sharePhotoLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:12]];
-    [self.sharePhotoLabel setTextColor:[UIColor whiteColor]];
+    [self.sharePhotoLabel setFont:[UIFont fontWithName:@"SourceSansPro-Bold" size:11]];
+    [self.sharePhotoLabel setTextColor:RGBA(185, 196, 200, 1.0)];
     [self.sharePhotoLabel setShadowColor:[UIColor blackColor]];
     [self.sharePhotoLabel setShadowOffset:CGSizeMake(0, -1)];
     
@@ -266,6 +270,59 @@ enum { kTagTabBase = 100 };
     
     // Adjust content size of scrollview for ez scrolling between event scrollview and tabs scrollview
     [self.eventScrollView setContentSize:CGSizeMake(320, self.eventScrollView.frame.size.height + self.eventImageView.frame.size.height)];
+    
+    // Share Drawer Buttons
+    // Set Button Image
+    UIImage *buttonImage = [[UIImage imageNamed:@"btn-ltgrey"]
+                            resizableImageWithCapInsets:UIEdgeInsetsMake(20, 15, 20, 15)];
+    
+    // Set Button Image
+    UIImage *highlightButtonImage = [[UIImage imageNamed:@"btn-orange-lg-pressed"]
+                                     resizableImageWithCapInsets:UIEdgeInsetsMake(20, 15, 20, 15)];
+    
+    // Set the background for any states you plan to use
+    [self.shareEmailButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    [self.shareEmailButton setBackgroundImage:highlightButtonImage forState:UIControlStateSelected];
+    
+    // Set Button Image
+    UIImage *twitterButtonImage = [[UIImage imageNamed:@"btn-twitter-lg"]
+                                   resizableImageWithCapInsets:UIEdgeInsetsMake(20, 15, 20, 15)];
+    
+    // Set Button Image
+    UIImage *twitterHighlightButtonImage = [[UIImage imageNamed:@"btn-twitter-lg-pressed"]
+                                            resizableImageWithCapInsets:UIEdgeInsetsMake(20, 15, 20, 15)];
+    
+    // Set the background for any states you plan to use
+    [self.shareTwitterButton setBackgroundImage:twitterButtonImage forState:UIControlStateNormal];
+    [self.shareTwitterButton setBackgroundImage:twitterHighlightButtonImage forState:UIControlStateSelected];
+    
+    // Set Button Image
+    UIImage *facebookButtonImage = [[UIImage imageNamed:@"btn-fb-lg"]
+                                    resizableImageWithCapInsets:UIEdgeInsetsMake(20, 15, 20, 15)];
+    
+    // Set Button Image
+    UIImage *facebookHighlightButtonImage = [[UIImage imageNamed:@"btn-fb-lg-pressed"]
+                                             resizableImageWithCapInsets:UIEdgeInsetsMake(20, 15, 20, 15)];
+    
+    // Set the background for any states you plan to use
+    [self.shareFacebookButton setBackgroundImage:facebookButtonImage forState:UIControlStateNormal];
+    [self.shareFacebookButton setBackgroundImage:facebookHighlightButtonImage forState:UIControlStateSelected];
+    
+    // Set Font / Color
+    [self.shareEmailButton.titleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Semibold" size:15]];
+    [self.shareEmailButton.titleLabel setTextColor:[UIColor whiteColor]];
+    [self.shareEmailButton.titleLabel setShadowColor:[UIColor blackColor]];
+    [self.shareEmailButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
+    
+    [self.shareTwitterButton.titleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Semibold" size:15]];
+    [self.shareTwitterButton.titleLabel setTextColor:[UIColor whiteColor]];
+    [self.shareTwitterButton.titleLabel setShadowColor:[UIColor blackColor]];
+    [self.shareTwitterButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
+    
+    [self.shareFacebookButton.titleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Semibold" size:15]];
+    [self.shareFacebookButton.titleLabel setTextColor:[UIColor whiteColor]];
+    [self.shareFacebookButton.titleLabel setShadowColor:[UIColor blackColor]];
+    [self.shareFacebookButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
 
     [super viewDidLoad];
 }
@@ -288,6 +345,15 @@ enum { kTagTabBase = 100 };
     // Observe keyboard
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    
+    // Add Share button
+    UIButton *shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [shareButton setFrame:CGRectMake(0, 0, 30, 30)];
+    
+    [shareButton setImage:[UIImage imageNamed:@"btn-invite"] forState:UIControlStateNormal];
+    [shareButton addTarget:self action:@selector(shareButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *shareBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:shareButton];
+    [self.navigationItem setRightBarButtonItem:shareBarButtonItem];
 }
 
 #pragma mark - IBActions
@@ -307,6 +373,7 @@ enum { kTagTabBase = 100 };
 }
 
 - (IBAction)noteButtonAction:(id)sender {
+
 }
 
 - (IBAction)chooseFromLibrary:(id)sender {
@@ -318,6 +385,104 @@ enum { kTagTabBase = 100 };
     viewController.allowsEditing = NO;
     
     [self presentModalViewController:viewController animated:YES];
+}
+
+- (IBAction)shareButtonAction:(id)sender {
+    if (isShareDrawerOpen) {
+        // Close Drawer
+        [UIView animateWithDuration:0.4 animations:^{
+            [self.shareDrawer setFrame:CGRectMake(self.shareDrawer.frame.origin.x, self.shareDrawer.frame.origin.y - self.shareDrawer.frame.size.height, self.shareDrawer.frame.size.width, self.shareDrawer.frame.size.height)];
+            [self.eventScrollView setFrame:CGRectMake(self.eventScrollView.frame.origin.x, self.eventScrollView.frame.origin.y - self.shareDrawer.frame.size.height, self.eventScrollView.frame.size.width, self.eventScrollView.frame.size.height)];}
+                         completion:^(BOOL finished){
+                             // Re-enable touches on scroll view
+                             self.eventScrollView.userInteractionEnabled = YES;
+                         }
+         ];
+        
+        // Change Share button
+        UIButton *shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [shareButton setFrame:CGRectMake(0, 0, 30, 30)];
+        
+        [shareButton setImage:[UIImage imageNamed:@"btn-invite"] forState:UIControlStateNormal];
+        [shareButton addTarget:self action:@selector(shareButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *shareBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:shareButton];
+        [self.navigationItem setRightBarButtonItem:shareBarButtonItem];
+        
+        isShareDrawerOpen = NO;
+    } else {
+        // Disable touches on scroll view
+        self.eventScrollView.userInteractionEnabled = NO;
+        
+        // Open Drawer
+        [UIView animateWithDuration:0.4 animations:^{
+            [self.shareDrawer setFrame:CGRectMake(self.shareDrawer.frame.origin.x, self.shareDrawer.frame.origin.y + self.shareDrawer.frame.size.height, self.shareDrawer.frame.size.width, self.shareDrawer.frame.size.height)];
+            [self.eventScrollView setFrame:CGRectMake(self.eventScrollView.frame.origin.x, self.eventScrollView.frame.origin.y + self.shareDrawer.frame.size.height, self.eventScrollView.frame.size.width, self.eventScrollView.frame.size.height)];}
+                         completion:nil
+         ];
+        
+        // Change Share button
+        UIButton *shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [shareButton setFrame:CGRectMake(0, 0, 30, 30)];
+        
+        [shareButton setImage:[UIImage imageNamed:@"btn-invite-active"] forState:UIControlStateNormal];
+        [shareButton addTarget:self action:@selector(shareButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *shareBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:shareButton];
+        [self.navigationItem setRightBarButtonItem:shareBarButtonItem];
+        
+        isShareDrawerOpen = YES;
+    }
+}
+
+- (IBAction)shareFacebookButtonAction:(id)sender {
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
+        SLComposeViewController *facebookSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+        
+        NSString *initialText = [NSString stringWithFormat:NSLocalizedString(@"Join the camera crew for %@ at %@!", @""), self.mission.artist.artistName, self.mission.venue.venueName];
+        [facebookSheet setInitialText:initialText];
+        [facebookSheet addURL:[NSURL URLWithString:self.mission.missionPageURL]];
+        
+        [self presentViewController:facebookSheet animated:YES completion:nil];
+    } else {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Facebook Not Configured", @"") message:NSLocalizedString(@"You don't have a Facebook account setup on this device.  Add one in your Settings app to share via Facebook!", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles: nil];
+        [alertView show];
+    }
+}
+
+- (IBAction)shareTwitterButtonAction:(id)sender {
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
+        SLComposeViewController *tweetSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
+        
+        NSString *initialText = [NSString stringWithFormat:NSLocalizedString(@"Join the camera crew for %@ at %@!", @""), self.mission.artist.artistName, self.mission.venue.venueName];
+        [tweetSheet setInitialText:initialText];
+        [tweetSheet addURL:[NSURL URLWithString:self.mission.missionPageURL]];
+        
+        [self presentViewController:tweetSheet animated:YES completion:nil];
+    } else {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Twitter Not Configured", @"") message:NSLocalizedString(@"You don't have a Twitter account setup on this device.  Add one in your Settings app to share via Twitter!", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles: nil];
+        [alertView show];
+    }
+}
+
+- (IBAction)shareEmailButtonAction:(id)sender {
+    if ([MFMailComposeViewController canSendMail]) {
+        NSMutableString *body = [NSMutableString string];
+        // add HTML before the link here with line breaks (\n)
+        [body appendFormat:NSLocalizedString(@"<h4>Join the camera crew for %@ at %@!</h4>\n", @""), self.mission.artist.artistName, self.mission.venue.venueName];
+        [body appendFormat:NSLocalizedString(@"<a href=\"%@\">View the event!</a>\n", @""), self.mission.missionPageURL];
+        [body appendString:NSLocalizedString(@"<div>Hope to see you there!</div>\n", @"")];
+        
+        MFMailComposeViewController *viewController = [[MFMailComposeViewController alloc] init];
+        [viewController setSubject:NSLocalizedString(@"Check out this Switchcam Event!", @"")];
+        [viewController setMessageBody:body isHTML:YES];
+        [self presentModalViewController:viewController animated:YES];
+    } else {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"No Email Configured", @"") message:NSLocalizedString(@"You don't have an email account setup on this device.  Add one in your Settings app to share via email!", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles: nil];
+        [alertView show];
+    }
+}
+
+- (IBAction)inviteFacebookFriendsButtonAction:(id)sender {
+    
 }
 
 #pragma mark - UIImagePicker Delegate Methods
@@ -478,6 +643,12 @@ enum { kTagTabBase = 100 };
 
 - (void)keyboardWillHide:(NSNotification *)notification {
     
+}
+
+#pragma mark - MFMailComposeViewControllerDelegate
+
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 @end

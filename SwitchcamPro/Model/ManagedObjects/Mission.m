@@ -27,6 +27,7 @@
 @dynamic submissionDeadline;
 @dynamic title;
 @dynamic missionDescription;
+@dynamic missionPageURL;
 @dynamic artist;
 @dynamic cameraCrew;
 @dynamic createdBy;

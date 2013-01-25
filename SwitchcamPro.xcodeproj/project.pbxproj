@@ -57,7 +57,8 @@
 		C9606C7616AFDCD200F5C76F /* EventInfoGoingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9606C7516AFDCD200F5C76F /* EventInfoGoingCell.m */; };
 		C9606C7816AFDCE900F5C76F /* EventInfoGoingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9606C7716AFDCE900F5C76F /* EventInfoGoingCell.xib */; };
 		C9606C7B16B2788900F5C76F /* Link.m in Sources */ = {isa = PBXBuildFile; fileRef = C9606C7A16B2788900F5C76F /* Link.m */; };
-		C9606C7E16B2788A00F5C76F /* Mission.m in Sources */ = {isa = PBXBuildFile; fileRef = C9606C7D16B2788A00F5C76F /* Mission.m */; };
+		C9606C8016B2843700F5C76F /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9606C7F16B2843600F5C76F /* MessageUI.framework */; };
+		C9606C8316B286FC00F5C76F /* Mission.m in Sources */ = {isa = PBXBuildFile; fileRef = C9606C8216B286FC00F5C76F /* Mission.m */; };
 		C97B0CB2166DBDC3005BB65F /* libUAirship-1.3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C97BFFC2166DBDC0005BB65F /* libUAirship-1.3.3.a */; };
 		C97B132F166DBFA8005BB65F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97B132E166DBFA8005BB65F /* SystemConfiguration.framework */; };
 		C97B1331166DBFB8005BB65F /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97B1330166DBFB8005BB65F /* CFNetwork.framework */; };
@@ -472,8 +473,9 @@
 		C9606C7716AFDCE900F5C76F /* EventInfoGoingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EventInfoGoingCell.xib; path = TableViewCells/EventInfo/EventInfoGoingCell.xib; sourceTree = "<group>"; };
 		C9606C7916B2788900F5C76F /* Link.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Link.h; path = Model/ManagedObjects/Link.h; sourceTree = "<group>"; };
 		C9606C7A16B2788900F5C76F /* Link.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Link.m; path = Model/ManagedObjects/Link.m; sourceTree = "<group>"; };
-		C9606C7C16B2788A00F5C76F /* Mission.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mission.h; path = Model/ManagedObjects/Mission.h; sourceTree = "<group>"; };
-		C9606C7D16B2788A00F5C76F /* Mission.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Mission.m; path = Model/ManagedObjects/Mission.m; sourceTree = "<group>"; };
+		C9606C7F16B2843600F5C76F /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		C9606C8116B286FC00F5C76F /* Mission.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mission.h; path = Model/ManagedObjects/Mission.h; sourceTree = "<group>"; };
+		C9606C8216B286FC00F5C76F /* Mission.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Mission.m; path = Model/ManagedObjects/Mission.m; sourceTree = "<group>"; };
 		C97B132E166DBFA8005BB65F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		C97B1330166DBFB8005BB65F /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		C97B1332166DBFC5005BB65F /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -905,6 +907,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9606C8016B2843700F5C76F /* MessageUI.framework in Frameworks */,
 				C90847CC16803C7700DEF94E /* QuartzCore.framework in Frameworks */,
 				C9F49116167D43CE00C75C6F /* ImageIO.framework in Frameworks */,
 				C97B1946167405C8005BB65F /* CoreMedia.framework in Frameworks */,
@@ -1178,10 +1181,10 @@
 				C90ECA0716A7D68C0085DF8C /* Activity.m */,
 				C9606C5E16AFB8FE00F5C76F /* Venue.h */,
 				C9606C5F16AFB8FE00F5C76F /* Venue.m */,
-				C9606C7C16B2788A00F5C76F /* Mission.h */,
-				C9606C7D16B2788A00F5C76F /* Mission.m */,
 				C9606C7916B2788900F5C76F /* Link.h */,
 				C9606C7A16B2788900F5C76F /* Link.m */,
+				C9606C8116B286FC00F5C76F /* Mission.h */,
+				C9606C8216B286FC00F5C76F /* Mission.m */,
 			);
 			name = ManagedObjects;
 			sourceTree = "<group>";
@@ -1237,6 +1240,7 @@
 		C97BFEE5166D909D005BB65F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C9606C7F16B2843600F5C76F /* MessageUI.framework */,
 				C90847CB16803C7700DEF94E /* QuartzCore.framework */,
 				C9F49115167D43CB00C75C6F /* ImageIO.framework */,
 				C97B1945167405C6005BB65F /* CoreMedia.framework */,
@@ -2212,7 +2216,7 @@
 				C9606C6A16AFBFF300F5C76F /* EventInfoLinksCell.m in Sources */,
 				C9606C7616AFDCD200F5C76F /* EventInfoGoingCell.m in Sources */,
 				C9606C7B16B2788900F5C76F /* Link.m in Sources */,
-				C9606C7E16B2788A00F5C76F /* Mission.m in Sources */,
+				C9606C8316B286FC00F5C76F /* Mission.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

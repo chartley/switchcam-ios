@@ -24,6 +24,7 @@
 @property (nonatomic, retain) NSDate * submissionDeadline;
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSString * missionDescription;
+@property (nonatomic, retain) NSString * missionPageURL;
 @property (nonatomic, retain) Artist *artist;
 @property (nonatomic, retain) NSSet *cameraCrew;
 @property (nonatomic, retain) User *createdBy;

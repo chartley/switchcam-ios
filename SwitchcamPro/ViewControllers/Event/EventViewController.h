@@ -34,6 +34,14 @@
 @property (strong, nonatomic) IBOutlet UIImageView *eventImageView;
 @property (strong, nonatomic) IBOutlet UIScrollView *eventScrollView;
 
+@property (strong, nonatomic) IBOutlet UIView *shareDrawer;
+@property (strong, nonatomic) IBOutlet UIButton *shareFacebookButton;
+@property (strong, nonatomic) IBOutlet UIButton *shareTwitterButton;
+@property (strong, nonatomic) IBOutlet UIButton *shareEmailButton;
+@property (strong, nonatomic) IBOutlet UIButton *inviteFacebookFriendsButton;
+@property (strong, nonatomic) IBOutlet UILabel *shareDrawerLabel;
+
+
 - (id)initWithViewControllers:(NSArray *)viewControllers
                         style:(SPTabStyle *)style;
 - (id)initWithMission:(Mission*)mission;

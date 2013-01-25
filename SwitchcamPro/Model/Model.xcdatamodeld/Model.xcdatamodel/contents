@@ -48,6 +48,7 @@
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="missionDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="missionId" optional="YES" attributeType="Integer 64" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="missionPageURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="picURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="startDatetime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="submissionDeadline" optional="YES" attributeType="Date" syncable="YES"/>
@@ -112,7 +113,7 @@
         <element name="Activity" positionX="160" positionY="192" width="128" height="315"/>
         <element name="Artist" positionX="160" positionY="192" width="128" height="90"/>
         <element name="Comment" positionX="160" positionY="192" width="128" height="150"/>
-        <element name="Mission" positionX="160" positionY="192" width="128" height="315"/>
+        <element name="Mission" positionX="160" positionY="192" width="128" height="330"/>
         <element name="User" positionX="160" positionY="192" width="128" height="195"/>
         <element name="UserVideo" positionX="160" positionY="192" width="128" height="405"/>
         <element name="Venue" positionX="160" positionY="192" width="128" height="165"/>
