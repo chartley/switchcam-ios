@@ -427,6 +427,15 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     // If source and destination key path are the same, we can simply add a string to the array
     [userMapping addAttributeMappingsFromArray:@[ @"name" ]];
     
+    RKEntityMapping *linkMapping = [RKEntityMapping mappingForEntityForName:@"Link" inManagedObjectStore:managedObjectStore];
+    linkMapping.identificationAttributes = @[ @"linkURL" ];
+    
+    [linkMapping addAttributeMappingsFromDictionary:@{
+     @"id": @"linkId",
+     @"display_name": @"linkName",
+     @"url": @"linkURL",
+     }];
+    
     RKEntityMapping *missionMapping = [RKEntityMapping mappingForEntityForName:@"Mission" inManagedObjectStore:managedObjectStore];
     missionMapping.identificationAttributes = @[ @"missionId" ];
     [missionMapping addAttributeMappingsFromDictionary:@{
@@ -437,6 +446,7 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
      @"end_datetime": @"endDatetime",
      @"submission_deadline": @"submissionDeadline",
      @"pic_url": @"picURL",
+     @"description": @"missionDescription",
      }];
     // If source and destination key path are the same, we can simply add a string to the array
     [missionMapping addAttributeMappingsFromArray:@[ @"title" ]];
@@ -470,6 +480,7 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     [missionMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"followers" toKeyPath:@"followers" withMapping:userMapping]];
     [missionMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"venue" toKeyPath:@"venue" withMapping:venueMapping]];
     [missionMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"artist" toKeyPath:@"artist" withMapping:artistMapping]];
+    [missionMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"links" toKeyPath:@"links" withMapping:linkMapping]];
     
     // User Video Object Mapping
     RKEntityMapping *userVideoMapping = [RKEntityMapping mappingForEntityForName:@"UserVideo" inManagedObjectStore:managedObjectStore];

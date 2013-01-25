@@ -31,7 +31,6 @@
 		C90847AB167FDD7300DEF94E /* icn-upload-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = C90847A1167FDD7300DEF94E /* icn-upload-pressed.png */; };
 		C90847AC167FDD7300DEF94E /* icn-upload-pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C90847A2167FDD7300DEF94E /* icn-upload-pressed@2x.png */; };
 		C90847CC16803C7700DEF94E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C90847CB16803C7700DEF94E /* QuartzCore.framework */; };
-		C90EC9F016A744060085DF8C /* Mission.m in Sources */ = {isa = PBXBuildFile; fileRef = C90EC9EF16A744060085DF8C /* Mission.m */; };
 		C90ECA0516A7D67D0085DF8C /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = C90ECA0416A7D67D0085DF8C /* Comment.m */; };
 		C90ECA0816A7D68D0085DF8C /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = C90ECA0716A7D68C0085DF8C /* Activity.m */; };
 		C90ECA1316AE20F60085DF8C /* TermsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C90ECA1116AE20F60085DF8C /* TermsViewController.m */; };
@@ -49,6 +48,16 @@
 		C94F7C61169BF5B500D65EDC /* SPModelHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F7C60169BF5B500D65EDC /* SPModelHelper.m */; };
 		C9606C5D16AE4CCB00F5C76F /* TOS.html in Resources */ = {isa = PBXBuildFile; fileRef = C9606C5C16AE4CCB00F5C76F /* TOS.html */; };
 		C9606C6016AFB8FE00F5C76F /* Venue.m in Sources */ = {isa = PBXBuildFile; fileRef = C9606C5F16AFB8FE00F5C76F /* Venue.m */; };
+		C9606C6416AFBFCB00F5C76F /* EventInfoOrganizerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9606C6316AFBFCB00F5C76F /* EventInfoOrganizerCell.m */; };
+		C9606C6716AFBFDD00F5C76F /* EventInfoDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9606C6616AFBFDD00F5C76F /* EventInfoDetailCell.m */; };
+		C9606C6A16AFBFF300F5C76F /* EventInfoLinksCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9606C6916AFBFF300F5C76F /* EventInfoLinksCell.m */; };
+		C9606C6C16AFC00900F5C76F /* EventInfoDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9606C6B16AFC00900F5C76F /* EventInfoDetailCell.xib */; };
+		C9606C6E16AFC01500F5C76F /* EventInfoLinksCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9606C6D16AFC01500F5C76F /* EventInfoLinksCell.xib */; };
+		C9606C7016AFC02300F5C76F /* EventInfoOrganizerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9606C6F16AFC02300F5C76F /* EventInfoOrganizerCell.xib */; };
+		C9606C7616AFDCD200F5C76F /* EventInfoGoingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9606C7516AFDCD200F5C76F /* EventInfoGoingCell.m */; };
+		C9606C7816AFDCE900F5C76F /* EventInfoGoingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9606C7716AFDCE900F5C76F /* EventInfoGoingCell.xib */; };
+		C9606C7B16B2788900F5C76F /* Link.m in Sources */ = {isa = PBXBuildFile; fileRef = C9606C7A16B2788900F5C76F /* Link.m */; };
+		C9606C7E16B2788A00F5C76F /* Mission.m in Sources */ = {isa = PBXBuildFile; fileRef = C9606C7D16B2788A00F5C76F /* Mission.m */; };
 		C97B0CB2166DBDC3005BB65F /* libUAirship-1.3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C97BFFC2166DBDC0005BB65F /* libUAirship-1.3.3.a */; };
 		C97B132F166DBFA8005BB65F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97B132E166DBFA8005BB65F /* SystemConfiguration.framework */; };
 		C97B1331166DBFB8005BB65F /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97B1330166DBFB8005BB65F /* CFNetwork.framework */; };
@@ -420,8 +429,6 @@
 		C90847A1167FDD7300DEF94E /* icn-upload-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icn-upload-pressed.png"; sourceTree = "<group>"; };
 		C90847A2167FDD7300DEF94E /* icn-upload-pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icn-upload-pressed@2x.png"; sourceTree = "<group>"; };
 		C90847CB16803C7700DEF94E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		C90EC9EE16A744060085DF8C /* Mission.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mission.h; path = Model/ManagedObjects/Mission.h; sourceTree = "<group>"; };
-		C90EC9EF16A744060085DF8C /* Mission.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Mission.m; path = Model/ManagedObjects/Mission.m; sourceTree = "<group>"; };
 		C90ECA0316A7D67D0085DF8C /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Comment.h; path = Model/ManagedObjects/Comment.h; sourceTree = "<group>"; };
 		C90ECA0416A7D67D0085DF8C /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Comment.m; path = Model/ManagedObjects/Comment.m; sourceTree = "<group>"; };
 		C90ECA0616A7D68C0085DF8C /* Activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Activity.h; path = Model/ManagedObjects/Activity.h; sourceTree = "<group>"; };
@@ -451,6 +458,22 @@
 		C9606C5C16AE4CCB00F5C76F /* TOS.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = TOS.html; path = Terms/TOS.html; sourceTree = "<group>"; };
 		C9606C5E16AFB8FE00F5C76F /* Venue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Venue.h; path = Model/ManagedObjects/Venue.h; sourceTree = "<group>"; };
 		C9606C5F16AFB8FE00F5C76F /* Venue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Venue.m; path = Model/ManagedObjects/Venue.m; sourceTree = "<group>"; };
+		C9606C6216AFBFCB00F5C76F /* EventInfoOrganizerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventInfoOrganizerCell.h; path = TableViewCells/EventInfo/EventInfoOrganizerCell.h; sourceTree = "<group>"; };
+		C9606C6316AFBFCB00F5C76F /* EventInfoOrganizerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EventInfoOrganizerCell.m; path = TableViewCells/EventInfo/EventInfoOrganizerCell.m; sourceTree = "<group>"; };
+		C9606C6516AFBFDD00F5C76F /* EventInfoDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventInfoDetailCell.h; path = TableViewCells/EventInfo/EventInfoDetailCell.h; sourceTree = "<group>"; };
+		C9606C6616AFBFDD00F5C76F /* EventInfoDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EventInfoDetailCell.m; path = TableViewCells/EventInfo/EventInfoDetailCell.m; sourceTree = "<group>"; };
+		C9606C6816AFBFF300F5C76F /* EventInfoLinksCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventInfoLinksCell.h; path = TableViewCells/EventInfo/EventInfoLinksCell.h; sourceTree = "<group>"; };
+		C9606C6916AFBFF300F5C76F /* EventInfoLinksCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EventInfoLinksCell.m; path = TableViewCells/EventInfo/EventInfoLinksCell.m; sourceTree = "<group>"; };
+		C9606C6B16AFC00900F5C76F /* EventInfoDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EventInfoDetailCell.xib; path = TableViewCells/EventInfo/EventInfoDetailCell.xib; sourceTree = "<group>"; };
+		C9606C6D16AFC01500F5C76F /* EventInfoLinksCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EventInfoLinksCell.xib; path = TableViewCells/EventInfo/EventInfoLinksCell.xib; sourceTree = "<group>"; };
+		C9606C6F16AFC02300F5C76F /* EventInfoOrganizerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EventInfoOrganizerCell.xib; path = TableViewCells/EventInfo/EventInfoOrganizerCell.xib; sourceTree = "<group>"; };
+		C9606C7416AFDCD200F5C76F /* EventInfoGoingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventInfoGoingCell.h; path = TableViewCells/EventInfo/EventInfoGoingCell.h; sourceTree = "<group>"; };
+		C9606C7516AFDCD200F5C76F /* EventInfoGoingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EventInfoGoingCell.m; path = TableViewCells/EventInfo/EventInfoGoingCell.m; sourceTree = "<group>"; };
+		C9606C7716AFDCE900F5C76F /* EventInfoGoingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EventInfoGoingCell.xib; path = TableViewCells/EventInfo/EventInfoGoingCell.xib; sourceTree = "<group>"; };
+		C9606C7916B2788900F5C76F /* Link.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Link.h; path = Model/ManagedObjects/Link.h; sourceTree = "<group>"; };
+		C9606C7A16B2788900F5C76F /* Link.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Link.m; path = Model/ManagedObjects/Link.m; sourceTree = "<group>"; };
+		C9606C7C16B2788A00F5C76F /* Mission.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mission.h; path = Model/ManagedObjects/Mission.h; sourceTree = "<group>"; };
+		C9606C7D16B2788A00F5C76F /* Mission.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Mission.m; path = Model/ManagedObjects/Mission.m; sourceTree = "<group>"; };
 		C97B132E166DBFA8005BB65F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		C97B1330166DBFB8005BB65F /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		C97B1332166DBFC5005BB65F /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -940,6 +963,25 @@
 			name = Terms;
 			sourceTree = "<group>";
 		};
+		C9606C6116AFBF9800F5C76F /* Event Info */ = {
+			isa = PBXGroup;
+			children = (
+				C9606C6216AFBFCB00F5C76F /* EventInfoOrganizerCell.h */,
+				C9606C6316AFBFCB00F5C76F /* EventInfoOrganizerCell.m */,
+				C9606C6F16AFC02300F5C76F /* EventInfoOrganizerCell.xib */,
+				C9606C6516AFBFDD00F5C76F /* EventInfoDetailCell.h */,
+				C9606C6616AFBFDD00F5C76F /* EventInfoDetailCell.m */,
+				C9606C6B16AFC00900F5C76F /* EventInfoDetailCell.xib */,
+				C9606C6816AFBFF300F5C76F /* EventInfoLinksCell.h */,
+				C9606C6916AFBFF300F5C76F /* EventInfoLinksCell.m */,
+				C9606C6D16AFC01500F5C76F /* EventInfoLinksCell.xib */,
+				C9606C7416AFDCD200F5C76F /* EventInfoGoingCell.h */,
+				C9606C7516AFDCD200F5C76F /* EventInfoGoingCell.m */,
+				C9606C7716AFDCE900F5C76F /* EventInfoGoingCell.xib */,
+			);
+			name = "Event Info";
+			sourceTree = "<group>";
+		};
 		C97B1342166DC118005BB65F /* AirshipLib */ = {
 			isa = PBXGroup;
 			children = (
@@ -1130,14 +1172,16 @@
 				C9AED0A7169E6B9A00A6A09D /* UserVideo.m */,
 				C906ADD116A6896B001E5E5C /* User.h */,
 				C906ADD216A6896B001E5E5C /* User.m */,
-				C90EC9EE16A744060085DF8C /* Mission.h */,
-				C90EC9EF16A744060085DF8C /* Mission.m */,
 				C90ECA0316A7D67D0085DF8C /* Comment.h */,
 				C90ECA0416A7D67D0085DF8C /* Comment.m */,
 				C90ECA0616A7D68C0085DF8C /* Activity.h */,
 				C90ECA0716A7D68C0085DF8C /* Activity.m */,
 				C9606C5E16AFB8FE00F5C76F /* Venue.h */,
 				C9606C5F16AFB8FE00F5C76F /* Venue.m */,
+				C9606C7C16B2788A00F5C76F /* Mission.h */,
+				C9606C7D16B2788A00F5C76F /* Mission.m */,
+				C9606C7916B2788900F5C76F /* Link.h */,
+				C9606C7A16B2788900F5C76F /* Link.m */,
 			);
 			name = ManagedObjects;
 			sourceTree = "<group>";
@@ -1316,6 +1360,7 @@
 		C97BFF2D166D94FD005BB65F /* TableViewCells */ = {
 			isa = PBXGroup;
 			children = (
+				C9606C6116AFBF9800F5C76F /* Event Info */,
 				2456C42D168E650100F49C70 /* Find Events */,
 				C9856D2C167EB02300C5B708 /* Pending Uploads */,
 				C97B14AB16710E70005BB65F /* Activity */,
@@ -2063,6 +2108,10 @@
 				C906ADD016A68459001E5E5C /* ActivityCommentCell.xib in Resources */,
 				C90ECA1416AE20F60085DF8C /* TermsViewController.xib in Resources */,
 				C9606C5D16AE4CCB00F5C76F /* TOS.html in Resources */,
+				C9606C6C16AFC00900F5C76F /* EventInfoDetailCell.xib in Resources */,
+				C9606C6E16AFC01500F5C76F /* EventInfoLinksCell.xib in Resources */,
+				C9606C7016AFC02300F5C76F /* EventInfoOrganizerCell.xib in Resources */,
+				C9606C7816AFDCE900F5C76F /* EventInfoGoingCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2154,11 +2203,16 @@
 				C906ADC916A6833C001E5E5C /* ActivityPostCommentCell.m in Sources */,
 				C906ADCC16A68353001E5E5C /* ActivityCommentCell.m in Sources */,
 				C906ADD316A6896C001E5E5C /* User.m in Sources */,
-				C90EC9F016A744060085DF8C /* Mission.m in Sources */,
 				C90ECA0516A7D67D0085DF8C /* Comment.m in Sources */,
 				C90ECA0816A7D68D0085DF8C /* Activity.m in Sources */,
 				C90ECA1316AE20F60085DF8C /* TermsViewController.m in Sources */,
 				C9606C6016AFB8FE00F5C76F /* Venue.m in Sources */,
+				C9606C6416AFBFCB00F5C76F /* EventInfoOrganizerCell.m in Sources */,
+				C9606C6716AFBFDD00F5C76F /* EventInfoDetailCell.m in Sources */,
+				C9606C6A16AFBFF300F5C76F /* EventInfoLinksCell.m in Sources */,
+				C9606C7616AFDCD200F5C76F /* EventInfoGoingCell.m in Sources */,
+				C9606C7B16B2788900F5C76F /* Link.m in Sources */,
+				C9606C7E16B2788A00F5C76F /* Mission.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

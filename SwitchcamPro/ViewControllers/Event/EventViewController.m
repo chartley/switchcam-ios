@@ -19,10 +19,12 @@
 
 enum { kTagTabBase = 100 };
 
-#define kTopPictureHeight 169
+//#define kTopPictureHeight 169
 #define kBottomBarHeight 44
 
-@interface EventViewController ()
+@interface EventViewController () {
+    int topPictureHeight;
+}
 
 @property (nonatomic, retain) NSArray *viewControllers;
 @property (nonatomic, assign, readwrite) UIScrollView *currentView;
@@ -71,6 +73,8 @@ enum { kTagTabBase = 100 };
         // Custom initialization
         self.mission = mission;
         self.navigationItem.title = self.mission.artist.artistName;
+        
+
     }
     return self;
 }
@@ -117,7 +121,7 @@ enum { kTagTabBase = 100 };
     self.currentTabScrollView = (UIScrollView*)viewController.tabScrollView;
     
     self.currentView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-    self.currentView.frame = CGRectMake(0, kTopPictureHeight + self.tabsContainerView.bounds.size.height, self.view.bounds.size.width, self.eventScrollView.bounds.size.height - self.tabsContainerView.bounds.size.height);
+    self.currentView.frame = CGRectMake(0, topPictureHeight + self.tabsContainerView.bounds.size.height, self.view.bounds.size.width, self.eventScrollView.bounds.size.height - self.tabsContainerView.bounds.size.height);
     
     [self.eventScrollView addSubview:self.currentView];
     
@@ -135,6 +139,20 @@ enum { kTagTabBase = 100 };
 }
 
 - (void)viewDidLoad {
+    //TODO Switchcam movie
+    if (true) {
+        topPictureHeight = 156;
+        [self.eventLocationLabel setFrame:CGRectMake(20, 109, 280, 21)];
+        [self.eventDateLabel setFrame:CGRectMake(20, 129, 280, 21)];
+    } else {
+        topPictureHeight = 169;
+        [self.eventLocationLabel setFrame:CGRectMake(20, 122, 280, 21)];
+        [self.eventDateLabel setFrame:CGRectMake(20, 142, 280, 21)];
+    }
+    
+    [self.eventImageView setFrame:CGRectMake(self.eventImageView.frame.origin.x, self.eventImageView.frame.origin.y, 320, topPictureHeight)];
+    [self.eventImageView setClipsToBounds:YES];
+    
     // Add background
     UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bgfull-fullapp"]];
     [self.view addSubview:backgroundImageView];
@@ -143,7 +161,7 @@ enum { kTagTabBase = 100 };
     
     // The view that contains the tab views is located across the top.
     
-    CGRect tabsViewFrame = CGRectMake(0, kTopPictureHeight, self.view.frame.size.width, self.style.tabsViewHeight);
+    CGRect tabsViewFrame = CGRectMake(0, topPictureHeight, self.view.frame.size.width, self.style.tabsViewHeight);
     self.tabsContainerView = [[SPTabsView alloc] initWithFrame:tabsViewFrame];
     self.tabsContainerView.backgroundColor = [UIColor clearColor];
     self.tabsContainerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
