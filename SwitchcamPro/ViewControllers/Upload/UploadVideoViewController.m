@@ -8,16 +8,16 @@
 
 #import <AVFoundation/AVFoundation.h>
 #import <Foundation/Foundation.h>
-#import "AFNetworking.h"
 #import "SPConstants.h"
 #import "UploadVideoViewController.h"
 #import "LabelInvisibleButtonCell.h"
 #import "LabelTextFieldCell.h"
 #import "ButtonToProgressCell.h"
-#import "Recording.h"
+#import "UserVideo.h"
 #import "SCS3Uploader.h"
 #import "SPSerializable.h"
 #import "UIImage+H568.h"
+#import "Mission.h"
 
 #define kBufferBetweenThumbnailLabels 10
 
@@ -80,12 +80,12 @@
     // Set Labels
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 	[dateFormatter setDateFormat:@"h:mm a"];
-    [self.timeLabel setText:[dateFormatter stringFromDate:[self.recordingToUpload recordStart]]];
+    [self.timeLabel setText:[dateFormatter stringFromDate:[self.userVideoToUpload recordStart]]];
     
     NSString *lengthString = [NSString stringWithFormat:NSLocalizedString(@"Length: %@", @""), @""];
     [self.lengthLabel setText:lengthString];
     
-    NSString *sizeString = [NSString stringWithFormat:NSLocalizedString(@"Size: %@MB", @""), [[self.recordingToUpload sizeMegaBytes] stringValue]];
+    NSString *sizeString = [NSString stringWithFormat:NSLocalizedString(@"Size: %@MB", @""), [[self.userVideoToUpload sizeMegaBytes] stringValue]];
     [self.sizeLabel setText:sizeString];
     
     // Size to fit labels and set their origins
@@ -98,7 +98,7 @@
     [self.sizeLabel sizeToFit];
     
     // Load thumbnail image
-    UIImage *thumbnailImage = [UIImage imageWithContentsOfFile:[self.recordingToUpload thumbnailURL]];
+    UIImage *thumbnailImage = [UIImage imageWithContentsOfFile:[self.userVideoToUpload thumbnailLocalURL]];
     
     // Set Thumbnail
     [self.videoThumbnailImageView setImage:thumbnailImage];
@@ -123,44 +123,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Network Requests
-
-- (void)createUserVideo {
-    NSString *facebookId = [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookIdKey];
-    NSString *facebookToken = [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookTokenKey];
-    
-    // Completion Blocks
-    void (^createUserVideoSuccessBlock)(AFHTTPRequestOperation *operation, id responseObject);
-    void (^createUserVideoFailureBlock)(AFHTTPRequestOperation *operation, NSError *error);
-    
-    createUserVideoSuccessBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
-        // Start Upload in background
-        [self performSelectorInBackground:@selector(startUpload) withObject:nil];
-        
-        [self dismissModalViewControllerAnimated:YES];
-    };
-    
-    createUserVideoFailureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
-        //TODO better error handling
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Oops", @"") message:NSLocalizedString(@"Something went wrong, please try again.", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles:nil];
-        [alertView show];
-    };
-    
-    // Make Request and set params
-    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:kAPIHost]];
-    [httpClient setAuthorizationHeaderWithUsername:facebookId password:facebookToken];
-    //TODO Need payload
-
-    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:@"uservideo/" parameters:nil];
-    
-    AFJSONRequestOperation *operation = [[AFJSONRequestOperation alloc] initWithRequest:request];
-    [operation setCompletionBlockWithSuccess:createUserVideoSuccessBlock failure:createUserVideoFailureBlock];
-    
-    [operation start];
-}
-
-
-
 #pragma mark - Button Actions
 
 - (void)uploadButtonAction {
@@ -177,8 +139,10 @@
     void (^compressionFailureBlock)(NSError *error);
     
     compressionSuccessBlock = ^() {
-        // Notify Switchcam of new recording
-        [self createUserVideo];
+        [self performSelectorOnMainThread:@selector(backButtonAction:) withObject:self waitUntilDone:NO];
+        
+        // Start Upload in background
+        [self performSelectorInBackground:@selector(startUpload) withObject:nil];
     };
     
     compressionFailureBlock = ^(NSError *error) {
@@ -198,20 +162,19 @@
 #pragma mark - Helper Methods
 
 - (void)startUpload {
-    // Create Key
-    NSString *videoKey = [NSString stringWithFormat:@"%@-%@", [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookIdKey] , [SPSerializable formattedStringFromDate: self.recordingToUpload.recordStart]];
-    
-    NSError *error;
-    // Get Data
-    NSData *uploadData = [[NSData alloc] initWithContentsOfFile:[self.recordingToUpload compressedVideoURL] options:NSDataReadingMapped error:&error];
-    
-    SCS3Uploader *uploader = [[SCS3Uploader alloc] init];
-    [uploader uploadVideo:uploadData withKey:videoKey];
+    @autoreleasepool {
+        NSError *error;
+        // Get Data
+        NSData *uploadData = [[NSData alloc] initWithContentsOfFile:[self.userVideoToUpload compressedVideoURL] options:NSDataReadingMapped error:&error];
+        
+        SCS3Uploader *uploader = [[SCS3Uploader alloc] init];
+        [uploader uploadVideo:uploadData withKey:self.userVideoToUpload.uploadPath];
+    }
 }
 
 - (void)startVideoCompressionWithSuccessHandler:(void (^)())successHandler failureHandler:(void (^)(NSError *))failureHandler  {
-    NSString *outputURLString = [self.recordingToUpload compressedVideoURL];
-    NSURL *inputURL = [NSURL URLWithString:[self.recordingToUpload localVideoAssetURL]];
+    NSString *outputURLString = [self.userVideoToUpload compressedVideoURL];
+    NSURL *inputURL = [NSURL URLWithString:[self.userVideoToUpload localVideoAssetURL]];
     NSURL *outputURL = [NSURL fileURLWithPath:outputURLString];
     
     if ([[NSFileManager defaultManager] fileExistsAtPath:outputURLString]) {
@@ -248,6 +211,7 @@
             [labelTextFieldCell.leftLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:17]];
             [labelTextFieldCell.textField setTextColor:[UIColor whiteColor]];
             [labelTextFieldCell.textField setFont:[UIFont fontWithName:@"SourceSansPro-Light" size:17]];
+            [labelTextFieldCell.textField setDelegate:self];
             break;
         }
             
@@ -432,6 +396,14 @@
     // Update label
     NSString *progressString = [NSString stringWithFormat:NSLocalizedString(@"Processing Video - %d%%", @""), (self.compressionSession.progress * 100)];
     [self.compressProgressLabel setText:progressString];
+}
+
+#pragma mark - UITextField Delegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    
+    return YES;
 }
 
 @end

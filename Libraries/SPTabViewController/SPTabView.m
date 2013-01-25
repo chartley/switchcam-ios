@@ -10,10 +10,10 @@
 #define kHorizontalSectionCount           4
 #define kGridWidthInSection               16
 #define kGridHeight                       20
-#define kTabHeightInGridUnits             17
+#define kTabHeightInGridUnits             20
 #define kBottomControlPointDXInGridUnits  8
 #define kBottomControlPointDYInGridUnits  1
-#define kTopControlPointDXInGridUnits     10
+#define kTopControlPointDXInGridUnits     1
 
 static inline CGFloat radians(CGFloat degrees) {
   return degrees * M_PI/180;
@@ -99,83 +99,19 @@ static inline CGFloat radians(CGFloat degrees) {
                     self.frame.size.width - 0.5, tabHeight);
 }
 
-- (CGMutablePathRef)_makeTabPath {
-    CGFloat sectionWidth = [self _sectionWidth];
-    CGSize  gridSize     = [self _gridSize];
-    CGRect  tabRect      = [self _tabRect];
-    
-    CGFloat tabLeft   = tabRect.origin.x + 0.5;
-    CGFloat tabRight  = tabRect.origin.x + tabRect.size.width - 0.5;
-    CGFloat tabTop    = tabRect.origin.y + 0.5;
-    CGFloat tabBottom = tabRect.origin.y + tabRect.size.height - 0.5;
-    
-    CGFloat bottomControlPointDX = gridSize.width  * kBottomControlPointDXInGridUnits;
-    CGFloat bottomControlPointDY = gridSize.height * kBottomControlPointDYInGridUnits;
-    CGFloat topControlPointDX    = gridSize.width  * kTopControlPointDXInGridUnits;
-    
-    CGMutablePathRef path = CGPathCreateMutable();
-    
-    CGPathMoveToPoint(path, NULL, tabLeft, tabBottom);
-    
-    CGPathAddCurveToPoint(path, NULL,
-                          bottomControlPointDX, tabBottom - bottomControlPointDY,
-                          sectionWidth - topControlPointDX, tabTop,
-                          sectionWidth, tabTop);
-    
-    CGPathAddLineToPoint(path, NULL, tabRight - sectionWidth, tabTop);
-    
-    CGPathAddCurveToPoint(path, NULL,
-                          tabRight - sectionWidth + topControlPointDX, tabTop,
-                          tabRight - bottomControlPointDX, tabBottom - bottomControlPointDY,
-                          tabRight, tabBottom);
-    
-    return path;
-}
-
 - (void)drawRect:(CGRect)rect {
-    CGMutablePathRef path = [self _makeTabPath];
-    
     CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    // Configure a linear gradient which adds a simple white highlight on the top.
-    
-    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    CGFloat locations[] = { 0.0, 0.4 };
     
     CGColorRef tabColor = (self.selected
                            ? self.style.selectedTabColor.CGColor
                            : self.style.unselectedTabColor.CGColor);
     
-    CGColorRef startColor = [UIColor whiteColor].CGColor;
-    CGColorRef endColor   = tabColor;
-    NSArray    *colors    = [NSArray arrayWithObjects:(id)startColor, (id)endColor, nil];
-    
-    CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, (CFArrayRef)colors, locations);
-    
-    CGRect  tabRect    = [self _tabRect];
-    CGPoint startPoint = CGPointMake(CGRectGetMidX(tabRect), tabRect.origin.y);
-    CGPoint endPoint   = CGPointMake(CGRectGetMidX(tabRect), tabRect.origin.y + tabRect.size.height);
-    
     // Fill with current tab color
-    
-    CGContextSaveGState(context);
-    CGContextAddPath(context, path);
     CGContextSetFillColorWithColor(context, tabColor);
-    CGContextSetShadow(context, CGSizeMake(0, -1), self.style.shadowRadius);
-    CGContextFillPath(context);
-    CGContextRestoreGState(context);
+    CGContextSetRGBStrokeColor(context, (43.0/255.0), (43.0/255.0), (43.0/255.0), self.selected?0.0:1.0);
+    CGContextSetLineWidth(context, 2);
+    CGContextFillRect(context, [self _tabRect]);
     
-    // Render the interior of the tab path using the gradient.
-    
-    CGContextSaveGState(context);
-    CGContextAddPath(context, path);
-    CGContextClip(context);
-    CGContextDrawLinearGradient(context, gradient, startPoint, endPoint, 0);
-    CGContextRestoreGState(context);
-    CGGradientRelease(gradient);
-    CGColorSpaceRelease(colorSpace);
-    
-    CFRelease(path);
     
     [self _configureTitleLabel];
 }

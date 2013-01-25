@@ -22,18 +22,18 @@
 - (id)init {
   if ((self = [super init])) {
     self.tabsViewHeight = 50;
-    self.tabHeight = 40;
-    self.tabBarHeight = 5;
-    self.overlapAsPercentageOfTabWidth = 0.20;
+    self.tabHeight = 50;
+    self.tabBarHeight = 0;
+    self.overlapAsPercentageOfTabWidth = 0;
     self.shadowRadius = 3;
 
-    self.selectedTabColor = RGBA(36, 38, 39, 1);
+    self.selectedTabColor = RGBA(0, 0, 0, 0);
     self.selectedTitleFont = [UIFont fontWithName:@"SourceSansPro-Regular" size:15];
     self.selectedTitleTextColor = RGBA(233, 110, 62, 1);
     self.selectedTitleShadowOffset = CGSizeMake(0, -1);
     self.selectedTitleShadowColor = [UIColor blackColor];
 
-    self.unselectedTabColor = RGBA(30, 32, 32, 1);
+    self.unselectedTabColor = RGBA(0, 0, 0, 0.20);
     self.unselectedTitleFont = [UIFont fontWithName:@"SourceSansPro-Regular" size:15];
     self.unselectedTitleTextColor = [UIColor whiteColor];
     self.unselectedTitleShadowOffset = CGSizeMake(0, -1);

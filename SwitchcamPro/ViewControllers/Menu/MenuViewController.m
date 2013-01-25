@@ -47,6 +47,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [self.pendingDataSourceDelegate refreshUploads];
     [self.pendingUploadTableView reloadData];
 }
 
@@ -119,6 +120,8 @@
             [self.slidingViewController resetTopView];
         }];
     }
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 @end

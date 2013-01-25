@@ -11,12 +11,15 @@
 #import <RestKit/RestKit.h>
 #import <RestKit/CoreData.h>
 #import <FacebookSDK/FacebookSDK.h>
+#import <TestFlightSDK/TestFlight.h>
+#import "UserVideo.h"
 #import "UAirship.h"
 #import "UAPush.h"
-#import "AFNetworking.h"
+#import "SPLocationManager.h"
 #import "MyEventsViewController.h"
 #import "ECSlidingViewController.h"
 #import "LoginViewController.h"
+#import "TermsViewController.h"
 #import "SPConstants.h"
 #import "StatusBarToastAndProgressView.h"
 #import "SCS3Uploader.h"
@@ -27,7 +30,6 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
 
 @interface AppDelegate ()
 
-@property (strong, nonatomic) ECSlidingViewController *slidingViewController;
 @property (strong, nonatomic) UINavigationController* loginViewController;
 @property (strong, nonatomic) StatusBarToastAndProgressView* statusBarToastAndProgressView;
 
@@ -40,7 +42,7 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Initialize Push
-    //[self initAirship:launchOptions];
+    [self initAirship:launchOptions];
     
     // Initialize Custom Navigation Bar
     [self initializeNavigationBarAppearance];
@@ -50,6 +52,9 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     
     // Initialize RestKit
     [self initializeRestKit];
+    
+    // Initialize TestFlight
+    [TestFlight takeOff:@"2acb3bce-2531-4584-b080-013af6bd4993"];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
@@ -68,7 +73,16 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     if (![self openReadSessionWithAllowLoginUI:NO]) {
         // No? Display the login page.
         [self showLoginView];
+    } else if(![[NSUserDefaults standardUserDefaults] boolForKey:kSPUserAcceptedTermsKey]) {
+        // No? show terms page
+        [self showTermsView];
     } else {
+        // Start location if we haven't yet
+        NSTimeInterval secondsSinceManagerStarted = [[NSDate date] timeIntervalSinceDate:[[SPLocationManager sharedInstance] locationManagerStartDate]];
+        if (secondsSinceManagerStarted > 120) {
+            [[SPLocationManager sharedInstance] start];
+        }
+        
         // Save Facebook id and token for API access
         [[FBRequest requestForMe] startWithCompletionHandler:
          ^(FBRequestConnection *connection,
@@ -141,11 +155,8 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     // things may be hanging off the session, that need releasing (completion block, etc.) and
     // other components in the app may be awaiting close notification in order to do cleanup
     
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:kSPStaySignedInKey]) {
-        [FBSession.activeSession closeAndClearTokenInformation];
-    } else {
-        [FBSession.activeSession close];
-    }
+
+    [FBSession.activeSession close];
 }
 
 #pragma mark - Facebook
@@ -192,15 +203,44 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
         UIViewController *topViewController = [self.slidingViewController topViewController];
         [topViewController dismissModalViewControllerAnimated:YES];
         self.loginViewController = nil;
+        
+        // Start location if we haven't yet
+        NSTimeInterval secondsSinceManagerStarted = [[NSDate date] timeIntervalSinceDate:[[SPLocationManager sharedInstance] locationManagerStartDate]];
+        if (secondsSinceManagerStarted > 120) {
+            [[SPLocationManager sharedInstance] start];
+        }
     }
 }
 
-#pragma mark Facebook Login Code
+#pragma mark - Facebook Login Code
 
 - (void)createAndPresentLoginView {
     if (self.loginViewController == nil) {
         LoginViewController *loginRootViewController = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
         self.loginViewController = [[UINavigationController alloc] initWithRootViewController:loginRootViewController];
+        UIViewController *topViewController = [self.slidingViewController topViewController];
+        [topViewController presentModalViewController:self.loginViewController animated:NO];
+    } else {
+        [self.loginViewController popToRootViewControllerAnimated:YES];
+        UIViewController *topViewController = [self.slidingViewController topViewController];
+        [topViewController presentModalViewController:self.loginViewController animated:NO];
+    }
+}
+
+- (void)createAndPresentTermsView {
+    if (self.loginViewController == nil) {
+        LoginViewController *loginRootViewController = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
+        self.loginViewController = [[UINavigationController alloc] initWithRootViewController:loginRootViewController];
+        
+        TermsViewController *termsViewController = [[TermsViewController alloc] initWithNibName:@"TermsViewController" bundle:nil];
+        [self.loginViewController pushViewController:termsViewController animated:NO];
+        UIViewController *topViewController = [self.slidingViewController topViewController];
+        [topViewController presentModalViewController:self.loginViewController animated:NO];
+    } else {
+        [self.loginViewController popToRootViewControllerAnimated:YES];
+
+        TermsViewController *termsViewController = [[TermsViewController alloc] initWithNibName:@"TermsViewController" bundle:nil];
+        [self.loginViewController pushViewController:termsViewController animated:NO];
         UIViewController *topViewController = [self.slidingViewController topViewController];
         [topViewController presentModalViewController:self.loginViewController animated:NO];
     }
@@ -212,6 +252,10 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     } else {
         // State being observed at LoginViewController
     }
+}
+
+- (void)showTermsView {
+    [self createAndPresentTermsView];
 }
 
 - (void)sessionStateChanged:(FBSession *)session
@@ -246,6 +290,7 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
                      
                      [[NSUserDefaults standardUserDefaults] setObject:facebookId forKey:kSPUserFacebookIdKey];
                      [[NSUserDefaults standardUserDefaults] setObject:facebookToken forKey:kSPUserFacebookTokenKey];
+                     [[NSUserDefaults standardUserDefaults] synchronize];
                      
                      // Facebook id and token captured, we can start making network requests
                      [[NSNotificationCenter defaultCenter] postNotificationName:SCAPINetworkRequestCanStartNotification
@@ -382,6 +427,15 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     // If source and destination key path are the same, we can simply add a string to the array
     [userMapping addAttributeMappingsFromArray:@[ @"name" ]];
     
+    RKEntityMapping *linkMapping = [RKEntityMapping mappingForEntityForName:@"Link" inManagedObjectStore:managedObjectStore];
+    linkMapping.identificationAttributes = @[ @"linkURL" ];
+    
+    [linkMapping addAttributeMappingsFromDictionary:@{
+     @"id": @"linkId",
+     @"display_name": @"linkName",
+     @"url": @"linkURL",
+     }];
+    
     RKEntityMapping *missionMapping = [RKEntityMapping mappingForEntityForName:@"Mission" inManagedObjectStore:managedObjectStore];
     missionMapping.identificationAttributes = @[ @"missionId" ];
     [missionMapping addAttributeMappingsFromDictionary:@{
@@ -391,42 +445,170 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
      @"start_datetime": @"startDatetime",
      @"end_datetime": @"endDatetime",
      @"submission_deadline": @"submissionDeadline",
+     @"pic_url": @"picURL",
+     @"description": @"missionDescription",
      }];
     // If source and destination key path are the same, we can simply add a string to the array
     [missionMapping addAttributeMappingsFromArray:@[ @"title" ]];
+    
+    RKEntityMapping *artistMapping = [RKEntityMapping mappingForEntityForName:@"Artist" inManagedObjectStore:managedObjectStore];
+    artistMapping.identificationAttributes = @[ @"artistId" ];
+    
+    [artistMapping addAttributeMappingsFromDictionary:@{
+     @"id": @"artistId",
+     @"name": @"artistName",
+     @"pic_link": @"pictureURL",
+     }];
+    
+    RKEntityMapping *venueMapping = [RKEntityMapping mappingForEntityForName:@"Venue" inManagedObjectStore:managedObjectStore];
+    venueMapping.identificationAttributes = @[ @"venueId" ];
+    
+    [venueMapping addAttributeMappingsFromDictionary:@{
+     @"foursquare_id": @"foursquareId",
+     @"name": @"venueName",
+     @"id": @"venueId",
+     }];
+    // If source and destination key path are the same, we can simply add a string to the array
+    [venueMapping addAttributeMappingsFromArray:@[ @"street" ]];
+    [venueMapping addAttributeMappingsFromArray:@[ @"city" ]];
+    [venueMapping addAttributeMappingsFromArray:@[ @"state" ]];
+    [venueMapping addAttributeMappingsFromArray:@[ @"country" ]];
     
     // Relationships
     [missionMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"camera_crew" toKeyPath:@"cameraCrew" withMapping:userMapping]];
     [missionMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"created_by" toKeyPath:@"createdBy" withMapping:userMapping]];    
     [missionMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"followers" toKeyPath:@"followers" withMapping:userMapping]];
+    [missionMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"venue" toKeyPath:@"venue" withMapping:venueMapping]];
+    [missionMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"artist" toKeyPath:@"artist" withMapping:artistMapping]];
+    [missionMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"links" toKeyPath:@"links" withMapping:linkMapping]];
     
-    [userMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"attendedMissions" toKeyPath:@"cameraCrew" withMapping:missionMapping]];
-    [userMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"createdMissions" toKeyPath:@"createdBy" withMapping:missionMapping]];
-    [userMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"followedMissions" toKeyPath:@"followers" withMapping:missionMapping]];
-    
-    // Recording Object Mapping
-    RKEntityMapping *recordingMapping = [RKEntityMapping mappingForEntityForName:@"Recording" inManagedObjectStore:managedObjectStore];
-    recordingMapping.identificationAttributes = @[ @"uploadedVideoId" ];
-    [recordingMapping addAttributeMappingsFromDictionary:@{
+    // User Video Object Mapping
+    RKEntityMapping *userVideoMapping = [RKEntityMapping mappingForEntityForName:@"UserVideo" inManagedObjectStore:managedObjectStore];
+    userVideoMapping.identificationAttributes = @[ @"videoId" ];
+    [userVideoMapping addAttributeMappingsFromDictionary:@{
+     @"upload_date": @"uploadDate",
+     @"video_id": @"videoId",
+     @"input_title": @"inputTitle",
+     @"thumbnail_sd": @"thumbnailSDURL",
+     @"thumbnail_hd": @"thumbnailHDURL",
+     @"duration_seconds": @"durationSeconds",
+     @"lon": @"longitude",
+     @"lat": @"latitude",
+     @"record_date": @"recordStart",
      @"upload_destination": @"uploadDestination",
      @"upload_s3_bucket": @"uploadS3Bucket",
      @"upload_path": @"uploadPath",
      @"size_mb": @"sizeMegaBytes",
      }];
+    [userVideoMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"uploaded_by" toKeyPath:@"uploadedBy" withMapping:userMapping]];
     // If source and destination key path are the same, we can simply add a string to the array
-    [recordingMapping addAttributeMappingsFromArray:@[ @"filename" ]];
-    [recordingMapping addAttributeMappingsFromArray:@[ @"mimetype" ]];
+    [userVideoMapping addAttributeMappingsFromArray:@[ @"filename" ]];
+    [userVideoMapping addAttributeMappingsFromArray:@[ @"mimetype" ]];
+    [userVideoMapping addAttributeMappingsFromArray:@[ @"state" ]];
     
+    // User Video Object Mapping
+    RKEntityMapping *createUserVideoMapping = [RKEntityMapping mappingForEntityForName:@"UserVideo" inManagedObjectStore:managedObjectStore];
+    createUserVideoMapping.identificationAttributes = @[ @"uploadPath" ];
+    [createUserVideoMapping addAttributeMappingsFromDictionary:@{
+     @"upload_date": @"uploadDate",
+     @"video_id": @"videoId",
+     @"input_title": @"inputTitle",
+     @"thumbnail_sd": @"thumbnailSDURL",
+     @"thumbnail_hd": @"thumbnailHDURL",
+     @"duration_seconds": @"durationSeconds",
+     @"lon": @"longitude",
+     @"lat": @"latitude",
+     @"record_date": @"recordStart",
+     @"upload_destination": @"uploadDestination",
+     @"upload_s3_bucket": @"uploadS3Bucket",
+     @"upload_path": @"uploadPath",
+     @"size_mb": @"sizeMegaBytes",
+     }];
+    [createUserVideoMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"uploaded_by" toKeyPath:@"uploadedBy" withMapping:userMapping]];
+    // If source and destination key path are the same, we can simply add a string to the array
+    [createUserVideoMapping addAttributeMappingsFromArray:@[ @"filename" ]];
+    [createUserVideoMapping addAttributeMappingsFromArray:@[ @"mimetype" ]];
+    [createUserVideoMapping addAttributeMappingsFromArray:@[ @"state" ]];
     
-    // Register json serialization
-    [RKMIMETypeSerialization registerClass:[RKNSJSONSerialization class] forMIMEType:@"application/json"];
+    RKEntityMapping *commentMapping = [RKEntityMapping mappingForEntityForName:@"Comment" inManagedObjectStore:managedObjectStore];
+    commentMapping.identificationAttributes = @[ @"commentId" ];
+    
+    [commentMapping addAttributeMappingsFromDictionary:@{
+     @"id": @"commentId",
+     @"submit_date": @"submitDate",
+     }];
+    [commentMapping addAttributeMappingsFromArray:@[ @"comment" ]];
+    [commentMapping addAttributeMappingsFromArray:@[ @"timesince" ]];
+    
+    // Relationships
+    [commentMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"person" toKeyPath:@"person" withMapping:userMapping]];
+
+    
+    RKEntityMapping *activityMapping = [RKEntityMapping mappingForEntityForName:@"Activity" inManagedObjectStore:managedObjectStore];
+    activityMapping.identificationAttributes = @[ @"activityId" ];
+    
+    [activityMapping addAttributeMappingsFromDictionary:@{
+     @"id": @"activityId",
+     @"action_object_content_type_name": @"actionObjectContentTypeName",
+     @"action_object_object_id": @"actionObjectId",
+     @"like_count": @"likeCount",
+     @"comment_count": @"commentCount",
+     @"url": @"photoThumbnailURL",
+     @"i_liked": @"iLiked",
+     @"i_commented": @"iCommented",
+     }];
+    // If source and destination key path are the same, we can simply add a string to the array
+    [activityMapping addAttributeMappingsFromArray:@[ @"text" ]];
+    [activityMapping addAttributeMappingsFromArray:@[ @"verb" ]];
+    [activityMapping addAttributeMappingsFromArray:@[ @"timestamp" ]];
+    [activityMapping addAttributeMappingsFromArray:@[ @"timesince" ]];
+    [activityMapping addAttributeMappingsFromArray:@[ @"deletable" ]];
+    
+    // Relationships
+    [activityMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"person" toKeyPath:@"person" withMapping:userMapping]];
+    [activityMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"action_object.uservideo" toKeyPath:@"userVideo" withMapping:userVideoMapping]];
+    [activityMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"latest_3_comments" toKeyPath:@"latestComments" withMapping:commentMapping]];
+    
+    RKObjectMapping *userVideoRequestMapping = [RKObjectMapping requestMapping]; // objectClass == NSMutableDictionary
+    [userVideoRequestMapping addAttributeMappingsFromDictionary:@{
+     @"uploadDestination": @"upload_destination",
+     @"uploadS3Bucket": @"upload_s3_bucket",
+     @"uploadPath": @"upload_path",
+     @"sizeMegaBytes": @"size_mb",
+     @"recordStart": @"record_date",
+     @"durationSeconds": @"duration_seconds",
+     @"mission.missionId": @"mission_id",
+     @"latitude": @"lat",
+     @"longitude": @"lon",
+     @"state": @"state",
+     }];
     
     // Register our mappings with the provider
+    RKRequestDescriptor *userVideoRequestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:userVideoRequestMapping objectClass:[UserVideo class] rootKeyPath:@"uservideo"];
+    
+    RKResponseDescriptor *userVideoResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userVideoMapping pathPattern:@"uservideo/" keyPath:@"data" statusCodes:[NSIndexSet indexSetWithIndex:200]];
+    RKResponseDescriptor *createUserVideoResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:createUserVideoMapping pathPattern:@"uservideo/" keyPath:@"" statusCodes:[NSIndexSet indexSetWithIndex:201]];
+    
     RKResponseDescriptor *missionResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:missionMapping
                                                                                             pathPattern:@"mission/"
                                                                                                 keyPath:@"data"
                                                                                             statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    
+    RKResponseDescriptor *activityResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:activityMapping
+                                                                                              pathPattern:@"mission/:missionId/activity/"
+                                                                                                  keyPath:@"data"
+                                                                                              statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    [objectManager addRequestDescriptor:userVideoRequestDescriptor];
+    [objectManager addResponseDescriptor:userVideoResponseDescriptor];
+    [objectManager addResponseDescriptor:createUserVideoResponseDescriptor];
     [objectManager addResponseDescriptor:missionResponseDescriptor];
+    [objectManager addResponseDescriptor:activityResponseDescriptor];
+    
+    // Register json serialization
+    [RKMIMETypeSerialization registerClass:[RKNSJSONSerialization class] forMIMEType:@"application/json"];
+    [objectManager setRequestSerializationMIMEType:RKMIMETypeJSON];
+    
+    
     
     /**
      Complete Core Data stack initialization
@@ -441,7 +623,7 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     [managedObjectStore createManagedObjectContexts];
     
     // Configure a managed object cache to ensure we do not create duplicate objects
-    managedObjectStore.managedObjectCache = [[RKInMemoryManagedObjectCache alloc] initWithManagedObjectContext:managedObjectStore.persistentStoreManagedObjectContext];
+    managedObjectStore.managedObjectCache = [[RKInMemoryManagedObjectCache alloc] initWithManagedObjectContext:managedObjectStore.mainQueueManagedObjectContext];
 }
 
 #pragma mark - NavigationBar
@@ -465,16 +647,19 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     self.statusBarToastAndProgressView = [[StatusBarToastAndProgressView alloc] initWithFrame:statusBarFrame];
     [self.statusBarToastAndProgressView makeKeyAndVisible];
     
+    // Keep all input coming to Main Window
+    [self.window makeKeyWindow];
+    
     // Setup listeners
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadStarted) name:kSCS3UploadStartedNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadCompleted) name:kSCS3UploadCompletedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadStarted:) name:kSCS3UploadStartedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadCompleted:) name:kSCS3UploadCompletedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadProgress:) name:kSCS3UploadPercentCompleteNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadFailed) name:kSCS3UploadFailedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadFailed:) name:kSCS3UploadFailedNotification object:nil];
 }
 
 #pragma mark - Observer Methods
 
-- (void)uploadStarted {
+- (void)uploadStarted:(NSNotification*)notification {
     [self.statusBarToastAndProgressView showProgressView];
 }
 
@@ -483,14 +668,70 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     [self.statusBarToastAndProgressView updateProgressLabelWithAmount:[progress floatValue]];
 }
 
-- (void)uploadCompleted {
-    [self.statusBarToastAndProgressView showToastWithMessage:NSLocalizedString(@"Upload Complete!", @"")];
+- (void)uploadCompleted:(NSNotification*)notification {
+    NSString *videoKey = (NSString*)[notification object];
+    [self createUserVideo:videoKey];
+}
+
+- (void)uploadFailed:(NSNotification*)notification {
+    [self.statusBarToastAndProgressView showToastWithMessage:NSLocalizedString(@"Upload Failed!", @"")];
     [self.statusBarToastAndProgressView hideProgressView];
 }
 
-- (void)uploadFailed {
-    [self.statusBarToastAndProgressView showToastWithMessage:NSLocalizedString(@"Upload Failed!", @"")];
-    [self.statusBarToastAndProgressView hideProgressView];
+#pragma mark - Create User Video
+
+- (void)createUserVideo:(NSString*)videoKey {
+    // Get UserVideo with videoKey
+    UserVideo *userVideoToUpload = nil;
+    NSManagedObjectContext *managedObjectContext = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"UserVideo" inManagedObjectContext:managedObjectContext];
+    [fetchRequest setEntity:entity];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"uploadPath == %@", videoKey];
+    [fetchRequest setPredicate:predicate];
+    
+    NSError *error = nil;
+    NSArray *results = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    
+    if (error == nil && [results count] > 0) {
+        userVideoToUpload = [results objectAtIndex:0];
+    } else {
+        [self.statusBarToastAndProgressView showToastWithMessage:NSLocalizedString(@"Upload Failed!", @"")];
+        [self.statusBarToastAndProgressView hideProgressView];
+        return;
+    }
+    
+    // Set S3 Info
+    userVideoToUpload.uploadDestination = @"S3";
+    userVideoToUpload.uploadS3Bucket = @"upload-switchcam-ios";
+    userVideoToUpload.uploadPath = videoKey;
+    userVideoToUpload.state = [NSNumber numberWithInt:10];
+    
+    // Save
+    NSManagedObjectContext *context = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
+    [context processPendingChanges];
+    if (![context saveToPersistentStore:&error]) {
+        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+    }
+    
+    // Completion Blocks
+    void (^createUserVideoSuccessBlock)(RKObjectRequestOperation *operation, RKMappingResult *responseObject);
+    void (^createUserVideoFailureBlock)(RKObjectRequestOperation *operation, NSError *error);
+    
+    
+    createUserVideoSuccessBlock = ^(RKObjectRequestOperation *operation, RKMappingResult *responseObject) {
+        [self.statusBarToastAndProgressView showToastWithMessage:NSLocalizedString(@"Upload Complete!", @"")];
+        [self.statusBarToastAndProgressView hideProgressView];
+    };
+    
+    createUserVideoFailureBlock = ^(RKObjectRequestOperation *operation, NSError *error) {
+        [self.statusBarToastAndProgressView showToastWithMessage:NSLocalizedString(@"Upload Failed!", @"")];
+        [self.statusBarToastAndProgressView hideProgressView];
+    };
+    
+    [[RKObjectManager sharedManager] postObject:userVideoToUpload path:@"uservideo/" parameters:nil success:createUserVideoSuccessBlock failure:createUserVideoFailureBlock];
 }
 
 @end

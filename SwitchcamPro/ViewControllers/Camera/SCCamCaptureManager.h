@@ -49,13 +49,13 @@
 #import <AVFoundation/AVFoundation.h>
 
 @class SCCamRecorder;
-@class Recording;
+@class UserVideo;
 @protocol SCCamCaptureManagerDelegate;
 
 @interface SCCamCaptureManager : NSObject {
 }
 
-@property (nonatomic,retain) Recording *currentRecording;
+@property (nonatomic,retain) UserVideo *currentRecording;
 @property (nonatomic,retain) AVCaptureSession *session;
 @property (nonatomic,assign) AVCaptureVideoOrientation orientation;
 @property (nonatomic,retain) AVCaptureDeviceInput *videoInput;

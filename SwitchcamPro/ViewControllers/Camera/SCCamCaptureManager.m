@@ -52,7 +52,8 @@
 #import "SCCamCaptureManager.h"
 #import "SCCamRecorder.h"
 #import "SCCamUtilities.h"
-#import "Recording.h"
+#import "UserVideo.h"
+#import "SPImageHelper.h"
 
 #import "AppDelegate.h"
 
@@ -430,20 +431,6 @@ bail:
 	}
 }
 
-#pragma mark - Helper Methods
-
-void CGImageWriteToFile(CGImageRef image, NSString *path) {
-    CFURLRef url = (CFURLRef)[NSURL fileURLWithPath:path];
-    CGImageDestinationRef destination = CGImageDestinationCreateWithURL(url, kUTTypePNG, 1, NULL);
-    CGImageDestinationAddImage(destination, image, nil);
-    
-    if (!CGImageDestinationFinalize(destination)) {
-        NSLog(@"Failed to write image to %@", path);
-    }
-    
-    CFRelease(destination);
-}
-
 @end
 
 
@@ -601,7 +588,7 @@ void CGImageWriteToFile(CGImageRef image, NSString *path) {
         self.currentRecording.sizeMegaBytes = [NSNumber numberWithLongLong:((rep.size/1024)/1024)];
         
         // Save Thumbnail
-        CGImageWriteToFile([myasset aspectRatioThumbnail], [self.currentRecording thumbnailURL]);
+        CGImageWriteToFile([myasset aspectRatioThumbnail], [self.currentRecording thumbnailLocalURL]);
         
         // Fire that we are finished to perform next action
         if ([[self delegate] respondsToSelector:@selector(captureManagerRecordingFinished:)]) {

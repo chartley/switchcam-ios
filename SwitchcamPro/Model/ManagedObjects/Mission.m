@@ -2,28 +2,38 @@
 //  Mission.m
 //  SwitchcamPro
 //
-//  Created by William Ketterer on 12/15/12.
-//  Copyright (c) 2012 William Ketterer. All rights reserved.
+//  Created by William Ketterer on 1/25/13.
+//  Copyright (c) 2013 William Ketterer. All rights reserved.
 //
 
 #import "Mission.h"
-#import "Recording.h"
+#import "Artist.h"
+#import "Link.h"
 #import "User.h"
+#import "UserVideo.h"
+#import "Venue.h"
 
 
 @implementation Mission
 
 @dynamic endDatetime;
-@dynamic missionId;
-@dynamic following;
+@dynamic isCameraCrew;
+@dynamic isFollowing;
 @dynamic latitude;
 @dynamic longitude;
+@dynamic missionId;
+@dynamic picURL;
 @dynamic startDatetime;
 @dynamic submissionDeadline;
 @dynamic title;
+@dynamic missionDescription;
+@dynamic missionPageURL;
+@dynamic artist;
 @dynamic cameraCrew;
 @dynamic createdBy;
 @dynamic followers;
-@dynamic myRecordings;
+@dynamic userVideos;
+@dynamic venue;
+@dynamic links;
 
 @end

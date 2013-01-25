@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "EventTabViewController.h"
+#import "ActivityCell.h"
 
-@interface EventActivityViewController : EventTabViewController
+@interface EventActivityViewController : EventTabViewController <ActivityCellDelegate>
+
+@property (strong, nonatomic) IBOutlet UITableView *eventActivityTableView;
 
 @end

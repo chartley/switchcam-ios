@@ -14,6 +14,7 @@
 
 @interface SCS3Uploader () {
     BOOL        _doneUploadingToS3;
+    NSString *uploadVideoKey;
 }
 
 @end
@@ -115,6 +116,7 @@ const int PART_SIZE = (5 * 1024 * 1024); // 5MB is the smallest part size allowe
 
 - (void)uploadVideo:(NSData*)videoData withKey:(NSString*)videoKey;
 {
+    uploadVideoKey = videoKey;
     //[AmazonLogger verboseLogging];
     NSNumber *percentComplete = [NSNumber numberWithFloat:0];
     [[NSNotificationCenter defaultCenter] postNotificationName:kSCS3UploadStartedNotification object:percentComplete];
@@ -144,8 +146,6 @@ const int PART_SIZE = (5 * 1024 * 1024); // 5MB is the smallest part size allowe
         @catch (AmazonClientException *exception) {
             [[NSNotificationCenter defaultCenter] postNotificationName:kSCS3UploadFailedNotification object:nil];
             //  NSLog( @"single part Upload Failed"  );
-            // TODO FIX ME
-            //[Constants showAlertMessage:exception.message withTitle:@"Upload Error"];
             _doneUploadingToS3 = YES;
         }
     } else {
@@ -181,11 +181,11 @@ const int PART_SIZE = (5 * 1024 * 1024); // 5MB is the smallest part size allowe
             }
             
             [s3 completeMultipartUpload:compReq];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kSCS3UploadCompletedNotification object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kSCS3UploadCompletedNotification object:videoKey];
             
         }
         @catch ( AmazonServiceException *exception ) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kSCS3UploadFailedNotification object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kSCS3UploadFailedNotification object:videoKey];
         }
     }
 }
@@ -206,11 +206,12 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
 
 -(void)request:(AmazonServiceRequest *)request didCompleteWithResponse:(AmazonServiceResponse *)response {
     _doneUploadingToS3 = YES;
-    [[NSNotificationCenter defaultCenter] postNotificationName:kSCS3UploadCompletedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSCS3UploadCompletedNotification object:uploadVideoKey];
 }
 
 -(void)request:(AmazonServiceRequest *)request didFailWithError:(NSError *)error {
     _doneUploadingToS3 = YES;
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSCS3UploadFailedNotification object:uploadVideoKey];
 }
 
 -(void)request:(AmazonServiceRequest *)request didFailWithServiceException:(NSException *)exception {

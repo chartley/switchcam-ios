@@ -48,7 +48,13 @@
 #import <UIKit/UIKit.h>
 #import "MBProgressHUD.h"
 
-@class SCCamCaptureManager, SCCamPreviewView, AVCaptureVideoPreviewLayer;
+@protocol SCCamViewControllerDelegate <NSObject>
+
+- (void)selectExistingButtonPressed;
+
+@end
+
+@class SCCamCaptureManager, SCCamPreviewView, AVCaptureVideoPreviewLayer, Mission;
 
 @interface SCCamViewController : UIViewController <UIImagePickerControllerDelegate,UINavigationControllerDelegate, MBProgressHUDDelegate> {
 }
@@ -71,6 +77,11 @@
 @property (nonatomic,retain) IBOutlet UIButton *flashSelectOffButton;
 @property (nonatomic,retain) IBOutlet UIButton *flashSelectOnButton;
 @property (nonatomic,retain) IBOutlet UIButton *flashSelectedButton;
+
+@property (nonatomic,retain) IBOutlet UIButton *selectExistingButton;
+@property (nonatomic,retain) Mission *selectedMission;
+
+@property (assign, nonatomic) id<SCCamViewControllerDelegate> delegate;
 
 #pragma mark Toolbar Actions
 - (IBAction)toggleRecording:(id)sender;

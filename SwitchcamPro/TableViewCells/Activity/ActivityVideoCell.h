@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ActivityCell.h"
 
-@interface ActivityVideoCell : UITableViewCell
+#define kActivityVideoCellIdentifier @"ActivityVideoCellIdentifier"
+#define kActivityVideoCellRowHeight 200
+
+@interface ActivityVideoCell : ActivityCell
+
+@property (strong, nonatomic) IBOutlet UIImageView *videoThumbnailImageView;
+@property (strong, nonatomic) IBOutlet UIButton *previewButton;
 
 @end

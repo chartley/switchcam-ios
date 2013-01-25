@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@class Recording;
+@class UserVideo;
 
-@interface UploadVideoViewController : UIViewController
+@interface UploadVideoViewController : UIViewController <UITextFieldDelegate>
 
-@property (strong, nonatomic) Recording *recordingToUpload;
+@property (strong, nonatomic) UserVideo *userVideoToUpload;
 @property (strong, nonatomic) IBOutlet UILabel *timeLabel;
 @property (strong, nonatomic) IBOutlet UILabel *lengthLabel;
 @property (strong, nonatomic) IBOutlet UILabel *sizeLabel;

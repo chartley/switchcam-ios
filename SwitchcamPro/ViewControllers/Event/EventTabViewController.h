@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class Mission;
+
 @interface EventTabViewController : UIViewController
 
+@property (strong, nonatomic) IBOutlet Mission *selectedMission;
 @property (strong, nonatomic) IBOutlet UIScrollView *tabScrollView;
 
 @end

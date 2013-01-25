@@ -39,7 +39,7 @@
     [self.view sendSubviewToBack:backgroundImageView];
     
     // Set Font
-    [self.settingsTitleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Semibold" size:17]];
+    [self.settingsTitleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:18]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -288,6 +288,7 @@
                 }
                     
                 default:
+                    return 0;
                     break;
             }
             break;

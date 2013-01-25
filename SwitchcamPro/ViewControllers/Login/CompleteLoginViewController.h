@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CompleteLoginViewController : UIViewController
+@interface CompleteLoginViewController : UIViewController <UITextFieldDelegate>
 
 @property (strong, nonatomic) NSString *userFullNameString;
 @property (strong, nonatomic) NSString *userEmailString;
 @property (strong, nonatomic) NSURL *userProfileURL;
+@property (strong, nonatomic) UITextField *userEmailTextField;
 
 @end

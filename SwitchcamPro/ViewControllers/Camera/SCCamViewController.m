@@ -48,11 +48,14 @@
 #import <AVFoundation/AVFoundation.h>
 #import <CoreData/CoreData.h>
 #import <RestKit/RestKit.h>
+#import <AssetsLibrary/AssetsLibrary.h>
 #import "SCCamViewController.h"
 #import "SCCamCaptureManager.h"
 #import "SCCamRecorder.h"
 #import "UploadVideoViewController.h"
-#import "Recording.h"
+#import "UserVideo.h"
+#import "Mission.h"
+#import "SPLocationManager.h"
 
 static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
 
@@ -90,6 +93,8 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
 
 @synthesize timerCountLabelLandscape;
 @synthesize timerBackgroundLandscape;
+
+@synthesize delegate;
 
 - (NSString *)stringForFocusMode:(AVCaptureFocusMode)focusMode
 {
@@ -191,6 +196,9 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
 		}		
 	}
     
+    // Grab library thumbnail
+    [self grabLibraryThumbnail];
+    
     // Recorder Glow
     self.recorderGlow.animationImages = @[ [UIImage imageNamed:@"record-button-on"],
     [UIImage imageNamed:@"camera-recordbutton"] ];
@@ -278,7 +286,35 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
                      }];
 }
 
-#pragma mark IBActions Actions
+- (void)grabLibraryThumbnail {
+    ALAssetsLibrary* library = [[ALAssetsLibrary alloc] init];
+    
+    // Completion Blocks
+    void (^enumerationBlock)(ALAssetsGroup *group, BOOL *stop);
+    void (^failureBlock)(NSError *error) ;
+    
+    enumerationBlock = ^(ALAssetsGroup *group, BOOL *stop) {
+        
+        if (group.numberOfAssets > 0) {
+            // Grab first image
+            UIImage *thumbnail = [UIImage imageWithCGImage:group.posterImage];
+            [self.selectExistingButton setImage:thumbnail forState:UIControlStateNormal];
+        }
+        
+        // Stop enumerating
+        *stop = YES;
+    };
+    
+    failureBlock = ^(NSError *error) {
+        // TODO some placeholder
+        // Do nothing
+    };
+    
+    [library enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:enumerationBlock failureBlock:failureBlock];
+}
+
+#pragma mark - IBActions Actions
+
 - (IBAction)toggleCamera:(id)sender {
     // Toggle between cameras when there is more than one
     [[self captureManager] toggleCamera];
@@ -293,13 +329,17 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
     
     if (![[[self captureManager] recorder] isRecording]) {
         // Start collecting data of our new video
-        NSManagedObjectContext *context = [RKManagedObjectStore defaultStore].persistentStoreManagedObjectContext;
-        Recording *currentRecording = [NSEntityDescription
-                                          insertNewObjectForEntityForName:@"Recording"
+        NSManagedObjectContext *context = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
+        UserVideo *currentRecording = [NSEntityDescription
+                                          insertNewObjectForEntityForName:@"UserVideo"
                                           inManagedObjectContext:context];
         
+        CLLocationCoordinate2D coordinate = [[[SPLocationManager sharedInstance] currentLocation] coordinate];
+        
+        [currentRecording setLatitude:[NSNumber numberWithDouble:coordinate.latitude]];
+        [currentRecording setLongitude:[NSNumber numberWithDouble:coordinate.longitude]];
+        [currentRecording setMission:self.selectedMission];
         [currentRecording setRecordStart:[NSDate date]];
-        [currentRecording setIsUploaded:[NSNumber numberWithBool:NO]];
         
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd-HH-mm-ss"];
@@ -319,7 +359,7 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
             NSString *thumbnailURLString = [outputURLString stringByAppendingPathExtension:photoExtension];
             
             [currentRecording setCompressedVideoURL:videoURLString];
-            [currentRecording setThumbnailURL:thumbnailURLString];
+            [currentRecording setThumbnailLocalURL:thumbnailURLString];
             [currentRecording setFilename:fileName];
             count++;
             
@@ -417,6 +457,12 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
     [[self captureManager] setTorchMode:AVCaptureTorchModeOff];
     [self.flashSelectedButton setTitle:NSLocalizedString(@"Off", @"") forState:UIControlStateNormal];
     [self closeTorchDrawer];
+}
+
+- (IBAction)selectExistingButtonAction:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(selectExistingButtonPressed)]) {
+		[self.delegate performSelector:@selector(selectExistingButtonPressed) withObject:nil];
+	}
 }
 
 #pragma mark - Timer Methods
@@ -583,10 +629,10 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
         [HUD hide:YES];
         
         // Save
-        NSManagedObjectContext *context = [RKManagedObjectStore defaultStore].persistentStoreManagedObjectContext;
+        NSManagedObjectContext *context = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
         [context processPendingChanges];
         NSError *error = nil;
-        if (![context save:&error]) {
+        if (![context saveToPersistentStore:&error]) {
             NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
         }
     });
