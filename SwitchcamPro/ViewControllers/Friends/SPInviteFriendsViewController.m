@@ -128,6 +128,12 @@
     self.searchBar = nil;
 }
 
+- (void)dealloc {
+    self.dataSource.controllerDelegate = nil;
+    self.selectionManager.delegate = nil;
+    self.loader.delegate = nil;
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
