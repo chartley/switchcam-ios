@@ -192,7 +192,7 @@
             LabelProfileCell *labelProfileCell = (LabelProfileCell *)cell;
             
             [labelProfileCell.profileNameLabel setText:self.userFullNameString];
-            [labelProfileCell.profileImageView setImageWithURL:self.userProfileURL placeholderImage:[UIImage imageNamed:@""]];
+            [labelProfileCell.profileImageView setImageWithURL:self.userProfileURL placeholderImage:[UIImage imageNamed:@"img-shoot-thumb-placeholder"]];
             break;
         }
             

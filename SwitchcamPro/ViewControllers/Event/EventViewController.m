@@ -19,6 +19,7 @@
 #import "EventVideosViewController.h"
 #import "UploadVideoViewController.h"
 #import "SPImageHelper.h"
+#import "SPInviteFriendsViewController.h"
 
 enum { kTagTabBase = 100 };
 
@@ -272,12 +273,20 @@ enum { kTagTabBase = 100 };
     [self.eventScrollView setContentSize:CGSizeMake(320, self.eventScrollView.frame.size.height + self.eventImageView.frame.size.height)];
     
     // Share Drawer Buttons
+    
+    // Set Button Image
+    UIImage *inviteFriendsButtonImage = [[UIImage imageNamed:@"btn-invitefbfirends"]
+                            resizableImageWithCapInsets:UIEdgeInsetsMake(20, 15, 20, 15)];
+    
+    // Set the background for any states you plan to use
+    [self.inviteFacebookFriendsButton setBackgroundImage:inviteFriendsButtonImage forState:UIControlStateNormal];
+    
     // Set Button Image
     UIImage *buttonImage = [[UIImage imageNamed:@"btn-ltgrey"]
                             resizableImageWithCapInsets:UIEdgeInsetsMake(20, 15, 20, 15)];
     
     // Set Button Image
-    UIImage *highlightButtonImage = [[UIImage imageNamed:@"btn-orange-lg-pressed"]
+    UIImage *highlightButtonImage = [[UIImage imageNamed:@"btn-ltgrey-lg-pressed"]
                                      resizableImageWithCapInsets:UIEdgeInsetsMake(20, 15, 20, 15)];
     
     // Set the background for any states you plan to use
@@ -482,7 +491,10 @@ enum { kTagTabBase = 100 };
 }
 
 - (IBAction)inviteFacebookFriendsButtonAction:(id)sender {
-    
+    //InviteFriendsViewController *viewController = [[InviteFriendsViewController alloc] initWithNibName:@"InviteFriendsViewController" bundle:nil];
+    SPInviteFriendsViewController *viewController = [[SPInviteFriendsViewController alloc] init];
+    [viewController loadData];
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 #pragma mark - UIImagePicker Delegate Methods

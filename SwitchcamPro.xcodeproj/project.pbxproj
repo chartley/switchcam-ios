@@ -45,6 +45,7 @@
 		C94F7C5C169B726A00D65EDC /* ActivityActionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F7C5B169B726900D65EDC /* ActivityActionCell.m */; };
 		C94F7C5E169B72C100D65EDC /* ActivityActionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C94F7C5D169B72C100D65EDC /* ActivityActionCell.xib */; };
 		C94F7C61169BF5B500D65EDC /* SPModelHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F7C60169BF5B500D65EDC /* SPModelHelper.m */; };
+		C95E4A6A16B4908300DA8652 /* SPInviteFriendsTableSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = C95E4A6916B4908300DA8652 /* SPInviteFriendsTableSelection.m */; };
 		C9606C5D16AE4CCB00F5C76F /* TOS.html in Resources */ = {isa = PBXBuildFile; fileRef = C9606C5C16AE4CCB00F5C76F /* TOS.html */; };
 		C9606C6016AFB8FE00F5C76F /* Venue.m in Sources */ = {isa = PBXBuildFile; fileRef = C9606C5F16AFB8FE00F5C76F /* Venue.m */; };
 		C9606C6416AFBFCB00F5C76F /* EventInfoOrganizerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9606C6316AFBFCB00F5C76F /* EventInfoOrganizerCell.m */; };
@@ -59,6 +60,17 @@
 		C9606C8016B2843700F5C76F /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9606C7F16B2843600F5C76F /* MessageUI.framework */; };
 		C9606C8616B36E5600F5C76F /* Mission.m in Sources */ = {isa = PBXBuildFile; fileRef = C9606C8516B36E5600F5C76F /* Mission.m */; };
 		C9606C8916B36E6C00F5C76F /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = C9606C8816B36E6A00F5C76F /* Activity.m */; };
+		C9606C9216B45E1100F5C76F /* arrow-share-down.png in Resources */ = {isa = PBXBuildFile; fileRef = C9606C8A16B45E1100F5C76F /* arrow-share-down.png */; };
+		C9606C9316B45E1100F5C76F /* arrow-share-down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9606C8B16B45E1100F5C76F /* arrow-share-down@2x.png */; };
+		C9606C9416B45E1100F5C76F /* bg-sharefooter-noshadow.png in Resources */ = {isa = PBXBuildFile; fileRef = C9606C8C16B45E1100F5C76F /* bg-sharefooter-noshadow.png */; };
+		C9606C9516B45E1100F5C76F /* bg-sharefooter-noshadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9606C8D16B45E1100F5C76F /* bg-sharefooter-noshadow@2x.png */; };
+		C9606C9616B45E1100F5C76F /* btn-invitefbfirends.png in Resources */ = {isa = PBXBuildFile; fileRef = C9606C8E16B45E1100F5C76F /* btn-invitefbfirends.png */; };
+		C9606C9716B45E1100F5C76F /* btn-invitefbfirends@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9606C8F16B45E1100F5C76F /* btn-invitefbfirends@2x.png */; };
+		C9606C9816B45E1100F5C76F /* icn-rtarrow.png in Resources */ = {isa = PBXBuildFile; fileRef = C9606C9016B45E1100F5C76F /* icn-rtarrow.png */; };
+		C9606C9916B45E1100F5C76F /* icn-rtarrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9606C9116B45E1100F5C76F /* icn-rtarrow@2x.png */; };
+		C9606C9D16B4622E00F5C76F /* InviteFriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9606C9C16B4622E00F5C76F /* InviteFriendCell.m */; };
+		C9606CA216B4718200F5C76F /* SPInviteFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9606CA116B4718200F5C76F /* SPInviteFriendsViewController.m */; };
+		C962EB2D16B4786700C643D0 /* SPInviteFriendsTableDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = C962EB2C16B4786700C643D0 /* SPInviteFriendsTableDataSource.m */; };
 		C97B0CB2166DBDC3005BB65F /* libUAirship-1.3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C97BFFC2166DBDC0005BB65F /* libUAirship-1.3.3.a */; };
 		C97B132F166DBFA8005BB65F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97B132E166DBFA8005BB65F /* SystemConfiguration.framework */; };
 		C97B1331166DBFB8005BB65F /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97B1330166DBFB8005BB65F /* CFNetwork.framework */; };
@@ -133,9 +145,6 @@
 		C97B19101673BAC6005BB65F /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97B190F1673BAC5005BB65F /* StoreKit.framework */; };
 		C97B19171673E5BC005BB65F /* PendingUploadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C97B19161673E5BC005BB65F /* PendingUploadCell.m */; };
 		C97B19191673E5D0005BB65F /* PendingUploadCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C97B19181673E5D0005BB65F /* PendingUploadCell.xib */; };
-		C97B191E1673E66F005BB65F /* InviteFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C97B191C1673E66E005BB65F /* InviteFriendsViewController.m */; };
-		C97B191F1673E66F005BB65F /* InviteFriendsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C97B191D1673E66E005BB65F /* InviteFriendsViewController.xib */; };
-		C97B19221673ECE1005BB65F /* UILocalizedIndexedCollation+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = C97B19211673ECE1005BB65F /* UILocalizedIndexedCollation+Util.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C97B192E1673F4B3005BB65F /* SCCamCaptureManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C97B19261673F4B3005BB65F /* SCCamCaptureManager.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C97B192F1673F4B3005BB65F /* SCCamRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = C97B19281673F4B3005BB65F /* SCCamRecorder.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C97B19301673F4B3005BB65F /* SCCamUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = C97B192A1673F4B3005BB65F /* SCCamUtilities.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -454,6 +463,8 @@
 		C94F7C5D169B72C100D65EDC /* ActivityActionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ActivityActionCell.xib; path = TableViewCells/Activity/ActivityActionCell.xib; sourceTree = "<group>"; };
 		C94F7C5F169BF5B500D65EDC /* SPModelHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPModelHelper.h; path = Helpers/SPModelHelper.h; sourceTree = "<group>"; };
 		C94F7C60169BF5B500D65EDC /* SPModelHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPModelHelper.m; path = Helpers/SPModelHelper.m; sourceTree = "<group>"; };
+		C95E4A6816B4908200DA8652 /* SPInviteFriendsTableSelection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPInviteFriendsTableSelection.h; path = ViewControllers/Friends/SPInviteFriendsTableSelection.h; sourceTree = "<group>"; };
+		C95E4A6916B4908300DA8652 /* SPInviteFriendsTableSelection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPInviteFriendsTableSelection.m; path = ViewControllers/Friends/SPInviteFriendsTableSelection.m; sourceTree = "<group>"; };
 		C9606C5C16AE4CCB00F5C76F /* TOS.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = TOS.html; path = Terms/TOS.html; sourceTree = "<group>"; };
 		C9606C5E16AFB8FE00F5C76F /* Venue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Venue.h; path = Model/ManagedObjects/Venue.h; sourceTree = "<group>"; };
 		C9606C5F16AFB8FE00F5C76F /* Venue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Venue.m; path = Model/ManagedObjects/Venue.m; sourceTree = "<group>"; };
@@ -476,6 +487,20 @@
 		C9606C8516B36E5600F5C76F /* Mission.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Mission.m; path = Model/ManagedObjects/Mission.m; sourceTree = "<group>"; };
 		C9606C8716B36E6A00F5C76F /* Activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Activity.h; path = Model/ManagedObjects/Activity.h; sourceTree = "<group>"; };
 		C9606C8816B36E6A00F5C76F /* Activity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Activity.m; path = Model/ManagedObjects/Activity.m; sourceTree = "<group>"; };
+		C9606C8A16B45E1100F5C76F /* arrow-share-down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-share-down.png"; sourceTree = "<group>"; };
+		C9606C8B16B45E1100F5C76F /* arrow-share-down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-share-down@2x.png"; sourceTree = "<group>"; };
+		C9606C8C16B45E1100F5C76F /* bg-sharefooter-noshadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-sharefooter-noshadow.png"; sourceTree = "<group>"; };
+		C9606C8D16B45E1100F5C76F /* bg-sharefooter-noshadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-sharefooter-noshadow@2x.png"; sourceTree = "<group>"; };
+		C9606C8E16B45E1100F5C76F /* btn-invitefbfirends.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-invitefbfirends.png"; sourceTree = "<group>"; };
+		C9606C8F16B45E1100F5C76F /* btn-invitefbfirends@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-invitefbfirends@2x.png"; sourceTree = "<group>"; };
+		C9606C9016B45E1100F5C76F /* icn-rtarrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icn-rtarrow.png"; sourceTree = "<group>"; };
+		C9606C9116B45E1100F5C76F /* icn-rtarrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icn-rtarrow@2x.png"; sourceTree = "<group>"; };
+		C9606C9B16B4622E00F5C76F /* InviteFriendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InviteFriendCell.h; path = TableViewCells/Invite/InviteFriendCell.h; sourceTree = "<group>"; };
+		C9606C9C16B4622E00F5C76F /* InviteFriendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InviteFriendCell.m; path = TableViewCells/Invite/InviteFriendCell.m; sourceTree = "<group>"; };
+		C9606CA016B4718200F5C76F /* SPInviteFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPInviteFriendsViewController.h; path = ViewControllers/Friends/SPInviteFriendsViewController.h; sourceTree = "<group>"; };
+		C9606CA116B4718200F5C76F /* SPInviteFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPInviteFriendsViewController.m; path = ViewControllers/Friends/SPInviteFriendsViewController.m; sourceTree = "<group>"; };
+		C962EB2B16B4786700C643D0 /* SPInviteFriendsTableDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPInviteFriendsTableDataSource.h; path = ViewControllers/Friends/SPInviteFriendsTableDataSource.h; sourceTree = "<group>"; };
+		C962EB2C16B4786700C643D0 /* SPInviteFriendsTableDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPInviteFriendsTableDataSource.m; path = ViewControllers/Friends/SPInviteFriendsTableDataSource.m; sourceTree = "<group>"; };
 		C97B132E166DBFA8005BB65F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		C97B1330166DBFB8005BB65F /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		C97B1332166DBFC5005BB65F /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -605,11 +630,6 @@
 		C97B19151673E5BB005BB65F /* PendingUploadCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PendingUploadCell.h; path = TableViewCells/PendingUploadCell.h; sourceTree = "<group>"; };
 		C97B19161673E5BC005BB65F /* PendingUploadCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PendingUploadCell.m; path = TableViewCells/PendingUploadCell.m; sourceTree = "<group>"; };
 		C97B19181673E5D0005BB65F /* PendingUploadCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PendingUploadCell.xib; path = TableViewCells/PendingUploadCell.xib; sourceTree = "<group>"; };
-		C97B191B1673E66E005BB65F /* InviteFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InviteFriendsViewController.h; path = ViewControllers/Friends/InviteFriendsViewController.h; sourceTree = "<group>"; };
-		C97B191C1673E66E005BB65F /* InviteFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InviteFriendsViewController.m; path = ViewControllers/Friends/InviteFriendsViewController.m; sourceTree = "<group>"; };
-		C97B191D1673E66E005BB65F /* InviteFriendsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = InviteFriendsViewController.xib; path = ViewControllers/Friends/InviteFriendsViewController.xib; sourceTree = "<group>"; };
-		C97B19201673ECE1005BB65F /* UILocalizedIndexedCollation+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UILocalizedIndexedCollation+Util.h"; path = "Helpers/UILocalizedIndexedCollation+Util.h"; sourceTree = "<group>"; };
-		C97B19211673ECE1005BB65F /* UILocalizedIndexedCollation+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UILocalizedIndexedCollation+Util.m"; path = "Helpers/UILocalizedIndexedCollation+Util.m"; sourceTree = "<group>"; };
 		C97B19251673F4B3005BB65F /* SCCamCaptureManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCamCaptureManager.h; sourceTree = "<group>"; };
 		C97B19261673F4B3005BB65F /* SCCamCaptureManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCCamCaptureManager.m; sourceTree = "<group>"; };
 		C97B19271673F4B3005BB65F /* SCCamRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCCamRecorder.h; sourceTree = "<group>"; };
@@ -985,6 +1005,22 @@
 			name = "Event Info";
 			sourceTree = "<group>";
 		};
+		C9606C9A16B4621000F5C76F /* Invite */ = {
+			isa = PBXGroup;
+			children = (
+				C9606C9B16B4622E00F5C76F /* InviteFriendCell.h */,
+				C9606C9C16B4622E00F5C76F /* InviteFriendCell.m */,
+			);
+			name = Invite;
+			sourceTree = "<group>";
+		};
+		C962EB2F16B4791100C643D0 /* FBHeaders */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = FBHeaders;
+			sourceTree = "<group>";
+		};
 		C97B1342166DC118005BB65F /* AirshipLib */ = {
 			isa = PBXGroup;
 			children = (
@@ -1192,9 +1228,12 @@
 		C97B191A1673E638005BB65F /* Friends */ = {
 			isa = PBXGroup;
 			children = (
-				C97B191B1673E66E005BB65F /* InviteFriendsViewController.h */,
-				C97B191C1673E66E005BB65F /* InviteFriendsViewController.m */,
-				C97B191D1673E66E005BB65F /* InviteFriendsViewController.xib */,
+				C9606CA016B4718200F5C76F /* SPInviteFriendsViewController.h */,
+				C9606CA116B4718200F5C76F /* SPInviteFriendsViewController.m */,
+				C962EB2B16B4786700C643D0 /* SPInviteFriendsTableDataSource.h */,
+				C962EB2C16B4786700C643D0 /* SPInviteFriendsTableDataSource.m */,
+				C95E4A6816B4908200DA8652 /* SPInviteFriendsTableSelection.h */,
+				C95E4A6916B4908300DA8652 /* SPInviteFriendsTableSelection.m */,
 			);
 			name = Friends;
 			sourceTree = "<group>";
@@ -1308,6 +1347,7 @@
 		C97BFF13166D9126005BB65F /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				C962EB2F16B4791100C643D0 /* FBHeaders */,
 				C97B149B16710898005BB65F /* SPTabViewController */,
 				C97B141A166F1A8F005BB65F /* SPPagingScrollView */,
 				C97BFF62166DBDC0005BB65F /* Airship */,
@@ -1364,6 +1404,7 @@
 		C97BFF2D166D94FD005BB65F /* TableViewCells */ = {
 			isa = PBXGroup;
 			children = (
+				C9606C9A16B4621000F5C76F /* Invite */,
 				C9606C6116AFBF9800F5C76F /* Event Info */,
 				2456C42D168E650100F49C70 /* Find Events */,
 				C9856D2C167EB02300C5B708 /* Pending Uploads */,
@@ -1454,8 +1495,6 @@
 				C97B139B166DDD03005BB65F /* Reachability.h */,
 				C97B139C166DDD03005BB65F /* Reachability.m */,
 				C97BFF5F166D9CFC005BB65F /* SPConstants.h */,
-				C97B19201673ECE1005BB65F /* UILocalizedIndexedCollation+Util.h */,
-				C97B19211673ECE1005BB65F /* UILocalizedIndexedCollation+Util.m */,
 				C9E9B6CE1675DF4200487A72 /* SPSerializable.h */,
 				C9E9B6CF1675DF4200487A72 /* SPSerializable.m */,
 				C94F7C21169A0A3200D65EDC /* SPLocationManager.h */,
@@ -1522,6 +1561,14 @@
 		C9DDF1AB167D24DD000399EA /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				C9606C8A16B45E1100F5C76F /* arrow-share-down.png */,
+				C9606C8B16B45E1100F5C76F /* arrow-share-down@2x.png */,
+				C9606C8C16B45E1100F5C76F /* bg-sharefooter-noshadow.png */,
+				C9606C8D16B45E1100F5C76F /* bg-sharefooter-noshadow@2x.png */,
+				C9606C8E16B45E1100F5C76F /* btn-invitefbfirends.png */,
+				C9606C8F16B45E1100F5C76F /* btn-invitefbfirends@2x.png */,
+				C9606C9016B45E1100F5C76F /* icn-rtarrow.png */,
+				C9606C9116B45E1100F5C76F /* icn-rtarrow@2x.png */,
 				2456C464168F6F0D00F49C70 /* img-shoot-thumb-placeholder.png */,
 				2456C465168F6F0D00F49C70 /* img-shoot-thumb-placeholder@2x.png */,
 				2456C466168F6F0D00F49C70 /* results-shadow.png */,
@@ -1858,7 +1905,6 @@
 				C97B149516710676005BB65F /* EventPeopleViewController.xib in Resources */,
 				C97B149A1671068E005BB65F /* EventVideosViewController.xib in Resources */,
 				C97B19191673E5D0005BB65F /* PendingUploadCell.xib in Resources */,
-				C97B191F1673E66F005BB65F /* InviteFriendsViewController.xib in Resources */,
 				C97B19321673F4B3005BB65F /* SCCamViewController.xib in Resources */,
 				C9E9B6B016741B1800487A72 /* UploadVideoViewController.xib in Resources */,
 				C9E9B6BB16741D6C00487A72 /* ButtonToProgressCell.xib in Resources */,
@@ -2116,6 +2162,14 @@
 				C9606C6E16AFC01500F5C76F /* EventInfoLinksCell.xib in Resources */,
 				C9606C7016AFC02300F5C76F /* EventInfoOrganizerCell.xib in Resources */,
 				C9606C7816AFDCE900F5C76F /* EventInfoGoingCell.xib in Resources */,
+				C9606C9216B45E1100F5C76F /* arrow-share-down.png in Resources */,
+				C9606C9316B45E1100F5C76F /* arrow-share-down@2x.png in Resources */,
+				C9606C9416B45E1100F5C76F /* bg-sharefooter-noshadow.png in Resources */,
+				C9606C9516B45E1100F5C76F /* bg-sharefooter-noshadow@2x.png in Resources */,
+				C9606C9616B45E1100F5C76F /* btn-invitefbfirends.png in Resources */,
+				C9606C9716B45E1100F5C76F /* btn-invitefbfirends@2x.png in Resources */,
+				C9606C9816B45E1100F5C76F /* icn-rtarrow.png in Resources */,
+				C9606C9916B45E1100F5C76F /* icn-rtarrow@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2177,8 +2231,6 @@
 				C97B14AE16710E94005BB65F /* ActivityVideoCell.m in Sources */,
 				C97B18FA1671A6BB005BB65F /* Model.xcdatamodeld in Sources */,
 				C97B19171673E5BC005BB65F /* PendingUploadCell.m in Sources */,
-				C97B191E1673E66F005BB65F /* InviteFriendsViewController.m in Sources */,
-				C97B19221673ECE1005BB65F /* UILocalizedIndexedCollation+Util.m in Sources */,
 				C97B192E1673F4B3005BB65F /* SCCamCaptureManager.m in Sources */,
 				C97B192F1673F4B3005BB65F /* SCCamRecorder.m in Sources */,
 				C97B19301673F4B3005BB65F /* SCCamUtilities.m in Sources */,
@@ -2217,6 +2269,10 @@
 				C9606C7B16B2788900F5C76F /* Link.m in Sources */,
 				C9606C8616B36E5600F5C76F /* Mission.m in Sources */,
 				C9606C8916B36E6C00F5C76F /* Activity.m in Sources */,
+				C9606C9D16B4622E00F5C76F /* InviteFriendCell.m in Sources */,
+				C9606CA216B4718200F5C76F /* SPInviteFriendsViewController.m in Sources */,
+				C962EB2D16B4786700C643D0 /* SPInviteFriendsTableDataSource.m in Sources */,
+				C95E4A6A16B4908300DA8652 /* SPInviteFriendsTableSelection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
