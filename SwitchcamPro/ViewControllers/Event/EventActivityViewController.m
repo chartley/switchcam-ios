@@ -54,6 +54,8 @@
     // Load up any cached events
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Activity"];
     NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"timestamp" ascending:NO];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"mission == %@", self.selectedMission];
+    fetchRequest.predicate = predicate;
     fetchRequest.sortDescriptors = @[descriptor];
     fetchRequest.fetchLimit = 30;
     NSError *error = nil;
@@ -107,6 +109,8 @@
                 int rowHeight = labelSize.height + 28 + 15; // Label size, fixed bottom, fixed top
                 comment.rowHeight = [NSNumber numberWithInt:rowHeight];
             }
+            
+            activity.mission = self.selectedMission;
         }
         
         // Save row height data

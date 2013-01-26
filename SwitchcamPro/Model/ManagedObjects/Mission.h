@@ -9,7 +9,7 @@
 #import <RestKit/RestKit.h>
 #import <RestKit/CoreData.h>
 
-@class Artist, Link, User, UserVideo, Venue;
+@class Activity, Artist, Link, User, UserVideo, Venue;
 
 @interface Mission : NSManagedObject
 
@@ -32,6 +32,7 @@
 @property (nonatomic, retain) NSSet *userVideos;
 @property (nonatomic, retain) Venue *venue;
 @property (nonatomic, retain) NSSet *links;
+@property (nonatomic, retain) NSSet *activities;
 @end
 
 @interface Mission (CoreDataGeneratedAccessors)
@@ -55,5 +56,10 @@
 - (void)removeLinksObject:(Link *)value;
 - (void)addLinks:(NSSet *)values;
 - (void)removeLinks:(NSSet *)values;
+
+- (void)addActivitiesObject:(Activity *)value;
+- (void)removeActivitiesObject:(Activity *)value;
+- (void)addActivities:(NSSet *)values;
+- (void)removeActivities:(NSSet *)values;
 
 @end

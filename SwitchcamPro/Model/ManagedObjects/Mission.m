@@ -7,6 +7,7 @@
 //
 
 #import "Mission.h"
+#import "Activity.h"
 #import "Artist.h"
 #import "Link.h"
 #import "User.h"
@@ -35,5 +36,6 @@
 @dynamic userVideos;
 @dynamic venue;
 @dynamic links;
+@dynamic activities;
 
 @end
