@@ -13,9 +13,11 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import <TestFlightSDK/TestFlight.h>
 #import "UserVideo.h"
+#import "Mission.h"
 #import "UAirship.h"
 #import "UAPush.h"
 #import "SPLocationManager.h"
+#import "EventViewController.h"
 #import "MyEventsViewController.h"
 #import "ECSlidingViewController.h"
 #import "LoginViewController.h"
@@ -58,8 +60,17 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    MyEventsViewController *myEventsViewController = [[MyEventsViewController alloc] initWithNibName:@"MyEventsViewController" bundle:nil];
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:myEventsViewController];
+    Mission *mission = [self getDefaultMission];
+    
+    UIViewController *viewController = nil;
+    
+    if (mission == nil) {
+        viewController = [[MyEventsViewController alloc] initWithNibName:@"MyEventsViewController" bundle:nil];
+    } else {
+        viewController = [[EventViewController alloc] initWithMission:mission];
+    }
+
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
     self.slidingViewController = [[ECSlidingViewController alloc] init];
     self.slidingViewController.topViewController = navController;
     self.window.rootViewController = self.slidingViewController;
@@ -194,6 +205,46 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     // Updates the device token and registers the token with UA
     [[UAPush shared] registerDeviceToken:deviceToken];
+}
+
+#pragma mark - Helper Methods
+
+- (Mission*)getNearestMissionToNow:(NSArray *)missions {
+    long minDiff = -1;
+    long currentTime = [[NSDate date] timeIntervalSince1970];
+    Mission *returnMission = nil;
+    for (Mission *mission in missions) {
+        long diff = abs(currentTime - [mission.startDatetime timeIntervalSince1970]);
+        if ((minDiff == -1) || (diff < minDiff)) {
+            minDiff = diff;
+            returnMission = mission;
+        }
+    }
+    
+    return returnMission;
+}
+
+- (Mission*)getDefaultMission {
+    Mission *mission = nil;
+    
+    // Get the mission closest to now
+    NSManagedObjectContext *managedObjectContext = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Mission" inManagedObjectContext:managedObjectContext];
+    [fetchRequest setEntity:entity];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isFollowing == YES || isCameraCrew == YES"];
+    [fetchRequest setPredicate:predicate];
+    
+    NSError *error = nil;
+    NSArray *results = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    
+    if ([results count] > 0) {
+        mission = [self getNearestMissionToNow:results];
+    }
+    
+    return mission;
 }
 
 #pragma mark - View Control Helper Methods

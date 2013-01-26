@@ -171,6 +171,12 @@
             mission.isFollowing = [NSNumber numberWithBool:YES];
         }
         
+        // Save our events
+        NSError *error = nil;
+        if (![[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext saveToPersistentStore:&error]) {
+            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+        }
+        
         RKLogInfo(@"Load complete: Table should refresh...");
         [self.myEventsTableView reloadData];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
