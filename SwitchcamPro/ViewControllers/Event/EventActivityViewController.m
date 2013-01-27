@@ -654,7 +654,7 @@
         
         // Preview
         MPMoviePlayerViewController *viewController = [[MPMoviePlayerViewController alloc] initWithContentURL: previewRecordingURL];
-        [appDelegate.slidingViewController presentModalViewController:viewController animated:YES];
+        [appDelegate.slidingViewController presentViewController:viewController animated:YES completion:nil];
     } else {
         // Photo
     }

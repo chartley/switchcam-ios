@@ -252,7 +252,7 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
 - (void)successfulLoginViewControllerChange {
     if (self.loginViewController != nil) {
         UIViewController *topViewController = [self.slidingViewController topViewController];
-        [topViewController dismissModalViewControllerAnimated:YES];
+        [topViewController dismissViewControllerAnimated:YES completion:nil];
         self.loginViewController = nil;
         
         // Start location if we haven't yet
@@ -270,11 +270,11 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
         LoginViewController *loginRootViewController = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
         self.loginViewController = [[UINavigationController alloc] initWithRootViewController:loginRootViewController];
         UIViewController *topViewController = [self.slidingViewController topViewController];
-        [topViewController presentModalViewController:self.loginViewController animated:NO];
+        [topViewController presentViewController:self.loginViewController animated:NO completion:nil];
     } else {
         [self.loginViewController popToRootViewControllerAnimated:YES];
         UIViewController *topViewController = [self.slidingViewController topViewController];
-        [topViewController presentModalViewController:self.loginViewController animated:NO];
+        [topViewController presentViewController:self.loginViewController animated:NO completion:nil];
     }
 }
 
@@ -286,14 +286,14 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
         TermsViewController *termsViewController = [[TermsViewController alloc] initWithNibName:@"TermsViewController" bundle:nil];
         [self.loginViewController pushViewController:termsViewController animated:NO];
         UIViewController *topViewController = [self.slidingViewController topViewController];
-        [topViewController presentModalViewController:self.loginViewController animated:NO];
+        [topViewController presentViewController:self.loginViewController animated:NO completion:nil];
     } else {
         [self.loginViewController popToRootViewControllerAnimated:YES];
 
         TermsViewController *termsViewController = [[TermsViewController alloc] initWithNibName:@"TermsViewController" bundle:nil];
         [self.loginViewController pushViewController:termsViewController animated:NO];
         UIViewController *topViewController = [self.slidingViewController topViewController];
-        [topViewController presentModalViewController:self.loginViewController animated:NO];
+        [topViewController presentViewController:self.loginViewController animated:NO completion:nil];
     }
 }
 
@@ -357,9 +357,9 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
             // FBSample logic
             // Once the user has logged out, we want them to be looking at the root view.
             UIViewController *topViewController = [self.slidingViewController topViewController];
-            UIViewController *modalViewController = [topViewController modalViewController];
+            UIViewController *modalViewController = [topViewController presentedViewController];
             if (modalViewController != nil) {
-                [topViewController dismissModalViewControllerAnimated:NO];
+                [topViewController dismissViewControllerAnimated:NO completion:nil];
             }
             [self.slidingViewController resetTopView];
             

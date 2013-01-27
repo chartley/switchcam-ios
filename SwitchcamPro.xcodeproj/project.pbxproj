@@ -2354,7 +2354,7 @@
 				GCC_PREFIX_HEADER = "SwitchcamPro/SwitchcamPro-Prefix.pch";
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Pods/Headers\"/**";
 				INFOPLIST_FILE = "SwitchcamPro/SwitchcamPro-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Libraries/Airship\"",
@@ -2381,7 +2381,7 @@
 				GCC_PREFIX_HEADER = "SwitchcamPro/SwitchcamPro-Prefix.pch";
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Pods/Headers\"/**";
 				INFOPLIST_FILE = "SwitchcamPro/SwitchcamPro-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Libraries/Airship\"",

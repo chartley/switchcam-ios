@@ -378,7 +378,7 @@ enum { kTagTabBase = 100 };
     SCCamViewController *viewController = [[SCCamViewController alloc] init];
     [viewController setSelectedMission:self.mission];
     [viewController setDelegate:self];
-    [self presentModalViewController:viewController animated:YES];
+    [self presentViewController:viewController animated:YES completion:nil];
 }
 
 - (IBAction)noteButtonAction:(id)sender {
@@ -393,7 +393,7 @@ enum { kTagTabBase = 100 };
     viewController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     viewController.allowsEditing = NO;
     
-    [self presentModalViewController:viewController animated:YES];
+    [self presentViewController:viewController animated:YES completion:nil];
 }
 
 - (IBAction)shareButtonAction:(id)sender {
@@ -483,7 +483,7 @@ enum { kTagTabBase = 100 };
         MFMailComposeViewController *viewController = [[MFMailComposeViewController alloc] init];
         [viewController setSubject:NSLocalizedString(@"Check out this Switchcam Event!", @"")];
         [viewController setMessageBody:body isHTML:YES];
-        [self presentModalViewController:viewController animated:YES];
+        [self presentViewController:viewController animated:YES completion:nil];
     } else {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"No Email Configured", @"") message:NSLocalizedString(@"You don't have an email account setup on this device.  Add one in your Settings app to share via email!", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles: nil];
         [alertView show];
@@ -527,7 +527,7 @@ enum { kTagTabBase = 100 };
                 // Upload
                 UploadVideoViewController *viewController = [[UploadVideoViewController alloc] init];
                 [viewController setUserVideoToUpload:userVideo];
-                [self presentModalViewController:viewController animated:YES];
+                [self presentViewController:viewController animated:YES completion:nil];
             }
         } else {
             // Create Recording
@@ -586,7 +586,7 @@ enum { kTagTabBase = 100 };
                 // Upload
                 UploadVideoViewController *viewController = [[UploadVideoViewController alloc] init];
                 [viewController setUserVideoToUpload:userVideo];
-                [self presentModalViewController:viewController animated:YES];
+                [self presentViewController:viewController animated:YES completion:nil];
             };
             
             ALAssetsLibraryAccessFailureBlock failureblock  = ^(NSError *myerror) {
@@ -603,7 +603,7 @@ enum { kTagTabBase = 100 };
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - ScrollView Delegate
@@ -660,7 +660,7 @@ enum { kTagTabBase = 100 };
 #pragma mark - MFMailComposeViewControllerDelegate
 
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

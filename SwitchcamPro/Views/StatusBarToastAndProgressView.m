@@ -50,7 +50,7 @@
         [self.statusBarProgressLabel setTextColor:[UIColor whiteColor]];
         [self.statusBarProgressLabel setShadowColor:[UIColor blackColor]];
         [self.statusBarProgressLabel setShadowOffset:CGSizeMake(0, -1)];
-        [self.statusBarProgressLabel setTextAlignment:UITextAlignmentRight];
+        [self.statusBarProgressLabel setTextAlignment:NSTextAlignmentRight];
         [self.statusBarProgressLabel setText:NSLocalizedString(@"0% Uploaded", @"")];
         
         // Create Toast bar and label
@@ -64,7 +64,7 @@
         [self.toastLabel setTextColor:[UIColor whiteColor]];
         [self.toastLabel setShadowColor:[UIColor blackColor]];
         [self.toastLabel setShadowOffset:CGSizeMake(0, -1)];
-        [self.toastLabel setTextAlignment:UITextAlignmentCenter];
+        [self.toastLabel setTextAlignment:NSTextAlignmentCenter];
         [self.toastLabel setBackgroundColor:[UIColor clearColor]];
         
         // Hide all views

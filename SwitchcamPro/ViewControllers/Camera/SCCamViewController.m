@@ -152,8 +152,11 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
 			[newCaptureVideoPreviewLayer setFrame:bounds];
 			
 			[newCaptureVideoPreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
-            //TODO Fix deprecation
-            [newCaptureVideoPreviewLayer setOrientation:AVCaptureVideoOrientationLandscapeRight];
+            
+            // Requires change if doing pre-iOS6
+            if ([newCaptureVideoPreviewLayer.connection isVideoOrientationSupported]) {
+                [newCaptureVideoPreviewLayer.connection setVideoOrientation:self.interfaceOrientation];
+            }
 			
 			[viewLayer insertSublayer:newCaptureVideoPreviewLayer below:[[viewLayer sublayers] objectAtIndex:0]];
 			
@@ -424,7 +427,7 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
 }
 
 - (IBAction)closeButtonAction:(id)sender {
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)toggleFlashAction:(id)sender {

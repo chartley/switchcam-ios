@@ -44,8 +44,8 @@ static inline CGFloat radians(CGFloat degrees) {
     CGRect labelFrame = [self _tabRect];
     self.titleLabel = [[[UILabel alloc] initWithFrame:labelFrame] autorelease];
     self.titleLabel.text = title;
-    self.titleLabel.textAlignment = UITextAlignmentCenter;
-    self.titleLabel.lineBreakMode = UILineBreakModeTailTruncation;
+    self.titleLabel.textAlignment = NSTextAlignmentCenter;
+    self.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     self.titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     self.titleLabel.backgroundColor = [UIColor clearColor];
     self.titleLabel.textColor = self.style.unselectedTitleTextColor;

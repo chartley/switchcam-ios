@@ -166,7 +166,7 @@
     
     // Preview
     MPMoviePlayerViewController *viewController = [[MPMoviePlayerViewController alloc] initWithContentURL: previewRecordingURL];
-    [self.menuViewController presentModalViewController:viewController animated:YES];
+    [self.menuViewController presentViewController:viewController animated:YES completion:nil];
 }
 
 - (void)uploadButtonPressed:(PendingUploadCell*)pendingUploadCell {
@@ -178,7 +178,7 @@
     // Upload
     UploadVideoViewController *viewController = [[UploadVideoViewController alloc] init];
     [viewController setUserVideoToUpload:userVideo];
-    [self.menuViewController presentModalViewController:viewController animated:YES];
+    [self.menuViewController presentViewController:viewController animated:YES completion:nil];
     
     // Reset Top view
     [self.menuViewController.slidingViewController resetTopView];
