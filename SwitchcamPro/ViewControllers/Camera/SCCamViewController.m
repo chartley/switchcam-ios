@@ -244,11 +244,13 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
 
 - (void)viewWillAppear:(BOOL)animated {
     [[UIApplication sharedApplication] setStatusBarHidden: YES withAnimation: UIStatusBarAnimationNone];
+    [UIApplication sharedApplication].idleTimerDisabled = YES;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [[UIApplication sharedApplication] setStatusBarHidden: NO
                                             withAnimation: UIStatusBarAnimationNone];
+    [UIApplication sharedApplication].idleTimerDisabled = NO;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
