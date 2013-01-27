@@ -166,9 +166,10 @@
         NSError *error;
         // Get Data
         NSData *uploadData = [[NSData alloc] initWithContentsOfFile:[self.userVideoToUpload compressedVideoURL] options:NSDataReadingMapped error:&error];
+        NSString *videoKey = [NSString stringWithFormat:@"%@%@", [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookIdKey], [SPSerializable formattedStringFromDate:self.userVideoToUpload.recordStart]];
         
         SCS3Uploader *uploader = [[SCS3Uploader alloc] init];
-        [uploader uploadVideo:uploadData withKey:self.userVideoToUpload.uploadPath];
+        [uploader uploadVideo:uploadData withKey:videoKey];
     }
 }
 
@@ -394,7 +395,7 @@
     self.compressProgressView.progress = self.compressionSession.progress;
     
     // Update label
-    NSString *progressString = [NSString stringWithFormat:NSLocalizedString(@"Processing Video - %d%%", @""), (self.compressionSession.progress * 100)];
+    NSString *progressString = [NSString stringWithFormat:NSLocalizedString(@"Processing Video - %d%%", @""), (int)(self.compressionSession.progress * 100)];
     [self.compressProgressLabel setText:progressString];
 }
 
