@@ -20,21 +20,25 @@
 #import "UploadVideoViewController.h"
 #import "SPImageHelper.h"
 #import "SPInviteFriendsViewController.h"
+#import "UIPlaceholderTextView.h"
+#import "AppDelegate.h"
 
 enum { kTagTabBase = 100 };
 
-//#define kTopPictureHeight 169
+#define kNoteDrawerHeight 121
 #define kBottomBarHeight 44
 
 @interface EventViewController () {
     int topPictureHeight;
     BOOL isShareDrawerOpen;
+    BOOL isToolbarDrawerOpen;
 }
 
 @property (nonatomic, retain) NSArray *viewControllers;
 @property (nonatomic, assign, readwrite) UIScrollView *currentView;
 @property (nonatomic, assign, readwrite) UIScrollView *currentTabScrollView;
 @property (nonatomic, retain) SPTabsView *tabsContainerView;
+@property (strong, nonatomic) MBProgressHUD *loadingIndicator;
 
 @end
 
@@ -244,6 +248,8 @@ enum { kTagTabBase = 100 };
     [self.eventLocationLabel setText:locationString];
     [self.eventDateLabel setText:startEventTimeString];
     
+    [self.shareNoteTextView setPlaceholder:NSLocalizedString(@"Type your note...", @"")];
+    
     // Set Font / Color
     [self.shareNoteLabel setFont:[UIFont fontWithName:@"SourceSansPro-Bold" size:11]];
     [self.shareNoteLabel setTextColor:RGBA(185, 196, 200, 1.0)];
@@ -266,7 +272,7 @@ enum { kTagTabBase = 100 };
     [self.eventDateLabel setShadowOffset:CGSizeMake(0, -1)];
     
     // Adjust drawer toolbar to be set to the correct origin depending on screen size
-    [self.toolbarDrawer setFrame:CGRectMake(0, self.view.frame.size.height - self.toolbarDrawer.frame.size.height, self.toolbarDrawer.frame.size.width, self.toolbarDrawer.frame.size.height)];
+    [self.toolbarDrawer setFrame:CGRectMake(0, self.view.frame.size.height - self.toolbarDrawer.frame.size.height + kNoteDrawerHeight, self.toolbarDrawer.frame.size.width, self.toolbarDrawer.frame.size.height)];
     [self.view bringSubviewToFront:self.toolbarDrawer];
     
     // Adjust content size of scrollview for ez scrolling between event scrollview and tabs scrollview
@@ -332,8 +338,36 @@ enum { kTagTabBase = 100 };
     [self.shareFacebookButton.titleLabel setTextColor:[UIColor whiteColor]];
     [self.shareFacebookButton.titleLabel setShadowColor:[UIColor blackColor]];
     [self.shareFacebookButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
+    
+    // Toolbar drawer button
+    // Set Button Image
+    UIImage *postNoteButtonImage = [[UIImage imageNamed:@"btn-orange-lg"]
+                            resizableImageWithCapInsets:UIEdgeInsetsMake(20, 15, 20, 15)];
+    
+    // Set Button Image
+    UIImage *postNoteHighlightButtonImage = [[UIImage imageNamed:@"btn-orange-lg-pressed"]
+                                     resizableImageWithCapInsets:UIEdgeInsetsMake(20, 15, 20, 15)];
+    
+    // Set the background for any states you plan to use
+    [self.postNoteButton setBackgroundImage:postNoteButtonImage forState:UIControlStateNormal];
+    [self.postNoteButton setBackgroundImage:postNoteHighlightButtonImage forState:UIControlStateSelected];
+    
+    [self.postNoteButton.titleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Semibold" size:13]];
+    [self.postNoteButton.titleLabel setTextColor:[UIColor whiteColor]];
+    [self.postNoteButton.titleLabel setShadowColor:[UIColor blackColor]];
+    [self.postNoteButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
 
+    // Add loading indicator
+    AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    self.loadingIndicator = [[MBProgressHUD alloc] initWithWindow:appDelegate.window];
+    [appDelegate.window addSubview:self.loadingIndicator];
+    
     [super viewDidLoad];
+}
+
+- (void)viewDidUnload {
+    // Remove Loading Indicator
+    [self.loadingIndicator removeFromSuperview];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -365,6 +399,56 @@ enum { kTagTabBase = 100 };
     [self.navigationItem setRightBarButtonItem:shareBarButtonItem];
 }
 
+#pragma mark - Network Requests
+
+- (void)postNote:(NSString *)note {
+    [self.loadingIndicator show:YES];
+    
+    NSString *facebookId = [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookIdKey];
+    NSString *facebookToken = [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookTokenKey];
+    
+    // Completion Blocks
+    void (^postNoteSuccessBlock)(AFHTTPRequestOperation *operation, id responseObject);
+    void (^postNoteFailureBlock)(AFHTTPRequestOperation *operation, NSError *error);
+    
+    postNoteSuccessBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self.loadingIndicator hide:YES];
+        
+        // Close drawer
+        [self noteButtonAction:nil];
+    };
+    
+    postNoteFailureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self.loadingIndicator hide:YES];
+        
+        if ([error code] == NSURLErrorNotConnectedToInternet) {
+            NSString *title = NSLocalizedString(@"No Network Connection", @"");
+            NSString *message = NSLocalizedString(@"Please check your internet connection and try again.", @"");
+            
+            // Show alert
+            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alertView show];
+        }
+    };
+    
+    // Setup Parameters
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    
+    [parameters setObject:note forKey:@"text"];
+    
+    // Make Request and set params
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:kAPIHost]];
+    [httpClient setAuthorizationHeaderWithUsername:facebookId password:facebookToken];
+    
+    NSString *path = [NSString stringWithFormat:@"mission/%@/note/", [self.mission.missionId stringValue]];
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:path parameters:parameters];
+    
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    [operation setCompletionBlockWithSuccess:postNoteSuccessBlock failure:postNoteFailureBlock];
+    
+    [operation start];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)menuButtonAction:(id)sender {
@@ -382,7 +466,49 @@ enum { kTagTabBase = 100 };
 }
 
 - (IBAction)noteButtonAction:(id)sender {
+    // Open/Close drawer
+    if (isToolbarDrawerOpen) {
+        // Close Drawer
+        [UIView animateWithDuration:0.4 animations:^{
+            [self.toolbarDrawer setFrame:CGRectMake(self.toolbarDrawer.frame.origin.x, self.toolbarDrawer.frame.origin.y + kNoteDrawerHeight, self.toolbarDrawer.frame.size.width, self.toolbarDrawer.frame.size.height)];}
+                         completion:^(BOOL finished){
+                             // Re-enable touches on scroll view
+                             self.eventScrollView.userInteractionEnabled = YES;
+                         }
+         ];
+        
+        // Hide button highlight
+        self.shareNoteButtonBackground.hidden = YES;
+        
+        isToolbarDrawerOpen = NO;
+    } else {
+        // Disable touches on scroll view
+        self.eventScrollView.userInteractionEnabled = NO;
+        
+        // Open Drawer
+        [UIView animateWithDuration:0.4 animations:^{
+            [self.toolbarDrawer setFrame:CGRectMake(self.toolbarDrawer.frame.origin.x, self.toolbarDrawer.frame.origin.y - kNoteDrawerHeight, self.toolbarDrawer.frame.size.width, self.toolbarDrawer.frame.size.height)];}
+                         completion:nil
+         ];
+        
+        // Show button highlight
+        self.shareNoteButtonBackground.hidden = NO;
+        
+        isToolbarDrawerOpen = YES;
+    }
+}
 
+- (IBAction)postNoteButtonAction:(id)sender {
+    // Remove keyboard
+    [self.shareNoteTextView resignFirstResponder];
+    
+    // Validation
+    if (self.shareNoteTextView.text != nil && ![self.shareNoteTextView.text isEqualToString:@""]) {
+        [self postNote:self.shareNoteTextView.text];
+    } else {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Oops", @"") message:NSLocalizedString(@"Please enter a note before attempting to post!", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles: nil];
+        [alertView show];
+    }
 }
 
 - (IBAction)chooseFromLibrary:(id)sender {
@@ -491,7 +617,6 @@ enum { kTagTabBase = 100 };
 }
 
 - (IBAction)inviteFacebookFriendsButtonAction:(id)sender {
-    //InviteFriendsViewController *viewController = [[InviteFriendsViewController alloc] initWithNibName:@"InviteFriendsViewController" bundle:nil];
     SPInviteFriendsViewController *viewController = [[SPInviteFriendsViewController alloc] init];
     [viewController loadData];
     [self.navigationController pushViewController:viewController animated:YES];
@@ -644,17 +769,30 @@ enum { kTagTabBase = 100 };
 #pragma mark - Observers
 
 - (void)keyboardWillShow:(NSNotification *)notification {
-    // Keep the tabs at the top
-    [UIView animateWithDuration:0.25 animations:^(){
-        [self.eventScrollView setContentOffset:CGPointMake(0, self.eventImageView.frame.size.height)];
-    } completion:^(BOOL finished) {
-        [self.eventScrollView setContentOffset:CGPointMake(0, self.eventImageView.frame.size.height)];
-    }];
-    
+    if (isToolbarDrawerOpen) {
+        NSDictionary* info = [notification userInfo];
+        CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+        
+        [UIView animateWithDuration:0.25 animations:^(){
+            [self.toolbarDrawer setFrame:CGRectMake(0, self.toolbarDrawer.frame.origin.y - kbSize.height, 320, self.toolbarDrawer.frame.size.height)];
+        } completion:^(BOOL finished) {
+        }];
+    } else {
+        // Keep the tabs at the top
+        [UIView animateWithDuration:0.25 animations:^(){
+            [self.eventScrollView setContentOffset:CGPointMake(0, self.eventImageView.frame.size.height)];
+        } completion:^(BOOL finished) {
+        }];
+    }
 }
 
 - (void)keyboardWillHide:(NSNotification *)notification {
-    
+    if (isToolbarDrawerOpen) {
+        NSDictionary* info = [notification userInfo];
+        CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+        
+        [self.toolbarDrawer setFrame:CGRectMake(0, self.toolbarDrawer.frame.origin.y + kbSize.height, 320, self.toolbarDrawer.frame.size.height)];
+    }
 }
 
 #pragma mark - MFMailComposeViewControllerDelegate

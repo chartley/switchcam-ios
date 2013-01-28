@@ -14,6 +14,7 @@
 		2456C469168F6F0D00F49C70 /* img-shoot-thumb-placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2456C465168F6F0D00F49C70 /* img-shoot-thumb-placeholder@2x.png */; };
 		2456C46A168F6F0D00F49C70 /* results-shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 2456C466168F6F0D00F49C70 /* results-shadow.png */; };
 		2456C46B168F6F0D00F49C70 /* results-shadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2456C467168F6F0D00F49C70 /* results-shadow@2x.png */; };
+		24F9C37316B66D630029D1E5 /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F9C37216B66D630029D1E5 /* UIPlaceHolderTextView.m */; };
 		C906ADBB16A019DE001E5E5C /* HostedEventVideoTopCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C906ADBA16A019DE001E5E5C /* HostedEventVideoTopCell.xib */; };
 		C906ADC916A6833C001E5E5C /* ActivityPostCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C906ADC816A6833B001E5E5C /* ActivityPostCommentCell.m */; };
 		C906ADCC16A68353001E5E5C /* ActivityCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C906ADCB16A68352001E5E5C /* ActivityCommentCell.m */; };
@@ -418,6 +419,8 @@
 		2456C465168F6F0D00F49C70 /* img-shoot-thumb-placeholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img-shoot-thumb-placeholder@2x.png"; sourceTree = "<group>"; };
 		2456C466168F6F0D00F49C70 /* results-shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "results-shadow.png"; sourceTree = "<group>"; };
 		2456C467168F6F0D00F49C70 /* results-shadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "results-shadow@2x.png"; sourceTree = "<group>"; };
+		24F9C37116B66D630029D1E5 /* UIPlaceHolderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIPlaceHolderTextView.h; path = Views/UIPlaceHolderTextView.h; sourceTree = "<group>"; };
+		24F9C37216B66D630029D1E5 /* UIPlaceHolderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIPlaceHolderTextView.m; path = Views/UIPlaceHolderTextView.m; sourceTree = "<group>"; };
 		A19C79BD691C4B088E80A4B3 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		C906ADBA16A019DE001E5E5C /* HostedEventVideoTopCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HostedEventVideoTopCell.xib; path = TableViewCells/PendingUploads/HostedEventVideoTopCell.xib; sourceTree = "<group>"; };
 		C906ADC716A6833B001E5E5C /* ActivityPostCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActivityPostCommentCell.h; path = TableViewCells/Activity/ActivityPostCommentCell.h; sourceTree = "<group>"; };
@@ -1818,6 +1821,8 @@
 				C9856D0D167E733400C5B708 /* Walkthrough */,
 				C99E97EB167E4494006B3BBC /* StatusBarToastAndProgressView.h */,
 				C99E97EC167E4494006B3BBC /* StatusBarToastAndProgressView.m */,
+				24F9C37116B66D630029D1E5 /* UIPlaceHolderTextView.h */,
+				24F9C37216B66D630029D1E5 /* UIPlaceHolderTextView.m */,
 			);
 			name = "Custom Views";
 			sourceTree = "<group>";
@@ -2273,6 +2278,7 @@
 				C9606CA216B4718200F5C76F /* SPInviteFriendsViewController.m in Sources */,
 				C962EB2D16B4786700C643D0 /* SPInviteFriendsTableDataSource.m in Sources */,
 				C95E4A6A16B4908300DA8652 /* SPInviteFriendsTableSelection.m in Sources */,
+				24F9C37316B66D630029D1E5 /* UIPlaceHolderTextView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

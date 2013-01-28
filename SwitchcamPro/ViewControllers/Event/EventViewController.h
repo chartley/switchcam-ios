@@ -14,6 +14,7 @@
 @class SPTabsViewController;
 @class SPTabStyle;
 @class SPTabsView;
+@class UIPlaceHolderTextView;
 
 @interface EventViewController : UIViewController <SPTabViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate, SCCamViewControllerDelegate> {
     NSArray *viewControllers;
@@ -28,7 +29,12 @@
 @property (strong, nonatomic) IBOutlet UIButton *sharePhotoButton;
 @property (strong, nonatomic) IBOutlet UILabel *sharePhotoLabel;
 @property (strong, nonatomic) IBOutlet UIButton *shareNoteButton;
+@property (strong, nonatomic) IBOutlet UIImageView *shareNoteButtonBackground;
 @property (strong, nonatomic) IBOutlet UILabel *shareNoteLabel;
+@property (strong, nonatomic) IBOutlet UIPlaceHolderTextView *shareNoteTextView;
+@property (strong, nonatomic) IBOutlet UIButton *postNoteButton;
+
+
 @property (strong, nonatomic) IBOutlet UILabel *eventLocationLabel;
 @property (strong, nonatomic) IBOutlet UILabel *eventDateLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *eventImageView;
