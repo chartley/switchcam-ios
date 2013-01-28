@@ -15,6 +15,8 @@
 		2456C46A168F6F0D00F49C70 /* results-shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 2456C466168F6F0D00F49C70 /* results-shadow.png */; };
 		2456C46B168F6F0D00F49C70 /* results-shadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2456C467168F6F0D00F49C70 /* results-shadow@2x.png */; };
 		24F9C37316B66D630029D1E5 /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F9C37216B66D630029D1E5 /* UIPlaceHolderTextView.m */; };
+		24F9C37716B679F10029D1E5 /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F9C37616B679F10029D1E5 /* Activity.m */; };
+		24F9C37A16B67A030029D1E5 /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F9C37916B67A030029D1E5 /* Note.m */; };
 		C906ADBB16A019DE001E5E5C /* HostedEventVideoTopCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C906ADBA16A019DE001E5E5C /* HostedEventVideoTopCell.xib */; };
 		C906ADC916A6833C001E5E5C /* ActivityPostCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C906ADC816A6833B001E5E5C /* ActivityPostCommentCell.m */; };
 		C906ADCC16A68353001E5E5C /* ActivityCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C906ADCB16A68352001E5E5C /* ActivityCommentCell.m */; };
@@ -60,7 +62,6 @@
 		C9606C7B16B2788900F5C76F /* Link.m in Sources */ = {isa = PBXBuildFile; fileRef = C9606C7A16B2788900F5C76F /* Link.m */; };
 		C9606C8016B2843700F5C76F /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9606C7F16B2843600F5C76F /* MessageUI.framework */; };
 		C9606C8616B36E5600F5C76F /* Mission.m in Sources */ = {isa = PBXBuildFile; fileRef = C9606C8516B36E5600F5C76F /* Mission.m */; };
-		C9606C8916B36E6C00F5C76F /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = C9606C8816B36E6A00F5C76F /* Activity.m */; };
 		C9606C9216B45E1100F5C76F /* arrow-share-down.png in Resources */ = {isa = PBXBuildFile; fileRef = C9606C8A16B45E1100F5C76F /* arrow-share-down.png */; };
 		C9606C9316B45E1100F5C76F /* arrow-share-down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9606C8B16B45E1100F5C76F /* arrow-share-down@2x.png */; };
 		C9606C9416B45E1100F5C76F /* bg-sharefooter-noshadow.png in Resources */ = {isa = PBXBuildFile; fileRef = C9606C8C16B45E1100F5C76F /* bg-sharefooter-noshadow.png */; };
@@ -421,6 +422,10 @@
 		2456C467168F6F0D00F49C70 /* results-shadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "results-shadow@2x.png"; sourceTree = "<group>"; };
 		24F9C37116B66D630029D1E5 /* UIPlaceHolderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIPlaceHolderTextView.h; path = Views/UIPlaceHolderTextView.h; sourceTree = "<group>"; };
 		24F9C37216B66D630029D1E5 /* UIPlaceHolderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIPlaceHolderTextView.m; path = Views/UIPlaceHolderTextView.m; sourceTree = "<group>"; };
+		24F9C37516B679F10029D1E5 /* Activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Activity.h; path = Model/ManagedObjects/Activity.h; sourceTree = "<group>"; };
+		24F9C37616B679F10029D1E5 /* Activity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Activity.m; path = Model/ManagedObjects/Activity.m; sourceTree = "<group>"; };
+		24F9C37816B67A030029D1E5 /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Note.h; path = Model/ManagedObjects/Note.h; sourceTree = "<group>"; };
+		24F9C37916B67A030029D1E5 /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Note.m; path = Model/ManagedObjects/Note.m; sourceTree = "<group>"; };
 		A19C79BD691C4B088E80A4B3 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		C906ADBA16A019DE001E5E5C /* HostedEventVideoTopCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HostedEventVideoTopCell.xib; path = TableViewCells/PendingUploads/HostedEventVideoTopCell.xib; sourceTree = "<group>"; };
 		C906ADC716A6833B001E5E5C /* ActivityPostCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActivityPostCommentCell.h; path = TableViewCells/Activity/ActivityPostCommentCell.h; sourceTree = "<group>"; };
@@ -488,8 +493,6 @@
 		C9606C7F16B2843600F5C76F /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		C9606C8416B36E5600F5C76F /* Mission.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mission.h; path = Model/ManagedObjects/Mission.h; sourceTree = "<group>"; };
 		C9606C8516B36E5600F5C76F /* Mission.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Mission.m; path = Model/ManagedObjects/Mission.m; sourceTree = "<group>"; };
-		C9606C8716B36E6A00F5C76F /* Activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Activity.h; path = Model/ManagedObjects/Activity.h; sourceTree = "<group>"; };
-		C9606C8816B36E6A00F5C76F /* Activity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Activity.m; path = Model/ManagedObjects/Activity.m; sourceTree = "<group>"; };
 		C9606C8A16B45E1100F5C76F /* arrow-share-down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-share-down.png"; sourceTree = "<group>"; };
 		C9606C8B16B45E1100F5C76F /* arrow-share-down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-share-down@2x.png"; sourceTree = "<group>"; };
 		C9606C8C16B45E1100F5C76F /* bg-sharefooter-noshadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-sharefooter-noshadow.png"; sourceTree = "<group>"; };
@@ -1222,8 +1225,10 @@
 				C9606C7A16B2788900F5C76F /* Link.m */,
 				C9606C8416B36E5600F5C76F /* Mission.h */,
 				C9606C8516B36E5600F5C76F /* Mission.m */,
-				C9606C8716B36E6A00F5C76F /* Activity.h */,
-				C9606C8816B36E6A00F5C76F /* Activity.m */,
+				24F9C37516B679F10029D1E5 /* Activity.h */,
+				24F9C37616B679F10029D1E5 /* Activity.m */,
+				24F9C37816B67A030029D1E5 /* Note.h */,
+				24F9C37916B67A030029D1E5 /* Note.m */,
 			);
 			name = ManagedObjects;
 			sourceTree = "<group>";
@@ -2273,12 +2278,13 @@
 				C9606C7616AFDCD200F5C76F /* EventInfoGoingCell.m in Sources */,
 				C9606C7B16B2788900F5C76F /* Link.m in Sources */,
 				C9606C8616B36E5600F5C76F /* Mission.m in Sources */,
-				C9606C8916B36E6C00F5C76F /* Activity.m in Sources */,
 				C9606C9D16B4622E00F5C76F /* InviteFriendCell.m in Sources */,
 				C9606CA216B4718200F5C76F /* SPInviteFriendsViewController.m in Sources */,
 				C962EB2D16B4786700C643D0 /* SPInviteFriendsTableDataSource.m in Sources */,
 				C95E4A6A16B4908300DA8652 /* SPInviteFriendsTableSelection.m in Sources */,
 				24F9C37316B66D630029D1E5 /* UIPlaceHolderTextView.m in Sources */,
+				24F9C37716B679F10029D1E5 /* Activity.m in Sources */,
+				24F9C37A16B67A030029D1E5 /* Note.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

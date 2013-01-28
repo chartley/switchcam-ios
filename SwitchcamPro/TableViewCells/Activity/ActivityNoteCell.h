@@ -15,5 +15,6 @@
 @interface ActivityNoteCell : ActivityCell
 
 @property (strong, nonatomic) IBOutlet UILabel *noteLabel;
+@property (strong, nonatomic) IBOutlet UIView *noteBackground;
 
 @end

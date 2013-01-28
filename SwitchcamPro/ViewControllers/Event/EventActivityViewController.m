@@ -24,6 +24,11 @@
 #import "User.h"
 #import "UserVideo.h"
 #import "Comment.h"
+#import "Note.h"
+
+// Calculated with label height
+#define kNoteBottomMargin 75
+#define kNoteTopMargin 30
 
 @interface EventActivityViewController () <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate> {
     int postCommentRow;
@@ -99,8 +104,8 @@
             } else if ([activity.actionObjectContentTypeName isEqualToString:@"director.missionphoto"]) {
                 activity.rowHeight = [NSNumber numberWithInt:kActivityPhotoCellRowHeight];
             } else if ([activity.actionObjectContentTypeName isEqualToString:@"director.missionnote"]) {
-                CGSize labelSize = [activity.text sizeWithFont:[UIFont fontWithName:@"" size:17.0] constrainedToSize:CGSizeMake(264, 600) lineBreakMode:NSLineBreakByWordWrapping];
-                int rowHeight = labelSize.height + 65 + 20; // Label size, fixed bottom, fixed top
+                CGSize labelSize = [activity.actionObject.text sizeWithFont:[UIFont fontWithName:@"SourceSansPro-It" size:13.0] constrainedToSize:CGSizeMake(260, 600) lineBreakMode:NSLineBreakByWordWrapping];
+                int rowHeight = labelSize.height + kNoteBottomMargin + kNoteTopMargin; // Label size, fixed bottom, fixed top
                 activity.rowHeight = [NSNumber numberWithInt:rowHeight];
             }
             
@@ -321,6 +326,23 @@
         } else if ([activity.actionObjectContentTypeName isEqualToString:@"director.missionnote"]) {
             ActivityNoteCell *activityNoteCell = (ActivityNoteCell *)cell;
             [activityNoteCell.verbLabel setText:NSLocalizedString(@"added a note", @"")];
+            
+            int labelHeight = [activity.rowHeight intValue] - kNoteBottomMargin - kNoteTopMargin;
+            [activityNoteCell.noteLabel setFrame:CGRectMake(30, 30, 260, labelHeight)];
+            [activityNoteCell.noteLabel setFont:[UIFont fontWithName:@"SourceSansPro-It" size:13.0]];
+            [activityNoteCell.noteLabel setText:activity.actionObject.text];
+            [activityNoteCell.noteLabel setTextColor:RGBA(184, 196, 200, 1.0)];
+            
+            // Set background with rounded corners
+            [activityNoteCell.noteBackground setFrame:CGRectMake(20, 20, 280, labelHeight + 20)];
+            [activityNoteCell.noteBackground setBackgroundColor:RGBA(47, 50, 51, 1.0)];
+            [activityNoteCell.noteBackground.layer setCornerRadius:5.0f];
+            [activityNoteCell.noteBackground.layer setBorderColor:RGBA(58, 60, 61, 1).CGColor];
+            [activityNoteCell.noteBackground.layer setBorderWidth:1.5f];
+            [activityNoteCell.noteBackground.layer setMasksToBounds:YES];
+            
+            // Move rest of the label down
+            [activityNoteCell setFrame:CGRectMake(0, 0, 320, [activity.rowHeight intValue])];
         }
         
         [activityCell.verbLabel setText:activity.verb];

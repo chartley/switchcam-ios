@@ -2,7 +2,7 @@
 //  Activity.m
 //  SwitchcamPro
 //
-//  Created by William Ketterer on 1/25/13.
+//  Created by William Ketterer on 1/28/13.
 //  Copyright (c) 2013 William Ketterer. All rights reserved.
 //
 
@@ -11,6 +11,7 @@
 #import "Mission.h"
 #import "User.h"
 #import "UserVideo.h"
+#import "Note.h"
 
 
 @implementation Activity
@@ -31,8 +32,9 @@
 @dynamic timestamp;
 @dynamic verb;
 @dynamic latestComments;
+@dynamic mission;
 @dynamic person;
 @dynamic userVideo;
-@dynamic mission;
+@dynamic actionObject;
 
 @end

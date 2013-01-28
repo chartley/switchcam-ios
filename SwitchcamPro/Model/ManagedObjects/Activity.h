@@ -2,14 +2,14 @@
 //  Activity.h
 //  SwitchcamPro
 //
-//  Created by William Ketterer on 1/25/13.
+//  Created by William Ketterer on 1/28/13.
 //  Copyright (c) 2013 William Ketterer. All rights reserved.
 //
 
 #import <RestKit/RestKit.h>
 #import <RestKit/CoreData.h>
 
-@class Comment, Mission, User, UserVideo;
+@class Comment, Mission, User, UserVideo, Note;
 
 @interface Activity : NSManagedObject
 
@@ -29,9 +29,10 @@
 @property (nonatomic, retain) NSDate * timestamp;
 @property (nonatomic, retain) NSString * verb;
 @property (nonatomic, retain) NSSet *latestComments;
+@property (nonatomic, retain) Mission *mission;
 @property (nonatomic, retain) User *person;
 @property (nonatomic, retain) UserVideo *userVideo;
-@property (nonatomic, retain) Mission *mission;
+@property (nonatomic, retain) Note *actionObject;
 @end
 
 @interface Activity (CoreDataGeneratedAccessors)

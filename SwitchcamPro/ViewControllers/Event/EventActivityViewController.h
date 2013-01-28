@@ -14,4 +14,6 @@
 
 @property (strong, nonatomic) IBOutlet UITableView *eventActivityTableView;
 
+- (void)getActivity;
+
 @end

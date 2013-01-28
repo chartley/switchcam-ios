@@ -32,6 +32,7 @@ enum { kTagTabBase = 100 };
     int topPictureHeight;
     BOOL isShareDrawerOpen;
     BOOL isToolbarDrawerOpen;
+    EventActivityViewController *activityViewController;
 }
 
 @property (nonatomic, retain) NSArray *viewControllers;
@@ -67,6 +68,7 @@ enum { kTagTabBase = 100 };
     
     EventActivityViewController *eventActivityViewController = [[EventActivityViewController alloc] init];
     [eventActivityViewController setSelectedMission:mission];
+    activityViewController = eventActivityViewController;
     
     EventPeopleViewController *eventPeopleViewController = [[EventPeopleViewController alloc] init];
     [eventPeopleViewController setSelectedMission:mission];
@@ -416,6 +418,9 @@ enum { kTagTabBase = 100 };
         
         // Close drawer
         [self noteButtonAction:nil];
+        
+        // Refresh activity view
+        [activityViewController getActivity];
     };
     
     postNoteFailureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {

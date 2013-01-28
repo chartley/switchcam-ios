@@ -594,6 +594,14 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     // Relationships
     [commentMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"person" toKeyPath:@"person" withMapping:userMapping]];
 
+    RKEntityMapping *noteMapping = [RKEntityMapping mappingForEntityForName:@"Note" inManagedObjectStore:managedObjectStore];
+    noteMapping.identificationAttributes = @[ @"noteId" ];
+    
+    [noteMapping addAttributeMappingsFromDictionary:@{
+     @"id": @"noteId",
+     @"text": @"text",
+     @"create_datetime": @"createDate",
+     }];
     
     RKEntityMapping *activityMapping = [RKEntityMapping mappingForEntityForName:@"Activity" inManagedObjectStore:managedObjectStore];
     activityMapping.identificationAttributes = @[ @"activityId" ];
@@ -619,6 +627,7 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     [activityMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"person" toKeyPath:@"person" withMapping:userMapping]];
     [activityMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"action_object.uservideo" toKeyPath:@"userVideo" withMapping:userVideoMapping]];
     [activityMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"latest_3_comments" toKeyPath:@"latestComments" withMapping:commentMapping]];
+    [activityMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"action_object" toKeyPath:@"actionObject" withMapping:noteMapping]];
     
     RKObjectMapping *userVideoRequestMapping = [RKObjectMapping requestMapping]; // objectClass == NSMutableDictionary
     [userVideoRequestMapping addAttributeMappingsFromDictionary:@{
