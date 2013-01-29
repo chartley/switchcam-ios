@@ -474,19 +474,25 @@ enum { kTagTabBase = 100 };
 - (IBAction)noteButtonAction:(id)sender {
     // Open/Close drawer
     if (isToolbarDrawerOpen) {
-        // Close Drawer
-        [UIView animateWithDuration:0.4 animations:^{
-            [self.toolbarDrawer setFrame:CGRectMake(self.toolbarDrawer.frame.origin.x, self.toolbarDrawer.frame.origin.y + kNoteDrawerHeight, self.toolbarDrawer.frame.size.width, self.toolbarDrawer.frame.size.height)];}
-                         completion:^(BOOL finished){
-                             // Re-enable touches on scroll view
-                             self.eventScrollView.userInteractionEnabled = YES;
-                         }
-         ];
-        
-        // Hide button highlight
-        self.shareNoteButtonBackground.hidden = YES;
-        
-        isToolbarDrawerOpen = NO;
+        // Check if keyboard is up
+        if ([self.shareNoteTextView isFirstResponder]) {
+            // Remove keyboard, observer will handle closing for smooth animation with keyboard
+            [self.shareNoteTextView resignFirstResponder];
+        } else {            
+            // Close Drawer
+            [UIView animateWithDuration:0.4 animations:^{
+                [self.toolbarDrawer setFrame:CGRectMake(self.toolbarDrawer.frame.origin.x, self.toolbarDrawer.frame.origin.y + kNoteDrawerHeight, self.toolbarDrawer.frame.size.width, self.toolbarDrawer.frame.size.height)];}
+                             completion:^(BOOL finished){
+                                 // Re-enable touches on scroll view
+                                 self.eventScrollView.userInteractionEnabled = YES;
+                             }
+             ];
+            
+            // Hide button highlight
+            self.shareNoteButtonBackground.hidden = YES;
+            
+            isToolbarDrawerOpen = NO;
+        }
     } else {
         // Disable touches on scroll view
         self.eventScrollView.userInteractionEnabled = NO;
@@ -802,7 +808,19 @@ enum { kTagTabBase = 100 };
         NSDictionary* info = [notification userInfo];
         CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
         
-        [self.toolbarDrawer setFrame:CGRectMake(0, self.toolbarDrawer.frame.origin.y + kbSize.height, 320, self.toolbarDrawer.frame.size.height)];
+        // Slide down with keyboard
+        [UIView animateWithDuration:0.3 animations:^(){
+            [self.toolbarDrawer setFrame:CGRectMake(0, self.toolbarDrawer.frame.origin.y + kbSize.height + kNoteDrawerHeight, 320, self.toolbarDrawer.frame.size.height)];
+        } completion:^(BOOL finished) {
+            // Re-enable touches on scroll view
+            self.eventScrollView.userInteractionEnabled = YES;
+            
+            // Hide button highlight
+            self.shareNoteButtonBackground.hidden = YES;
+            
+            isToolbarDrawerOpen = NO;
+        }];
+       
     }
 }
 
