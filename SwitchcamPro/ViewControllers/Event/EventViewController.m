@@ -584,7 +584,7 @@ enum { kTagTabBase = 100 };
     if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
         SLComposeViewController *facebookSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
         
-        NSString *initialText = [NSString stringWithFormat:NSLocalizedString(@"Join the camera crew for %@ at %@!", @""), self.mission.artist.artistName, self.mission.venue.venueName];
+        NSString *initialText = [NSString stringWithFormat:NSLocalizedString(@"I'm making a video with %@ at %@ - check it out", @""), self.mission.artist.artistName, self.mission.venue.venueName];
         [facebookSheet setInitialText:initialText];
         [facebookSheet addURL:[NSURL URLWithString:self.mission.missionPageURL]];
         
@@ -599,7 +599,7 @@ enum { kTagTabBase = 100 };
     if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
         SLComposeViewController *tweetSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
         
-        NSString *initialText = [NSString stringWithFormat:NSLocalizedString(@"Join the camera crew for %@ at %@!", @""), self.mission.artist.artistName, self.mission.venue.venueName];
+        NSString *initialText = [NSString stringWithFormat:NSLocalizedString(@"I'm making a video with %@ at %@ - check it out", @""), self.mission.artist.artistName, self.mission.venue.venueName];
         [tweetSheet setInitialText:initialText];
         [tweetSheet addURL:[NSURL URLWithString:self.mission.missionPageURL]];
         
