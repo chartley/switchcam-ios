@@ -608,9 +608,9 @@ enum { kTagTabBase = 100 };
     if ([MFMailComposeViewController canSendMail]) {
         NSMutableString *body = [NSMutableString string];
         // add HTML before the link here with line breaks (\n)
-        [body appendFormat:NSLocalizedString(@"<h4>Join the camera crew for %@ at %@!</h4>\n", @""), self.mission.artist.artistName, self.mission.venue.venueName];
-        [body appendFormat:NSLocalizedString(@"<a href=\"%@\">View the event!</a>\n", @""), self.mission.missionPageURL];
-        [body appendString:NSLocalizedString(@"<div>Hope to see you there!</div>\n", @"")];
+        [body appendFormat:NSLocalizedString(@"<h4>I joined the camera crew to make a video with %@ at %@!</h4>\n", @""), self.mission.artist.artistName, self.mission.venue.venueName];
+        [body appendFormat:NSLocalizedString(@"Sign up to join me <a href=\"%@\">here.</a>\n", @""), self.mission.missionPageURL];
+        [body appendString:NSLocalizedString(@"<div>See you there!</div>\n", @"")];
         
         MFMailComposeViewController *viewController = [[MFMailComposeViewController alloc] init];
         [viewController setSubject:NSLocalizedString(@"Check out this Switchcam Event!", @"")];
