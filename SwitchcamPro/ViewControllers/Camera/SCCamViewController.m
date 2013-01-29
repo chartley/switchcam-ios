@@ -127,6 +127,8 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
     [recordButton release];
     [stillButton release];	
 	[focusModeLabel release];
+    [HUD removeFromSuperview];
+	[HUD release];
 	
     [super dealloc];
 }
@@ -237,9 +239,6 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
     // The hud will dispable all input on the view (use the higest view possible in the view hierarchy)
 	HUD = [[MBProgressHUD alloc] initWithView:self.view];
 	[self.view addSubview:HUD];
-	
-	// Regiser for HUD callbacks so we can remove it from the window at the right time
-	HUD.delegate = self;
     
     [super viewDidLoad];
 }
@@ -665,15 +664,6 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
 - (void)captureManagerDeviceConfigurationChanged:(SCCamCaptureManager *)captureManager
 {
 	[self updateButtonStates];
-}
-
-#pragma mark - MBProgressHUDDelegate methods
-
-- (void)hudWasHidden:(MBProgressHUD *)hud {
-	// Remove HUD from screen when the HUD was hidded
-	[HUD removeFromSuperview];
-	[HUD release];
-	HUD = nil;
 }
 
 @end
