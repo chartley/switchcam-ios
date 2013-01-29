@@ -333,6 +333,8 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
 - (IBAction)toggleRecording:(id)sender {
     // Start recording if there isn't a recording running. Stop recording if there is.
     [[self recordButton] setEnabled:NO];
+    [[self cameraToggleButton] setHidden:YES];
+    [[self cameraToggleImageView] setHidden:YES];
     
     if (![[[self captureManager] recorder] isRecording]) {
         // Start collecting data of our new video
@@ -636,8 +638,12 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
 {
     CFRunLoopPerformBlock(CFRunLoopGetMain(), kCFRunLoopCommonModes, ^(void) {
         [[self recordButton] setEnabled:YES];
+        [[self cameraToggleButton] setHidden:NO];
+        [[self cameraToggleImageView] setHidden:NO];
         
-        [HUD hide:YES];
+        if (![HUD isHidden]) {
+            [HUD hide:YES];
+        }
         
         // Save
         NSManagedObjectContext *context = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
