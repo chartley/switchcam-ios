@@ -107,28 +107,11 @@
     void (^joinCameraCrewFailureBlock)(AFHTTPRequestOperation *operation, NSError *error);
     
     joinCameraCrewSuccessBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
-        [self.blockingLoadingIndicator hide:YES];
-        
-        [self.imGoingButton setSelected:YES];
-        [self.imNotGoingButton setSelected:NO];
-        [self.goingDetailLabel setText:NSLocalizedString(@"We'll send you updates during the shoot and notify you when to start shooting.", @"")];
-        [self.goingDetailLabel sizeToFit];
+        // Do Nothing
     };
     
     joinCameraCrewFailureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
-        [self.blockingLoadingIndicator hide:YES];
-        
-        if ([error code] == NSURLErrorNotConnectedToInternet) {
-            NSString *title = NSLocalizedString(@"No Network Connection", @"");
-            NSString *message = NSLocalizedString(@"Please check your internet connection and try again.", @"");
-            
-            // Show alert
-            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            [alertView show];
-        } else {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Oops", @"") message:NSLocalizedString(@"We're having trouble connecting to the server, please try again.", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles:nil];
-            [alertView show];
-        }
+        // Fail silently
     };
     
     // Make Request and set params
@@ -142,6 +125,21 @@
     [operation setCompletionBlockWithSuccess:joinCameraCrewSuccessBlock failure:joinCameraCrewFailureBlock];
     
     [operation start];
+    
+    // Update buttons
+    [self.imGoingButton setSelected:YES];
+    [self.imNotGoingButton setSelected:NO];
+    [self.goingDetailLabel setText:NSLocalizedString(@"We'll send you updates during the shoot and notify you when to start shooting.", @"")];
+    [self.goingDetailLabel sizeToFit];
+    
+    // Update mission
+    [self.selectedMission setIsCameraCrew:[NSNumber numberWithBool:YES]];
+    [self.selectedMission setIsFollowing:[NSNumber numberWithBool:NO]];
+    
+    NSError *error = nil;
+    if (![[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext saveToPersistentStore:&error]) {
+        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+    }
 }
 
 - (void)followMission {
@@ -152,28 +150,12 @@
     void (^followMissionSuccessBlock)(AFHTTPRequestOperation *operation, id responseObject);
     void (^followMissionFailureBlock)(AFHTTPRequestOperation *operation, NSError *error);
     
-    followMissionSuccessBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
-        [self.blockingLoadingIndicator hide:YES];
-        [self.imGoingButton setSelected:NO];
-        [self.imNotGoingButton setSelected:YES];
-        [self.goingDetailLabel setText:NSLocalizedString(@"Bummer! Watch the activity feed during the event, and we'll notify you when the final event is built!", @"")];
-        [self.goingDetailLabel sizeToFit];
+    followMissionSuccessBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {        
+        // Do Nothing
     };
     
     followMissionFailureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
-        [self.blockingLoadingIndicator hide:YES];
-        
-        if ([error code] == NSURLErrorNotConnectedToInternet) {
-            NSString *title = NSLocalizedString(@"No Network Connection", @"");
-            NSString *message = NSLocalizedString(@"Please check your internet connection and try again.", @"");
-            
-            // Show alert
-            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            [alertView show];
-        } else {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Oops", @"") message:NSLocalizedString(@"We're having trouble connecting to the server, please try again.", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles:nil];
-            [alertView show];
-        }
+        // Fail silently
     };
     
     // Make Request and set params
@@ -187,6 +169,21 @@
     [operation setCompletionBlockWithSuccess:followMissionSuccessBlock failure:followMissionFailureBlock];
     
     [operation start];
+    
+    // Update buttons
+    [self.imGoingButton setSelected:NO];
+    [self.imNotGoingButton setSelected:YES];
+    [self.goingDetailLabel setText:NSLocalizedString(@"Bummer! Watch the activity feed during the event, and we'll notify you when the final event is built!", @"")];
+    [self.goingDetailLabel sizeToFit];
+    
+    // Update mission
+    [self.selectedMission setIsCameraCrew:[NSNumber numberWithBool:NO]];
+    [self.selectedMission setIsFollowing:[NSNumber numberWithBool:YES]];
+    
+    NSError *error = nil;
+    if (![[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext saveToPersistentStore:&error]) {
+        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+    }
 }
 
 #pragma mark - Helper Methods
