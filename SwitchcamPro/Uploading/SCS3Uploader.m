@@ -145,7 +145,7 @@ const int PART_SIZE = (5 * 1024 * 1024); // 5MB is the smallest part size allowe
         }
         @catch (AmazonClientException *exception) {
             [[NSNotificationCenter defaultCenter] postNotificationName:kSCS3UploadFailedNotification object:nil];
-            //  NSLog( @"single part Upload Failed"  );
+            NSLog( @"Single Upload Failed, Reason: %@", exception  );
             _doneUploadingToS3 = YES;
         }
     } else {
@@ -185,6 +185,7 @@ const int PART_SIZE = (5 * 1024 * 1024); // 5MB is the smallest part size allowe
             
         }
         @catch ( AmazonServiceException *exception ) {
+            NSLog( @"Multipart Upload Failed, Reason: %@", exception  );
             [[NSNotificationCenter defaultCenter] postNotificationName:kSCS3UploadFailedNotification object:videoKey];
         }
     }

@@ -22,6 +22,7 @@
 #import "SPInviteFriendsViewController.h"
 #import "UIPlaceholderTextView.h"
 #import "AppDelegate.h"
+#import "SPSerializable.h"
 
 enum { kTagTabBase = 100 };
 
@@ -672,6 +673,10 @@ enum { kTagTabBase = 100 };
             // Set time and length
             userVideo.recordStart = [NSDate date];
             userVideo.recordEnd = userVideo.recordStart;
+            
+            NSString *videoKey = [NSString stringWithFormat:@"%@%@", [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookIdKey], [SPSerializable formattedStringFromDate:userVideo.recordStart]];
+            
+            [userVideo setUploadPath:videoKey];
             
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
             [dateFormatter setDateFormat:@"yyyy-MM-dd-HH-mm-ss"];

@@ -166,10 +166,9 @@
         NSError *error;
         // Get Data
         NSData *uploadData = [[NSData alloc] initWithContentsOfFile:[self.userVideoToUpload compressedVideoURL] options:NSDataReadingMapped error:&error];
-        NSString *videoKey = [NSString stringWithFormat:@"%@%@", [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookIdKey], [SPSerializable formattedStringFromDate:self.userVideoToUpload.recordStart]];
         
         SCS3Uploader *uploader = [[SCS3Uploader alloc] init];
-        [uploader uploadVideo:uploadData withKey:videoKey];
+        [uploader uploadVideo:uploadData withKey:self.userVideoToUpload.uploadPath];
     }
 }
 

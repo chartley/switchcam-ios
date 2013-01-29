@@ -56,6 +56,8 @@
 #import "UserVideo.h"
 #import "Mission.h"
 #import "SPLocationManager.h"
+#import "SPConstants.h"
+#import "SPSerializable.h"
 
 static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
 
@@ -345,6 +347,10 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
         [currentRecording setLongitude:[NSNumber numberWithDouble:coordinate.longitude]];
         [currentRecording setMission:self.selectedMission];
         [currentRecording setRecordStart:[NSDate date]];
+        
+        NSString *videoKey = [NSString stringWithFormat:@"%@%@", [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookIdKey], [SPSerializable formattedStringFromDate:currentRecording.recordStart]];
+        
+        [currentRecording setUploadPath:videoKey];
         
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd-HH-mm-ss"];
