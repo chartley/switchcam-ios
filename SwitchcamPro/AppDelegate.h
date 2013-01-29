@@ -25,4 +25,7 @@ extern NSString *const SCAPINetworkRequestCanStartNotification;
 // Callback
 - (void)successfulLoginViewControllerChange;
 
+// Logout
+- (void)logoutUser;
+
 @end

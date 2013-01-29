@@ -13,6 +13,7 @@
 #import "LabelSwitchCell.h"
 #import "ProfileCell.h"
 #import "ButtonCell.h"
+#import "AppDelegate.h"
 
 @interface SettingsViewController ()
 
@@ -68,6 +69,12 @@
 
 - (IBAction)menuButtonAction:(id)sender {
     [self.slidingViewController anchorTopViewTo:ECRight];
+}
+
+- (IBAction)disconnectFacebookButtonAction:(id)sender {
+    // Sign out
+    AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    [appDelegate logoutUser];
 }
 
 #pragma mark - Helper Methods
@@ -136,6 +143,7 @@
                     [buttonCell.bigButton setBackgroundImage:buttonImageHighlight forState:UIControlStateHighlighted];
                     [buttonCell.bigButton setTitle:NSLocalizedString(@" Disconnect Facebook", @"") forState:UIControlStateNormal];
                     [buttonCell.bigButton setImage:[UIImage imageNamed:@"icn-fb"] forState:UIControlStateNormal];
+                    [buttonCell.bigButton addTarget:self action:@selector(disconnectFacebookButtonAction:) forControlEvents:UIControlEventTouchUpInside];
                     break;
                 }
                 default:

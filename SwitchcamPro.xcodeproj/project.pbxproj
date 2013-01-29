@@ -14,6 +14,7 @@
 		2456C469168F6F0D00F49C70 /* img-shoot-thumb-placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2456C465168F6F0D00F49C70 /* img-shoot-thumb-placeholder@2x.png */; };
 		2456C46A168F6F0D00F49C70 /* results-shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 2456C466168F6F0D00F49C70 /* results-shadow.png */; };
 		2456C46B168F6F0D00F49C70 /* results-shadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2456C467168F6F0D00F49C70 /* results-shadow@2x.png */; };
+		24B3CB1D16B7838700E233B7 /* NSObject+PerformBlockAfterDelay.m in Sources */ = {isa = PBXBuildFile; fileRef = 24B3CB1C16B7838700E233B7 /* NSObject+PerformBlockAfterDelay.m */; };
 		24F9C37316B66D630029D1E5 /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F9C37216B66D630029D1E5 /* UIPlaceHolderTextView.m */; };
 		24F9C37716B679F10029D1E5 /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F9C37616B679F10029D1E5 /* Activity.m */; };
 		24F9C37A16B67A030029D1E5 /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F9C37916B67A030029D1E5 /* Note.m */; };
@@ -420,6 +421,8 @@
 		2456C465168F6F0D00F49C70 /* img-shoot-thumb-placeholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img-shoot-thumb-placeholder@2x.png"; sourceTree = "<group>"; };
 		2456C466168F6F0D00F49C70 /* results-shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "results-shadow.png"; sourceTree = "<group>"; };
 		2456C467168F6F0D00F49C70 /* results-shadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "results-shadow@2x.png"; sourceTree = "<group>"; };
+		24B3CB1B16B7838700E233B7 /* NSObject+PerformBlockAfterDelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+PerformBlockAfterDelay.h"; path = "Helpers/NSObject+PerformBlockAfterDelay.h"; sourceTree = "<group>"; };
+		24B3CB1C16B7838700E233B7 /* NSObject+PerformBlockAfterDelay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+PerformBlockAfterDelay.m"; path = "Helpers/NSObject+PerformBlockAfterDelay.m"; sourceTree = "<group>"; };
 		24F9C37116B66D630029D1E5 /* UIPlaceHolderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIPlaceHolderTextView.h; path = Views/UIPlaceHolderTextView.h; sourceTree = "<group>"; };
 		24F9C37216B66D630029D1E5 /* UIPlaceHolderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIPlaceHolderTextView.m; path = Views/UIPlaceHolderTextView.m; sourceTree = "<group>"; };
 		24F9C37516B679F10029D1E5 /* Activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Activity.h; path = Model/ManagedObjects/Activity.h; sourceTree = "<group>"; };
@@ -1511,6 +1514,8 @@
 				C94F7C25169A234400D65EDC /* SPImageHelper.m */,
 				C94F7C5F169BF5B500D65EDC /* SPModelHelper.h */,
 				C94F7C60169BF5B500D65EDC /* SPModelHelper.m */,
+				24B3CB1B16B7838700E233B7 /* NSObject+PerformBlockAfterDelay.h */,
+				24B3CB1C16B7838700E233B7 /* NSObject+PerformBlockAfterDelay.m */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -2285,6 +2290,7 @@
 				24F9C37316B66D630029D1E5 /* UIPlaceHolderTextView.m in Sources */,
 				24F9C37716B679F10029D1E5 /* Activity.m in Sources */,
 				24F9C37A16B67A030029D1E5 /* Note.m in Sources */,
+				24B3CB1D16B7838700E233B7 /* NSObject+PerformBlockAfterDelay.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

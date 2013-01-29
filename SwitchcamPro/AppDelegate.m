@@ -26,6 +26,7 @@
 #import "StatusBarToastAndProgressView.h"
 #import "SCS3Uploader.h"
 #import "UIImage+H568.h"
+#import "NSObject+PerformBlockAfterDelay.h"
 
 NSString *const SCSessionStateChangedNotification = @"com.switchcam.switchcampro:SCSessionStateChangedNotification";
 NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switchcampro:SCAPINetworkRequestCanStartNotification";
@@ -447,6 +448,15 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
         default:
             return @"[Unknown]";
     }
+}
+
+- (void)logoutUser {
+    [FBSession.activeSession closeAndClearTokenInformation];
+    [self showLoginView];
+    
+    [self performBlock:^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:kAppFadeInCompleteNotification object:nil];
+    } afterDelay:0.5];
 }
 
 #pragma mark - RestKit

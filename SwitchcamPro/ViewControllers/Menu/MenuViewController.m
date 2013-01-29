@@ -13,6 +13,7 @@
 #import "SettingsViewController.h"
 #import "AboutViewController.h"
 #import "MenuPendingUploadDSD.h"
+#import "AppDelegate.h"
 
 @interface MenuViewController()
 @property (nonatomic, strong) NSArray *menuItems;
@@ -105,8 +106,12 @@
             break;
             
         case 4:
-            newTopViewController = [[MyEventsViewController alloc] init];
+        {
+            // Sign out
+            AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+            [appDelegate logoutUser];
             break;
+        }
             
         default:
             break;
