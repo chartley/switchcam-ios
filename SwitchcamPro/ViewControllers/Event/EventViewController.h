@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
 #import "SPTabView.h"
 #import "SCCamViewController.h"
 
@@ -16,7 +17,7 @@
 @class SPTabsView;
 @class UIPlaceHolderTextView;
 
-@interface EventViewController : UIViewController <SPTabViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate, SCCamViewControllerDelegate> {
+@interface EventViewController : UIViewController <SPTabViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate, SCCamViewControllerDelegate, MFMailComposeViewControllerDelegate> {
     NSArray *viewControllers;
     SPTabsView *tabsContainerView;
     SPTabStyle *tabStyle;

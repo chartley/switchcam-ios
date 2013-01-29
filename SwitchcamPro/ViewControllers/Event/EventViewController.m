@@ -1,7 +1,6 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <ImageIO/ImageIO.h>
 #import <AVFoundation/AVFoundation.h>
-#import <MessageUI/MessageUI.h>
 #import <Social/Social.h>
 #import "EventViewController.h"
 #import "SPTabStyle.h"
@@ -28,6 +27,7 @@ enum { kTagTabBase = 100 };
 
 #define kNoteDrawerHeight 121
 #define kBottomBarHeight 44
+#define kShareDrawerHeight 108 // Temp until invite facebook friends complete
 
 @interface EventViewController () {
     int topPictureHeight;
@@ -532,8 +532,8 @@ enum { kTagTabBase = 100 };
     if (isShareDrawerOpen) {
         // Close Drawer
         [UIView animateWithDuration:0.4 animations:^{
-            [self.shareDrawer setFrame:CGRectMake(self.shareDrawer.frame.origin.x, self.shareDrawer.frame.origin.y - self.shareDrawer.frame.size.height, self.shareDrawer.frame.size.width, self.shareDrawer.frame.size.height)];
-            [self.eventScrollView setFrame:CGRectMake(self.eventScrollView.frame.origin.x, self.eventScrollView.frame.origin.y - self.shareDrawer.frame.size.height, self.eventScrollView.frame.size.width, self.eventScrollView.frame.size.height)];}
+            [self.shareDrawer setFrame:CGRectMake(self.shareDrawer.frame.origin.x, self.shareDrawer.frame.origin.y - kShareDrawerHeight, self.shareDrawer.frame.size.width, self.shareDrawer.frame.size.height)];
+            [self.eventScrollView setFrame:CGRectMake(self.eventScrollView.frame.origin.x, self.eventScrollView.frame.origin.y - kShareDrawerHeight, self.eventScrollView.frame.size.width, self.eventScrollView.frame.size.height)];}
                          completion:^(BOOL finished){
                              // Re-enable touches on scroll view
                              self.eventScrollView.userInteractionEnabled = YES;
@@ -556,8 +556,8 @@ enum { kTagTabBase = 100 };
         
         // Open Drawer
         [UIView animateWithDuration:0.4 animations:^{
-            [self.shareDrawer setFrame:CGRectMake(self.shareDrawer.frame.origin.x, self.shareDrawer.frame.origin.y + self.shareDrawer.frame.size.height, self.shareDrawer.frame.size.width, self.shareDrawer.frame.size.height)];
-            [self.eventScrollView setFrame:CGRectMake(self.eventScrollView.frame.origin.x, self.eventScrollView.frame.origin.y + self.shareDrawer.frame.size.height, self.eventScrollView.frame.size.width, self.eventScrollView.frame.size.height)];}
+            [self.shareDrawer setFrame:CGRectMake(self.shareDrawer.frame.origin.x, self.shareDrawer.frame.origin.y + kShareDrawerHeight, self.shareDrawer.frame.size.width, self.shareDrawer.frame.size.height)];
+            [self.eventScrollView setFrame:CGRectMake(self.eventScrollView.frame.origin.x, self.eventScrollView.frame.origin.y + kShareDrawerHeight, self.eventScrollView.frame.size.width, self.eventScrollView.frame.size.height)];}
                          completion:nil
          ];
         
@@ -615,6 +615,7 @@ enum { kTagTabBase = 100 };
         MFMailComposeViewController *viewController = [[MFMailComposeViewController alloc] init];
         [viewController setSubject:NSLocalizedString(@"Check out this Switchcam Event!", @"")];
         [viewController setMessageBody:body isHTML:YES];
+        [viewController setMailComposeDelegate:self];
         [self presentViewController:viewController animated:YES completion:nil];
     } else {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"No Email Configured", @"") message:NSLocalizedString(@"You don't have an email account setup on this device.  Add one in your Settings app to share via email!", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles: nil];
