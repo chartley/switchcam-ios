@@ -66,16 +66,20 @@ enum { kTagTabBase = 100 };
     // Tabs
     EventInfoViewController *eventInfoViewController = [[EventInfoViewController alloc] init];
     [eventInfoViewController setSelectedMission:mission];
+    [eventInfoViewController setEventViewController:self];
     
     EventActivityViewController *eventActivityViewController = [[EventActivityViewController alloc] init];
     [eventActivityViewController setSelectedMission:mission];
+    [eventActivityViewController setEventViewController:self];
     activityViewController = eventActivityViewController;
     
     EventPeopleViewController *eventPeopleViewController = [[EventPeopleViewController alloc] init];
     [eventPeopleViewController setSelectedMission:mission];
-    
+    [eventPeopleViewController setEventViewController:self];
+
     EventVideosViewController *eventVideosViewController = [[EventVideosViewController alloc] init];
     [eventVideosViewController setSelectedMission:mission];
+    [eventVideosViewController setEventViewController:self];
     
     NSArray *viewController = [NSArray arrayWithObjects:eventInfoViewController, eventActivityViewController, eventPeopleViewController, eventVideosViewController, nil];
     
@@ -364,6 +368,19 @@ enum { kTagTabBase = 100 };
     AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     self.loadingIndicator = [[MBProgressHUD alloc] initWithWindow:appDelegate.window];
     [appDelegate.window addSubview:self.loadingIndicator];
+    
+    // Show / Hide Participation Drawer
+    if ([[self.mission isCameraCrew] boolValue]) {
+        int eventScrollViewHeight = self.view.frame.size.height - self.toolbarDrawer.frame.size.height + kNoteDrawerHeight;
+        [self.eventScrollView setFrame:CGRectMake(self.eventScrollView.frame.origin.x, self.eventScrollView.frame.origin.y, self.eventScrollView.frame.size.width, eventScrollViewHeight)];
+        
+        [self.toolbarDrawer setAlpha:1.0];
+    } else {
+        int eventScrollViewHeight = self.view.frame.size.height;
+        [self.eventScrollView setFrame:CGRectMake(self.eventScrollView.frame.origin.x, self.eventScrollView.frame.origin.y, self.eventScrollView.frame.size.width, eventScrollViewHeight)];
+        
+        [self.toolbarDrawer setAlpha:0.0];
+    }
     
     [super viewDidLoad];
 }
@@ -834,6 +851,32 @@ enum { kTagTabBase = 100 };
 
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Participate Drawer
+
+- (void)showParticipateDrawer {
+    [UIView animateWithDuration:0.25 animations:^{
+        int eventScrollViewHeight = self.view.frame.size.height - self.toolbarDrawer.frame.size.height + kNoteDrawerHeight;
+        [self.eventScrollView setFrame:CGRectMake(self.eventScrollView.frame.origin.x, self.eventScrollView.frame.origin.y, self.eventScrollView.frame.size.width, eventScrollViewHeight)];
+        
+        [self.toolbarDrawer setAlpha:1.0];
+    }
+                     completion:(void (^)(BOOL)) ^{
+                     }
+     ];
+}
+
+- (void)hideParticipateDrawer {
+    [UIView animateWithDuration:0.25 animations:^{
+        int eventScrollViewHeight = self.view.frame.size.height;
+        [self.eventScrollView setFrame:CGRectMake(self.eventScrollView.frame.origin.x, self.eventScrollView.frame.origin.y, self.eventScrollView.frame.size.width, eventScrollViewHeight)];
+        
+        [self.toolbarDrawer setAlpha:0.0];
+    }
+                     completion:(void (^)(BOOL)) ^{
+                     }
+     ];
 }
 
 @end

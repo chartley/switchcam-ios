@@ -53,4 +53,7 @@
                         style:(SPTabStyle *)style;
 - (id)initWithMission:(Mission*)mission;
 
+- (void)showParticipateDrawer;
+- (void)hideParticipateDrawer;
+
 @end

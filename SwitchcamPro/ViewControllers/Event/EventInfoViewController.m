@@ -132,6 +132,9 @@
     [self.goingDetailLabel setText:NSLocalizedString(@"We'll send you updates during the shoot and notify you when to start shooting.", @"")];
     [self.goingDetailLabel sizeToFit];
     
+    // Update Participation Drawer
+    [self.eventViewController showParticipateDrawer];
+    
     // Update mission
     [self.selectedMission setIsCameraCrew:[NSNumber numberWithBool:YES]];
     [self.selectedMission setIsFollowing:[NSNumber numberWithBool:NO]];
@@ -175,6 +178,9 @@
     [self.imNotGoingButton setSelected:YES];
     [self.goingDetailLabel setText:NSLocalizedString(@"Bummer! Watch the activity feed during the event, and we'll notify you when the final event is built!", @"")];
     [self.goingDetailLabel sizeToFit];
+    
+    // Update Participation Drawer
+    [self.eventViewController hideParticipateDrawer];
     
     // Update mission
     [self.selectedMission setIsCameraCrew:[NSNumber numberWithBool:NO]];

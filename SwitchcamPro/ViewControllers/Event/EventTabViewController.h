@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EventViewController.h"
 
 @class Mission;
 
@@ -14,5 +15,6 @@
 
 @property (strong, nonatomic) IBOutlet Mission *selectedMission;
 @property (strong, nonatomic) IBOutlet UIScrollView *tabScrollView;
+@property (strong, nonatomic) EventViewController *eventViewController;
 
 @end
