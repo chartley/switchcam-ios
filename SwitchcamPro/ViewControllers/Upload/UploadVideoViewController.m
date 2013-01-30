@@ -21,7 +21,9 @@
 
 #define kBufferBetweenThumbnailLabels 10
 
-@interface UploadVideoViewController ()
+@interface UploadVideoViewController () {
+    UITextField *activeTextField;
+}
 
 @property (strong, nonatomic) UIProgressView *compressProgressView;
 @property (strong, nonatomic) UILabel *compressProgressLabel;
@@ -115,6 +117,27 @@
     
     // Set Toolbar
     [self.headerToolbar setBackgroundImage:[UIImage imageNamed:@"bg-appheader"] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
+    
+    // Scrollview contentsize
+    if (IS_IPHONE_5) {
+        self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width, 568-44-20);
+    } else {
+        self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width, 480-44-20);
+    }
+
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    // Observe keyboard
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -398,7 +421,42 @@
     [self.compressProgressLabel setText:progressString];
 }
 
-#pragma mark - UITextField Delegate
+#pragma mark - Observers
+
+- (void)keyboardWillShow:(NSNotification *)notification {
+    NSDictionary* info = [notification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
+    self.scrollView.contentInset = contentInsets;
+    self.scrollView.scrollIndicatorInsets = contentInsets;
+    
+    // If active text field is hidden by keyboard, scroll it so it's visible
+    CGRect rc = [activeTextField bounds];
+    rc = [activeTextField convertRect:rc toView:self.scrollView];
+    [self.scrollView scrollRectToVisible:rc animated:YES];
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification {
+    [UIView animateWithDuration:0.25 animations:^{
+        UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+        self.scrollView.contentInset = contentInsets;
+        self.scrollView.scrollIndicatorInsets = contentInsets;
+    }
+                     completion:(void (^)(BOOL)) ^{
+                     }
+     ];
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    activeTextField = textField;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    activeTextField = nil;
+}
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];

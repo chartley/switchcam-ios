@@ -29,3 +29,8 @@ blue: b/255.0f alpha: a]
 
 // Notifications
 #define kAppFadeInCompleteNotification @"AppFadeInCompleteNotification"
+
+// Device
+#define HEIGHT_IPHONE_5 568
+#define IS_IPHONE   ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
+#define IS_IPHONE_5 ([[UIScreen mainScreen] bounds ].size.height == HEIGHT_IPHONE_5 )

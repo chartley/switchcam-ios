@@ -85,10 +85,10 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     // Observe keyboard
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-    [super viewWillAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -813,9 +813,14 @@
 }
 
 - (void)keyboardWillHide:(NSNotification *)notification {
-    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
-    self.eventActivityTableView.contentInset = contentInsets;
-    self.eventActivityTableView.scrollIndicatorInsets = contentInsets;
+    [UIView animateWithDuration:0.25 animations:^{
+        UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+        self.eventActivityTableView.contentInset = contentInsets;
+        self.eventActivityTableView.scrollIndicatorInsets = contentInsets;
+    }
+                     completion:(void (^)(BOOL)) ^{
+                     }
+     ];
 }
 
 #pragma mark - UITextFieldDelegate

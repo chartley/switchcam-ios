@@ -19,6 +19,8 @@
 @property (strong, nonatomic) IBOutlet UIImageView *videoThumbnailImageView;
 @property (strong, nonatomic) IBOutlet UIToolbar *headerToolbar;
 @property (strong, nonatomic) IBOutlet UILabel *headerToolbarLabel;
+@property (strong, nonatomic) IBOutlet UITableView *uploadTableView;
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 
 - (IBAction)backButtonAction:(id)sender;
 
