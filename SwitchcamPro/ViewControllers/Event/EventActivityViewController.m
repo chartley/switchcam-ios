@@ -32,7 +32,9 @@
 
 @interface EventActivityViewController () <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate> {
     int postCommentRow;
+    UITextField *activeTextField;
 }
+
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
 @end
@@ -83,7 +85,16 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    // Observe keyboard
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     [super viewWillAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
 #pragma mark - Network Calls
@@ -593,7 +604,7 @@
             [activityPostCommentCell.postCommentButton setBackgroundImage:highlightButtonImage forState:UIControlStateSelected];
             [activityPostCommentCell.postCommentButton.titleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Semibold" size:17]];
             
-
+            [activityPostCommentCell.commentTextField setDelegate:self];
         } else {
             // Comment Row
             NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"ActivityCommentCell" owner:self options:nil];
@@ -729,6 +740,9 @@
             postCommentRow = indexPath.row;
             
             animationType = UITableViewRowAnimationMiddle;
+            
+            // If text field is hidden, scroll it so it's visible
+            [self.eventActivityTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:postCommentRow+1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
         } else {
             indexPathsToShowAndHide = [NSArray arrayWithObject:indexPath];
             
@@ -751,6 +765,9 @@
         // Set row for height adjustment
         postCommentRow = indexPath.row;
         animationType = UITableViewRowAnimationMiddle;
+        
+        // If text field is hidden, scroll it so it's visible
+        [self.eventActivityTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:postCommentRow+1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     }
      
     // Show Post Comment / Hide previous post comment if open
@@ -777,6 +794,44 @@
     }
     
     [self addComment:commentToPost toActivity:selectedActivity];
+}
+
+#pragma mark - Observers
+
+- (void)keyboardWillShow:(NSNotification *)notification {
+    NSDictionary* info = [notification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
+    self.eventActivityTableView.contentInset = contentInsets;
+    self.eventActivityTableView.scrollIndicatorInsets = contentInsets;
+    
+    // If active text field is hidden by keyboard, scroll it so it's visible
+    CGRect rc = [activeTextField bounds];
+    rc = [activeTextField convertRect:rc toView:self.eventActivityTableView];
+    [self.eventActivityTableView scrollRectToVisible:rc animated:YES];
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification {
+    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+    self.eventActivityTableView.contentInset = contentInsets;
+    self.eventActivityTableView.scrollIndicatorInsets = contentInsets;
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    activeTextField = textField;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    activeTextField = nil;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    
+    return YES;
 }
 
 @end

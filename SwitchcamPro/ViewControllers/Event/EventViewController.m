@@ -402,6 +402,12 @@ enum { kTagTabBase = 100 };
     [self.navigationItem setRightBarButtonItem:shareBarButtonItem];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+}
+
 #pragma mark - Network Requests
 
 - (void)postNote:(NSString *)note {
