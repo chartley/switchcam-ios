@@ -635,6 +635,8 @@ enum { kTagTabBase = 100 };
 
 - (IBAction)shareEmailButtonAction:(id)sender {
     if ([MFMailComposeViewController canSendMail]) {
+        NSString *subject = [NSString stringWithFormat:NSLocalizedString(@"Video with %@?", @""), self.mission.artist.artistName];
+
         NSMutableString *body = [NSMutableString string];
         // add HTML before the link here with line breaks (\n)
         [body appendFormat:NSLocalizedString(@"<h4>I joined the camera crew to make a video with %@ at %@!</h4>\n", @""), self.mission.artist.artistName, self.mission.venue.venueName];
@@ -642,7 +644,7 @@ enum { kTagTabBase = 100 };
         [body appendString:NSLocalizedString(@"<div>See you there!</div>\n", @"")];
         
         MFMailComposeViewController *viewController = [[MFMailComposeViewController alloc] init];
-        [viewController setSubject:NSLocalizedString(@"Check out this Switchcam Event!", @"")];
+        [viewController setSubject:subject];
         [viewController setMessageBody:body isHTML:YES];
         [viewController setMailComposeDelegate:self];
         [self presentViewController:viewController animated:YES completion:nil];
