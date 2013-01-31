@@ -31,12 +31,13 @@
 #define kNoteBottomMargin 75
 #define kNoteTopMargin 30
 
-@interface EventActivityViewController () <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate> {
+@interface EventActivityViewController () <UITableViewDelegate, UITableViewDataSource> {
     int postCommentRow;
     UITextField *activeTextField;
 }
 
-@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, strong) RKPaginator *activityPaginator;
+@property (nonatomic, strong) NSMutableArray *activities;
 
 @end
 
@@ -65,16 +66,17 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"mission == %@", self.selectedMission];
     fetchRequest.predicate = predicate;
     fetchRequest.sortDescriptors = @[descriptor];
-    fetchRequest.fetchLimit = 30;
-    NSError *error = nil;
+    fetchRequest.fetchLimit = 10;
     
     // Setup fetched results
-    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
-                                                                        managedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext
-                                                                          sectionNameKeyPath:nil
-                                                                                   cacheName:nil];
-    [self.fetchedResultsController setDelegate:self];
-    [self.fetchedResultsController performFetch:&error];
+    NSManagedObjectContext *managedObjectContext = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
+    [fetchRequest setPredicate:predicate];
+    
+    NSError *error = nil;
+    NSArray *results = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (error == nil) {
+        self.activities = [NSMutableArray arrayWithArray:results];
+    }
     
     [self getActivity];
 }
@@ -101,14 +103,16 @@
 #pragma mark - Network Calls
 
 - (void)getActivity {
-    NSMutableDictionary *parameters = nil;
-    NSString *path = [NSString stringWithFormat:@"mission/%@/activity/", [self.selectedMission.missionId stringValue]];
+    NSString *path = [NSString stringWithFormat:@"mission/%@/activity/?page=:currentPage", [self.selectedMission.missionId stringValue]];
     
-    // Load the object model via RestKit
-    [[RKObjectManager sharedManager] getObjectsAtPath:path parameters:parameters success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+    // Completion Blocks
+    void (^getActivitySuccessBlock)(RKPaginator *paginator, NSArray *objects, NSUInteger page);
+    void (^getActivityFailureBlock)(RKPaginator *paginator, NSError *error);
+    
+    getActivitySuccessBlock = ^(RKPaginator *paginator, NSArray *objects, NSUInteger page) {
         
         // Set the row height for each activity
-        for (Activity *activity in [mappingResult array]) {
+        for (Activity *activity in objects) {
             if (activity.actionObjectContentTypeName == nil || [activity.actionObjectContentTypeName isEqualToString:@""]) {
                 activity.rowHeight = [NSNumber numberWithInt:kActivityActionCellRowHeight];
             } else if ([activity.actionObjectContentTypeName isEqualToString:@"director.recordingsession"]) {
@@ -130,15 +134,36 @@
             activity.mission = self.selectedMission;
         }
         
+        if ([paginator currentPage] == 1) {
+            self.activities = [NSMutableArray arrayWithArray:objects];
+        } else {
+            [self.activities addObjectsFromArray:objects];
+        }
+        
         // Save row height data
         NSError *error = nil;
         if (![[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext saveToPersistentStore:&error]) {
             NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
         }
         
+        // Reset load more view
+        [self.loadMoreLabel setText:NSLocalizedString(@"Load More", @"")];
+        [self.activityIndicatorView stopAnimating];
+        
+        // Check if we can load more
+        if ([paginator hasNextPage]) {
+            // Set footer for load more
+            [self.eventActivityTableView setTableFooterView:self.loadMoreView];
+        } else {
+            // Hide footer for load more
+            [self.eventActivityTableView setTableFooterView:nil];
+        }
+        
         RKLogInfo(@"Load complete: Table should refresh...");
         [self.eventActivityTableView reloadData];
-    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+    };
+    
+    getActivityFailureBlock = ^(RKPaginator *paginator, NSError *error) {
         RKLogError(@"Load failed with error: %@", error);
         // Error message
         if ([error code] == NSURLErrorNotConnectedToInternet) {
@@ -152,7 +177,12 @@
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Oops", @"") message:NSLocalizedString(@"We're having trouble connecting to the server, please try again.", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles:nil];
             [alertView show];
         }
-    }];
+    };
+    
+    // Load the object model via RestKit
+    self.activityPaginator = [[RKObjectManager sharedManager] paginatorWithPathPattern:path];
+    [self.activityPaginator setCompletionBlockWithSuccess:getActivitySuccessBlock failure:getActivityFailureBlock];
+    [self.activityPaginator loadPage:1];
 }
 
 - (void)likeActivity:(Activity*)likedActivity {
@@ -303,14 +333,21 @@
     [operation start];
 }
 
+#pragma mark - IBActions
+
+- (IBAction)loadMoreButtonAction:(id)sender {
+    [self.loadMoreLabel setText:NSLocalizedString(@"Loading...", @"")];
+    [self.activityIndicatorView startAnimating];
+    [self.activityPaginator loadNextPage];
+}
+
 #pragma mark - Helper Methods
 
 - (void)configureCell:(UITableViewCell *)cell forTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
     // We add rows for comments ahead of time, divide and floor to get the correct row for our fetched results
     int row = floor(indexPath.row / 5.0);
-    NSIndexPath *fetchedResultsIndexPath = [NSIndexPath indexPathForRow:row inSection:0];
     
-    Activity *activity = [self.fetchedResultsController objectAtIndexPath:fetchedResultsIndexPath];
+    Activity *activity = [self.activities objectAtIndex:row];
 
     ActivityCell *activityCell = (ActivityCell*)cell;
     
@@ -491,9 +528,8 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     // We add rows for comments ahead of time, divide and floor to get the correct row for our fetched results
     int row = floor(indexPath.row / 5.0);
-    NSIndexPath *fetchedResultsIndexPath = [NSIndexPath indexPathForRow:row inSection:0];
     
-    Activity *activity = [self.fetchedResultsController objectAtIndexPath:fetchedResultsIndexPath];
+    Activity *activity = [self.activities objectAtIndex:row];
     
     if (indexPath.row % 5 == 0) {
         // Main Post
@@ -526,7 +562,7 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [self.fetchedResultsController.sections count];
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)table numberOfRowsInSection:(NSInteger)section {
@@ -534,17 +570,16 @@
     // 1 Row Main Post
     // 3 Rows Comments
     // 1 Row Post Comment
-    id<NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController.sections objectAtIndex:section];
-    return [sectionInfo numberOfObjects] * 5;
+    
+    return [self.activities count] * 5;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // We add rows for comments ahead of time, divide and floor to get the correct row for our fetched results
     int row = floor(indexPath.row / 5.0);
-    NSIndexPath *fetchedResultsIndexPath = [NSIndexPath indexPathForRow:row inSection:0];
     
-    Activity *activity = [self.fetchedResultsController objectAtIndexPath:fetchedResultsIndexPath];
+    Activity *activity = [self.activities objectAtIndex:row];
 
     UITableViewCell *cell = nil;
 
@@ -716,9 +751,8 @@
     AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     
     int row = [activityCell tag];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
     
-    Activity *activity = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    Activity *activity = [self.activities objectAtIndex:row];
     
     UserVideo *userVideo = activity.userVideo;
     
@@ -763,8 +797,8 @@
 }
 
 - (void)likeButtonPressed:(ActivityCell*)activityCell {
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:activityCell.tag inSection:0];
-    Activity *selectedActivity = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    int row = [activityCell tag];
+    Activity *selectedActivity = [self.activities objectAtIndex:row];
     
     // Send Network Request
     if (activityCell.likeButton.selected) {
@@ -846,8 +880,8 @@
 }
 
 - (void)postCommentButtonPressed:(ActivityPostCommentCell*)activityPostCommentCell {
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:activityPostCommentCell.tag inSection:0];
-    Activity *selectedActivity = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    int row = activityPostCommentCell.tag;
+    Activity *selectedActivity = [self.activities objectAtIndex:row];
     
     NSString *commentToPost = activityPostCommentCell.commentTextField.text;
     

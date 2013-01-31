@@ -656,6 +656,13 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
      @"state": @"state",
      }];
     
+    // Pagination
+    RKObjectMapping *paginationMapping = [RKObjectMapping mappingForClass:[RKPaginator class]];
+    [paginationMapping addPropertyMapping:[RKAttributeMapping attributeMappingFromKeyPath:@"current_page" toKeyPath:@"currentPage"]];
+    [paginationMapping addPropertyMapping:[RKAttributeMapping attributeMappingFromKeyPath:@"items_per_page" toKeyPath:@"perPage"]];
+    [paginationMapping addPropertyMapping:[RKAttributeMapping attributeMappingFromKeyPath:@"total" toKeyPath:@"objectCount"]];
+    [[RKObjectManager sharedManager] setPaginationMapping:paginationMapping];
+    
     // Register our mappings with the provider
     RKRequestDescriptor *userVideoRequestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:userVideoRequestMapping objectClass:[UserVideo class] rootKeyPath:@"uservideo"];
     
