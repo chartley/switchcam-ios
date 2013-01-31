@@ -137,9 +137,22 @@ enum { kTagTabBase = 100 };
     
     EventTabViewController *viewController = [self.viewControllers objectAtIndex:currentTabIndex];
     
+    // First run won't have a recognizer
+    if (self.tabsPanGestureRecognizer != nil) {
+        // Remove Pan Gesture Recognizer
+        [self.currentTabScrollView removeGestureRecognizer:self.tabsPanGestureRecognizer];
+    }
+
+    
     [self.currentView removeFromSuperview];
     self.currentView = (UIScrollView*)viewController.view;
     self.currentTabScrollView = (UIScrollView*)viewController.tabScrollView;
+    
+    // First run won't have a recognizer
+    if (self.tabsPanGestureRecognizer != nil) {
+        // Add Pan Gesture Recognizer
+        [self.currentTabScrollView addGestureRecognizer:self.tabsPanGestureRecognizer];
+    }
     
     self.currentView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     self.currentView.frame = CGRectMake(0, topPictureHeight + self.tabsContainerView.bounds.size.height, self.view.bounds.size.width, self.eventScrollView.bounds.size.height - self.tabsContainerView.bounds.size.height);
@@ -921,7 +934,6 @@ enum { kTagTabBase = 100 };
         float newOffsetY =  (location.y - self.tabsContainerView.frame.size.height - topPictureHeight - 44 - 20);
         newOffsetY = newOffsetY < bottomOfTabs ? bottomOfTabs : newOffsetY;
         newOffsetY = newOffsetY > 0 ? 0 : newOffsetY;
-        NSLog(@"New Offset:%f", newOffsetY);
         self.eventScrollView.contentOffset = CGPointMake(0, (-1)*newOffsetY);
         
         savedOffset = self.eventScrollView.contentOffset.y > topPictureHeight ? topPictureHeight : self.eventScrollView.contentOffset.y;

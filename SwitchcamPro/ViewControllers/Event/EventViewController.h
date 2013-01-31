@@ -17,7 +17,7 @@
 @class SPTabsView;
 @class UIPlaceHolderTextView;
 
-@interface EventViewController : UIViewController <SPTabViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate, SCCamViewControllerDelegate, MFMailComposeViewControllerDelegate> {
+@interface EventViewController : UIViewController <SPTabViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate, SCCamViewControllerDelegate, MFMailComposeViewControllerDelegate, UIGestureRecognizerDelegate> {
     NSArray *viewControllers;
     SPTabsView *tabsContainerView;
     SPTabStyle *tabStyle;
