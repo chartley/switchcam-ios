@@ -15,6 +15,7 @@
 #import "AppDelegate.h"
 #import "Mission.h"
 #import "UserVideo.h"
+#import "Reachability.h"
 
 
 @interface EventVideosViewController () <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate>
@@ -301,7 +302,28 @@
         //TODO Verify asset url is good 
         previewRecordingURL = [NSURL URLWithString:[recording localVideoAssetURL]];
     } else {
-        previewRecordingURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://s3.amazonaws.com/%@/%@", [recording uploadS3Bucket], [recording uploadPath]]];
+        Reachability *reachability = [Reachability reachabilityForInternetConnection];
+        [reachability startNotifier];
+        
+        NetworkStatus status = [reachability currentReachabilityStatus];
+        
+        if(status == NotReachable) {
+            // No internet
+            // Error
+            NSString *title = NSLocalizedString(@"No Network Connection", @"");
+            NSString *message = NSLocalizedString(@"Please check your internet connection and try again.", @"");
+            
+            // Show alert
+            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles:nil];
+            [alertView show];
+            return;
+        } else if (status == ReachableViaWiFi) {
+            // WiFi
+            previewRecordingURL = [NSURL URLWithString:[recording videoHDURL]];
+        } else if (status == ReachableViaWWAN) {
+            // 3G
+            previewRecordingURL = [NSURL URLWithString:[recording videoSDURL]];
+        }
     }
     
     // Preview

@@ -561,6 +561,8 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
      @"upload_s3_bucket": @"uploadS3Bucket",
      @"upload_path": @"uploadPath",
      @"size_mb": @"sizeMegaBytes",
+     @"video_hd": @"videoHDURL",
+     @"video_sd": @"videoSDURL",
      }];
     [userVideoMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"uploaded_by" toKeyPath:@"uploadedBy" withMapping:userMapping]];
     // If source and destination key path are the same, we can simply add a string to the array

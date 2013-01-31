@@ -45,7 +45,9 @@
 @property (nonatomic, retain) NSString * uploadDestination;
 @property (nonatomic, retain) NSString * uploadPath;
 @property (nonatomic, retain) NSString * uploadS3Bucket;
+@property (nonatomic, retain) NSString * videoHDURL;
 @property (nonatomic, retain) NSString * videoId;
+@property (nonatomic, retain) NSString * videoSDURL;
 @property (nonatomic, retain) NSNumber * state;
 @property (nonatomic, retain) Mission *mission;
 @property (nonatomic, retain) User *uploadedBy;

@@ -33,7 +33,9 @@
 @dynamic uploadDestination;
 @dynamic uploadPath;
 @dynamic uploadS3Bucket;
+@dynamic videoHDURL;
 @dynamic videoId;
+@dynamic videoSDURL;
 @dynamic state;
 @dynamic mission;
 @dynamic uploadedBy;
