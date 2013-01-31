@@ -195,6 +195,13 @@
     [pendingUploadCell.pendingUploadTimeLabel sizeToFit];
     [pendingUploadCell.pendingUploadLengthLabel setFrame:CGRectMake(pendingUploadCell.pendingUploadTimeLabel.frame.origin.x + pendingUploadCell.pendingUploadTimeLabel.frame.size.width + kBufferBetweenThumbnailLabels, pendingUploadCell.pendingUploadLengthLabel.frame.origin.y, pendingUploadCell.pendingUploadLengthLabel.frame.size.width, pendingUploadCell.pendingUploadLengthLabel.frame.size.height)];
     
+    // Setup Length String
+    int durationSeconds = [[userVideo durationSeconds] intValue];
+    int seconds = (durationSeconds) % 60;
+    int minutes = (durationSeconds - seconds) / 60;
+    NSString *durationString = [NSString stringWithFormat:@"%d:%.2d", minutes, seconds];
+    
+    [pendingUploadCell.pendingUploadLengthLabel setText:durationString];
     [pendingUploadCell.pendingUploadLengthLabel sizeToFit];
 }
 

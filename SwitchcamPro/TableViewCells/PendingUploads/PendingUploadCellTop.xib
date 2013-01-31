@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1536</int>
-		<string key="IBDocument.SystemVersion">12C60</string>
+		<string key="IBDocument.SystemVersion">11G63b</string>
 		<string key="IBDocument.InterfaceBuilderVersion">2844</string>
-		<string key="IBDocument.AppKitVersion">1187.34</string>
-		<string key="IBDocument.HIToolboxVersion">625.00</string>
+		<string key="IBDocument.AppKitVersion">1138.51</string>
+		<string key="IBDocument.HIToolboxVersion">569.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			<string key="NS.object.0">1930</string>
@@ -155,7 +155,7 @@
 							<object class="IBUILabel" id="966771469">
 								<reference key="NSNextResponder" ref="1042668938"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{79, 152}, {49, 21}}</string>
+								<string key="NSFrame">{{79, 151}, {49, 21}}</string>
 								<reference key="NSSuperview" ref="1042668938"/>
 								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -678,6 +678,8 @@
 						<string key="uploadButton">UIButton</string>
 						<string key="uploadLabel">UILabel</string>
 						<string key="videoThumbnailImageView">UIImageView</string>
+						<string key="yourVideosCountLabel">UILabel</string>
+						<string key="yourVideosLabel">UILabel</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="deleteButtonButton">
@@ -723,6 +725,14 @@
 						<object class="IBToOneOutletInfo" key="videoThumbnailImageView">
 							<string key="name">videoThumbnailImageView</string>
 							<string key="candidateClassName">UIImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="yourVideosCountLabel">
+							<string key="name">yourVideosCountLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="yourVideosLabel">
+							<string key="name">yourVideosLabel</string>
+							<string key="candidateClassName">UILabel</string>
 						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">

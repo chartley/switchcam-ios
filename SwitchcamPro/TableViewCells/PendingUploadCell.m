@@ -54,7 +54,7 @@
     [self.pendingUploadTimeLabel setShadowColor:[UIColor blackColor]];
     [self.pendingUploadTimeLabel setShadowOffset:CGSizeMake(0, -1)];
     
-    [self.pendingUploadLengthLabel setFont:[UIFont fontWithName:@"SourceSansPro-It" size:12]];
+    [self.pendingUploadLengthLabel setFont:[UIFont fontWithName:@"SourceSansPro-It" size:13]];
     [self.pendingUploadLengthLabel setTextColor:RGBA(105, 105, 105, 1)];
     [self.pendingUploadLengthLabel setShadowColor:[UIColor blackColor]];
     [self.pendingUploadLengthLabel setShadowOffset:CGSizeMake(0, -1)];

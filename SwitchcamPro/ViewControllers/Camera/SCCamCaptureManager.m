@@ -580,6 +580,9 @@ bail:
     
     // Set time and length
     self.currentRecording.recordEnd = [NSDate date];
+    
+    NSTimeInterval durationSeconds = [self.currentRecording.recordEnd timeIntervalSinceDate:self.currentRecording.recordStart];
+    self.currentRecording.durationSeconds = [NSNumber numberWithDouble:durationSeconds];
 
     // Set size when we access info from library and capture thumbnail
     ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *myasset) {
