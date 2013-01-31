@@ -35,6 +35,8 @@ enum { kTagTabBase = 100 };
     BOOL isShareDrawerOpen;
     BOOL isToolbarDrawerOpen;
     EventActivityViewController *activityViewController;
+    BOOL isCurrentTabScrollViewScrolling;
+    int savedOffset;
 }
 
 @property (nonatomic, retain) NSArray *viewControllers;
@@ -42,6 +44,8 @@ enum { kTagTabBase = 100 };
 @property (nonatomic, assign, readwrite) UIScrollView *currentTabScrollView;
 @property (nonatomic, retain) SPTabsView *tabsContainerView;
 @property (strong, nonatomic) MBProgressHUD *loadingIndicator;
+@property (strong, nonatomic) UIPanGestureRecognizer *tabsPanGestureRecognizer;
+
 
 @end
 
@@ -382,6 +386,12 @@ enum { kTagTabBase = 100 };
         
         [self.toolbarDrawer setAlpha:0.0];
     }
+    
+    // Pan for tabs
+    self.tabsPanGestureRecognizer = [[UIPanGestureRecognizer alloc] init];
+    [self.tabsPanGestureRecognizer setDelegate:self];
+    [self.tabsPanGestureRecognizer addTarget:self action:@selector(panning:)];
+    [self.currentTabScrollView addGestureRecognizer:self.tabsPanGestureRecognizer];
     
     [super viewDidLoad];
 }
@@ -777,13 +787,12 @@ enum { kTagTabBase = 100 };
 #pragma mark - ScrollView Delegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if ([scrollView isEqual: self.eventScrollView]) {
+    if ([scrollView isEqual: self.eventScrollView] && !isCurrentTabScrollViewScrolling) {
         // Check if we have scrolled past the image pass the rest of the scroll to tab scrollview
         int offset = self.eventScrollView.contentOffset.y - self.eventImageView.frame.size.height;
  	    if (offset > 0) {
             // Keep the tabs at the top
             [self.eventScrollView setContentOffset:CGPointMake(0, self.eventImageView.frame.size.height)];
-            [self.eventScrollView setScrollEnabled:NO];
             
             // Scroll the bottom view
             int scrollableAmount = self.currentTabScrollView.contentSize.height - self.currentTabScrollView.frame.size.height;
@@ -794,9 +803,13 @@ enum { kTagTabBase = 100 };
             // Are we further than we scan scroll down
             if ((self.currentTabScrollView.contentOffset.y + offset) > scrollableAmount) {
                 [self.currentTabScrollView setContentOffset:CGPointMake(0, scrollableAmount)];
+                savedOffset = scrollableAmount;
             } else {
                 [self.currentTabScrollView setContentOffset:CGPointMake(0, offset)];
+                savedOffset = scrollableAmount;
             }
+        } else {
+            savedOffset = self.eventScrollView.contentOffset.y;
         }
     }
 }
@@ -880,6 +893,71 @@ enum { kTagTabBase = 100 };
                      completion:(void (^)(BOOL)) ^{
                      }
      ];
+}
+
+#pragma mark - UIGestureRecognizer
+
+// Full disclosure, this is pretty complex logic for keeping
+// two scroll views moving back and forth. I listen to scrolling
+// while the tab scroll view moves and move the event scroll view
+// when the scroll continues outside the tab scroll view.
+// I keep track of the scroll view offset so I know where I stared
+// when adjusting the event view.  This code is probably worth
+// reviewing for legibility when time permits.
+- (void)panning:(UIPanGestureRecognizer *)pan {
+    // Catch in window so we can get touches when they scroll past view
+    UIWindow *panWindow = [[UIApplication sharedApplication] keyWindow];
+    CGPoint location = [pan locationInView:panWindow];
+    
+    // Convert rect to event scrollview
+    CGRect tabsRect = [self.tabsContainerView convertRect:[self.tabsContainerView bounds] toView:self.eventScrollView];
+    tabsRect.origin.y = tabsRect.origin.y - self.eventScrollView.contentOffset.y;
+    
+    // Gesture is currently panning, match tabs y to touch y.
+    if (location.y < tabsRect.origin.y + tabsRect.size.height + 44 + 20){
+        
+        float bottomOfTabs = 0 - self.tabsContainerView.frame.size.height - topPictureHeight - 44 - 20;
+        
+        float newOffsetY =  (location.y - self.tabsContainerView.frame.size.height - topPictureHeight - 44 - 20);
+        newOffsetY = newOffsetY < bottomOfTabs ? bottomOfTabs : newOffsetY;
+        newOffsetY = newOffsetY > 0 ? 0 : newOffsetY;
+        NSLog(@"New Offset:%f", newOffsetY);
+        self.eventScrollView.contentOffset = CGPointMake(0, (-1)*newOffsetY);
+        
+        savedOffset = self.eventScrollView.contentOffset.y > topPictureHeight ? topPictureHeight : self.eventScrollView.contentOffset.y;
+        
+    } else if (self.currentTabScrollView.contentOffset.y < 0) {
+        isCurrentTabScrollViewScrolling = YES;
+        
+        int scrollOffset = 0;
+        
+        if ([pan state] == UIGestureRecognizerStateBegan) {
+            scrollOffset = savedOffset;
+        } else {
+            scrollOffset = savedOffset + (self.currentTabScrollView.contentOffset.y * 2);
+        }
+        
+        
+
+        
+        float newOffsetY = scrollOffset;
+        newOffsetY = newOffsetY < 0 ? 0 : newOffsetY;
+        
+        if ([pan state] == UIGestureRecognizerStateEnded) {
+            savedOffset = self.eventScrollView.contentOffset.y > topPictureHeight ? topPictureHeight : self.eventScrollView.contentOffset.y;
+        }
+        
+        self.eventScrollView.contentOffset = CGPointMake(0, newOffsetY);
+        isCurrentTabScrollViewScrolling = NO;
+    } else {
+        if ([pan state] == UIGestureRecognizerStateEnded) {
+            savedOffset = self.eventScrollView.contentOffset.y > topPictureHeight ? topPictureHeight : self.eventScrollView.contentOffset.y;
+        }
+    }
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    return YES;
 }
 
 @end
