@@ -40,7 +40,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
+    self.videoArray = [NSMutableArray array];
     [self.eventVideosTableView setTableFooterView:[[UIView alloc] init]];
     
     // Set Fonts / Colors
@@ -56,24 +56,6 @@
     
     // Set debug logging level. Set to 'RKLogLevelTrace' to see JSON payload
     RKLogConfigureByName("RestKit/Network", RKLogLevelTrace);
-    
-    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"UserVideo"];
-    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"recordStart" ascending:NO];
-    fetchRequest.sortDescriptors = @[descriptor];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"mission == %@", self.selectedMission];
-    fetchRequest.predicate = predicate;
-    fetchRequest.fetchLimit = 10;
-    
-    // Setup fetched results
-    NSManagedObjectContext *managedObjectContext = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
-    
-    NSError *error = nil;
-    NSArray *results = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (error == nil && results != nil) {
-        self.videoArray = [NSMutableArray arrayWithArray:results];
-    }
-    
-    [self getEventVideos];
 }
 
 - (void)didReceiveMemoryWarning
@@ -84,6 +66,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    [self refreshFeed];
 }
 
 #pragma mark - Network Calls
@@ -178,6 +162,48 @@
 
 #pragma mark - Helper Methods
 
+- (void)refreshFeed {
+    NSMutableArray *refreshArray = [NSMutableArray array];
+    
+    // Grab any pending uploads first so they are at the top
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"UserVideo"];
+    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"recordStart" ascending:NO];
+    fetchRequest.sortDescriptors = @[descriptor];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"mission == %@ && state < 10", self.selectedMission];
+    fetchRequest.predicate = predicate;
+    fetchRequest.fetchLimit = 10;
+    
+    NSManagedObjectContext *managedObjectContext = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
+    
+    NSError *error = nil;
+    NSArray *pendingUploadResults = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (error == nil && pendingUploadResults != nil) {
+        [refreshArray addObjectsFromArray:pendingUploadResults];
+    }
+    
+    // Grab cached items
+    fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"UserVideo"];
+    descriptor = [NSSortDescriptor sortDescriptorWithKey:@"recordStart" ascending:NO];
+    fetchRequest.sortDescriptors = @[descriptor];
+    predicate = [NSPredicate predicateWithFormat:@"mission == %@ && state >= 10", self.selectedMission];
+    fetchRequest.predicate = predicate;
+    fetchRequest.fetchLimit = 10;
+    
+    error = nil;
+    NSArray *results = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (error == nil && results != nil) {
+        [refreshArray addObjectsFromArray:results];
+    }
+    
+    // Set Array
+    self.videoArray = refreshArray;
+    
+    // Show any new pending videos right away
+    [self.eventVideosTableView reloadData];
+    
+    [self getEventVideos];
+}
+
 - (void)configureCell:(UITableViewCell *)cell forTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
     UserVideo *userVideo = [self.videoArray objectAtIndex:indexPath.row];
     
@@ -191,7 +217,7 @@
         
         [request setIncludesSubentities:NO]; //Omit subentities. Default is YES (i.e. include subentities)
         
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"state < 11 && localVideoAssetURL != nil"];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"state < 10 && localVideoAssetURL != nil"];
         [request setPredicate:predicate];
         
         NSError *err;
@@ -399,6 +425,7 @@
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
     
     UserVideo *userVideo = [self.videoArray objectAtIndex:indexPath.row];
+    [self.videoArray removeObject:userVideo];
     [context deleteObject:userVideo];
     [context processPendingChanges];
     
@@ -407,6 +434,8 @@
     if (![context saveToPersistentStore:&error]) {
         NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
     }
+    
+    [self.eventVideosTableView reloadData];
 }
 
 @end
