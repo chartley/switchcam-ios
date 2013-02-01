@@ -55,5 +55,6 @@
 
 - (void)showParticipateDrawer;
 - (void)hideParticipateDrawer;
+- (void)moveTabsToTop;
 
 @end

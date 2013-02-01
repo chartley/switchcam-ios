@@ -523,6 +523,16 @@
     [activityCell setDelegate:self];
 }
 
+- (void)scrollPostCommentToBeVisible {
+    // Check to see if we are the last row, if so scroll to the middle,
+    // otherwise scroll the next row to the bottom so we can keep context
+    if (postCommentRow == (([self.activities count] * 5) - 1)) {
+        [self.eventActivityTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:postCommentRow inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+    } else {
+        [self.eventActivityTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:postCommentRow+1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    }
+}
+
 #pragma mark - UITableViewDataSource methods
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -833,6 +843,11 @@
         
         // Check if we are hiding the current row
         if (![indexPathForHiding isEqual:indexPath]) {
+            // Add post comment row for this post and hide other post comment row
+            
+            // Give ourselves additional space by moving tabs to top
+            [self.eventViewController moveTabsToTop];
+            
             indexPathsToShowAndHide = [NSArray arrayWithObjects:indexPath, [NSIndexPath indexPathForRow:postCommentRow inSection:0], nil];
             oldActivityCell.commentButton.selected = NO;
             
@@ -843,9 +858,9 @@
             
             animationType = UITableViewRowAnimationMiddle;
             
-            // If text field is hidden, scroll it so it's visible
-            [self.eventActivityTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:postCommentRow+1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+            [self scrollPostCommentToBeVisible];
         } else {
+            // Hide other post comment row
             indexPathsToShowAndHide = [NSArray arrayWithObject:indexPath];
             
             // Remove keyboard if showing
@@ -860,6 +875,10 @@
             animationType = UITableViewRowAnimationMiddle;
         }
     } else {
+        // Add post comment row
+        // Give ourselves additional space by moving tabs to top
+        [self.eventViewController moveTabsToTop];
+        
         indexPathsToShowAndHide = [NSArray arrayWithObject:indexPath];
         
         [activityCell.commentButton setSelected:YES];
@@ -868,10 +887,9 @@
         postCommentRow = indexPath.row;
         animationType = UITableViewRowAnimationMiddle;
         
-        // If text field is hidden, scroll it so it's visible
-        [self.eventActivityTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:postCommentRow+1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        [self scrollPostCommentToBeVisible];
     }
-     
+    
     // Show Post Comment / Hide previous post comment if open
     [self.eventActivityTableView reloadRowsAtIndexPaths:indexPathsToShowAndHide withRowAnimation:animationType];
     

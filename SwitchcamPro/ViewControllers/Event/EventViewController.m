@@ -848,10 +848,7 @@ enum { kTagTabBase = 100 };
         }];
     } else {
         // Keep the tabs at the top
-        [UIView animateWithDuration:0.25 animations:^(){
-            [self.eventScrollView setContentOffset:CGPointMake(0, self.eventImageView.frame.size.height)];
-        } completion:^(BOOL finished) {
-        }];
+        [self moveTabsToTop];
     }
 }
 
@@ -970,6 +967,16 @@ enum { kTagTabBase = 100 };
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
     return YES;
+}
+
+#pragma mark - Public
+
+- (void)moveTabsToTop {
+    // Keep the tabs at the top
+    [UIView animateWithDuration:0.25 animations:^(){
+        [self.eventScrollView setContentOffset:CGPointMake(0, self.eventImageView.frame.size.height)];
+    } completion:^(BOOL finished) {
+    }];
 }
 
 @end
