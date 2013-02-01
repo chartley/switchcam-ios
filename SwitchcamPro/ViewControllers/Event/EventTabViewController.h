@@ -17,4 +17,11 @@
 @property (strong, nonatomic) IBOutlet UIScrollView *tabScrollView;
 @property (strong, nonatomic) EventViewController *eventViewController;
 
+// Pagination
+@property (strong, nonatomic) IBOutlet UIView *loadMoreView;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicatorView;
+@property (strong, nonatomic) IBOutlet UILabel *loadMoreLabel;
+@property (strong, nonatomic) IBOutlet UIButton *loadMoreButton;
+
+
 @end

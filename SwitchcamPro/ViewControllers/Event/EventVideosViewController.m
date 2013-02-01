@@ -18,9 +18,10 @@
 #import "Reachability.h"
 
 
-@interface EventVideosViewController () <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate>
+@interface EventVideosViewController () <UITableViewDelegate, UITableViewDataSource>
 
-@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, strong) RKPaginator *videoPaginator;
+@property (nonatomic, strong) NSMutableArray *videoArray;
 
 @end
 
@@ -61,16 +62,16 @@
     fetchRequest.sortDescriptors = @[descriptor];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"mission == %@", self.selectedMission];
     fetchRequest.predicate = predicate;
-    fetchRequest.fetchLimit = 30;
-    NSError *error = nil;
+    fetchRequest.fetchLimit = 10;
     
     // Setup fetched results
-    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
-                                                                        managedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext
-                                                                          sectionNameKeyPath:nil
-                                                                                   cacheName:nil];
-    [self.fetchedResultsController setDelegate:self];
-    [self.fetchedResultsController performFetch:&error];
+    NSManagedObjectContext *managedObjectContext = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
+    
+    NSError *error = nil;
+    NSArray *results = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (error == nil && results != nil) {
+        self.videoArray = [NSMutableArray arrayWithArray:results];
+    }
     
     [self getEventVideos];
 }
@@ -88,14 +89,28 @@
 #pragma mark - Network Calls
 
 - (void)getEventVideos {
-    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:[self.selectedMission missionId], @"mission_id", nil];
+    NSString *path = [NSString stringWithFormat:@"uservideo?page=:currentPage&mission_id=%@", [self.selectedMission.missionId stringValue]];
     
-    // Load the object model via RestKit
-    [[RKObjectManager sharedManager] getObjectsAtPath:@"uservideo/" parameters:parameters success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-        NSManagedObjectContext *context = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
+    // Completion Blocks
+    void (^getVideosSuccessBlock)(RKPaginator *paginator, NSArray *objects, NSUInteger page);
+    void (^getVideosFailureBlock)(RKPaginator *paginator, NSError *error);
+    
+    getVideosSuccessBlock = ^(RKPaginator *paginator, NSArray *objects, NSUInteger page) {
+        // Re-enable Load More button
+        [self.loadMoreButton setEnabled:YES];
         
-        // Show correct view depending on result count
-        if ([[mappingResult array] count] == 0) {
+        // Mark the mission id
+        for (UserVideo *userVideo in objects) {
+            if (userVideo.mission == nil) {
+                userVideo.mission = self.selectedMission;
+            }
+        }
+        
+        // Add objects to list
+        [self.videoArray addObjectsFromArray:objects];
+        
+        // Show correct view depending on video count
+        if ([self.videoArray count] == 0) {
             [self.noVideosFoundView setHidden:NO];
             [self.eventVideosTableView setHidden:YES];
         } else {
@@ -103,44 +118,68 @@
             [self.eventVideosTableView setHidden:NO];
         }
         
-        // Mark the mission id
-        for (UserVideo *userVideo in [mappingResult array]) {
-            if (userVideo.mission == nil) {
-                userVideo.mission = self.selectedMission;
-            }
+        // Save row height data
+        NSError *error = nil;
+        if (![[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext saveToPersistentStore:&error]) {
+            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
         }
         
-        [context processPendingChanges];
+        // Reset load more view
+        [self.loadMoreLabel setText:NSLocalizedString(@"Load More", @"")];
+        [self.activityIndicatorView stopAnimating];
         
-        // This delete should trigger the results controller in a change and delete automagically
-        NSError *error = nil;
-        if (![context save:&error]) {
-            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+        // Check if we can load more
+        if ([paginator hasNextPage]) {
+            // Set footer for load more
+            [self.eventVideosTableView setTableFooterView:self.loadMoreView];
+        } else {
+            // Hide footer for load more
+            [self.eventVideosTableView setTableFooterView:nil];
         }
         
         RKLogInfo(@"Load complete: Table should refresh...");
         [self.eventVideosTableView reloadData];
-    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+    };
+    
+    getVideosFailureBlock = ^(RKPaginator *paginator, NSError *error) {
+        // Re-enable Load More button
+        [self.loadMoreButton setEnabled:YES];
+        
         RKLogError(@"Load failed with error: %@", error);
-        //TODO Error message
-    }];
+        // Error message
+        if ([error code] == NSURLErrorNotConnectedToInternet) {
+            NSString *title = NSLocalizedString(@"No Network Connection", @"");
+            NSString *message = NSLocalizedString(@"Please check your internet connection and try again.", @"");
+            
+            // Show alert
+            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alertView show];
+        } else {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Oops", @"") message:NSLocalizedString(@"We're having trouble connecting to the server, please try again.", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles:nil];
+            [alertView show];
+        }
+    };
+    
+    // Load the object model via RestKit
+    self.videoPaginator = [[RKObjectManager sharedManager] paginatorWithPathPattern:path];
+    [self.videoPaginator setCompletionBlockWithSuccess:getVideosSuccessBlock failure:getVideosFailureBlock];
+    [self.videoPaginator loadPage:1];
 }
 
-#pragma mark - RKDelegate
-/*
- - (void)objectLoader:(RKObjectLoader*)loader willMapData:(id)mappableData {
- // Get the paging data here
- 
- NSString *total = [mappableData objectForKey:@"total"];
- NSString *itemsPerPage = [mappableData objectForKey:@"items_per_page"];
- NSString *currentPage = [mappableData objectForKey:@"current_page"];
- }
- */
+#pragma mark - IBActions
+
+- (IBAction)loadMoreButtonAction:(id)sender {
+    // Load next page, disable button until call complete
+    [self.loadMoreButton setEnabled:NO];
+    [self.loadMoreLabel setText:NSLocalizedString(@"Loading...", @"")];
+    [self.activityIndicatorView startAnimating];
+    [self.videoPaginator loadNextPage];
+}
 
 #pragma mark - Helper Methods
 
 - (void)configureCell:(UITableViewCell *)cell forTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
-    UserVideo *userVideo = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    UserVideo *userVideo = [self.videoArray objectAtIndex:indexPath.row];
     
     PendingUploadCell *pendingUploadCell = (PendingUploadCell*)cell;
     
@@ -208,7 +247,7 @@
 #pragma mark - UITableViewDataSource methods
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath: (NSIndexPath *) indexPath {
-    UserVideo *userVideo = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    UserVideo *userVideo = [self.videoArray objectAtIndex:indexPath.row];
 
     if (indexPath.row == 0) {
         if ([[userVideo state] intValue] > 10) {
@@ -227,17 +266,16 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [self.fetchedResultsController.sections count];
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)table numberOfRowsInSection:(NSInteger)section {
-    id<NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController.sections objectAtIndex:section];
-    return [sectionInfo numberOfObjects];
+    return [self.videoArray count];
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UserVideo *userVideo = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    UserVideo *userVideo = [self.videoArray objectAtIndex:indexPath.row];
     
     NSString *identifier = nil;
     
@@ -302,12 +340,12 @@
     int row = [pendingUploadCell tag];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
     
-    UserVideo *recording = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    UserVideo *userVideo = [self.videoArray objectAtIndex:indexPath.row];
     
     NSURL *previewRecordingURL = nil;
-    if ([recording localVideoAssetURL] != nil) {
+    if ([userVideo localVideoAssetURL] != nil) {
         //TODO Verify asset url is good 
-        previewRecordingURL = [NSURL URLWithString:[recording localVideoAssetURL]];
+        previewRecordingURL = [NSURL URLWithString:[userVideo localVideoAssetURL]];
     } else {
         Reachability *reachability = [Reachability reachabilityForInternetConnection];
         [reachability startNotifier];
@@ -326,10 +364,10 @@
             return;
         } else if (status == ReachableViaWiFi) {
             // WiFi
-            previewRecordingURL = [NSURL URLWithString:[recording videoHDURL]];
+            previewRecordingURL = [NSURL URLWithString:[userVideo videoHDURL]];
         } else if (status == ReachableViaWWAN) {
             // 3G
-            previewRecordingURL = [NSURL URLWithString:[recording videoSDURL]];
+            previewRecordingURL = [NSURL URLWithString:[userVideo videoSDURL]];
         }
     }
     
@@ -344,7 +382,7 @@
     int row = [pendingUploadCell tag];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
     
-    UserVideo *userVideo = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    UserVideo *userVideo = [self.videoArray objectAtIndex:indexPath.row];
     
     // Upload
     UploadVideoViewController *viewController = [[UploadVideoViewController alloc] init];
@@ -360,8 +398,8 @@
     int row = [pendingUploadCell tag];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
     
-    UserVideo *recording = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    [context deleteObject:recording];
+    UserVideo *userVideo = [self.videoArray objectAtIndex:indexPath.row];
+    [context deleteObject:userVideo];
     [context processPendingChanges];
     
     // This delete should trigger the results controller in a change and delete automagically

@@ -25,6 +25,7 @@
 
 enum { kTagTabBase = 100 };
 
+#define kParticipationDrawerHeight 200
 #define kNoteDrawerHeight 121
 #define kBottomBarHeight 44
 #define kShareDrawerHeight 108 // Temp until invite facebook friends complete
@@ -389,7 +390,7 @@ enum { kTagTabBase = 100 };
     
     // Show / Hide Participation Drawer
     if ([[self.mission isCameraCrew] boolValue]) {
-        int eventScrollViewHeight = self.view.frame.size.height - self.toolbarDrawer.frame.size.height + kNoteDrawerHeight + kParticipationTransparency;
+        int eventScrollViewHeight = self.view.frame.size.height - kParticipationDrawerHeight + kNoteDrawerHeight + kParticipationTransparency;
         [self.eventScrollView setFrame:CGRectMake(self.eventScrollView.frame.origin.x, self.eventScrollView.frame.origin.y, self.eventScrollView.frame.size.width, eventScrollViewHeight)];
         
         [self.toolbarDrawer setAlpha:1.0];
@@ -883,7 +884,7 @@ enum { kTagTabBase = 100 };
 
 - (void)showParticipateDrawer {
     [UIView animateWithDuration:0.25 animations:^{
-        int eventScrollViewHeight = self.view.frame.size.height - self.toolbarDrawer.frame.size.height + kNoteDrawerHeight + kParticipationTransparency;
+        int eventScrollViewHeight = self.view.frame.size.height - kParticipationDrawerHeight + kNoteDrawerHeight + kParticipationTransparency;
         [self.eventScrollView setFrame:CGRectMake(self.eventScrollView.frame.origin.x, self.eventScrollView.frame.origin.y, self.eventScrollView.frame.size.width, eventScrollViewHeight)];
         
         [self.toolbarDrawer setAlpha:1.0];

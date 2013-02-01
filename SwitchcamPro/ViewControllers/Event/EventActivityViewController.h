@@ -14,10 +14,6 @@
 
 @property (strong, nonatomic) IBOutlet UITableView *eventActivityTableView;
 
-@property (strong, nonatomic) IBOutlet UIView *loadMoreView;
-@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicatorView;
-@property (strong, nonatomic) IBOutlet UILabel *loadMoreLabel;
-
 - (void)getActivity;
 
 - (IBAction)loadMoreButtonAction:(id)sender;

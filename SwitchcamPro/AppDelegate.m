@@ -666,7 +666,7 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     // Register our mappings with the provider
     RKRequestDescriptor *userVideoRequestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:userVideoRequestMapping objectClass:[UserVideo class] rootKeyPath:@"uservideo"];
     
-    RKResponseDescriptor *userVideoResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userVideoMapping pathPattern:@"uservideo/" keyPath:@"data" statusCodes:[NSIndexSet indexSetWithIndex:200]];
+    RKResponseDescriptor *userVideoResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userVideoMapping pathPattern:@"uservideo" keyPath:@"data" statusCodes:[NSIndexSet indexSetWithIndex:200]];
     
     RKResponseDescriptor *createUserVideoResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:createUserVideoMapping pathPattern:@"uservideo/" keyPath:@"" statusCodes:[NSIndexSet indexSetWithIndex:201]];
     
@@ -676,7 +676,7 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
                                                                                             statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
     
     RKResponseDescriptor *activityResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:activityMapping
-                                                                                              pathPattern:@"mission/:missionId/activity/"
+                                                                                              pathPattern:@"mission/:missionId/activity"
                                                                                                   keyPath:@"data"
                                                                                               statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
     [objectManager addRequestDescriptor:userVideoRequestDescriptor];

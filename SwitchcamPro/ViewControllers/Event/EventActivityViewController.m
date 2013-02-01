@@ -74,7 +74,7 @@
     
     NSError *error = nil;
     NSArray *results = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (error == nil) {
+    if (error == nil && results != nil) {
         self.activities = [NSMutableArray arrayWithArray:results];
     }
     
@@ -103,13 +103,15 @@
 #pragma mark - Network Calls
 
 - (void)getActivity {
-    NSString *path = [NSString stringWithFormat:@"mission/%@/activity/?page=:currentPage", [self.selectedMission.missionId stringValue]];
+    NSString *path = [NSString stringWithFormat:@"mission/%@/activity?page=:currentPage", [self.selectedMission.missionId stringValue]];
     
     // Completion Blocks
     void (^getActivitySuccessBlock)(RKPaginator *paginator, NSArray *objects, NSUInteger page);
     void (^getActivityFailureBlock)(RKPaginator *paginator, NSError *error);
     
     getActivitySuccessBlock = ^(RKPaginator *paginator, NSArray *objects, NSUInteger page) {
+        // Re-enable Load More button
+        [self.loadMoreButton setEnabled:YES];
         
         // Set the row height for each activity
         for (Activity *activity in objects) {
@@ -164,6 +166,9 @@
     };
     
     getActivityFailureBlock = ^(RKPaginator *paginator, NSError *error) {
+        // Re-enable Load More button
+        [self.loadMoreButton setEnabled:YES];
+        
         RKLogError(@"Load failed with error: %@", error);
         // Error message
         if ([error code] == NSURLErrorNotConnectedToInternet) {
@@ -336,6 +341,8 @@
 #pragma mark - IBActions
 
 - (IBAction)loadMoreButtonAction:(id)sender {
+    // Load next page, disable button until call complete
+    [self.loadMoreButton setEnabled:NO];
     [self.loadMoreLabel setText:NSLocalizedString(@"Loading...", @"")];
     [self.activityIndicatorView startAnimating];
     [self.activityPaginator loadNextPage];
