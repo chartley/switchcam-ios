@@ -788,7 +788,7 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     userVideoToUpload.uploadDestination = @"S3";
     userVideoToUpload.uploadS3Bucket = @"upload-switchcam-ios";
     userVideoToUpload.uploadPath = videoKey;
-    userVideoToUpload.state = [NSNumber numberWithInt:10];
+    userVideoToUpload.state = [NSNumber numberWithInt:kUserVideoStateUSER_UPLOADING];  // State should be 10 on server
     
     // Save
     NSManagedObjectContext *context = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
@@ -805,6 +805,18 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     createUserVideoSuccessBlock = ^(RKObjectRequestOperation *operation, RKMappingResult *responseObject) {
         [self.statusBarToastAndProgressView showToastWithMessage:NSLocalizedString(@"Upload Complete!", @"")];
         [self.statusBarToastAndProgressView hideProgressView];
+        
+        // Video uploaded
+        userVideoToUpload.state = [NSNumber numberWithInt:kUserVideoStateSTORAGE_TRANSFER];
+        
+        NSError *error = nil;
+        
+        // Save
+        NSManagedObjectContext *context = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
+        [context processPendingChanges];
+        if (![context saveToPersistentStore:&error]) {
+            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+        }
     };
     
     createUserVideoFailureBlock = ^(RKObjectRequestOperation *operation, NSError *error) {
