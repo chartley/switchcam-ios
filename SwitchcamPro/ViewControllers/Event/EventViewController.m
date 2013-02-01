@@ -464,8 +464,11 @@ enum { kTagTabBase = 100 };
     postNoteSuccessBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
         [self.loadingIndicator hide:YES];
         
-        // Close drawer
-        [self noteButtonAction:nil];
+        // Close drawer / Remove keyboard
+        [self.shareNoteTextView resignFirstResponder];
+        
+        // Clear textview
+        [self.shareNoteTextView setText:@""];
         
         // Refresh activity view
         [activityViewController getActivity];
@@ -558,9 +561,6 @@ enum { kTagTabBase = 100 };
 }
 
 - (IBAction)postNoteButtonAction:(id)sender {
-    // Remove keyboard
-    [self.shareNoteTextView resignFirstResponder];
-    
     // Validation
     if (self.shareNoteTextView.text != nil && ![self.shareNoteTextView.text isEqualToString:@""]) {
         [self postNote:self.shareNoteTextView.text];
