@@ -14,6 +14,7 @@
 #import "AboutViewController.h"
 #import "MenuPendingUploadDSD.h"
 #import "AppDelegate.h"
+#import "SPNavigationController.h"
 
 @interface MenuViewController()
 @property (nonatomic, strong) NSArray *menuItems;
@@ -88,7 +89,7 @@
         case 0:
         {
             MyEventsViewController *myEventsViewController = [[MyEventsViewController alloc] initWithNibName:@"MyEventsViewController" bundle:nil];
-            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:myEventsViewController];
+            SPNavigationController *navController = [[SPNavigationController alloc] initWithRootViewController:myEventsViewController];
             newTopViewController = navController;
             break;
         }

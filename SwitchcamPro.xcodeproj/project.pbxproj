@@ -182,6 +182,7 @@
 		C99E97E5167E40A6006B3BBC /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C99E97E3167E40A6006B3BBC /* Icon.png */; };
 		C99E97E6167E40A6006B3BBC /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C99E97E4167E40A6006B3BBC /* Icon@2x.png */; };
 		C99E97ED167E4494006B3BBC /* StatusBarToastAndProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = C99E97EC167E4494006B3BBC /* StatusBarToastAndProgressView.m */; };
+		C9A203A716BF142D0093E259 /* SPNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9A203A616BF142D0093E259 /* SPNavigationController.m */; };
 		C9AED0A8169E6B9A00A6A09D /* UserVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = C9AED0A7169E6B9A00A6A09D /* UserVideo.m */; };
 		C9AED0AA169E987E00A6A09D /* PendingUploadCellEventVideoTop.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9AED0A9169E987E00A6A09D /* PendingUploadCellEventVideoTop.xib */; };
 		C9AED0AF169E9BD700A6A09D /* PendingUploadCellEventVideo.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9AED0AE169E9BD700A6A09D /* PendingUploadCellEventVideo.xib */; };
@@ -692,6 +693,8 @@
 		C99E97E4167E40A6006B3BBC /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		C99E97EB167E4494006B3BBC /* StatusBarToastAndProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StatusBarToastAndProgressView.h; path = Views/StatusBarToastAndProgressView.h; sourceTree = "<group>"; };
 		C99E97EC167E4494006B3BBC /* StatusBarToastAndProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StatusBarToastAndProgressView.m; path = Views/StatusBarToastAndProgressView.m; sourceTree = "<group>"; };
+		C9A203A516BF142D0093E259 /* SPNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPNavigationController.h; path = ViewControllers/Navigation/SPNavigationController.h; sourceTree = "<group>"; };
+		C9A203A616BF142D0093E259 /* SPNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPNavigationController.m; path = ViewControllers/Navigation/SPNavigationController.m; sourceTree = "<group>"; };
 		C9AED0A6169E6B9A00A6A09D /* UserVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserVideo.h; path = Model/ManagedObjects/UserVideo.h; sourceTree = "<group>"; };
 		C9AED0A7169E6B9A00A6A09D /* UserVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserVideo.m; path = Model/ManagedObjects/UserVideo.m; sourceTree = "<group>"; };
 		C9AED0A9169E987E00A6A09D /* PendingUploadCellEventVideoTop.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PendingUploadCellEventVideoTop.xib; path = TableViewCells/PendingUploads/PendingUploadCellEventVideoTop.xib; sourceTree = "<group>"; };
@@ -1457,6 +1460,7 @@
 		C97BFF33166D9826005BB65F /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				C9A203A816BF14310093E259 /* Navigation */,
 				C90847BA1680355A00DEF94E /* Playback */,
 				C9E9B6AB16741AEB00487A72 /* Upload */,
 				C97B19241673F4B2005BB65F /* Camera */,
@@ -1561,6 +1565,15 @@
 				C906ADBA16A019DE001E5E5C /* HostedEventVideoTopCell.xib */,
 			);
 			name = "Pending Uploads";
+			sourceTree = "<group>";
+		};
+		C9A203A816BF14310093E259 /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				C9A203A516BF142D0093E259 /* SPNavigationController.h */,
+				C9A203A616BF142D0093E259 /* SPNavigationController.m */,
+			);
+			name = Navigation;
 			sourceTree = "<group>";
 		};
 		C9DDF1AA167D24CA000399EA /* Resources */ = {
@@ -2291,6 +2304,7 @@
 				24F9C37716B679F10029D1E5 /* Activity.m in Sources */,
 				24F9C37A16B67A030029D1E5 /* Note.m in Sources */,
 				24B3CB1D16B7838700E233B7 /* NSObject+PerformBlockAfterDelay.m in Sources */,
+				C9A203A716BF142D0093E259 /* SPNavigationController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

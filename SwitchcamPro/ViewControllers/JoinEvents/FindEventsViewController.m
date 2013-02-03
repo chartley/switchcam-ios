@@ -19,6 +19,7 @@
 #import "Mission.h"
 #import "Venue.h"
 #import "Artist.h"
+#import "SPNavigationController.h"
 
 @interface FindEventsViewController () <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate>
 
@@ -318,7 +319,7 @@
     // Load Event View Controller
     EventViewController *viewController = [[EventViewController alloc] initWithMission:mission];
     
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    SPNavigationController *navController = [[SPNavigationController alloc] initWithRootViewController:viewController];
     
     [self.slidingViewController anchorTopViewOffScreenTo:ECRight animations:nil onComplete:^{
         AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;

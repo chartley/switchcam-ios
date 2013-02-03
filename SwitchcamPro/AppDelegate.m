@@ -27,13 +27,14 @@
 #import "SCS3Uploader.h"
 #import "UIImage+H568.h"
 #import "NSObject+PerformBlockAfterDelay.h"
+#import "SPNavigationController.h"
 
 NSString *const SCSessionStateChangedNotification = @"com.switchcam.switchcampro:SCSessionStateChangedNotification";
 NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switchcampro:SCAPINetworkRequestCanStartNotification";
 
 @interface AppDelegate ()
 
-@property (strong, nonatomic) UINavigationController* loginViewController;
+@property (strong, nonatomic) SPNavigationController* loginViewController;
 @property (strong, nonatomic) StatusBarToastAndProgressView* statusBarToastAndProgressView;
 
 - (void)showLoginView;
@@ -71,7 +72,7 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
         viewController = [[EventViewController alloc] initWithMission:mission];
     }
 
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    SPNavigationController *navController = [[SPNavigationController alloc] initWithRootViewController:viewController];
     self.slidingViewController = [[ECSlidingViewController alloc] init];
     self.slidingViewController.topViewController = navController;
     self.window.rootViewController = self.slidingViewController;
@@ -269,7 +270,7 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
 - (void)createAndPresentLoginView {
     if (self.loginViewController == nil) {
         LoginViewController *loginRootViewController = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
-        self.loginViewController = [[UINavigationController alloc] initWithRootViewController:loginRootViewController];
+        self.loginViewController = [[SPNavigationController alloc] initWithRootViewController:loginRootViewController];
         UIViewController *topViewController = [self.slidingViewController topViewController];
         [topViewController presentViewController:self.loginViewController animated:NO completion:nil];
     } else {
@@ -282,7 +283,7 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
 - (void)createAndPresentTermsView {
     if (self.loginViewController == nil) {
         LoginViewController *loginRootViewController = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
-        self.loginViewController = [[UINavigationController alloc] initWithRootViewController:loginRootViewController];
+        self.loginViewController = [[SPNavigationController alloc] initWithRootViewController:loginRootViewController];
         
         TermsViewController *termsViewController = [[TermsViewController alloc] initWithNibName:@"TermsViewController" bundle:nil];
         [self.loginViewController pushViewController:termsViewController animated:NO];
@@ -710,12 +711,14 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
 #pragma mark - NavigationBar
 
 - (void)initializeNavigationBarAppearance {
-    // Set Title bar font
-    NSMutableDictionary *titleBarAttributes = [NSMutableDictionary dictionaryWithDictionary: [[UINavigationBar appearance] titleTextAttributes]];
-    [titleBarAttributes setValue:[UIFont fontWithName:@"SourceSansPro-Regular" size:18] forKey:UITextAttributeFont];
-    [[UINavigationBar appearance] setTitleTextAttributes:titleBarAttributes];
+    id navigationBarAppearance = [UINavigationBar appearanceWhenContainedIn:[SPNavigationController class], nil];
     
-    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"bg-appheader"] forBarMetrics:UIBarMetricsDefault];
+    // Set Title bar font
+    NSMutableDictionary *titleBarAttributes = [NSMutableDictionary dictionaryWithDictionary: [navigationBarAppearance titleTextAttributes]];
+    [titleBarAttributes setValue:[UIFont fontWithName:@"SourceSansPro-Regular" size:18] forKey:UITextAttributeFont];
+    [navigationBarAppearance setTitleTextAttributes:titleBarAttributes];
+    
+    [navigationBarAppearance setBackgroundImage:[UIImage imageNamed:@"bg-appheader"] forBarMetrics:UIBarMetricsDefault];
     [[UIToolbar appearance] setBackgroundImage:[UIImage imageNamed:@"bg-appheader"] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
 }
 
