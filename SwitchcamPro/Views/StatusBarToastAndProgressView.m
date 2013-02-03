@@ -30,6 +30,7 @@
         self.windowLevel = UIWindowLevelStatusBar;
         
         [self setBackgroundColor:[UIColor clearColor]];
+        [self setUserInteractionEnabled:NO];
         
         // Create Progress bar and label
         self.statusBarProgressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
@@ -43,6 +44,7 @@
         
         // Set frame after setting images
         [self.statusBarProgressView setFrame:CGRectMake(0, 0, 320, 20)];
+        [self.statusBarProgressView setUserInteractionEnabled:NO];
         
         // Set Font / Color
         [self.statusBarProgressLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:12]];
@@ -52,10 +54,12 @@
         [self.statusBarProgressLabel setShadowOffset:CGSizeMake(0, -1)];
         [self.statusBarProgressLabel setTextAlignment:NSTextAlignmentRight];
         [self.statusBarProgressLabel setText:NSLocalizedString(@"0% Uploaded", @"")];
+        [self.statusBarProgressLabel setUserInteractionEnabled:NO];
         
         // Create Toast bar and label
         self.toastBackgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
         [self.toastBackgroundImageView setImage:[UIImage imageNamed:@"bg-statusbar-green"]];
+        [self.toastBackgroundImageView setUserInteractionEnabled:NO];
         
         self.toastLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
         
@@ -66,6 +70,7 @@
         [self.toastLabel setShadowOffset:CGSizeMake(0, -1)];
         [self.toastLabel setTextAlignment:NSTextAlignmentCenter];
         [self.toastLabel setBackgroundColor:[UIColor clearColor]];
+        [self.toastLabel setUserInteractionEnabled:NO];
         
         // Hide all views
         [self.statusBarProgressLabel setAlpha:0.0];

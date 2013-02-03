@@ -2361,8 +2361,8 @@
 		C97BFF07166D909D005BB65F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Chris Hartley (7J7EDWHC8U)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Chris Hartley (7J7EDWHC8U)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Libraries/facebook-facebook-ios-sdk-a4c745f\"",
@@ -2379,8 +2379,8 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "DEE97D94-3539-431F-8BA6-0063FBE29E35";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DEE97D94-3539-431F-8BA6-0063FBE29E35";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
