@@ -12,6 +12,8 @@
 #import <RestKit/CoreData.h>
 #import <FacebookSDK/FacebookSDK.h>
 #import <TestFlightSDK/TestFlight.h>
+#import <CoreTelephony/CTCallCenter.h>
+#import <CoreTelephony/CTCall.h>
 #import "UserVideo.h"
 #import "Mission.h"
 #import "UAirship.h"
@@ -32,10 +34,15 @@
 NSString *const SCSessionStateChangedNotification = @"com.switchcam.switchcampro:SCSessionStateChangedNotification";
 NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switchcampro:SCAPINetworkRequestCanStartNotification";
 
-@interface AppDelegate ()
+@interface AppDelegate () {
+    CTCallCenter *callCenter;
+}
 
 @property (strong, nonatomic) SPNavigationController* loginViewController;
 @property (strong, nonatomic) StatusBarToastAndProgressView* statusBarToastAndProgressView;
+
+@property (nonatomic) BOOL isUserOnPhoneCall;
+@property (nonatomic) BOOL isUserUploading;
 
 - (void)showLoginView;
 
@@ -739,12 +746,53 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadCompleted:) name:kSCS3UploadCompletedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadProgress:) name:kSCS3UploadPercentCompleteNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadFailed:) name:kSCS3UploadFailedNotification object:nil];
+    
+    
+    __weak AppDelegate *weakSelf = self;
+    // Call handling
+    callCenter = [[CTCallCenter alloc] init];
+    callCenter.callEventHandler=^(CTCall* call)
+    {
+        
+        if(call.callState == CTCallStateDialing)
+        {
+            // The call state, before connection is established, when the user initiates the call.
+        }
+        if(call.callState == CTCallStateIncoming)
+        {
+            // The call state, before connection is established, when a call is incoming but not yet answered by the user.
+        }
+        if(call.callState == CTCallStateConnected)
+        {
+            // The call state when the call is fully established for all parties involved.
+            weakSelf.isUserOnPhoneCall = YES;
+            
+            // Hide progress
+            if (weakSelf.isUserUploading) {
+                [self.statusBarToastAndProgressView hideProgressView];
+            }
+        }
+        if(call.callState == CTCallStateDisconnected)
+        {
+            // The call state Ended.
+            weakSelf.isUserOnPhoneCall = NO;
+            
+            // Show progress if uploading
+            if (weakSelf.isUserUploading) {
+                [self.statusBarToastAndProgressView showProgressView];
+            }
+        }
+        
+    };
 }
 
 #pragma mark - Observer Methods
 
 - (void)uploadStarted:(NSNotification*)notification {
-    [self.statusBarToastAndProgressView showProgressView];
+    self.isUserUploading = YES;
+    if (!self.isUserOnPhoneCall) {
+        [self.statusBarToastAndProgressView showProgressView];
+    }
 }
 
 - (void)uploadProgress:(NSNotification*)notification {
@@ -753,11 +801,13 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
 }
 
 - (void)uploadCompleted:(NSNotification*)notification {
+    self.isUserUploading = NO;
     NSString *videoKey = (NSString*)[notification object];
     [self createUserVideo:videoKey];
 }
 
 - (void)uploadFailed:(NSNotification*)notification {
+    self.isUserUploading = NO;
     [self.statusBarToastAndProgressView showToastWithMessage:NSLocalizedString(@"Upload Failed!", @"")];
     [self.statusBarToastAndProgressView hideProgressView];
 }
