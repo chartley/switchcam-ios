@@ -793,6 +793,9 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     if (!self.isUserOnPhoneCall) {
         [self.statusBarToastAndProgressView showProgressView];
     }
+    
+    // Don't let screen fall asleep
+    [UIApplication sharedApplication].idleTimerDisabled = YES;
 }
 
 - (void)uploadProgress:(NSNotification*)notification {
@@ -804,12 +807,18 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     self.isUserUploading = NO;
     NSString *videoKey = (NSString*)[notification object];
     [self createUserVideo:videoKey];
+    
+    // Let screen fall asleep
+    [UIApplication sharedApplication].idleTimerDisabled = NO;
 }
 
 - (void)uploadFailed:(NSNotification*)notification {
     self.isUserUploading = NO;
     [self.statusBarToastAndProgressView showToastWithMessage:NSLocalizedString(@"Upload Failed!", @"")];
     [self.statusBarToastAndProgressView hideProgressView];
+    
+    // Let screen fall asleep
+    [UIApplication sharedApplication].idleTimerDisabled = NO;
 }
 
 #pragma mark - Create User Video
