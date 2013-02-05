@@ -352,12 +352,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
-#pragma mark - NSFetchedResultsControllerDelegate methods
-
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
-    [self.eventVideosTableView reloadData];
-}
-
 #pragma mark - PendingUploadCellDelegate
 
 - (void)previewButtonPressed:(PendingUploadCell*)pendingUploadCell {
