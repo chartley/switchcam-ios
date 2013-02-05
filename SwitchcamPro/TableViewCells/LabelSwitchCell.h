@@ -15,5 +15,6 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *leftLabel;
 @property (strong, nonatomic) IBOutlet UISwitch *staySignedInSwitch;
+@property (strong, nonatomic) IBOutlet UIView *labelSwitchSeparator;
 
 @end

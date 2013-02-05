@@ -306,7 +306,11 @@
                 // Get Information about the user
                 [[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection *connection, NSDictionary<FBGraphObject> *user, NSError *error) {
                     NSString *userFullName = [NSString stringWithFormat:@"%@ %@", [user objectForKey:@"first_name"], [user objectForKey:@"last_name"]];
-                    NSURL *profileImageURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=square", [user objectForKey:@"id"]]];
+                    NSString *profileImageURLString = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=square", [user objectForKey:@"id"]];
+                    NSURL *profileImageURL = [NSURL URLWithString:profileImageURLString];
+                    
+                    [[NSUserDefaults standardUserDefaults] setObject:userFullName forKey:kSPUserFullName];
+                    [[NSUserDefaults standardUserDefaults] setObject:profileImageURLString forKey:kSPUserProfileURL];
                     
                     // Add data to next controller and start
                     CompleteLoginViewController *completeLoginViewController = [[CompleteLoginViewController alloc] init];

@@ -7,6 +7,7 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
+#import <AFNetworking/AFNetworking.h>
 #import "SettingsViewController.h"
 #import "ECSlidingViewController.h"
 #import "MenuViewController.h"
@@ -14,6 +15,7 @@
 #import "ProfileCell.h"
 #import "ButtonCell.h"
 #import "AppDelegate.h"
+#import "SPConstants.h"
 
 @interface SettingsViewController ()
 
@@ -89,6 +91,7 @@
                     [labelSwitchCell.leftLabel setText:NSLocalizedString(@"Upload over 3G", @"")];
                     labelSwitchCell.staySignedInSwitch = labelSwitchCell.staySignedInSwitch;
                     [labelSwitchCell.staySignedInSwitch addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
+                    [labelSwitchCell.labelSwitchSeparator setHidden:YES];
                     break;
                 }
                     
@@ -98,6 +101,7 @@
                     [labelSwitchCell.leftLabel setText:NSLocalizedString(@"Push Notification 1", @"")];
                     labelSwitchCell.tag = indexPath.row;
                     [labelSwitchCell.staySignedInSwitch addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
+                    [labelSwitchCell.labelSwitchSeparator setHidden:NO];
                     break;
                 }
                 case 2:
@@ -106,6 +110,7 @@
                     [labelSwitchCell.leftLabel setText:NSLocalizedString(@"Push Notification 2", @"")];
                     labelSwitchCell.tag = indexPath.row;
                     [labelSwitchCell.staySignedInSwitch addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
+                    [labelSwitchCell.labelSwitchSeparator setHidden:NO];
                     break;
                 }
                 case 3:
@@ -114,6 +119,7 @@
                     [labelSwitchCell.leftLabel setText:NSLocalizedString(@"Push Notification 3", @"")];
                     labelSwitchCell.tag = indexPath.row;
                     [labelSwitchCell.staySignedInSwitch addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
+                    [labelSwitchCell.labelSwitchSeparator setHidden:NO];
                     break;
                 }
                 default:
@@ -124,9 +130,17 @@
             switch (indexPath.row) {
                 case 0:
                 {
+                    NSString *userFullName = [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFullName];
+                    NSString *profileImageURLString = [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserProfileURL];
+                    NSURL *profileImageURL = [NSURL URLWithString:profileImageURLString];
+                    
                     ProfileCell *profileCell = (ProfileCell *)cell;
-                    [profileCell.profileNameLabel setText:@""];
-                    [profileCell.profileImageView setImage:nil];
+                    [profileCell.profileNameLabel setText:userFullName];
+                    [profileCell.profileImageView setImageWithURL:profileImageURL placeholderImage:[UIImage imageNamed:@"img-shoot-thumb-placeholder"]];
+
+                    
+                    
+
                     break;
                 }
                     
@@ -160,7 +174,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
-        return 4;
+        return 1;
     } else {
         return 2;
     }
@@ -258,6 +272,8 @@
             [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grptableview-bottom"]]];
         }
     }
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
 }
