@@ -166,11 +166,6 @@
             [self.myEventsTableView setHidden:NO];
         }
         
-        // Mark these missions as following or camera crew
-        for (Mission *mission in [mappingResult array]) {
-            mission.isFollowing = [NSNumber numberWithBool:YES];
-        }
-        
         // Save our events
         NSError *error = nil;
         if (![[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext saveToPersistentStore:&error]) {

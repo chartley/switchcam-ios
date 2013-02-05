@@ -526,6 +526,8 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
      @"pic_url": @"picURL",
      @"description": @"missionDescription",
      @"mission_detail_url": @"missionPageURL",
+     @"is_follower": @"isFollowing",
+     @"is_crew": @"isCameraCrew",
      }];
     // If source and destination key path are the same, we can simply add a string to the array
     [missionMapping addAttributeMappingsFromArray:@[ @"title" ]];
