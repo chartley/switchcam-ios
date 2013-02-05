@@ -89,6 +89,10 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait;
+}
+
 #pragma mark - IBAction
 
 - (IBAction)iAgreeButtonAction:(id)sender {

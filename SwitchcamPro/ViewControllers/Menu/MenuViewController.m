@@ -57,6 +57,9 @@
     [self.pendingUploadTableView reloadData];
 }
 
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait;
+}
 
 #pragma mark - Menu TableView Data Source / Delegate
 

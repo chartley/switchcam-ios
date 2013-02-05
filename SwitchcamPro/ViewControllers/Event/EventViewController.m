@@ -451,6 +451,10 @@ enum { kTagTabBase = 100 };
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait;
+}
+
 #pragma mark - Network Requests
 
 - (void)postNote:(NSString *)note {
