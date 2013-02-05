@@ -23,4 +23,9 @@
 @property (strong, nonatomic) IBOutlet UIView *findEventsFooterView;
 @property (strong, nonatomic) IBOutlet UIButton *createShootButton;
 
+// Pagination
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicatorView;
+@property (strong, nonatomic) IBOutlet UILabel *loadMoreLabel;
+@property (strong, nonatomic) IBOutlet UIButton *loadMoreButton;
+
 @end

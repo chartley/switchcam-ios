@@ -700,6 +700,11 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
                                                                                                 keyPath:@"data"
                                                                                             statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
     
+    RKResponseDescriptor *missionNoSlashResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:missionMapping
+                                                                                              pathPattern:@"mission"
+                                                                                                  keyPath:@"data"
+                                                                                              statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    
     RKResponseDescriptor *activityResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:activityMapping
                                                                                               pathPattern:@"mission/:missionId/activity"
                                                                                                   keyPath:@"data"
@@ -711,6 +716,7 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     [objectManager addResponseDescriptor:createUserVideoResponseDescriptor];
     [objectManager addResponseDescriptor:commentResponseDescriptor];
     [objectManager addResponseDescriptor:missionResponseDescriptor];
+    [objectManager addResponseDescriptor:missionNoSlashResponseDescriptor];
     [objectManager addResponseDescriptor:activityResponseDescriptor];
     
     // Register json serialization

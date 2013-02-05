@@ -46,7 +46,7 @@
 								<string key="NSFrameSize">{320, 199}</string>
 								<reference key="NSSuperview" ref="733864539"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="774969120"/>
+								<reference key="NSNextKeyView" ref="654352960"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor" id="736405424">
 									<int key="NSColorSpace">3</int>
@@ -57,7 +57,7 @@
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
-							<object class="IBUIImageView" id="774969120">
+							<object class="IBUIImageView" id="654352960">
 								<reference key="NSNextResponder" ref="733864539"/>
 								<int key="NSvFlags">292</int>
 								<string key="NSFrameSize">{320, 199}</string>
@@ -184,6 +184,7 @@
 				<reference key="IBUIBackgroundColor" ref="736405424"/>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<reference key="IBUIContentView" ref="733864539"/>
+				<string key="IBUIReuseIdentifier">MyEventCell</string>
 				<integer value="200" key="IBUIRowHeight"/>
 			</object>
 		</array>
@@ -249,7 +250,7 @@
 							<reference ref="741195120"/>
 							<reference ref="508029720"/>
 							<reference ref="607839118"/>
-							<reference ref="774969120"/>
+							<reference ref="654352960"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -278,7 +279,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">58</int>
-						<reference key="object" ref="774969120"/>
+						<reference key="object" ref="654352960"/>
 						<reference key="parent" ref="777886867"/>
 					</object>
 				</array>

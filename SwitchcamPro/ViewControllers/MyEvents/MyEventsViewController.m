@@ -21,9 +21,10 @@
 #import "Artist.h"
 #import "Venue.h"
 
-@interface MyEventsViewController () <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate>
+@interface MyEventsViewController () <UITableViewDelegate, UITableViewDataSource>
 
-@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, strong) RKPaginator *shootPaginator;
+@property (nonatomic, strong) NSMutableArray *shootArray;
 
 @end
 
@@ -76,13 +77,13 @@
     fetchRequest.fetchLimit = 30;
     NSError *error = nil;
     
-    // Setup fetched results
-    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
-                                                                        managedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext
-                                                                          sectionNameKeyPath:nil
-                                                                                   cacheName:nil];
-    [self.fetchedResultsController setDelegate:self];
-    [self.fetchedResultsController performFetch:&error];
+    NSManagedObjectContext *managedObjectContext = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
+    NSArray *results = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (error == nil && results != nil) {
+        self.shootArray = [NSMutableArray arrayWithArray:results];
+    } else {
+        self.shootArray = [NSMutableArray array];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -149,16 +150,32 @@
     }];
 }
 
+- (IBAction)loadMoreButtonAction:(id)sender {
+    // Load next page, disable button until call complete
+    [self.loadMoreButton setEnabled:NO];
+    [self.loadMoreLabel setText:NSLocalizedString(@"Loading...", @"")];
+    [self.activityIndicatorView startAnimating];
+    [self.shootPaginator loadNextPage];
+}
+
 #pragma mark - Network Calls
 
 - (void)getMyEvents {
-    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:@"true", @"followed_or_camera_crew_only", nil];
+    NSString *path = [NSString stringWithFormat:@"mission?page=:currentPage&followed_or_camera_crew_only=true"];
     
-    // Load the object model via RestKit
-    [[RKObjectManager sharedManager] getObjectsAtPath:@"mission/" parameters:parameters success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+    // Completion Blocks
+    void (^getMyEventsSuccessBlock)(RKPaginator *paginator, NSArray *objects, NSUInteger page);
+    void (^getMyEventsFailureBlock)(RKPaginator *paginator, NSError *error);
+    
+    getMyEventsSuccessBlock = ^(RKPaginator *paginator, NSArray *objects, NSUInteger page) {
+        // Re-enable Load More button
+        [self.loadMoreButton setEnabled:YES];
         
-        // Show correct view depending on result count
-        if ([[mappingResult array] count] == 0) {
+        // Add objects to list
+        [self.shootArray addObjectsFromArray:objects];
+        
+        // Show correct view depending on video count
+        if ([self.shootArray count] == 0) {
             [self.noEventsFoundView setHidden:NO];
             [self.myEventsTableView setHidden:YES];
         } else {
@@ -166,35 +183,58 @@
             [self.myEventsTableView setHidden:NO];
         }
         
-        // Save our events
+        // Save row height data
         NSError *error = nil;
         if (![[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext saveToPersistentStore:&error]) {
             NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
         }
         
+        // Reset load more view
+        [self.loadMoreLabel setText:NSLocalizedString(@"Load More", @"")];
+        [self.activityIndicatorView stopAnimating];
+        
+        // Check if we can load more
+        if ([paginator hasNextPage]) {
+            // Set footer for load more
+            [self.myEventsTableView setTableFooterView:self.loadMoreView];
+        } else {
+            // Hide footer for load more
+            [self.myEventsTableView setTableFooterView:nil];
+        }
+        
         RKLogInfo(@"Load complete: Table should refresh...");
         [self.myEventsTableView reloadData];
-    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-        RKLogError(@"Load failed with error: %@", error);
-        //TODO Error message
-    }];
-}
-
-#pragma mark - RKDelegate
-/*
-- (void)objectLoader:(RKObjectLoader*)loader willMapData:(id)mappableData {
-    // Get the paging data here
+    };
     
-    NSString *total = [mappableData objectForKey:@"total"];
-    NSString *itemsPerPage = [mappableData objectForKey:@"items_per_page"];
-    NSString *currentPage = [mappableData objectForKey:@"current_page"];
+    getMyEventsFailureBlock = ^(RKPaginator *paginator, NSError *error) {
+        // Re-enable Load More button
+        [self.loadMoreButton setEnabled:YES];
+        
+        RKLogError(@"Load failed with error: %@", error);
+        // Error message
+        if ([error code] == NSURLErrorNotConnectedToInternet) {
+            NSString *title = NSLocalizedString(@"No Network Connection", @"");
+            NSString *message = NSLocalizedString(@"Please check your internet connection and try again.", @"");
+            
+            // Show alert
+            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alertView show];
+        } else {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Oops", @"") message:NSLocalizedString(@"We're having trouble connecting to the server, please try again.", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles:nil];
+            [alertView show];
+        }
+    };
+    
+    // Load the object model via RestKit
+    self.shootPaginator = [[RKObjectManager sharedManager] paginatorWithPathPattern:path];
+    [self.shootPaginator setCompletionBlockWithSuccess:getMyEventsSuccessBlock failure:getMyEventsFailureBlock];
+    [self.shootPaginator loadPage:1];
 }
- */
 
 #pragma mark - Helper Methods
 
 - (void)configureCell:(UITableViewCell *)cell forTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
-    Mission *mission = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    Mission *mission = [self.shootArray objectAtIndex:indexPath.row];
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"MMMM d. YYYY @ ha"];
@@ -219,12 +259,11 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [self.fetchedResultsController.sections count];
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)table numberOfRowsInSection:(NSInteger)section {
-    id<NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController.sections objectAtIndex:section];
-    return [sectionInfo numberOfObjects];
+    return [self.shootArray count];
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -261,16 +300,10 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    Mission *mission = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    Mission *mission = [self.shootArray objectAtIndex:indexPath.row];
     
     EventViewController *viewController = [[EventViewController alloc] initWithMission:mission];
     [self.navigationController pushViewController:viewController animated:YES];
-}
-
-#pragma mark - NSFetchedResultsControllerDelegate methods
-
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
-    [self.myEventsTableView reloadData];
 }
 
 #pragma mark - Observer Methods

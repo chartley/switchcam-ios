@@ -12,10 +12,14 @@
 
 @property (strong, nonatomic) IBOutlet UITableView *myEventsTableView;
 
-@property (strong, nonatomic) NSArray *myEventsArray;
-
 @property (strong, nonatomic) IBOutlet UIView *noEventsFoundView;
 @property (strong, nonatomic) IBOutlet UILabel *noEventsFoundHeaderLabel;
 @property (strong, nonatomic) IBOutlet UILabel *noEventsFoundDetailLabel;
+
+// Pagination
+@property (strong, nonatomic) IBOutlet UIView *loadMoreView;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicatorView;
+@property (strong, nonatomic) IBOutlet UILabel *loadMoreLabel;
+@property (strong, nonatomic) IBOutlet UIButton *loadMoreButton;
 
 @end

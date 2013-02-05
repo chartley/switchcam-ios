@@ -24,8 +24,8 @@
 
 @interface FindEventsViewController () <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate>
 
-@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
-@property (nonatomic, strong) NSArray *eventsArray;
+@property (nonatomic, strong) RKPaginator *shootPaginator;
+@property (nonatomic, strong) NSMutableArray *shootArray;
 
 @end
 
@@ -46,10 +46,17 @@
     // Do any additional setup after loading the view from its nib.
     
     // Add background
-    UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bgfull-signin"]];
-    [backgroundImageView setFrame:CGRectMake(0, 175, backgroundImageView.frame.size.width, backgroundImageView.frame.size.height)];
+    UIImageView *tableBackgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bgfull-signin"]];
+    [tableBackgroundImageView setFrame:CGRectMake(0, 138, tableBackgroundImageView.frame.size.width, tableBackgroundImageView.frame.size.height)];
+    [self.view addSubview:tableBackgroundImageView];
+    [self.view sendSubviewToBack:tableBackgroundImageView];
+    
+    UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bgfull-fullapp"]];
+    [backgroundImageView setFrame:CGRectMake(0, 0, backgroundImageView.frame.size.width, backgroundImageView.frame.size.height)];
     [self.view addSubview:backgroundImageView];
     [self.view sendSubviewToBack:backgroundImageView];
+    
+
     
     [self.eventsTableView setTableFooterView:[[UIView alloc] init]];
     
@@ -108,13 +115,13 @@
     fetchRequest.fetchLimit = 30;
     NSError *error = nil;
     
-    // Setup fetched results
-    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
-                                                                        managedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext
-                                                                          sectionNameKeyPath:nil
-                                                                                   cacheName:nil];
-    [self.fetchedResultsController setDelegate:self];
-    [self.fetchedResultsController performFetch:&error];
+    NSManagedObjectContext *managedObjectContext = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
+    NSArray *results = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (error == nil && results != nil) {
+        self.shootArray = [NSMutableArray arrayWithArray:results];
+    } else {
+        self.shootArray = [NSMutableArray array];
+    }
     
     [self findEventsWithLocation:YES];
     
@@ -180,14 +187,25 @@
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
+- (IBAction)loadMoreButtonAction:(id)sender {
+    // Adding a check since we don't hide the button
+    if ([self.shootPaginator hasNextPage]) {
+        // Load next page, disable button until call complete
+        [self.loadMoreButton setEnabled:NO];
+        [self.loadMoreLabel setText:NSLocalizedString(@"Loading...", @"")];
+        [self.activityIndicatorView startAnimating];
+        [self.shootPaginator loadNextPage];
+    }
+}
+
 #pragma mark - Network Calls
 
 - (void)findEventsWithLocation:(BOOL)usingLocation {
-    NSMutableDictionary *parameters = nil;
+    NSString *path = [NSString stringWithFormat:@"mission?page=:currentPage"];
     
     // Check if we have search text
     if (self.eventSearchTextField.text != nil && ![self.eventSearchTextField.text isEqualToString:@""]) {
-        parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:self.eventSearchTextField.text, @"terms", nil];
+        path = [path stringByAppendingFormat:@"&terms=%@", self.eventSearchTextField.text];
     }
     
     // Location
@@ -197,26 +215,32 @@
         NSString *lonString = [NSString stringWithFormat:@"%f", coordinate.longitude];
         NSString *latString = [NSString stringWithFormat:@"%f", coordinate.latitude];
         
-        if (parameters != nil) {
-            [parameters setObject:latString forKey:@"lat"];
-            [parameters setObject:lonString forKey:@"lon"];
-        } else {
-            parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:latString, @"lat",
-                          lonString, @"lon", nil];
-        }
+        path = [path stringByAppendingFormat:@"&lat=%@&lon=%@", latString, lonString];
         
         [self.eventSearchTextField setPlaceholder:NSLocalizedString(@"Near Current Location", @"")];
     } else {
         [self.eventSearchTextField setPlaceholder:NSLocalizedString(@"Enter event code or search", @"")];
     }
     
-    // Reset the cache
     
-    // Load the object model via RestKit
-    [[RKObjectManager sharedManager] getObjectsAtPath:@"mission/" parameters:parameters success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+    // Completion Blocks
+    void (^findEventsSuccessBlock)(RKPaginator *paginator, NSArray *objects, NSUInteger page);
+    void (^findEventsFailureBlock)(RKPaginator *paginator, NSError *error);
+    
+    findEventsSuccessBlock = ^(RKPaginator *paginator, NSArray *objects, NSUInteger page) {
+        // Re-enable Load More button
+        [self.loadMoreButton setEnabled:YES];
         
-        // Show correct view depending on result count
-        if ([[mappingResult array] count] == 0) {
+        if (page == 1) {
+            // New list
+            self.shootArray = [NSMutableArray arrayWithArray:objects];
+        } else {
+            // Add objects to list
+            [self.shootArray addObjectsFromArray:objects];
+        }
+        
+        // Show correct view depending on video count
+        if ([self.shootArray count] == 0) {
             [self.noEventsFoundView setHidden:NO];
             [self.eventsTableView setHidden:YES];
         } else {
@@ -224,21 +248,33 @@
             [self.eventsTableView setHidden:NO];
         }
         
-        // Mark these missions not following or camera crew if not set
-        for (Mission *mission in [mappingResult array]) {
-            if (mission.isFollowing == nil) {
-                mission.isFollowing = [NSNumber numberWithBool:NO];
-            }
-            
-            if (mission.isCameraCrew == nil) {
-                mission.isCameraCrew = [NSNumber numberWithBool:NO];
-            }
+        // Save row height data
+        NSError *error = nil;
+        if (![[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext saveToPersistentStore:&error]) {
+            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
         }
-        self.eventsArray = [mappingResult array];
+        
+        // Reset load more view
+        [self.loadMoreLabel setText:NSLocalizedString(@"Load More", @"")];
+        [self.activityIndicatorView stopAnimating];
+        
+        // Check if we can load more
+        if ([paginator hasNextPage]) {
+            // Set footer for load more
+            [self.loadMoreLabel setText:NSLocalizedString(@"Load More", @"")];
+        } else {
+            // Hide footer for load more
+            [self.loadMoreLabel setText:NSLocalizedString(@"Create More!", @"")];
+        }
         
         RKLogInfo(@"Load complete: Table should refresh...");
         [self.eventsTableView reloadData];
-    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+    };
+    
+    findEventsFailureBlock = ^(RKPaginator *paginator, NSError *error) {
+        // Re-enable Load More button
+        [self.loadMoreButton setEnabled:YES];
+        
         RKLogError(@"Load failed with error: %@", error);
         // Error message
         if ([error code] == NSURLErrorNotConnectedToInternet) {
@@ -252,13 +288,18 @@
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Oops", @"") message:NSLocalizedString(@"We're having trouble connecting to the server, please try again.", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles:nil];
             [alertView show];
         }
-    }];
+    };
+    
+    // Load the object model via RestKit
+    self.shootPaginator = [[RKObjectManager sharedManager] paginatorWithPathPattern:path];
+    [self.shootPaginator setCompletionBlockWithSuccess:findEventsSuccessBlock failure:findEventsFailureBlock];
+    [self.shootPaginator loadPage:1];
 }
 
 #pragma mark - Helper Methods
 
 - (void)configureCell:(UITableViewCell *)cell forTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
-    Mission *mission = [self.eventsArray objectAtIndex:indexPath.row];
+    Mission *mission = [self.shootArray objectAtIndex:indexPath.row];
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"d. MMMM YYYY"];
@@ -290,7 +331,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)table numberOfRowsInSection:(NSInteger)section {
-    return [self.eventsArray count];
+    return [self.shootArray count];
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -338,18 +379,11 @@
     return NO;
 }
 
-#pragma mark - NSFetchedResultsControllerDelegate methods
-
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
-    self.eventsArray = [controller fetchedObjects];
-    [self.eventsTableView reloadData];
-}
-
 #pragma mark - FindEventCellDelegate methods
 
 - (void)joinButtonPressed:(FindEventCell*)findEventCell {
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:findEventCell.tag inSection:0];
-    Mission *mission = [self.eventsArray objectAtIndex:indexPath.row];
+    Mission *mission = [self.shootArray objectAtIndex:indexPath.row];
     
     // Load Event View Controller
     EventViewController *viewController = [[EventViewController alloc] initWithMission:mission];
