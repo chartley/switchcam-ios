@@ -676,6 +676,10 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     
     RKResponseDescriptor *userVideoResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userVideoMapping pathPattern:@"uservideo" keyPath:@"data" statusCodes:[NSIndexSet indexSetWithIndex:200]];
     
+    RKResponseDescriptor *cameraCrewResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userMapping pathPattern:@"mission/:missionId/camera_crew" keyPath:@"data" statusCodes:[NSIndexSet indexSetWithIndex:200]];
+    
+    RKResponseDescriptor *followerResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:userMapping pathPattern:@"mission/:missionId/follower" keyPath:@"data" statusCodes:[NSIndexSet indexSetWithIndex:200]];
+    
     RKResponseDescriptor *createUserVideoResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:createUserVideoMapping pathPattern:@"uservideo/" keyPath:@"" statusCodes:[NSIndexSet indexSetWithIndex:201]];
     
     RKResponseDescriptor *missionResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:missionMapping
@@ -689,6 +693,8 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
                                                                                               statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
     [objectManager addRequestDescriptor:userVideoRequestDescriptor];
     [objectManager addResponseDescriptor:userVideoResponseDescriptor];
+    [objectManager addResponseDescriptor:cameraCrewResponseDescriptor];
+    [objectManager addResponseDescriptor:followerResponseDescriptor];
     [objectManager addResponseDescriptor:createUserVideoResponseDescriptor];
     [objectManager addResponseDescriptor:missionResponseDescriptor];
     [objectManager addResponseDescriptor:activityResponseDescriptor];

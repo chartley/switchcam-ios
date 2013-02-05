@@ -183,6 +183,8 @@
 		C99E97E6167E40A6006B3BBC /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C99E97E4167E40A6006B3BBC /* Icon@2x.png */; };
 		C99E97ED167E4494006B3BBC /* StatusBarToastAndProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = C99E97EC167E4494006B3BBC /* StatusBarToastAndProgressView.m */; };
 		C9A203A716BF142D0093E259 /* SPNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9A203A616BF142D0093E259 /* SPNavigationController.m */; };
+		C9A203AC16C083B10093E259 /* PeopleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9A203AB16C083B10093E259 /* PeopleCell.m */; };
+		C9A203AE16C083DC0093E259 /* PeopleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9A203AD16C083DC0093E259 /* PeopleCell.xib */; };
 		C9AED0A8169E6B9A00A6A09D /* UserVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = C9AED0A7169E6B9A00A6A09D /* UserVideo.m */; };
 		C9AED0AA169E987E00A6A09D /* PendingUploadCellEventVideoTop.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9AED0A9169E987E00A6A09D /* PendingUploadCellEventVideoTop.xib */; };
 		C9AED0AF169E9BD700A6A09D /* PendingUploadCellEventVideo.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9AED0AE169E9BD700A6A09D /* PendingUploadCellEventVideo.xib */; };
@@ -695,6 +697,9 @@
 		C99E97EC167E4494006B3BBC /* StatusBarToastAndProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StatusBarToastAndProgressView.m; path = Views/StatusBarToastAndProgressView.m; sourceTree = "<group>"; };
 		C9A203A516BF142D0093E259 /* SPNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPNavigationController.h; path = ViewControllers/Navigation/SPNavigationController.h; sourceTree = "<group>"; };
 		C9A203A616BF142D0093E259 /* SPNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPNavigationController.m; path = ViewControllers/Navigation/SPNavigationController.m; sourceTree = "<group>"; };
+		C9A203AA16C083B10093E259 /* PeopleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PeopleCell.h; path = TableViewCells/People/PeopleCell.h; sourceTree = "<group>"; };
+		C9A203AB16C083B10093E259 /* PeopleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PeopleCell.m; path = TableViewCells/People/PeopleCell.m; sourceTree = "<group>"; };
+		C9A203AD16C083DC0093E259 /* PeopleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PeopleCell.xib; path = TableViewCells/People/PeopleCell.xib; sourceTree = "<group>"; };
 		C9AED0A6169E6B9A00A6A09D /* UserVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserVideo.h; path = Model/ManagedObjects/UserVideo.h; sourceTree = "<group>"; };
 		C9AED0A7169E6B9A00A6A09D /* UserVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserVideo.m; path = Model/ManagedObjects/UserVideo.m; sourceTree = "<group>"; };
 		C9AED0A9169E987E00A6A09D /* PendingUploadCellEventVideoTop.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PendingUploadCellEventVideoTop.xib; path = TableViewCells/PendingUploads/PendingUploadCellEventVideoTop.xib; sourceTree = "<group>"; };
@@ -1418,6 +1423,7 @@
 		C97BFF2D166D94FD005BB65F /* TableViewCells */ = {
 			isa = PBXGroup;
 			children = (
+				C9A203A916C083940093E259 /* People */,
 				C9606C9A16B4621000F5C76F /* Invite */,
 				C9606C6116AFBF9800F5C76F /* Event Info */,
 				2456C42D168E650100F49C70 /* Find Events */,
@@ -1574,6 +1580,16 @@
 				C9A203A616BF142D0093E259 /* SPNavigationController.m */,
 			);
 			name = Navigation;
+			sourceTree = "<group>";
+		};
+		C9A203A916C083940093E259 /* People */ = {
+			isa = PBXGroup;
+			children = (
+				C9A203AA16C083B10093E259 /* PeopleCell.h */,
+				C9A203AB16C083B10093E259 /* PeopleCell.m */,
+				C9A203AD16C083DC0093E259 /* PeopleCell.xib */,
+			);
+			name = People;
 			sourceTree = "<group>";
 		};
 		C9DDF1AA167D24CA000399EA /* Resources */ = {
@@ -2198,6 +2214,7 @@
 				C9606C9716B45E1100F5C76F /* btn-invitefbfirends@2x.png in Resources */,
 				C9606C9816B45E1100F5C76F /* icn-rtarrow.png in Resources */,
 				C9606C9916B45E1100F5C76F /* icn-rtarrow@2x.png in Resources */,
+				C9A203AE16C083DC0093E259 /* PeopleCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2305,6 +2322,7 @@
 				24F9C37A16B67A030029D1E5 /* Note.m in Sources */,
 				24B3CB1D16B7838700E233B7 /* NSObject+PerformBlockAfterDelay.m in Sources */,
 				C9A203A716BF142D0093E259 /* SPNavigationController.m in Sources */,
+				C9A203AC16C083B10093E259 /* PeopleCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
