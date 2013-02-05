@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1536</int>
-		<string key="IBDocument.SystemVersion">11G63b</string>
+		<string key="IBDocument.SystemVersion">12C60</string>
 		<string key="IBDocument.InterfaceBuilderVersion">2844</string>
-		<string key="IBDocument.AppKitVersion">1138.51</string>
-		<string key="IBDocument.HIToolboxVersion">569.00</string>
+		<string key="IBDocument.AppKitVersion">1187.34</string>
+		<string key="IBDocument.HIToolboxVersion">625.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			<string key="NS.object.0">1930</string>
@@ -92,6 +92,23 @@
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
+							<object class="IBUIImageView" id="347492174">
+								<reference key="NSNextResponder" ref="168142542"/>
+								<int key="NSvFlags">288</int>
+								<string key="NSFrame">{{0, -32}, {320, 192}}</string>
+								<reference key="NSSuperview" ref="168142542"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="200530393"/>
+								<bool key="IBUIOpaque">NO</bool>
+								<bool key="IBUIClipsSubviews">YES</bool>
+								<int key="IBUIContentMode">4</int>
+								<bool key="IBUIMultipleTouchEnabled">YES</bool>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<object class="NSCustomResource" key="IBUIImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">imgshader.png</string>
+								</object>
+							</object>
 							<object class="IBUILabel" id="615690541">
 								<reference key="NSNextResponder" ref="168142542"/>
 								<int key="NSvFlags">293</int>
@@ -135,7 +152,7 @@
 								<string key="NSFrame">{{20, 142}, {280, 21}}</string>
 								<reference key="NSSuperview" ref="168142542"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="200530393"/>
+								<reference key="NSNextKeyView" ref="347492174"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -929,6 +946,7 @@
 							<reference ref="86817540"/>
 							<reference ref="607930352"/>
 							<reference ref="615690541"/>
+							<reference ref="347492174"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 					</object>
@@ -1041,6 +1059,11 @@
 						<reference key="object" ref="497281347"/>
 						<reference key="parent" ref="200530393"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">80</int>
+						<reference key="object" ref="347492174"/>
+						<reference key="parent" ref="168142542"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -1078,12 +1101,13 @@
 				<string key="73.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="74.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="75.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="80.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">79</int>
+			<int key="maxID">80</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1275,6 +1299,7 @@
 			<string key="icn-sharenote.png">{23, 23}</string>
 			<string key="icn-sharephoto.png">{27, 21}</string>
 			<string key="icn-twitter.png">{18, 16}</string>
+			<string key="imgshader.png">{320, 192}</string>
 			<string key="results-shadow.png">{320, 17}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1930</string>
