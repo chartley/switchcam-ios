@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class ECSlidingViewController;
+@class ECSlidingViewController, SCCamViewController;
 
 extern NSString *const SCSessionStateChangedNotification;
 extern NSString *const SCAPINetworkRequestCanStartNotification;
@@ -17,6 +17,7 @@ extern NSString *const SCAPINetworkRequestCanStartNotification;
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) ECSlidingViewController *slidingViewController;
+@property (strong, nonatomic) SCCamViewController *recordingViewController;
 
 // Facebook
 - (BOOL)openReadSessionWithAllowLoginUI:(BOOL)allowLoginUI;

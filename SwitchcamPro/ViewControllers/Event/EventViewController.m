@@ -521,9 +521,11 @@ enum { kTagTabBase = 100 };
 }
 
 - (IBAction)recordButtonAction:(id)sender {
+    AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     SCCamViewController *viewController = [[SCCamViewController alloc] init];
     [viewController setSelectedMission:self.mission];
     [viewController setDelegate:self];
+    appDelegate.recordingViewController = viewController;
     [self presentViewController:viewController animated:YES completion:nil];
 }
 
