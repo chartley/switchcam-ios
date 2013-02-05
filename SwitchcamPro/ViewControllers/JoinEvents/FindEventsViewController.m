@@ -102,7 +102,7 @@
     [self.fetchedResultsController setDelegate:self];
     [self.fetchedResultsController performFetch:&error];
     
-    [self findEventsWithLocation:NO];
+    [self findEventsWithLocation:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -173,6 +173,10 @@
             parameters = [NSMutableDictionary dictionaryWithObjectsAndKeys:latString, @"lat",
                           lonString, @"lon", nil];
         }
+        
+        [self.eventSearchTextField setPlaceholder:NSLocalizedString(@"Near Current Location", @"")];
+    } else {
+        [self.eventSearchTextField setPlaceholder:NSLocalizedString(@"Enter event code or search", @"")];
     }
     
     // Reset the cache
@@ -332,6 +336,10 @@
 }
 
 #pragma mark - UITextField Delegate
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    [self.eventSearchTextField setPlaceholder:NSLocalizedString(@"Enter event code or search", @"")];
+}
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
