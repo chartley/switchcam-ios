@@ -789,7 +789,7 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
             
             // Hide progress
             if (weakSelf.isUserUploading) {
-                [self.statusBarToastAndProgressView hideProgressView];
+                [weakSelf.statusBarToastAndProgressView hideProgressView];
             }
         }
         if(call.callState == CTCallStateDisconnected)
@@ -799,7 +799,7 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
             
             // Show progress if uploading
             if (weakSelf.isUserUploading) {
-                [self.statusBarToastAndProgressView showProgressView];
+                [weakSelf.statusBarToastAndProgressView showProgressView];
             }
         }
         
