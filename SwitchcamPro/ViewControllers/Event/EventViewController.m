@@ -46,6 +46,7 @@ enum { kTagTabBase = 100 };
 @property (nonatomic, retain) SPTabsView *tabsContainerView;
 @property (strong, nonatomic) MBProgressHUD *loadingIndicator;
 @property (strong, nonatomic) UIPanGestureRecognizer *tabsPanGestureRecognizer;
+@property (strong, nonatomic) UIButton *invisibleButton;
 
 
 @end
@@ -523,6 +524,12 @@ enum { kTagTabBase = 100 };
 }
 
 - (IBAction)noteButtonAction:(id)sender {
+    // Check if Share drawer is open
+    if (isShareDrawerOpen) {
+        // Close drawer
+        [self shareButtonAction:nil];
+    }
+    
     // Open/Close drawer
     if (isToolbarDrawerOpen) {
         // Check if keyboard is up
@@ -532,7 +539,8 @@ enum { kTagTabBase = 100 };
         } else {            
             // Close Drawer
             [UIView animateWithDuration:0.4 animations:^{
-                [self.toolbarDrawer setFrame:CGRectMake(self.toolbarDrawer.frame.origin.x, self.toolbarDrawer.frame.origin.y + kNoteDrawerHeight, self.toolbarDrawer.frame.size.width, self.toolbarDrawer.frame.size.height)];}
+                [self.toolbarDrawer setFrame:CGRectMake(self.toolbarDrawer.frame.origin.x, self.toolbarDrawer.frame.origin.y + kNoteDrawerHeight, self.toolbarDrawer.frame.size.width, self.toolbarDrawer.frame.size.height)];
+            }
                              completion:^(BOOL finished){
                                  // Re-enable touches on scroll view
                                  self.eventScrollView.userInteractionEnabled = YES;
@@ -543,6 +551,9 @@ enum { kTagTabBase = 100 };
             self.shareNoteButtonBackground.hidden = YES;
             
             isToolbarDrawerOpen = NO;
+            
+            [self.invisibleButton removeFromSuperview];
+            self.invisibleButton = nil;
         }
     } else {
         // Disable touches on scroll view
@@ -553,6 +564,19 @@ enum { kTagTabBase = 100 };
             [self.toolbarDrawer setFrame:CGRectMake(self.toolbarDrawer.frame.origin.x, self.toolbarDrawer.frame.origin.y - kNoteDrawerHeight, self.toolbarDrawer.frame.size.width, self.toolbarDrawer.frame.size.height)];}
                          completion:nil
          ];
+        
+        // Remove button if still present
+        if (self.invisibleButton != nil) {
+            [self.invisibleButton removeFromSuperview];
+            self.invisibleButton = nil;
+        }
+        
+        // Add invisible button to dismiss
+        self.invisibleButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.invisibleButton setFrame:CGRectMake(0, 64, 320, self.toolbarDrawer.frame.origin.y)];
+        [self.invisibleButton addTarget:self action:@selector(noteButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+        AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+        [appDelegate.window addSubview:self.invisibleButton];
         
         // Show button highlight
         self.shareNoteButtonBackground.hidden = NO;
@@ -583,6 +607,12 @@ enum { kTagTabBase = 100 };
 }
 
 - (IBAction)shareButtonAction:(id)sender {
+    // Check if bottom drawer is open
+    if (isToolbarDrawerOpen) {
+        // Close bottom drawer
+        [self noteButtonAction:nil];
+    }
+    
     if (isShareDrawerOpen) {
         // Close Drawer
         [UIView animateWithDuration:0.4 animations:^{
@@ -604,6 +634,10 @@ enum { kTagTabBase = 100 };
         [self.navigationItem setRightBarButtonItem:shareBarButtonItem];
         
         isShareDrawerOpen = NO;
+        
+        // Remove invisible
+        [self.invisibleButton removeFromSuperview];
+        self.invisibleButton = nil;
     } else {
         // Disable touches on scroll view
         self.eventScrollView.userInteractionEnabled = NO;
@@ -625,6 +659,19 @@ enum { kTagTabBase = 100 };
         [self.navigationItem setRightBarButtonItem:shareBarButtonItem];
         
         isShareDrawerOpen = YES;
+        
+        // Remove button if still present
+        if (self.invisibleButton != nil) {
+            [self.invisibleButton removeFromSuperview];
+            self.invisibleButton = nil;
+        }
+
+        // Add invisible button to dismiss
+        self.invisibleButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.invisibleButton setFrame:CGRectMake(0, self.shareDrawer.frame.origin.y + self.shareDrawer.frame.size.height + 64, 320, self.view.frame.size.height - self.shareDrawer.frame.size.height - kBottomBarHeight)];
+        [self.invisibleButton addTarget:self action:@selector(shareButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+        AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+        [appDelegate.window addSubview:self.invisibleButton];
     }
 }
 
@@ -845,6 +892,7 @@ enum { kTagTabBase = 100 };
         
         [UIView animateWithDuration:0.25 animations:^(){
             [self.toolbarDrawer setFrame:CGRectMake(0, self.toolbarDrawer.frame.origin.y - kbSize.height, 320, self.toolbarDrawer.frame.size.height)];
+            [self.invisibleButton setFrame:CGRectMake(0, 0, 320, self.invisibleButton.frame.size.height - kbSize.height)];
         } completion:^(BOOL finished) {
         }];
     } else {
@@ -869,6 +917,9 @@ enum { kTagTabBase = 100 };
             self.shareNoteButtonBackground.hidden = YES;
             
             isToolbarDrawerOpen = NO;
+            
+            [self.invisibleButton removeFromSuperview];
+            self.invisibleButton = nil;
         }];
        
     }
