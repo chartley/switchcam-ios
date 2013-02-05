@@ -289,11 +289,39 @@
     NSString *facebookToken = [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookTokenKey];
     
     // Completion Blocks
-    void (^commentActivitySuccessBlock)(AFHTTPRequestOperation *operation, id responseObject);
-    void (^commentActivityFailureBlock)(AFHTTPRequestOperation *operation, NSError *error);
+    void (^commentActivitySuccessBlock)(RKObjectRequestOperation *operation, RKMappingResult *responseObject);
+    void (^commentActivityFailureBlock)(RKObjectRequestOperation *operation, NSError *error);
     
-    commentActivitySuccessBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
-        //TODO insert comment
+    commentActivitySuccessBlock = ^(RKObjectRequestOperation *operation, RKMappingResult *result) {
+        // Insert comment
+        Comment *comment = [[result array] objectAtIndex:0];
+        
+        // Get Object off main queue
+        NSError *error = nil;
+        comment = (Comment*)[[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext existingObjectWithID:[comment objectID] error:&error];
+        
+        if (error != nil) {
+            //TODO logging
+            return;
+        }
+        
+        NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"submitDate" ascending:YES];
+        NSArray *commentArray = [selectedActivity.latestComments sortedArrayUsingDescriptors:@[descriptor]];
+        
+        // Remove oldest if count == 3
+        if ([commentArray count] == 3) {
+            [selectedActivity removeLatestCommentsObject:[commentArray objectAtIndex:0]];
+        }
+        
+        // Calculate row height
+        CGSize labelSize = [comment.comment sizeWithFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:13.0] constrainedToSize:CGSizeMake(264, 600) lineBreakMode:NSLineBreakByWordWrapping];
+        int rowHeight = labelSize.height + 28 + 15; // Label size, fixed bottom, fixed top
+        comment.rowHeight = [NSNumber numberWithInt:rowHeight];
+        
+        // Add comment
+        [comment setActivity:selectedActivity];
+        [selectedActivity addLatestCommentsObject:comment];
+        
         NSMutableArray *indexPathsToReload = [NSMutableArray array];
         // Reload all rows pertaining to this post
         for (int i = postCommentRow; i > postCommentRow - 5; i--) {
@@ -307,7 +335,7 @@
         [self.eventActivityTableView reloadRowsAtIndexPaths:indexPathsToReload withRowAnimation:UITableViewRowAnimationTop];
     };
     
-    commentActivityFailureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
+    commentActivityFailureBlock = ^(RKObjectRequestOperation *operation, NSError *error) {
         if ([error code] == NSURLErrorNotConnectedToInternet) {
             NSString *title = NSLocalizedString(@"No Network Connection", @"");
             NSString *message = NSLocalizedString(@"Please check your internet connection and try again.", @"");
@@ -332,8 +360,9 @@
     NSString *path = [NSString stringWithFormat:@"comment/"];
     NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:path parameters:parameters];
     
-    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    [operation setCompletionBlockWithSuccess:commentActivitySuccessBlock failure:commentActivityFailureBlock];
+    // Use private queue otherwise we could deadlock
+    NSManagedObjectContext *context = [[RKManagedObjectStore defaultStore] newChildManagedObjectContextWithConcurrencyType:NSPrivateQueueConcurrencyType];
+    RKManagedObjectRequestOperation *operation = [[RKObjectManager sharedManager] managedObjectRequestOperationWithRequest:request managedObjectContext:context success:commentActivitySuccessBlock failure:commentActivityFailureBlock];
     
     [operation start];
 }
@@ -441,13 +470,15 @@
         // Set Contributer
         [activityCell.contributorLabel setText:activity.person.name];
         [activityCell.contributorImageView setImageWithURL:[NSURL URLWithString:[activity.person pictureURL]] placeholderImage:[UIImage imageNamed:@"img-shoot-thumb-placeholder"]];
+        
+        [activityCell.timeLabel setText:activity.timesince];
     } else if (indexPath.row % 5 == 4) {
         // Post Comment Row
     } else {
         // Comment Row
         ActivityCommentCell *activityCommentCell = (ActivityCommentCell*)cell;
         
-        NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"submitDate" ascending:NO];
+        NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"submitDate" ascending:YES];
         NSArray *commentArray = [activity.latestComments sortedArrayUsingDescriptors:@[descriptor]];
         
         if ([commentArray count] >= (indexPath.row % 5)) {
@@ -458,6 +489,8 @@
             
             [activityCell.contributorLabel setText:comment.person.name];
             [activityCell.contributorImageView setImageWithURL:[NSURL URLWithString:[comment.person pictureURL]] placeholderImage:[UIImage imageNamed:@"img-shoot-thumb-placeholder"]];
+            
+            [activityCell.timeLabel setText:comment.timesince];
             
             // Adjust verb / time layout
             [activityCell.contributorLabel sizeToFit];
@@ -521,10 +554,7 @@
         }
     }
     
-    
 
-    [activityCell.timeLabel setText:activity.timesince];
-    
     // Set delegate and tag
     [activityCell setTag:(indexPath.row / 5)];
     [activityCell setDelegate:self];
@@ -561,7 +591,7 @@
     } else {
         // Comment Row
         // Sort set
-        NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"submitDate" ascending:NO];
+        NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"submitDate" ascending:YES];
         NSArray *commentArray = [activity.latestComments sortedArrayUsingDescriptors:@[descriptor]];
         
         if ([commentArray count] >= (indexPath.row % 5)) {
@@ -865,6 +895,7 @@
     }
     
     [self addComment:commentToPost toActivity:selectedActivity];
+    [activityPostCommentCell.commentTextField setText:@""];
 }
 
 #pragma mark - Observers

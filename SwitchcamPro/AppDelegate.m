@@ -693,6 +693,8 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     
     RKResponseDescriptor *createUserVideoResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:createUserVideoMapping pathPattern:@"uservideo/" keyPath:@"" statusCodes:[NSIndexSet indexSetWithIndex:201]];
     
+    RKResponseDescriptor *commentResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:commentMapping pathPattern:@"comment/" keyPath:@"" statusCodes:[NSIndexSet indexSetWithIndex:201]];
+    
     RKResponseDescriptor *missionResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:missionMapping
                                                                                             pathPattern:@"mission/"
                                                                                                 keyPath:@"data"
@@ -707,6 +709,7 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     [objectManager addResponseDescriptor:cameraCrewResponseDescriptor];
     [objectManager addResponseDescriptor:followerResponseDescriptor];
     [objectManager addResponseDescriptor:createUserVideoResponseDescriptor];
+    [objectManager addResponseDescriptor:commentResponseDescriptor];
     [objectManager addResponseDescriptor:missionResponseDescriptor];
     [objectManager addResponseDescriptor:activityResponseDescriptor];
     
