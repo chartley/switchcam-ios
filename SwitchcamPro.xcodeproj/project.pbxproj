@@ -14,6 +14,8 @@
 		2456C469168F6F0D00F49C70 /* img-shoot-thumb-placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2456C465168F6F0D00F49C70 /* img-shoot-thumb-placeholder@2x.png */; };
 		2456C46A168F6F0D00F49C70 /* results-shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 2456C466168F6F0D00F49C70 /* results-shadow.png */; };
 		2456C46B168F6F0D00F49C70 /* results-shadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2456C467168F6F0D00F49C70 /* results-shadow@2x.png */; };
+		2473DE0416C0E2DA00E8F446 /* CreateEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2473DE0216C0E2DA00E8F446 /* CreateEventViewController.m */; };
+		2473DE0516C0E2DA00E8F446 /* CreateEventViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2473DE0316C0E2DA00E8F446 /* CreateEventViewController.xib */; };
 		24B3CB1D16B7838700E233B7 /* NSObject+PerformBlockAfterDelay.m in Sources */ = {isa = PBXBuildFile; fileRef = 24B3CB1C16B7838700E233B7 /* NSObject+PerformBlockAfterDelay.m */; };
 		24F9C37316B66D630029D1E5 /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F9C37216B66D630029D1E5 /* UIPlaceHolderTextView.m */; };
 		24F9C37716B679F10029D1E5 /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F9C37616B679F10029D1E5 /* Activity.m */; };
@@ -424,6 +426,9 @@
 		2456C465168F6F0D00F49C70 /* img-shoot-thumb-placeholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img-shoot-thumb-placeholder@2x.png"; sourceTree = "<group>"; };
 		2456C466168F6F0D00F49C70 /* results-shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "results-shadow.png"; sourceTree = "<group>"; };
 		2456C467168F6F0D00F49C70 /* results-shadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "results-shadow@2x.png"; sourceTree = "<group>"; };
+		2473DE0116C0E2DA00E8F446 /* CreateEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CreateEventViewController.h; path = ViewControllers/CreateEvent/CreateEventViewController.h; sourceTree = "<group>"; };
+		2473DE0216C0E2DA00E8F446 /* CreateEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CreateEventViewController.m; path = ViewControllers/CreateEvent/CreateEventViewController.m; sourceTree = "<group>"; };
+		2473DE0316C0E2DA00E8F446 /* CreateEventViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CreateEventViewController.xib; path = ViewControllers/CreateEvent/CreateEventViewController.xib; sourceTree = "<group>"; };
 		24B3CB1B16B7838700E233B7 /* NSObject+PerformBlockAfterDelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+PerformBlockAfterDelay.h"; path = "Helpers/NSObject+PerformBlockAfterDelay.h"; sourceTree = "<group>"; };
 		24B3CB1C16B7838700E233B7 /* NSObject+PerformBlockAfterDelay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+PerformBlockAfterDelay.m"; path = "Helpers/NSObject+PerformBlockAfterDelay.m"; sourceTree = "<group>"; };
 		24F9C37116B66D630029D1E5 /* UIPlaceHolderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIPlaceHolderTextView.h; path = Views/UIPlaceHolderTextView.h; sourceTree = "<group>"; };
@@ -988,6 +993,16 @@
 			name = "Find Events";
 			sourceTree = "<group>";
 		};
+		2473DE0016C0E2A100E8F446 /* Create Event */ = {
+			isa = PBXGroup;
+			children = (
+				2473DE0116C0E2DA00E8F446 /* CreateEventViewController.h */,
+				2473DE0216C0E2DA00E8F446 /* CreateEventViewController.m */,
+				2473DE0316C0E2DA00E8F446 /* CreateEventViewController.xib */,
+			);
+			name = "Create Event";
+			sourceTree = "<group>";
+		};
 		C90847BA1680355A00DEF94E /* Playback */ = {
 			isa = PBXGroup;
 			children = (
@@ -1466,6 +1481,7 @@
 		C97BFF33166D9826005BB65F /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				2473DE0016C0E2A100E8F446 /* Create Event */,
 				C9A203A816BF14310093E259 /* Navigation */,
 				C90847BA1680355A00DEF94E /* Playback */,
 				C9E9B6AB16741AEB00487A72 /* Upload */,
@@ -2215,6 +2231,7 @@
 				C9606C9816B45E1100F5C76F /* icn-rtarrow.png in Resources */,
 				C9606C9916B45E1100F5C76F /* icn-rtarrow@2x.png in Resources */,
 				C9A203AE16C083DC0093E259 /* PeopleCell.xib in Resources */,
+				2473DE0516C0E2DA00E8F446 /* CreateEventViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2323,6 +2340,7 @@
 				24B3CB1D16B7838700E233B7 /* NSObject+PerformBlockAfterDelay.m in Sources */,
 				C9A203A716BF142D0093E259 /* SPNavigationController.m in Sources */,
 				C9A203AC16C083B10093E259 /* PeopleCell.m in Sources */,
+				2473DE0416C0E2DA00E8F446 /* CreateEventViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

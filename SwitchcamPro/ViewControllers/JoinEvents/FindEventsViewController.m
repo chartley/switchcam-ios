@@ -20,6 +20,7 @@
 #import "Venue.h"
 #import "Artist.h"
 #import "SPNavigationController.h"
+#import "CreateEventViewController.h"
 
 @interface FindEventsViewController () <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate>
 
@@ -52,6 +53,22 @@
     
     [self.eventsTableView setTableFooterView:[[UIView alloc] init]];
     
+    // Menu Button and Location Button
+    UIButton *menuButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [menuButton setFrame:CGRectMake(0, 0, 30, 30)];
+    [menuButton setImage:[UIImage imageNamed:@"btn-sidemenu"] forState:UIControlStateNormal];
+    [menuButton addTarget:self action:@selector(menuButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *menuBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:menuButton];
+    [self.navigationItem setLeftBarButtonItem:menuBarButtonItem];
+    [self.navigationItem setHidesBackButton:YES];
+    
+    UIButton *locationButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [locationButton setFrame:CGRectMake(0, 0, 30, 30)];
+    [locationButton setImage:[UIImage imageNamed:@"btn-location"] forState:UIControlStateNormal];
+    [locationButton addTarget:self action:@selector(locationButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *locationBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:locationButton];
+    [self.navigationItem setRightBarButtonItem:locationBarButtonItem];
+    
     // Set Button Image
     UIImage *buttonImage = [[UIImage imageNamed:@"btn-orange-lg"]
                             resizableImageWithCapInsets:UIEdgeInsetsMake(20, 15, 20, 15)];
@@ -70,10 +87,7 @@
     [self.findEventsButton.titleLabel setShadowColor:[UIColor blackColor]];
     [self.findEventsButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
     
-    [self.titleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:18]];
-    [self.titleLabel setTextColor:[UIColor whiteColor]];
-    [self.titleLabel setShadowColor:[UIColor blackColor]];
-    [self.titleLabel setShadowOffset:CGSizeMake(0, -1)];
+    [self.navigationItem setTitle:NSLocalizedString(@"Find Shoots", @"")];
     
     [self.noEventsFoundHeaderLabel setFont:[UIFont fontWithName:@"SourceSansPro-SemiBold" size:17]];
     [self.noEventsFoundHeaderLabel setTextColor:[UIColor whiteColor]];
@@ -103,6 +117,18 @@
     [self.fetchedResultsController performFetch:&error];
     
     [self findEventsWithLocation:YES];
+    
+    // Footer
+    [self.eventsTableView setTableFooterView:self.findEventsFooterView];
+    
+    // Set the background for any states you plan to use
+    [self.createShootButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    [self.createShootButton setBackgroundImage:buttonImageHighlight forState:UIControlStateHighlighted];
+    
+    // No Events button
+    [self.noEventsFoundCreateShootButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    [self.noEventsFoundCreateShootButton setBackgroundImage:buttonImageHighlight forState:UIControlStateHighlighted];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -147,6 +173,11 @@
 - (IBAction)findYourEventButtonAction:(id)sender {
     [self.eventSearchTextField resignFirstResponder];
     [self findEventsWithLocation:NO];
+}
+
+- (IBAction)createShootButtonAction:(id)sender {
+    CreateEventViewController *viewController = [[CreateEventViewController alloc] init];
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 #pragma mark - Network Calls

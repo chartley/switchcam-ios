@@ -11,7 +11,6 @@
 
 @interface FindEventsViewController : UIViewController <FindEventCellDelegate>
 
-@property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UITableView *eventsTableView;
 @property (strong, nonatomic) IBOutlet UITextField *eventSearchTextField;
 @property (strong, nonatomic) IBOutlet UIButton *findEventsButton;
@@ -19,6 +18,9 @@
 @property (strong, nonatomic) IBOutlet UIView *noEventsFoundView;
 @property (strong, nonatomic) IBOutlet UILabel *noEventsFoundHeaderLabel;
 @property (strong, nonatomic) IBOutlet UILabel *noEventsFoundDetailLabel;
+@property (strong, nonatomic) IBOutlet UIButton *noEventsFoundCreateShootButton;
 
+@property (strong, nonatomic) IBOutlet UIView *findEventsFooterView;
+@property (strong, nonatomic) IBOutlet UIButton *createShootButton;
 
 @end

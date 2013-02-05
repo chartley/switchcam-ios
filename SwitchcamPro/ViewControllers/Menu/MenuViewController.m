@@ -95,7 +95,11 @@
         }
             
         case 1:
-            newTopViewController = [[FindEventsViewController alloc] init];
+        {
+            FindEventsViewController *findEventsViewController = [[FindEventsViewController alloc] initWithNibName:@"FindEventsViewController" bundle:nil];
+            SPNavigationController *navController = [[SPNavigationController alloc] initWithRootViewController:findEventsViewController];
+            newTopViewController = navController;
+        }
             break;
             
         case 2:
