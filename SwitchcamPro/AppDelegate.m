@@ -34,8 +34,14 @@
 NSString *const SCSessionStateChangedNotification = @"com.switchcam.switchcampro:SCSessionStateChangedNotification";
 NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switchcampro:SCAPINetworkRequestCanStartNotification";
 
+#define kUpgradeRequiredMessage 1000
+#define kUpgradeOptionalMessage 1001
+#define kAlertMessage 1002
+#define kAlertWithURLMessage 1003
+
 @interface AppDelegate () {
     CTCallCenter *callCenter;
+    NSURL *checkAppLinkURL;
 }
 
 @property (strong, nonatomic) SPNavigationController* loginViewController;
@@ -63,6 +69,9 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     
     // Initialize RestKit
     [self initializeRestKit];
+    
+    // Check for any messages from Switchcam
+    [self checkAppMessage];
     
     // Initialize TestFlight
     [TestFlight takeOff:@"2acb3bce-2531-4584-b080-013af6bd4993"];
@@ -827,7 +836,70 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     [UIApplication sharedApplication].idleTimerDisabled = NO;
 }
 
-#pragma mark - Create User Video
+#pragma mark - Network Requests
+
+- (void)checkAppMessage {
+    // Completion Blocks
+    void (^checkAppMessageSuccessBlock)(AFHTTPRequestOperation *operation, id responseObject);
+    void (^checkAppMessageFailureBlock)(AFHTTPRequestOperation *operation, NSError *error);
+    
+    checkAppMessageSuccessBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
+        // Check for messages
+        if ([[responseObject objectForKey:@"data"] count] > 0) {
+            NSDictionary *messageObject = [[responseObject objectForKey:@"data"] objectAtIndex:0];
+            NSString *status = [messageObject objectForKey:@"status"];
+            NSString *title = [messageObject objectForKey:@"title"];
+            NSString *message = [messageObject objectForKey:@"body"];
+            NSString *linkURL = [messageObject objectForKey:@"link_url"];
+            
+            UIAlertView *alertView = nil; 
+            if ([status isEqualToString:@"upgrade_required"]) {
+                // Show message
+                alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:NSLocalizedString(@"Upgrade Now", @"") otherButtonTitles: nil];
+                [alertView setTag:kUpgradeRequiredMessage];
+                
+                checkAppLinkURL = [NSURL URLWithString:linkURL];
+            } else if ([status isEqualToString:@"upgrade_optional"]) {
+                // Show message
+                alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:NSLocalizedString(@"Later", @"") otherButtonTitles:NSLocalizedString(@"Upgrade Now", @""), nil];
+                [alertView setTag:kUpgradeOptionalMessage];
+                
+                checkAppLinkURL = [NSURL URLWithString:linkURL];
+            } else if (linkURL == nil || [linkURL isEqualToString:@""]){
+                // Show message without link
+                alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles:nil];
+                [alertView setTag:kAlertMessage];
+            } else {
+                // Show message
+                alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:NSLocalizedString(@"Later", @"") otherButtonTitles:NSLocalizedString(@"Safari", @""), nil];
+                [alertView setTag:kAlertWithURLMessage];
+                
+                checkAppLinkURL = [NSURL URLWithString:linkURL];
+            }
+            [alertView setDelegate:self];
+            [alertView show];
+        }
+    };
+    
+    checkAppMessageFailureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
+        // Fail silently
+    };
+    
+    NSString *appVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+    NSString *appMessageVersionString = [NSString stringWithFormat:@"ios-%@", appVersion];
+    
+    // Make Request and set params
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:kAPIHost]];
+    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:appMessageVersionString, @"version_id", nil];
+    
+    NSString *path = [NSString stringWithFormat:@"appmessage"];
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET" path:path parameters:parameters];
+    
+    AFJSONRequestOperation *operation = [[AFJSONRequestOperation alloc] initWithRequest:request];
+    [operation setCompletionBlockWithSuccess:checkAppMessageSuccessBlock failure:checkAppMessageFailureBlock];
+    
+    [operation start];
+}
 
 - (void)createUserVideo:(NSString*)videoKey {
     // Get UserVideo with videoKey
@@ -894,5 +966,32 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     
     [[RKObjectManager sharedManager] postObject:userVideoToUpload path:@"uservideo/" parameters:nil success:createUserVideoSuccessBlock failure:createUserVideoFailureBlock];
 }
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (alertView.tag == kUpgradeRequiredMessage) {
+        // Force user to upgrade
+        [[UIApplication sharedApplication] openURL:checkAppLinkURL];
+    } else if (alertView.tag == kUpgradeOptionalMessage) {
+        if (buttonIndex == 0) {
+            // Canceled
+        } else {
+            // Open Safari
+            [[UIApplication sharedApplication] openURL:checkAppLinkURL];
+        }
+    } else if (alertView.tag == kAlertWithURLMessage) {
+        if (buttonIndex == 0) {
+            // Canceled
+        } else {
+            // Open Safari
+            [[UIApplication sharedApplication] openURL:checkAppLinkURL];
+        }
+    } else if (alertView.tag == kAlertMessage) {
+        // Nothing
+    }
+}
+
+
 
 @end
