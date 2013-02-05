@@ -41,8 +41,16 @@
     [self.view addSubview:backgroundImageView];
     [self.view sendSubviewToBack:backgroundImageView];
     
-    // Set Font
-    [self.settingsTitleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:18]];
+    [self.navigationItem setTitle:NSLocalizedString(@"Settings", @"")];
+    
+    // Menu Button and Location Button
+    UIButton *menuButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [menuButton setFrame:CGRectMake(0, 0, 30, 30)];
+    [menuButton setImage:[UIImage imageNamed:@"btn-sidemenu"] forState:UIControlStateNormal];
+    [menuButton addTarget:self action:@selector(menuButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *menuBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:menuButton];
+    [self.navigationItem setLeftBarButtonItem:menuBarButtonItem];
+    [self.navigationItem setHidesBackButton:YES];
 }
 
 - (void)didReceiveMemoryWarning

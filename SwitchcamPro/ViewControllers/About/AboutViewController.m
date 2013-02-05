@@ -91,12 +91,21 @@
     [self.facebookButton.titleLabel setShadowColor:[UIColor blackColor]];
     [self.facebookButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
     
-    [self.aboutTitleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:18]];
-    
     [self.aboutLabel setFont:[UIFont fontWithName:@"SourceSansPro-Semibold" size:15]];
     [self.aboutLabel setTextColor:[UIColor whiteColor]];
     [self.aboutLabel setShadowColor:[UIColor blackColor]];
     [self.aboutLabel setShadowOffset:CGSizeMake(0, -1)];
+    
+    [self.navigationItem setTitle:NSLocalizedString(@"About", @"")];
+    
+    // Menu Button and Location Button
+    UIButton *menuButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [menuButton setFrame:CGRectMake(0, 0, 30, 30)];
+    [menuButton setImage:[UIImage imageNamed:@"btn-sidemenu"] forState:UIControlStateNormal];
+    [menuButton addTarget:self action:@selector(menuButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *menuBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:menuButton];
+    [self.navigationItem setLeftBarButtonItem:menuBarButtonItem];
+    [self.navigationItem setHidesBackButton:YES];
 }
 
 - (void)didReceiveMemoryWarning

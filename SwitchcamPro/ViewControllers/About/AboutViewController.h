@@ -11,7 +11,6 @@
 @interface AboutViewController : UIViewController
 
 @property (strong, nonatomic) IBOutlet UILabel *aboutLabel;
-@property (strong, nonatomic) IBOutlet UILabel *aboutTitleLabel;
 @property (strong, nonatomic) IBOutlet UIButton *switchcamButton;
 @property (strong, nonatomic) IBOutlet UIButton *twitterButton;
 @property (strong, nonatomic) IBOutlet UIButton *facebookButton;

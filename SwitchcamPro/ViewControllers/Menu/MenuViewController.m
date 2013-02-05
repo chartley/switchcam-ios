@@ -107,11 +107,19 @@
             break;
             
         case 2:
-            newTopViewController = [[SettingsViewController alloc] init];
+        {
+            SettingsViewController *settingsViewController = [[SettingsViewController alloc] initWithNibName:@"SettingsViewController" bundle:nil];
+            SPNavigationController *navController = [[SPNavigationController alloc] initWithRootViewController:settingsViewController];
+            newTopViewController = navController;
+        }
             break;
             
         case 3:
-            newTopViewController = [[AboutViewController alloc] init];
+        {
+            AboutViewController *aboutViewController = [[AboutViewController alloc] initWithNibName:@"AboutViewController" bundle:nil];
+            SPNavigationController *navController = [[SPNavigationController alloc] initWithRootViewController:aboutViewController];
+            newTopViewController = navController;
+        }
             break;
             
         case 4:
