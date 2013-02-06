@@ -29,7 +29,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.menuItems = [NSArray arrayWithObjects:@"My Events", @"Find Events", @"Settings", @"About", @"Sign Out", nil];
+        self.menuItems = [NSArray arrayWithObjects:@"My Shoots", @"Find Shoots", @"Settings", @"About", @"Sign Out", nil];
     }
     return self;
 }

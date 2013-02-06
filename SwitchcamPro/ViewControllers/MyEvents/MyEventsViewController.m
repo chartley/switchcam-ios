@@ -13,6 +13,7 @@
 #import "EventViewController.h"
 #import "FindEventsViewController.h"
 #import "ECSlidingViewController.h"
+#import "SPNavigationController.h"
 #import "MenuViewController.h"
 #import "MyEventCell.h"
 #import "AppDelegate.h"
@@ -49,7 +50,7 @@
     [self.view sendSubviewToBack:backgroundImageView];
     
     // Add title
-    [self.navigationItem setTitle:NSLocalizedString(@"My Events", @"")];
+    [self.navigationItem setTitle:NSLocalizedString(@"My Shoots", @"")];
     
     [self.myEventsTableView setTableFooterView:[[UIView alloc] init]];
     
@@ -143,12 +144,13 @@
 - (IBAction)plusButtonAction:(id)sender {
     // Load Find Event View Controller
     FindEventsViewController *viewController = [[FindEventsViewController alloc] init];
+    SPNavigationController *navController = [[SPNavigationController alloc] initWithRootViewController:viewController];
     
     [self.slidingViewController anchorTopViewOffScreenTo:ECRight animations:nil onComplete:^{
         AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
         
         CGRect frame = appDelegate.slidingViewController.topViewController.view.frame;
-        appDelegate.slidingViewController.topViewController = viewController;
+        appDelegate.slidingViewController.topViewController = navController;
         appDelegate.slidingViewController.topViewController.view.frame = frame;
         [appDelegate.slidingViewController resetTopView];
     }];
