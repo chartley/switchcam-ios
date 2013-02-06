@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
-		<int key="IBDocument.SystemTarget">1536</int>
+		<int key="IBDocument.SystemTarget">1552</int>
 		<string key="IBDocument.SystemVersion">12C60</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2844</string>
+		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
 		<string key="IBDocument.AppKitVersion">1187.34</string>
 		<string key="IBDocument.HIToolboxVersion">625.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">1930</string>
+			<string key="NS.object.0">2083</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBProxyObject</string>
@@ -48,7 +48,7 @@
 								<string key="NSFrame">{{20, 20}, {280, 122}}</string>
 								<reference key="NSSuperview" ref="995971189"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="424504304"/>
+								<reference key="NSNextKeyView" ref="563231362"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<int key="IBUIContentMode">2</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
@@ -60,6 +60,7 @@
 								<string key="NSFrame">{{20, 42}, {280, 78}}</string>
 								<reference key="NSSuperview" ref="995971189"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="424504304"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<int key="IBUIContentMode">4</int>
@@ -126,7 +127,7 @@
 							<object class="IBUIButton" id="424504304">
 								<reference key="NSNextResponder" ref="995971189"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{126.5, 59}, {67, 44}}</string>
+								<string key="NSFrame">{{127, 59}, {67, 44}}</string>
 								<reference key="NSSuperview" ref="995971189"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="801916324"/>
@@ -301,6 +302,7 @@
 								<string key="NSFrame">{{260, 179}, {42, 21}}</string>
 								<reference key="NSSuperview" ref="995971189"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -322,18 +324,19 @@
 								<string key="NSFrameSize">{320, 1}</string>
 								<reference key="NSSuperview" ref="995971189"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="215372498"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MC4xODQzMTM3MjU1IDAuMTk2MDc4NDMxNCAwLjIAA</bytes>
+									<bytes key="NSRGB">MSAxIDEgMC4yAA</bytes>
 								</object>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
 						</array>
-						<string key="NSFrameSize">{320, 199}</string>
+						<string key="NSFrameSize">{320, 204}</string>
 						<reference key="NSSuperview" ref="1004017552"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="215372498"/>
+						<reference key="NSNextKeyView" ref="437403796"/>
 						<string key="NSReuseIdentifierKey">_NS:11</string>
 						<object class="NSColor" key="IBUIBackgroundColor" id="880321692">
 							<int key="NSColorSpace">3</int>
@@ -346,7 +349,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
 				</array>
-				<string key="NSFrameSize">{320, 200}</string>
+				<string key="NSFrameSize">{320, 205}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="995971189"/>
@@ -716,6 +719,6 @@
 			<string key="icn-preview-pressed.png">{21, 25}</string>
 			<string key="icn-preview.png">{21, 25}</string>
 		</dictionary>
-		<string key="IBCocoaTouchPluginVersion">1930</string>
+		<string key="IBCocoaTouchPluginVersion">2083</string>
 	</data>
 </archive>

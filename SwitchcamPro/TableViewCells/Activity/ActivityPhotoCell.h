@@ -10,7 +10,7 @@
 #import "ActivityCell.h"
 
 #define kActivityPhotoCellIdentifier @"ActivityPhotoCellIdentifier"
-#define kActivityPhotoCellRowHeight 200
+#define kActivityPhotoCellRowHeight 205
 
 @interface ActivityPhotoCell : ActivityCell
 

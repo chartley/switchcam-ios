@@ -10,7 +10,7 @@
 #import "ActivityCell.h"
 
 #define kActivityNoteCellIdentifier @"ActivityNoteCellIdentifier"
-#define kActivityNoteCellRowHeight 200
+#define kActivityNoteCellRowHeight 205
 
 @interface ActivityNoteCell : ActivityCell
 

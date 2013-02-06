@@ -10,7 +10,7 @@
 #import "ActivityCell.h"
 
 #define kActivityActionCellIdentifier @"ActivityActionCellIdentifier"
-#define kActivityActionCellRowHeight 62
+#define kActivityActionCellRowHeight 75
 
 @interface ActivityActionCell : ActivityCell
 

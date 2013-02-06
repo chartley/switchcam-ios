@@ -69,7 +69,7 @@
     // Set Font / Color
     [self.openURLButton.titleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Bold" size:17]];
     [self.openURLButton.titleLabel setTextColor:[UIColor whiteColor]];
-    [self.openURLButton.titleLabel setShadowColor:[UIColor blackColor]];
+    [self.openURLButton.titleLabel setShadowColor:RGBA(0,0,0,0.4)];
     [self.openURLButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
     
     [self.createEventBodyLabel setFont:[UIFont fontWithName:@"SourceSansPro-Semibold" size:13]];

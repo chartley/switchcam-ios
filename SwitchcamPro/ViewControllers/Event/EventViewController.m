@@ -227,7 +227,7 @@ enum { kTagTabBase = 100 };
         tabView.tag = kTagTabBase + tabIndex;
         [tabView.titleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Semibold" size:17]];
         [tabView.titleLabel setTextColor:[UIColor whiteColor]];
-        [tabView.titleLabel setShadowColor:[UIColor blackColor]];
+        [tabView.titleLabel setShadowColor:RGBA(0,0,0,0.4)];
         [tabView.titleLabel setShadowOffset:CGSizeMake(0, -1)];
         tabView.delegate = self;
         
@@ -351,17 +351,17 @@ enum { kTagTabBase = 100 };
     // Set Font / Color
     [self.shareEmailButton.titleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Semibold" size:15]];
     [self.shareEmailButton.titleLabel setTextColor:[UIColor whiteColor]];
-    [self.shareEmailButton.titleLabel setShadowColor:[UIColor blackColor]];
+    [self.shareEmailButton.titleLabel setShadowColor:RGBA(0,0,0,0.4)];
     [self.shareEmailButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
     
     [self.shareTwitterButton.titleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Semibold" size:15]];
     [self.shareTwitterButton.titleLabel setTextColor:[UIColor whiteColor]];
-    [self.shareTwitterButton.titleLabel setShadowColor:[UIColor blackColor]];
+    [self.shareTwitterButton.titleLabel setShadowColor:RGBA(0,0,0,0.4)];
     [self.shareTwitterButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
     
     [self.shareFacebookButton.titleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Semibold" size:15]];
     [self.shareFacebookButton.titleLabel setTextColor:[UIColor whiteColor]];
-    [self.shareFacebookButton.titleLabel setShadowColor:[UIColor blackColor]];
+    [self.shareFacebookButton.titleLabel setShadowColor:RGBA(0,0,0,0.4)];
     [self.shareFacebookButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
     
     // Toolbar drawer button
@@ -379,7 +379,7 @@ enum { kTagTabBase = 100 };
     
     [self.postNoteButton.titleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Semibold" size:13]];
     [self.postNoteButton.titleLabel setTextColor:[UIColor whiteColor]];
-    [self.postNoteButton.titleLabel setShadowColor:[UIColor blackColor]];
+    [self.postNoteButton.titleLabel setShadowColor:RGBA(0,0,0,0.4)];
     [self.postNoteButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
 
     // Add loading indicator

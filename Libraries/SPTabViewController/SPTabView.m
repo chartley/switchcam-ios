@@ -108,7 +108,7 @@ static inline CGFloat radians(CGFloat degrees) {
     
     // Fill with current tab color
     CGContextSetFillColorWithColor(context, tabColor);
-    CGContextSetRGBStrokeColor(context, (43.0/255.0), (43.0/255.0), (43.0/255.0), self.selected?0.0:1.0);
+    CGContextSetRGBStrokeColor(context, (255.0/255.0), (255.0/255.0), (255.0/255.0), self.selected?0.0:0.2);
     CGContextSetLineWidth(context, 2);
     CGContextFillRect(context, [self _tabRect]);
     

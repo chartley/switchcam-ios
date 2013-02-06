@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
-		<int key="IBDocument.SystemTarget">1536</int>
+		<int key="IBDocument.SystemTarget">1552</int>
 		<string key="IBDocument.SystemVersion">12C60</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2844</string>
+		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
 		<string key="IBDocument.AppKitVersion">1187.34</string>
 		<string key="IBDocument.HIToolboxVersion">625.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">1930</string>
+			<string key="NS.object.0">2083</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBProxyObject</string>
@@ -75,7 +75,7 @@
 							<object class="IBUILabel" id="508029720">
 								<reference key="NSNextResponder" ref="733864539"/>
 								<int key="NSvFlags">293</int>
-								<string key="NSFrame">{{20, 117}, {280, 48}}</string>
+								<string key="NSFrame">{{20, 105}, {280, 48}}</string>
 								<reference key="NSSuperview" ref="733864539"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="999434633"/>
@@ -112,7 +112,7 @@
 							<object class="IBUILabel" id="999434633">
 								<reference key="NSNextResponder" ref="733864539"/>
 								<int key="NSvFlags">293</int>
-								<string key="NSFrame">{{20, 152}, {280, 21}}</string>
+								<string key="NSFrame">{{20, 140}, {280, 21}}</string>
 								<reference key="NSSuperview" ref="733864539"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="741195120"/>
@@ -137,10 +137,9 @@
 							<object class="IBUILabel" id="741195120">
 								<reference key="NSNextResponder" ref="733864539"/>
 								<int key="NSvFlags">293</int>
-								<string key="NSFrame">{{20, 172}, {280, 21}}</string>
+								<string key="NSFrame">{{20, 160}, {280, 21}}</string>
 								<reference key="NSSuperview" ref="733864539"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -351,6 +350,6 @@
 			<string key="NS.key.0">imgshader.png</string>
 			<string key="NS.object.0">{320, 192}</string>
 		</object>
-		<string key="IBCocoaTouchPluginVersion">1930</string>
+		<string key="IBCocoaTouchPluginVersion">2083</string>
 	</data>
 </archive>

@@ -78,17 +78,17 @@
     // Set Font / Color
     [self.switchcamButton.titleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Bold" size:17]];
     [self.switchcamButton.titleLabel setTextColor:[UIColor whiteColor]];
-    [self.switchcamButton.titleLabel setShadowColor:[UIColor blackColor]];
+    [self.switchcamButton.titleLabel setShadowColor:RGBA(0,0,0,0.4)];
     [self.switchcamButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
     
     [self.twitterButton.titleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Bold" size:17]];
     [self.twitterButton.titleLabel setTextColor:[UIColor whiteColor]];
-    [self.twitterButton.titleLabel setShadowColor:[UIColor blackColor]];
+    [self.twitterButton.titleLabel setShadowColor:RGBA(0,0,0,0.4)];
     [self.twitterButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
     
     [self.facebookButton.titleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Bold" size:17]];
     [self.facebookButton.titleLabel setTextColor:[UIColor whiteColor]];
-    [self.facebookButton.titleLabel setShadowColor:[UIColor blackColor]];
+    [self.facebookButton.titleLabel setShadowColor:RGBA(0,0,0,0.4)];
     [self.facebookButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
     
     [self.aboutLabel setFont:[UIFont fontWithName:@"SourceSansPro-Semibold" size:15]];

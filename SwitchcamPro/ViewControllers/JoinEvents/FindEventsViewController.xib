@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
-		<int key="IBDocument.SystemTarget">1536</int>
+		<int key="IBDocument.SystemTarget">1552</int>
 		<string key="IBDocument.SystemVersion">12C60</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2844</string>
+		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
 		<string key="IBDocument.AppKitVersion">1187.34</string>
 		<string key="IBDocument.HIToolboxVersion">625.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">1930</string>
+			<string key="NS.object.0">2083</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBProxyObject</string>
@@ -46,7 +46,7 @@
 						<string key="NSFrame">{{280, 13}, {20, 20}}</string>
 						<reference key="NSSuperview" ref="700730951"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
+						<reference key="NSNextKeyView" ref="18612933"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -54,7 +54,7 @@
 					<object class="IBUILabel" id="6223327">
 						<reference key="NSNextResponder" ref="700730951"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 12}, {177, 21}}</string>
+						<string key="NSFrame">{{72, 12}, {177, 21}}</string>
 						<reference key="NSSuperview" ref="700730951"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="306166893"/>
@@ -77,6 +77,7 @@
 							<bytes key="NSWhite">MQA</bytes>
 						</object>
 						<int key="IBUIBaselineAdjustment">0</int>
+						<int key="IBUITextAlignment">1</int>
 						<object class="IBUIFontDescription" key="IBUIFontDescription" id="313209350">
 							<int key="type">1</int>
 							<double key="pointSize">17</double>
@@ -130,6 +131,7 @@
 						<reference key="NSSuperview" ref="700730951"/>
 						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<reference key="IBUIBackgroundColor" ref="507709848"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
@@ -138,9 +140,9 @@
 						<string key="IBUINormalTitle">Create your own Switchcam Shoots!</string>
 						<reference key="IBUIHighlightedTitleColor" ref="779587042"/>
 						<reference key="IBUINormalTitleColor" ref="779587042"/>
-						<object class="NSColor" key="IBUINormalTitleShadowColor" id="2773812">
+						<object class="NSColor" key="IBUINormalTitleShadowColor">
 							<int key="NSColorSpace">3</int>
-							<bytes key="NSWhite">MAA</bytes>
+							<bytes key="NSWhite">MCAwLjQAA</bytes>
 						</object>
 						<reference key="IBUIFontDescription" ref="321878535"/>
 						<reference key="IBUIFont" ref="785888016"/>
@@ -192,6 +194,7 @@
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="216529673"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<reference key="IBUIBackgroundColor" ref="507709848"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
@@ -200,7 +203,10 @@
 						<string key="IBUINormalTitle">Find your shoot</string>
 						<reference key="IBUIHighlightedTitleColor" ref="779587042"/>
 						<reference key="IBUINormalTitleColor" ref="779587042"/>
-						<reference key="IBUINormalTitleShadowColor" ref="2773812"/>
+						<object class="NSColor" key="IBUINormalTitleShadowColor">
+							<int key="NSColorSpace">3</int>
+							<bytes key="NSWhite">MCAwLjQAA</bytes>
+						</object>
 						<reference key="IBUIFontDescription" ref="321878535"/>
 						<reference key="IBUIFont" ref="785888016"/>
 					</object>
@@ -281,7 +287,10 @@
 								<string key="IBUIText">Doh! No matching events found!</string>
 								<reference key="IBUITextColor" ref="779587042"/>
 								<nil key="IBUIHighlightedColor"/>
-								<reference key="IBUIShadowColor" ref="2773812"/>
+								<object class="NSColor" key="IBUIShadowColor" id="2773812">
+									<int key="NSColorSpace">3</int>
+									<bytes key="NSWhite">MAA</bytes>
+								</object>
 								<int key="IBUIBaselineAdjustment">0</int>
 								<int key="IBUITextAlignment">1</int>
 								<reference key="IBUIFontDescription" ref="313209350"/>
@@ -317,7 +326,6 @@
 								<string key="NSFrame">{{20, 171}, {280, 40}}</string>
 								<reference key="NSSuperview" ref="761187457"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -704,35 +712,6 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">FindEventsViewController</string>
 					<string key="superclassName">UIViewController</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="createShootButtonAction:">id</string>
-						<string key="findYourEventButtonAction:">id</string>
-						<string key="loadMoreButtonAction:">id</string>
-						<string key="locationButtonAction:">id</string>
-						<string key="menuButtonAction:">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="createShootButtonAction:">
-							<string key="name">createShootButtonAction:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="findYourEventButtonAction:">
-							<string key="name">findYourEventButtonAction:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="loadMoreButtonAction:">
-							<string key="name">loadMoreButtonAction:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="locationButtonAction:">
-							<string key="name">locationButtonAction:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="menuButtonAction:">
-							<string key="name">menuButtonAction:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="activityIndicatorView">UIActivityIndicatorView</string>
 						<string key="createShootButton">UIButton</string>
@@ -812,6 +791,6 @@
 			<string key="icn-white-notfound.png">{37, 34}</string>
 			<string key="results-shadow.png">{320, 17}</string>
 		</dictionary>
-		<string key="IBCocoaTouchPluginVersion">1930</string>
+		<string key="IBCocoaTouchPluginVersion">2083</string>
 	</data>
 </archive>

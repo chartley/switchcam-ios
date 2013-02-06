@@ -10,7 +10,7 @@
 #import "ActivityCell.h"
 
 #define kActivityVideoCellIdentifier @"ActivityVideoCellIdentifier"
-#define kActivityVideoCellRowHeight 200
+#define kActivityVideoCellRowHeight 205
 
 @interface ActivityVideoCell : ActivityCell
 

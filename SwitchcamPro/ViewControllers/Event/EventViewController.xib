@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
-		<int key="IBDocument.SystemTarget">1536</int>
+		<int key="IBDocument.SystemTarget">1552</int>
 		<string key="IBDocument.SystemVersion">12C60</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2844</string>
+		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
 		<string key="IBDocument.AppKitVersion">1187.34</string>
 		<string key="IBDocument.HIToolboxVersion">625.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">1930</string>
+			<string key="NS.object.0">2083</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBProxyObject</string>
@@ -409,7 +409,7 @@
 							<object class="IBUIButton" id="44992810">
 								<reference key="NSNextResponder" ref="200530393"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{128, -21}, {65, 65}}</string>
+								<string key="NSFrame">{{127, -20}, {65, 65}}</string>
 								<reference key="NSSuperview" ref="200530393"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="918912184"/>
@@ -1114,65 +1114,6 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">EventViewController</string>
 					<string key="superclassName">UIViewController</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="chooseFromLibrary:">id</string>
-						<string key="inviteFacebookFriendsButtonAction:">id</string>
-						<string key="menuButtonAction:">id</string>
-						<string key="noteButtonAction:">id</string>
-						<string key="photoButtonAction:">id</string>
-						<string key="postNoteButtonAction:">id</string>
-						<string key="recordButtonAction:">id</string>
-						<string key="shareButtonAction:">id</string>
-						<string key="shareEmailButtonAction:">id</string>
-						<string key="shareFacebookButtonAction:">id</string>
-						<string key="shareTwitterButtonAction:">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="chooseFromLibrary:">
-							<string key="name">chooseFromLibrary:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="inviteFacebookFriendsButtonAction:">
-							<string key="name">inviteFacebookFriendsButtonAction:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="menuButtonAction:">
-							<string key="name">menuButtonAction:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="noteButtonAction:">
-							<string key="name">noteButtonAction:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="photoButtonAction:">
-							<string key="name">photoButtonAction:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="postNoteButtonAction:">
-							<string key="name">postNoteButtonAction:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="recordButtonAction:">
-							<string key="name">recordButtonAction:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="shareButtonAction:">
-							<string key="name">shareButtonAction:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="shareEmailButtonAction:">
-							<string key="name">shareEmailButtonAction:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="shareFacebookButtonAction:">
-							<string key="name">shareFacebookButtonAction:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="shareTwitterButtonAction:">
-							<string key="name">shareTwitterButtonAction:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="eventDateLabel">UILabel</string>
 						<string key="eventImageView">UIImageView</string>
@@ -1302,6 +1243,6 @@
 			<string key="imgshader.png">{320, 192}</string>
 			<string key="results-shadow.png">{320, 17}</string>
 		</dictionary>
-		<string key="IBCocoaTouchPluginVersion">1930</string>
+		<string key="IBCocoaTouchPluginVersion">2083</string>
 	</data>
 </archive>

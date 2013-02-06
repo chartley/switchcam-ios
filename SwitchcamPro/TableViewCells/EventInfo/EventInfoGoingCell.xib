@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
-		<int key="IBDocument.SystemTarget">1536</int>
+		<int key="IBDocument.SystemTarget">1552</int>
 		<string key="IBDocument.SystemVersion">12C60</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2844</string>
+		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
 		<string key="IBDocument.AppKitVersion">1187.34</string>
 		<string key="IBDocument.HIToolboxVersion">625.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">1930</string>
+			<string key="NS.object.0">2083</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBProxyObject</string>
@@ -53,6 +53,10 @@
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="552617926"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
+										<object class="NSColor" key="IBUIBackgroundColor" id="799662907">
+											<int key="NSColorSpace">3</int>
+											<bytes key="NSWhite">MCAwAA</bytes>
+										</object>
 										<bool key="IBUIOpaque">NO</bool>
 										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 										<int key="IBUIContentHorizontalAlignment">0</int>
@@ -65,6 +69,10 @@
 											<bytes key="NSWhite">MQA</bytes>
 										</object>
 										<reference key="IBUINormalTitleColor" ref="501813924"/>
+										<object class="NSColor" key="IBUISelectedTitleShadowColor" id="869855118">
+											<int key="NSColorSpace">1</int>
+											<bytes key="NSRGB">MCAwIDAgMC40AA</bytes>
+										</object>
 										<object class="NSColor" key="IBUINormalTitleShadowColor" id="745640874">
 											<int key="NSColorSpace">3</int>
 											<bytes key="NSWhite">MAA</bytes>
@@ -91,6 +99,7 @@
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="702588591"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
+										<reference key="IBUIBackgroundColor" ref="799662907"/>
 										<bool key="IBUIOpaque">NO</bool>
 										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 										<int key="IBUIContentHorizontalAlignment">0</int>
@@ -100,6 +109,7 @@
 										<string key="IBUINormalTitle">I'm not going</string>
 										<reference key="IBUIHighlightedTitleColor" ref="501813924"/>
 										<reference key="IBUINormalTitleColor" ref="501813924"/>
+										<reference key="IBUISelectedTitleShadowColor" ref="869855118"/>
 										<reference key="IBUINormalTitleShadowColor" ref="745640874"/>
 										<reference key="IBUISelectedImage" ref="30256425"/>
 										<reference key="IBUIFontDescription" ref="921576262"/>
@@ -111,7 +121,6 @@
 										<string key="NSFrame">{{17, 79}, {280, 94}}</string>
 										<reference key="NSSuperview" ref="906544948"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<bool key="IBUIOpaque">NO</bool>
 										<bool key="IBUIClipsSubviews">YES</bool>
@@ -160,10 +169,7 @@
 								<reference key="NSSuperview" ref="457363462"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="326955040"/>
-								<object class="NSColor" key="IBUIBackgroundColor" id="799662907">
-									<int key="NSColorSpace">3</int>
-									<bytes key="NSWhite">MCAwAA</bytes>
-								</object>
+								<reference key="IBUIBackgroundColor" ref="799662907"/>
 								<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics"/>
 								<object class="IBUIScreenMetrics" key="IBUISimulatedDestinationMetrics">
 									<string key="IBUISimulatedSizeMetricsClass">IBUIScreenMetrics</string>
@@ -357,6 +363,6 @@
 			<string key="NS.key.0">icn-check-white.png</string>
 			<string key="NS.object.0">{16, 13}</string>
 		</object>
-		<string key="IBCocoaTouchPluginVersion">1930</string>
+		<string key="IBCocoaTouchPluginVersion">2083</string>
 	</data>
 </archive>

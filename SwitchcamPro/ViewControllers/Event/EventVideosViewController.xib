@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
-		<int key="IBDocument.SystemTarget">1536</int>
-		<string key="IBDocument.SystemVersion">11G63b</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2844</string>
-		<string key="IBDocument.AppKitVersion">1138.51</string>
-		<string key="IBDocument.HIToolboxVersion">569.00</string>
+		<int key="IBDocument.SystemTarget">1552</int>
+		<string key="IBDocument.SystemVersion">12C60</string>
+		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
+		<string key="IBDocument.AppKitVersion">1187.34</string>
+		<string key="IBDocument.HIToolboxVersion">625.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">1930</string>
+			<string key="NS.object.0">2083</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBProxyObject</string>
@@ -105,6 +105,7 @@
 								<string key="NSFrame">{{10, 84}, {300, 67}}</string>
 								<reference key="NSSuperview" ref="490321738"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -155,6 +156,7 @@
 						<string key="NSFrame">{{280, 13}, {20, 20}}</string>
 						<reference key="NSSuperview" ref="93687478"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -162,7 +164,7 @@
 					<object class="IBUILabel" id="963083305">
 						<reference key="NSNextResponder" ref="93687478"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 12}, {177, 21}}</string>
+						<string key="NSFrame">{{72, 12}, {177, 21}}</string>
 						<reference key="NSSuperview" ref="93687478"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="939609160"/>
@@ -182,6 +184,7 @@
 						</object>
 						<reference key="IBUIHighlightedColor" ref="528369680"/>
 						<int key="IBUIBaselineAdjustment">0</int>
+						<int key="IBUITextAlignment">1</int>
 						<reference key="IBUIFontDescription" ref="153491282"/>
 						<reference key="IBUIFont" ref="258686368"/>
 						<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
@@ -515,6 +518,17 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">EventVideosViewController</string>
 					<string key="superclassName">EventTabViewController</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">loadMoreButtonAction:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">loadMoreButtonAction:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">loadMoreButtonAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="eventVideosTableView">UITableView</string>
 						<string key="noVideosFoundDetailLabel">UILabel</string>
@@ -558,6 +572,6 @@
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
-		<string key="IBCocoaTouchPluginVersion">1930</string>
+		<string key="IBCocoaTouchPluginVersion">2083</string>
 	</data>
 </archive>

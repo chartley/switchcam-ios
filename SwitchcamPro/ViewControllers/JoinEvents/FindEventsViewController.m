@@ -91,7 +91,7 @@
     // Set Font / Color
     [self.findEventsButton.titleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Bold" size:20]];
     [self.findEventsButton.titleLabel setTextColor:[UIColor whiteColor]];
-    [self.findEventsButton.titleLabel setShadowColor:[UIColor blackColor]];
+    [self.findEventsButton.titleLabel setShadowColor:RGBA(0,0,0,0.4)];
     [self.findEventsButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
     
     [self.navigationItem setTitle:NSLocalizedString(@"Find Shoots", @"")];

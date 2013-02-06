@@ -336,7 +336,7 @@
                 // Set Font / Color
                 [self.imGoingButton.titleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Bold" size:17]];
                 [self.imGoingButton.titleLabel setTextColor:[UIColor whiteColor]];
-                [self.imGoingButton.titleLabel setShadowColor:[UIColor blackColor]];
+                [self.imGoingButton.titleLabel setShadowColor:RGBA(0,0,0,0.4)];
                 [self.imGoingButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
                 
                 [self.imNotGoingButton.titleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Bold" size:17]];
@@ -408,7 +408,7 @@
                     [linkButton addTarget:self action:@selector(linkButtonAction:) forControlEvents:UIControlEventTouchUpInside];
                     [linkButton.titleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Bold" size:17]];
                     [linkButton.titleLabel setTextColor:[UIColor whiteColor]];
-                    [linkButton.titleLabel setShadowColor:[UIColor blackColor]];
+                    [linkButton.titleLabel setShadowColor:RGBA(0,0,0,0.4)];
                     [linkButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
                     [eventInfoLinksCell.contentView addSubview:linkButton];
                     i++;

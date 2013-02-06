@@ -286,9 +286,9 @@
                 [((ButtonCell*)cell).bigButton setBackgroundImage:buttonImageHighlight forState:UIControlStateHighlighted];
                 
                 // Set Font / Color
-                [((ButtonCell*)cell).bigButton.titleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:17]];
+                [((ButtonCell*)cell).bigButton.titleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Bold" size:17]];
                 [((ButtonCell*)cell).bigButton.titleLabel setTextColor:[UIColor whiteColor]];
-                [((ButtonCell*)cell).bigButton.titleLabel setShadowColor:[UIColor blackColor]];
+                [((ButtonCell*)cell).bigButton.titleLabel setShadowColor:RGBA(0,0,0,0.4)];
                 [((ButtonCell*)cell).bigButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
                 break;
             }
