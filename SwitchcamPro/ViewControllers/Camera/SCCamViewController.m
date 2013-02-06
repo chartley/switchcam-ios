@@ -356,6 +356,7 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd-HH-mm-ss"];
         NSString *dateString = [dateFormatter stringFromDate:[currentRecording recordStart]];
+        [dateFormatter release];
         
         // Make sure we don't overwrite
         NSUInteger count = 0;
@@ -375,6 +376,8 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
             [currentRecording setFilename:fileName];
             count++;
             
+            [videoExtension release];
+            [photoExtension release];
         } while ([[NSFileManager defaultManager] fileExistsAtPath:outputURLString]);
         
         

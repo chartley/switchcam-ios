@@ -551,6 +551,7 @@
             maskLayer.path = maskPath;
             activityCommentCell.commentBubbleBackground.layer.mask = maskLayer;
             activityCommentCell.commentDivider.hidden = NO;
+            CGPathRelease(maskPath);
         }
     }
     

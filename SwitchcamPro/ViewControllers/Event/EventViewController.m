@@ -78,7 +78,6 @@ enum { kTagTabBase = 100 };
     EventActivityViewController *eventActivityViewController = [[EventActivityViewController alloc] init];
     [eventActivityViewController setSelectedMission:mission];
     [eventActivityViewController setEventViewController:self];
-    activityViewController = eventActivityViewController;
     
     EventPeopleViewController *eventPeopleViewController = [[EventPeopleViewController alloc] init];
     [eventPeopleViewController setSelectedMission:mission];
@@ -97,7 +96,7 @@ enum { kTagTabBase = 100 };
         self.mission = mission;
         self.navigationItem.title = self.mission.artist.artistName;
         
-
+        activityViewController = eventActivityViewController;
     }
     return self;
 }
@@ -207,8 +206,7 @@ enum { kTagTabBase = 100 };
     // Tabs are resized such that all fit in the view's width.
     // We position the tab views from left to right, with some overlapping after the first one.
     
-    CGFloat tabWidth = self.view.frame.size.width / [self.viewControllers count];
-    tabWidth = (self.view.frame.size.width + ([self.viewControllers count] - 1)) / [self.viewControllers count];
+    CGFloat tabWidth = (self.view.frame.size.width + ([self.viewControllers count] - 1)) / [self.viewControllers count];
     
     NSMutableArray *allTabViews = [NSMutableArray arrayWithCapacity:[self.viewControllers count]];
     

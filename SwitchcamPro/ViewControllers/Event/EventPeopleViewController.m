@@ -66,10 +66,8 @@
 #pragma mark - Helper Methods
 
 - (void)refreshFeed {
-    NSMutableArray *refreshArray = [NSMutableArray array];
-    
     // Get crew and followers
-    refreshArray = [NSMutableArray arrayWithArray:[[self.selectedMission cameraCrew] allObjects]];
+    NSMutableArray *refreshArray = [NSMutableArray arrayWithArray:[[self.selectedMission cameraCrew] allObjects]];
     [refreshArray addObjectsFromArray:[[self.selectedMission followers] allObjects]];
     
     // Set Array
