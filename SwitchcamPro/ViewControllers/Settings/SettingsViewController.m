@@ -265,16 +265,8 @@
     
     // Set backgrounds
     if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
-            // Top
-            [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grptableview-top"]]];
-        } else if (indexPath.row == 3) {
-            // Bottom
-            [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grptableview-bottom"]]];
-        } else {
-            // Middle
-            [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grptableview-middle"]]];
-        }
+        // Single
+        [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grptableview-single"]]];
     } else {
         if (indexPath.row == 0) {
             // Top
