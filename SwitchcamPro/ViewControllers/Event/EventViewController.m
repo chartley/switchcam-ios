@@ -325,28 +325,18 @@ enum { kTagTabBase = 100 };
     [self.shareEmailButton setBackgroundImage:highlightButtonImage forState:UIControlStateSelected];
     
     // Set Button Image
-    UIImage *twitterButtonImage = [[UIImage imageNamed:@"btn-twitter-lg"]
+    UIImage *twitterButtonImage = [[UIImage imageNamed:@"btn-sharetwitter"]
                                    resizableImageWithCapInsets:UIEdgeInsetsMake(20, 15, 20, 15)];
-    
-    // Set Button Image
-    UIImage *twitterHighlightButtonImage = [[UIImage imageNamed:@"btn-twitter-lg-pressed"]
-                                            resizableImageWithCapInsets:UIEdgeInsetsMake(20, 15, 20, 15)];
     
     // Set the background for any states you plan to use
     [self.shareTwitterButton setBackgroundImage:twitterButtonImage forState:UIControlStateNormal];
-    [self.shareTwitterButton setBackgroundImage:twitterHighlightButtonImage forState:UIControlStateSelected];
     
     // Set Button Image
-    UIImage *facebookButtonImage = [[UIImage imageNamed:@"btn-fb-lg"]
+    UIImage *facebookButtonImage = [[UIImage imageNamed:@"btn-sharefb"]
                                     resizableImageWithCapInsets:UIEdgeInsetsMake(20, 15, 20, 15)];
-    
-    // Set Button Image
-    UIImage *facebookHighlightButtonImage = [[UIImage imageNamed:@"btn-fb-lg-pressed"]
-                                             resizableImageWithCapInsets:UIEdgeInsetsMake(20, 15, 20, 15)];
     
     // Set the background for any states you plan to use
     [self.shareFacebookButton setBackgroundImage:facebookButtonImage forState:UIControlStateNormal];
-    [self.shareFacebookButton setBackgroundImage:facebookHighlightButtonImage forState:UIControlStateSelected];
     
     // Set Font / Color
     [self.shareEmailButton.titleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Semibold" size:15]];
@@ -363,6 +353,11 @@ enum { kTagTabBase = 100 };
     [self.shareFacebookButton.titleLabel setTextColor:[UIColor whiteColor]];
     [self.shareFacebookButton.titleLabel setShadowColor:RGBA(0,0,0,0.4)];
     [self.shareFacebookButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
+    
+    [self.shareDrawerLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:15]];
+    [self.shareDrawerLabel setTextColor:[UIColor whiteColor]];
+    [self.shareDrawerLabel setShadowColor:RGBA(0,0,0,0.4)];
+    [self.shareDrawerLabel setShadowOffset:CGSizeMake(0, -1)];
     
     // Toolbar drawer button
     // Set Button Image
@@ -419,9 +414,9 @@ enum { kTagTabBase = 100 };
     
     // shadowPath, shadowOffset, and rotation is handled by ECSlidingViewController.
     // You just need to set the opacity, radius, and color.
-    self.view.layer.shadowOpacity = 0.75f;
-    self.view.layer.shadowRadius = 10.0f;
-    self.view.layer.shadowColor = [UIColor blackColor].CGColor;
+    self.navigationController.view.layer.shadowOpacity = 0.75f;
+    self.navigationController.view.layer.shadowRadius = 10.0f;
+    self.navigationController.view.layer.shadowColor = [UIColor blackColor].CGColor;
     
     if (![self.slidingViewController.underLeftViewController isKindOfClass:[MenuViewController class]]) {
         self.slidingViewController.underLeftViewController  = [[MenuViewController alloc] initWithNibName:@"MenuViewController" bundle:nil];

@@ -45,6 +45,10 @@
 		C916A7EE16C33DC500C26F70 /* MKMapView+ZoomLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = C916A7ED16C33DC500C26F70 /* MKMapView+ZoomLevel.m */; };
 		C916A7F416C384EF00C26F70 /* LKBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = C916A7F316C384EE00C26F70 /* LKBadgeView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C916A7F816C3961200C26F70 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C916A7F716C3961200C26F70 /* CoreText.framework */; };
+		C916A7FD16C3B3A500C26F70 /* btn-sharefb.png in Resources */ = {isa = PBXBuildFile; fileRef = C916A7F916C3B3A500C26F70 /* btn-sharefb.png */; };
+		C916A7FE16C3B3A500C26F70 /* btn-sharefb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C916A7FA16C3B3A500C26F70 /* btn-sharefb@2x.png */; };
+		C916A7FF16C3B3A500C26F70 /* btn-sharetwitter.png in Resources */ = {isa = PBXBuildFile; fileRef = C916A7FB16C3B3A500C26F70 /* btn-sharetwitter.png */; };
+		C916A80016C3B3A500C26F70 /* btn-sharetwitter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C916A7FC16C3B3A500C26F70 /* btn-sharetwitter@2x.png */; };
 		C94F7C111699F3E000D65EDC /* Artist.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F7C101699F3E000D65EDC /* Artist.m */; };
 		C94F7C23169A0A3200D65EDC /* SPLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F7C22169A0A3200D65EDC /* SPLocationManager.m */; };
 		C94F7C26169A234400D65EDC /* SPImageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F7C25169A234400D65EDC /* SPImageHelper.m */; };
@@ -476,6 +480,10 @@
 		C916A7F216C384EE00C26F70 /* LKBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKBadgeView.h; path = Views/LKBadgeView.h; sourceTree = "<group>"; };
 		C916A7F316C384EE00C26F70 /* LKBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKBadgeView.m; path = Views/LKBadgeView.m; sourceTree = "<group>"; };
 		C916A7F716C3961200C26F70 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		C916A7F916C3B3A500C26F70 /* btn-sharefb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-sharefb.png"; sourceTree = "<group>"; };
+		C916A7FA16C3B3A500C26F70 /* btn-sharefb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-sharefb@2x.png"; sourceTree = "<group>"; };
+		C916A7FB16C3B3A500C26F70 /* btn-sharetwitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-sharetwitter.png"; sourceTree = "<group>"; };
+		C916A7FC16C3B3A500C26F70 /* btn-sharetwitter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-sharetwitter@2x.png"; sourceTree = "<group>"; };
 		C94F7C0F1699F3DF00D65EDC /* Artist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Artist.h; path = Model/ManagedObjects/Artist.h; sourceTree = "<group>"; };
 		C94F7C101699F3E000D65EDC /* Artist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Artist.m; path = Model/ManagedObjects/Artist.m; sourceTree = "<group>"; };
 		C94F7C21169A0A3200D65EDC /* SPLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPLocationManager.h; path = Helpers/SPLocationManager.h; sourceTree = "<group>"; };
@@ -1648,6 +1656,10 @@
 		C9DDF1AB167D24DD000399EA /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				C916A7F916C3B3A500C26F70 /* btn-sharefb.png */,
+				C916A7FA16C3B3A500C26F70 /* btn-sharefb@2x.png */,
+				C916A7FB16C3B3A500C26F70 /* btn-sharetwitter.png */,
+				C916A7FC16C3B3A500C26F70 /* btn-sharetwitter@2x.png */,
 				C9606C8A16B45E1100F5C76F /* arrow-share-down.png */,
 				C9606C8B16B45E1100F5C76F /* arrow-share-down@2x.png */,
 				C9606C8C16B45E1100F5C76F /* bg-sharefooter-noshadow.png */,
@@ -2263,6 +2275,10 @@
 				C9606C9916B45E1100F5C76F /* icn-rtarrow@2x.png in Resources */,
 				C9A203AE16C083DC0093E259 /* PeopleCell.xib in Resources */,
 				2473DE0516C0E2DA00E8F446 /* CreateEventViewController.xib in Resources */,
+				C916A7FD16C3B3A500C26F70 /* btn-sharefb.png in Resources */,
+				C916A7FE16C3B3A500C26F70 /* btn-sharefb@2x.png in Resources */,
+				C916A7FF16C3B3A500C26F70 /* btn-sharetwitter.png in Resources */,
+				C916A80016C3B3A500C26F70 /* btn-sharetwitter@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
