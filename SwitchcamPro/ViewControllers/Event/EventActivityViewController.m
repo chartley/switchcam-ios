@@ -474,6 +474,14 @@
         [activityCell.timeLabel setText:activity.timesince];
     } else if (indexPath.row % 5 == 4) {
         // Post Comment Row
+        ActivityPostCommentCell *activityPostCommentCell = (ActivityPostCommentCell*)cell;
+        
+        // Hide if we aren't showing post comment so we can have a small buffer at the bottom
+        if (postCommentRow == indexPath.row) {
+            activityPostCommentCell.hidden = NO;
+        } else {
+            activityPostCommentCell.hidden = YES;
+        }
     } else {
         // Comment Row
         ActivityCommentCell *activityCommentCell = (ActivityCommentCell*)cell;
@@ -587,7 +595,8 @@
         if (postCommentRow == indexPath.row) {
             return kActivityPostCommentCellRowHeight;
         } else {
-            return 0;
+            // Buffer
+            return 20;
         }
     } else {
         // Comment Row
