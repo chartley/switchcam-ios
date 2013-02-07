@@ -241,19 +241,7 @@
             [labelTextFieldCell.textField setDelegate:self];
             break;
         }
-            
         case 1:
-        {
-            LabelInvisibleButtonCell *labelInvisibleButtonCell = (LabelInvisibleButtonCell *)cell;
-            [labelInvisibleButtonCell.leftLabel setText:NSLocalizedString(@"Tag Friends?", @"")];
-            [labelInvisibleButtonCell.leftLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:17]];
-            [labelInvisibleButtonCell.rightLabel setTextColor:RGBA(105, 105, 105, 1)];
-            [labelInvisibleButtonCell.rightLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:17]];
-
-            [labelInvisibleButtonCell.invisibleButton addTarget:self action:@selector(tagFriends) forControlEvents:UIControlEventTouchUpInside];
-            break;
-        }
-        case 2:
         {
             ButtonToProgressCell *buttonToProgressCell = (ButtonToProgressCell *)cell;
             [buttonToProgressCell.bigButton setTitle:NSLocalizedString(@"Upload", @"") forState:UIControlStateNormal];
@@ -287,13 +275,7 @@
             return kLabelTextFieldCellRowHeight;
             break;
         }
-            
         case 1:
-        {
-            return kLabelInvisibleButtonCellRowHeight;
-            break;
-        }
-        case 2:
         {
             return kButtonToProgressCellRowHeight;
             break;
@@ -305,7 +287,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    return 2;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -319,13 +301,7 @@
             cell = [tableView dequeueReusableCellWithIdentifier:kLabelTextFieldCellIdentifier];
             break;
         }
-            
         case 1:
-        {
-            cell = [tableView dequeueReusableCellWithIdentifier:kLabelInvisibleButtonCellIdentifier];
-            break;
-        }
-        case 2:
         {
             cell = [tableView dequeueReusableCellWithIdentifier:kButtonToProgressCellIdentifier];
             break;
@@ -342,14 +318,7 @@
                 cell = [nibArray objectAtIndex:0];
                 break;
             }
-                
             case 1:
-            {
-                NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"LabelInvisibleButtonCell" owner:self options:nil];
-                cell = [nibArray objectAtIndex:0];
-                break;
-            }
-            case 2:
             {
                 NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"ButtonToProgressCell" owner:self options:nil];
                 cell = [nibArray objectAtIndex:0];
@@ -383,7 +352,7 @@
     if (indexPath.row == 0) {
         // Top
         [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grptableview-top"]]];
-    } else if (indexPath.row == 2) {
+    } else if (indexPath.row == 1) {
         // Bottom
         [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grptableview-bottom"]]];
     } else {
