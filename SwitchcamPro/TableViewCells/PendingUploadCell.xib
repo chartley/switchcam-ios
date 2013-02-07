@@ -57,6 +57,37 @@
 								</object>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
+							<object class="IBUILabel" id="972365854">
+								<reference key="NSNextResponder" ref="613210487"/>
+								<int key="NSvFlags">292</int>
+								<string key="NSFrame">{{24, 109}, {55, 21}}</string>
+								<reference key="NSSuperview" ref="613210487"/>
+								<reference key="NSWindow"/>
+								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<bool key="IBUIOpaque">NO</bool>
+								<bool key="IBUIClipsSubviews">YES</bool>
+								<int key="IBUIContentMode">7</int>
+								<bool key="IBUIUserInteractionEnabled">NO</bool>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<string key="IBUIText">12:43 PM</string>
+								<object class="NSColor" key="IBUITextColor" id="695598524">
+									<int key="NSColorSpace">1</int>
+									<bytes key="NSRGB">MCAwIDAAA</bytes>
+									<string key="IBUIColorCocoaTouchKeyPath">darkTextColor</string>
+								</object>
+								<nil key="IBUIHighlightedColor"/>
+								<int key="IBUIBaselineAdjustment">0</int>
+								<object class="IBUIFontDescription" key="IBUIFontDescription" id="601665252">
+									<int key="type">1</int>
+									<double key="pointSize">14</double>
+								</object>
+								<object class="NSFont" key="IBUIFont" id="385681980">
+									<string key="NSName">Helvetica</string>
+									<double key="NSSize">14</double>
+									<int key="NSfFlags">16</int>
+								</object>
+								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
+							</object>
 							<object class="IBUIImageView" id="474307131">
 								<reference key="NSNextResponder" ref="613210487"/>
 								<int key="NSvFlags">292</int>
@@ -98,11 +129,7 @@
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<string key="IBUIText">Delete</string>
-								<object class="NSColor" key="IBUITextColor" id="695598524">
-									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MCAwIDAAA</bytes>
-									<string key="IBUIColorCocoaTouchKeyPath">darkTextColor</string>
-								</object>
+								<reference key="IBUITextColor" ref="695598524"/>
 								<object class="NSColor" key="IBUIHighlightedColor" id="493720781">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MQA</bytes>
@@ -137,15 +164,8 @@
 								<reference key="IBUITextColor" ref="695598524"/>
 								<nil key="IBUIHighlightedColor"/>
 								<int key="IBUIBaselineAdjustment">0</int>
-								<object class="IBUIFontDescription" key="IBUIFontDescription" id="601665252">
-									<int key="type">1</int>
-									<double key="pointSize">14</double>
-								</object>
-								<object class="NSFont" key="IBUIFont" id="572995560">
-									<string key="NSName">Helvetica</string>
-									<double key="NSSize">14</double>
-									<int key="NSfFlags">16</int>
-								</object>
+								<reference key="IBUIFontDescription" ref="601665252"/>
+								<reference key="IBUIFont" ref="385681980"/>
 								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 							</object>
 							<object class="IBUILabel" id="591778052">
@@ -165,7 +185,7 @@
 								<nil key="IBUIHighlightedColor"/>
 								<int key="IBUIBaselineAdjustment">0</int>
 								<reference key="IBUIFontDescription" ref="601665252"/>
-								<reference key="IBUIFont" ref="572995560"/>
+								<reference key="IBUIFont" ref="385681980"/>
 								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 							</object>
 							<object class="IBUIButton" id="96162018">
@@ -416,6 +436,14 @@
 					<int key="connectionID">56</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">shootNameLabel</string>
+						<reference key="source" ref="983931980"/>
+						<reference key="destination" ref="972365854"/>
+					</object>
+					<int key="connectionID">65</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">previewButtonAction:</string>
 						<reference key="source" ref="96162018"/>
@@ -477,6 +505,7 @@
 							<reference ref="524468004"/>
 							<reference ref="620233582"/>
 							<reference ref="870574727"/>
+							<reference ref="972365854"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -536,6 +565,11 @@
 						<reference key="object" ref="870574727"/>
 						<reference key="parent" ref="983931980"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">64</int>
+						<reference key="object" ref="972365854"/>
+						<reference key="parent" ref="983931980"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -558,12 +592,13 @@
 				<real value="1" key="46.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="60.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="63.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="64.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">63</int>
+			<int key="maxID">65</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -592,12 +627,12 @@
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="deleteButtonButton">UIButton</string>
 						<string key="deleteLabel">UILabel</string>
-						<string key="pendingUploadCountLabel">UILabel</string>
 						<string key="pendingUploadLabel">UILabel</string>
 						<string key="pendingUploadLengthLabel">UILabel</string>
 						<string key="pendingUploadTimeLabel">UILabel</string>
 						<string key="previewButton">UIButton</string>
 						<string key="previewLabel">UILabel</string>
+						<string key="shootNameLabel">UILabel</string>
 						<string key="uploadButton">UIButton</string>
 						<string key="uploadLabel">UILabel</string>
 						<string key="videoThumbnailImageView">UIImageView</string>
@@ -611,10 +646,6 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="deleteLabel">
 							<string key="name">deleteLabel</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="pendingUploadCountLabel">
-							<string key="name">pendingUploadCountLabel</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="pendingUploadLabel">
@@ -635,6 +666,10 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="previewLabel">
 							<string key="name">previewLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="shootNameLabel">
+							<string key="name">shootNameLabel</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="uploadButton">

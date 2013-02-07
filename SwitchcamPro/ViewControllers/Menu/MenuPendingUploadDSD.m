@@ -12,7 +12,10 @@
 #import "UploadVideoViewController.h"
 #import "MenuPendingUploadDSD.h"
 #import "UserVideo.h"
+#import "Mission.h"
+#import "Artist.h"
 #import "MenuViewController.h"
+
 
 @interface MenuPendingUploadDSD () <NSFetchedResultsControllerDelegate>
 
@@ -79,6 +82,14 @@
     [dateFormatter setDateFormat:@"h:mm a"];
     NSString *startRecordingTimeString = [dateFormatter stringFromDate:[recording recordStart]];
     
+    [pendingUploadCell.shootNameLabel setText:recording.mission.artist.artistName];
+    [pendingUploadCell.shootNameLabel sizeToFit];
+    
+    if (pendingUploadCell.shootNameLabel.frame.size.width > 300) {
+        [pendingUploadCell setFrame:CGRectMake(pendingUploadCell.shootNameLabel.frame.origin.x, pendingUploadCell.shootNameLabel.frame.origin.y, 300, pendingUploadCell.shootNameLabel.frame.size.height)];
+    }
+    
+    [pendingUploadCell.pendingUploadTimeLabel setFrame:CGRectMake(pendingUploadCell.shootNameLabel.frame.origin.x + pendingUploadCell.shootNameLabel.frame.size.width + kBufferBetweenThumbnailLabels, pendingUploadCell.pendingUploadTimeLabel.frame.origin.y, pendingUploadCell.pendingUploadTimeLabel.frame.size.width, pendingUploadCell.pendingUploadTimeLabel.frame.size.height)];
     [pendingUploadCell.pendingUploadTimeLabel setText:startRecordingTimeString];
     
     // Size to fit labels and set their origins

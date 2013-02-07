@@ -53,6 +53,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *yourVideosLabel;
 @property (strong, nonatomic) IBOutlet UILabel *yourVideosCountLabel;
 
+@property (strong, nonatomic) IBOutlet UILabel *shootNameLabel;
+
 
 
 @property (weak, nonatomic) id<PendingUploadCellDelegate> delegate;

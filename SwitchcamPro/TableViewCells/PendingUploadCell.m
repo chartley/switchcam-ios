@@ -49,6 +49,11 @@
     [self.pendingUploadLabel setShadowColor:[UIColor blackColor]];
     [self.pendingUploadLabel setShadowOffset:CGSizeMake(0, -1)];
     
+    [self.shootNameLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:12]];
+    [self.shootNameLabel setTextColor:[UIColor whiteColor]];
+    [self.shootNameLabel setShadowColor:[UIColor blackColor]];
+    [self.shootNameLabel setShadowOffset:CGSizeMake(0, -1)];
+    
     [self.pendingUploadTimeLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:12]];
     [self.pendingUploadTimeLabel setTextColor:[UIColor whiteColor]];
     [self.pendingUploadTimeLabel setShadowColor:[UIColor blackColor]];
