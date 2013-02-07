@@ -2,14 +2,14 @@
 //  User.h
 //  SwitchcamPro
 //
-//  Created by William Ketterer on 1/15/13.
+//  Created by William Ketterer on 2/7/13.
 //  Copyright (c) 2013 William Ketterer. All rights reserved.
 //
 
 #import <RestKit/RestKit.h>
 #import <RestKit/CoreData.h>
 
-@class Activity, Mission, UserVideo;
+@class Activity, Comment, Mission, UserVideo;
 
 @interface User : NSManagedObject
 
@@ -19,10 +19,11 @@
 @property (nonatomic, retain) NSNumber * userId;
 @property (nonatomic, retain) NSSet *activities;
 @property (nonatomic, retain) NSSet *attendedMission;
+@property (nonatomic, retain) NSSet *comments;
 @property (nonatomic, retain) NSSet *createdMission;
 @property (nonatomic, retain) NSSet *followedMission;
 @property (nonatomic, retain) NSSet *uploads;
-@property (nonatomic, retain) NSSet *comments;
+@property (nonatomic, retain) NSSet *actionObjects;
 @end
 
 @interface User (CoreDataGeneratedAccessors)
@@ -36,6 +37,11 @@
 - (void)removeAttendedMissionObject:(Mission *)value;
 - (void)addAttendedMission:(NSSet *)values;
 - (void)removeAttendedMission:(NSSet *)values;
+
+- (void)addCommentsObject:(Comment *)value;
+- (void)removeCommentsObject:(Comment *)value;
+- (void)addComments:(NSSet *)values;
+- (void)removeComments:(NSSet *)values;
 
 - (void)addCreatedMissionObject:(Mission *)value;
 - (void)removeCreatedMissionObject:(Mission *)value;
@@ -52,9 +58,9 @@
 - (void)addUploads:(NSSet *)values;
 - (void)removeUploads:(NSSet *)values;
 
-- (void)addCommentsObject:(NSManagedObject *)value;
-- (void)removeCommentsObject:(NSManagedObject *)value;
-- (void)addComments:(NSSet *)values;
-- (void)removeComments:(NSSet *)values;
+- (void)addActionObjectsObject:(NSManagedObject *)value;
+- (void)removeActionObjectsObject:(NSManagedObject *)value;
+- (void)addActionObjects:(NSSet *)values;
+- (void)removeActionObjects:(NSSet *)values;
 
 @end

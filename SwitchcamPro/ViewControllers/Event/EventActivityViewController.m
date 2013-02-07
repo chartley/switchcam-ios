@@ -24,7 +24,7 @@
 #import "User.h"
 #import "UserVideo.h"
 #import "Comment.h"
-#import "Note.h"
+#import "ActionObject.h"
 #import "Reachability.h"
 
 // Calculated with label height
@@ -401,8 +401,8 @@
         } else if ([activity.actionObjectContentTypeName isEqualToString:@"director.missionphoto"]) {
             // Set thumbnail from API
             ActivityPhotoCell *activityPhotoCell = (ActivityPhotoCell*) cell;
-            if (activity.photoThumbnailURL != nil) {
-                [activityPhotoCell.photoThumbnailImageView setImageWithURL:[NSURL URLWithString:activity.photoThumbnailURL]];
+            if (activity.actionObject.thumbURL != nil) {
+                [activityPhotoCell.photoThumbnailImageView setImageWithURL:[NSURL URLWithString:activity.actionObject.thumbURL]];
             }
         } else if ([activity.actionObjectContentTypeName isEqualToString:@"director.missionnote"]) {
             ActivityNoteCell *activityNoteCell = (ActivityNoteCell *)cell;
@@ -595,8 +595,13 @@
         if (postCommentRow == indexPath.row) {
             return kActivityPostCommentCellRowHeight;
         } else {
-            // Buffer
-            return 20;
+            if ([[activity commentCount] intValue] > 0) {
+                // Buffer
+                return 20;
+            } else {
+                return 0;
+            }
+
         }
     } else {
         // Comment Row

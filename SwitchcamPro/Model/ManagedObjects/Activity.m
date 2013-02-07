@@ -11,7 +11,7 @@
 #import "Mission.h"
 #import "User.h"
 #import "UserVideo.h"
-#import "Note.h"
+#import "ActionObject.h"
 
 
 @implementation Activity
@@ -25,7 +25,6 @@
 @dynamic iLiked;
 @dynamic likeCount;
 @dynamic liked;
-@dynamic photoThumbnailURL;
 @dynamic rowHeight;
 @dynamic text;
 @dynamic timesince;

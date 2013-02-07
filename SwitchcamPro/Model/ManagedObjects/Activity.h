@@ -9,7 +9,7 @@
 #import <RestKit/RestKit.h>
 #import <RestKit/CoreData.h>
 
-@class Comment, Mission, User, UserVideo, Note;
+@class Comment, Mission, User, UserVideo, ActionObject;
 
 @interface Activity : NSManagedObject
 
@@ -22,7 +22,6 @@
 @property (nonatomic, retain) NSNumber * iLiked;
 @property (nonatomic, retain) NSNumber * likeCount;
 @property (nonatomic, retain) NSNumber * liked;
-@property (nonatomic, retain) NSString * photoThumbnailURL;
 @property (nonatomic, retain) NSNumber * rowHeight;
 @property (nonatomic, retain) NSString * text;
 @property (nonatomic, retain) NSString * timesince;
@@ -32,7 +31,7 @@
 @property (nonatomic, retain) Mission *mission;
 @property (nonatomic, retain) User *person;
 @property (nonatomic, retain) UserVideo *userVideo;
-@property (nonatomic, retain) Note *actionObject;
+@property (nonatomic, retain) ActionObject *actionObject;
 @end
 
 @interface Activity (CoreDataGeneratedAccessors)
