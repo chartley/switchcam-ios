@@ -11,3 +11,6 @@ xcuserdata*
 /Pods/BuildHeaders/RestKit/
 /Pods/Headers/RestKit/
 /Pods/RestKit/
+/Pods/TTTAttributedLabel/
+/Pods/Headers/TTTAttributedLabel/
+/Pods/BuildHeaders/TTTAttributedLabel/

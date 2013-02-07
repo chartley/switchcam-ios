@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <TTTAttributedLabel.h>
 
-@interface AboutViewController : UIViewController
+@interface AboutViewController : UIViewController <TTTAttributedLabelDelegate>
+
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @property (strong, nonatomic) IBOutlet UILabel *aboutLabel;
 @property (strong, nonatomic) IBOutlet UIButton *switchcamButton;

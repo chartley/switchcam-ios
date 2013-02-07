@@ -44,6 +44,7 @@
 		C916A7EB16C33B4000C26F70 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C916A7EA16C33B3F00C26F70 /* MapKit.framework */; };
 		C916A7EE16C33DC500C26F70 /* MKMapView+ZoomLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = C916A7ED16C33DC500C26F70 /* MKMapView+ZoomLevel.m */; };
 		C916A7F416C384EF00C26F70 /* LKBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = C916A7F316C384EE00C26F70 /* LKBadgeView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		C916A7F816C3961200C26F70 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C916A7F716C3961200C26F70 /* CoreText.framework */; };
 		C94F7C111699F3E000D65EDC /* Artist.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F7C101699F3E000D65EDC /* Artist.m */; };
 		C94F7C23169A0A3200D65EDC /* SPLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F7C22169A0A3200D65EDC /* SPLocationManager.m */; };
 		C94F7C26169A234400D65EDC /* SPImageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F7C25169A234400D65EDC /* SPImageHelper.m */; };
@@ -474,6 +475,7 @@
 		C916A7ED16C33DC500C26F70 /* MKMapView+ZoomLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MKMapView+ZoomLevel.m"; path = "Helpers/MKMapView+ZoomLevel.m"; sourceTree = "<group>"; };
 		C916A7F216C384EE00C26F70 /* LKBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKBadgeView.h; path = Views/LKBadgeView.h; sourceTree = "<group>"; };
 		C916A7F316C384EE00C26F70 /* LKBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKBadgeView.m; path = Views/LKBadgeView.m; sourceTree = "<group>"; };
+		C916A7F716C3961200C26F70 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		C94F7C0F1699F3DF00D65EDC /* Artist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Artist.h; path = Model/ManagedObjects/Artist.h; sourceTree = "<group>"; };
 		C94F7C101699F3E000D65EDC /* Artist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Artist.m; path = Model/ManagedObjects/Artist.m; sourceTree = "<group>"; };
 		C94F7C21169A0A3200D65EDC /* SPLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPLocationManager.h; path = Helpers/SPLocationManager.h; sourceTree = "<group>"; };
@@ -960,6 +962,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C916A7F816C3961200C26F70 /* CoreText.framework in Frameworks */,
 				C916A7EB16C33B4000C26F70 /* MapKit.framework in Frameworks */,
 				C9606C8016B2843700F5C76F /* MessageUI.framework in Frameworks */,
 				C90847CC16803C7700DEF94E /* QuartzCore.framework in Frameworks */,
@@ -1335,6 +1338,7 @@
 		C97BFEE5166D909D005BB65F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C916A7F716C3961200C26F70 /* CoreText.framework */,
 				C916A7EA16C33B3F00C26F70 /* MapKit.framework */,
 				C9606C7F16B2843600F5C76F /* MessageUI.framework */,
 				C90847CB16803C7700DEF94E /* QuartzCore.framework */,

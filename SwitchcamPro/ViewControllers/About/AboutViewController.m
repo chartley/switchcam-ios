@@ -14,6 +14,8 @@
 #define kSwitchcamButtonTag 0
 #define kTwitterButtonTag 1
 #define kFacebookButtonTag 2
+#define kPrivacyTag 3
+#define kTermsTag 4
 
 @interface AboutViewController ()
 
@@ -38,6 +40,9 @@
     UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bgfull-fullapp"]];
     [self.view addSubview:backgroundImageView];
     [self.view sendSubviewToBack:backgroundImageView];
+    
+    // Set Content Size
+    [self.scrollView setContentSize:CGSizeMake(320, 580)];
     
     // Set Button Image
     UIImage *buttonImage = [[UIImage imageNamed:@"btn-orange-lg"]
@@ -106,6 +111,80 @@
     UIBarButtonItem *menuBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:menuButton];
     [self.navigationItem setLeftBarButtonItem:menuBarButtonItem];
     [self.navigationItem setHidesBackButton:YES];
+    
+    NSMutableDictionary *mutableLinkAttributes = [NSMutableDictionary dictionary];
+    [mutableLinkAttributes setObject:(id)[RGBA(235, 112, 62, 1) CGColor] forKey:(NSString*)kCTForegroundColorAttributeName];
+    [mutableLinkAttributes setObject:[NSNumber numberWithBool:YES] forKey:(NSString *)kCTUnderlineStyleAttributeName];
+    
+    
+    
+    // Privacy Policy
+    TTTAttributedLabel *privacyPolicyLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(0, 420, 320, 30)];
+    privacyPolicyLabel.font = [UIFont fontWithName:@"SourceSansPro-Bold" size:17];
+    privacyPolicyLabel.textColor = RGBA(235, 112, 62, 1);
+    privacyPolicyLabel.textAlignment = NSTextAlignmentCenter;
+    privacyPolicyLabel.backgroundColor = [UIColor clearColor];
+    privacyPolicyLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+    privacyPolicyLabel.numberOfLines = 1;
+    privacyPolicyLabel.delegate = self;
+    privacyPolicyLabel.linkAttributes = [NSDictionary dictionaryWithDictionary:mutableLinkAttributes];
+    
+    NSString *privacyPolicyText = NSLocalizedString(@"Privacy Policy", @"");
+    [privacyPolicyLabel setText:privacyPolicyText afterInheritingLabelAttributesAndConfiguringWithBlock:^ NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
+        NSRange underlineRange = [[mutableAttributedString string] rangeOfString:NSLocalizedString(@"Privacy Policy", @"") options:NSCaseInsensitiveSearch];
+        
+        // Core Text APIs use C functions without a direct bridge to UIFont. See Apple's "Core Text Programming Guide" to learn how to configure string attributes.
+        UIFont *customFont = [UIFont fontWithName:@"SourceSansPro-Bold" size:17];
+        CTFontRef font = CTFontCreateWithName((__bridge CFStringRef)customFont.fontName, customFont.pointSize, NULL);
+        if (font) {
+            [mutableAttributedString addAttribute:@"TTTUnderlineAttribute" value:[NSNumber numberWithBool:YES] range:underlineRange];
+            CFRelease(font);
+        }
+        
+        return mutableAttributedString;
+    }];
+    
+    NSRange privacyLinkRange = [privacyPolicyText rangeOfString:NSLocalizedString(@"Privacy Policy", @"") options:NSCaseInsensitiveSearch];
+    [privacyPolicyLabel addLinkToURL:[NSURL URLWithString:@"http://switchcam.com/legal/privacy"] withRange:privacyLinkRange];
+    
+    // Terms of Service
+    TTTAttributedLabel *termsOfServiceLabel = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(0, 460, 320, 30)];
+    termsOfServiceLabel.font = [UIFont fontWithName:@"SourceSansPro-Bold" size:17];
+    termsOfServiceLabel.textAlignment = NSTextAlignmentCenter;
+    termsOfServiceLabel.textColor = RGBA(235, 112, 62, 1);
+    termsOfServiceLabel.backgroundColor = [UIColor clearColor];
+    termsOfServiceLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+    termsOfServiceLabel.numberOfLines = 1;
+    termsOfServiceLabel.delegate = self;
+    termsOfServiceLabel.linkAttributes = [NSDictionary dictionaryWithDictionary:mutableLinkAttributes];
+    
+    NSString *termsOfServiceText = NSLocalizedString(@"Terms & Conditions", @"");
+    [termsOfServiceLabel setText:termsOfServiceText afterInheritingLabelAttributesAndConfiguringWithBlock:^ NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
+        NSRange underlineRange = [[mutableAttributedString string] rangeOfString:NSLocalizedString(@"Terms & Conditions", @"") options:NSCaseInsensitiveSearch];
+        
+        // Core Text APIs use C functions without a direct bridge to UIFont. See Apple's "Core Text Programming Guide" to learn how to configure string attributes.
+        UIFont *customFont = [UIFont fontWithName:@"SourceSansPro-Bold" size:17];
+        CTFontRef font = CTFontCreateWithName((__bridge CFStringRef)customFont.fontName, customFont.pointSize, NULL);
+        if (font) {
+            [mutableAttributedString addAttribute:@"TTTUnderlineAttribute" value:[NSNumber numberWithBool:YES] range:underlineRange];
+            CFRelease(font);
+        }
+        
+        return mutableAttributedString;
+    }];
+    
+    NSRange termsLinkRange = [termsOfServiceText rangeOfString:NSLocalizedString(@"Terms & Conditions", @"") options:NSCaseInsensitiveSearch];
+    [termsOfServiceLabel addLinkToURL:[NSURL URLWithString:@"http://switchcam.com/legal/terms"] withRange:termsLinkRange];
+    
+    // Center
+    [privacyPolicyLabel sizeToFit];
+    [termsOfServiceLabel sizeToFit];
+    
+    [privacyPolicyLabel setCenter:CGPointMake(160, 435)];
+    [termsOfServiceLabel setCenter:CGPointMake(160, 475)];
+    
+    [self.scrollView addSubview:privacyPolicyLabel];
+    [self.scrollView addSubview:termsOfServiceLabel];
 }
 
 - (void)didReceiveMemoryWarning
@@ -175,10 +254,29 @@
         } else if (alertView.tag == kFacebookButtonTag) {
             // Facebook
             urlToLaunch = [NSURL URLWithString:@"http://www.facebook.com/switchcam"];
+        } else if (alertView.tag == kPrivacyTag) {
+            // Privacy
+            urlToLaunch = [NSURL URLWithString:@"http://switchcam.com/legal/privacy"];
+        } else if (alertView.tag == kTermsTag) {
+            // Terms
+            urlToLaunch = [NSURL URLWithString:@"http://switchcam.com/legal/terms"];
         }
         
         [[UIApplication sharedApplication] openURL:urlToLaunch];
     }
+}
+
+#pragma mark - TTTAttributedLabelDelegate
+
+- (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url {
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Leaving app", @"") message:NSLocalizedString(@"Pressing OK will open this link in Safari", @"") delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", @"") otherButtonTitles:NSLocalizedString(@"OK", @""), nil];
+    if ([[url absoluteString] isEqualToString:@"http://switchcam.com/legal/privacy"]) {
+        [alertView setTag:kPrivacyTag];
+    } else {
+        [alertView setTag:kTermsTag];
+    }
+
+    [alertView show];
 }
 
 @end
