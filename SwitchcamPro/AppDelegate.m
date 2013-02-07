@@ -651,8 +651,8 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
      @"id": @"activityId",
      @"action_object_content_type_name": @"actionObjectContentTypeName",
      @"action_object_object_id": @"actionObjectId",
-     @"like_count": @"likeCount",
-     @"comment_count": @"commentCount",
+     @"total_likes": @"likeCount",
+     @"total_comments": @"commentCount",
      @"i_liked": @"iLiked",
      @"i_commented": @"iCommented",
      }];

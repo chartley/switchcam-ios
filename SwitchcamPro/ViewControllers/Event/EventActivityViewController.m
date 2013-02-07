@@ -200,11 +200,14 @@
     
     likeActivitySuccessBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
         likedActivity.iLiked = [NSNumber numberWithBool:YES];
+        likedActivity.likeCount = [NSNumber numberWithInt:([[likedActivity likeCount] intValue] + 1)];
         
         NSError *error = nil;
         if (![[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext saveToPersistentStore:&error]) {
             NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
         }
+        
+        [self.eventActivityTableView reloadData];
     };
     
     likeActivityFailureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -247,11 +250,14 @@
     
     unlikeActivitySuccessBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
         unlikedActivity.iLiked = [NSNumber numberWithBool:NO];
+        unlikedActivity.likeCount = [NSNumber numberWithInt:([[unlikedActivity likeCount] intValue] - 1)];
         
         NSError *error = nil;
         if (![[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext saveToPersistentStore:&error]) {
             NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
         }
+        
+        [self.eventActivityTableView reloadData];
     };
     
     unlikeActivityFailureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
