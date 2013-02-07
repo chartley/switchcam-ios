@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
 #import "EventTabViewController.h"
 
 @interface EventInfoViewController : EventTabViewController
@@ -16,5 +17,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *imGoingButton;
 @property (strong, nonatomic) IBOutlet UIButton *imNotGoingButton;
 @property (strong, nonatomic) IBOutlet UILabel *goingDetailLabel;
+
+@property (strong, nonatomic) IBOutlet MKMapView *mapView;
 
 @end

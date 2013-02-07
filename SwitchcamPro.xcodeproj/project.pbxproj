@@ -40,6 +40,9 @@
 		C90ECA0516A7D67D0085DF8C /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = C90ECA0416A7D67D0085DF8C /* Comment.m */; };
 		C90ECA1316AE20F60085DF8C /* TermsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C90ECA1116AE20F60085DF8C /* TermsViewController.m */; };
 		C90ECA1416AE20F60085DF8C /* TermsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C90ECA1216AE20F60085DF8C /* TermsViewController.xib */; };
+		C916A7E916C33A6D00C26F70 /* AddressAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = C916A7E816C33A6D00C26F70 /* AddressAnnotation.m */; };
+		C916A7EB16C33B4000C26F70 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C916A7EA16C33B3F00C26F70 /* MapKit.framework */; };
+		C916A7EE16C33DC500C26F70 /* MKMapView+ZoomLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = C916A7ED16C33DC500C26F70 /* MKMapView+ZoomLevel.m */; };
 		C94F7C111699F3E000D65EDC /* Artist.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F7C101699F3E000D65EDC /* Artist.m */; };
 		C94F7C23169A0A3200D65EDC /* SPLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F7C22169A0A3200D65EDC /* SPLocationManager.m */; };
 		C94F7C26169A234400D65EDC /* SPImageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F7C25169A234400D65EDC /* SPImageHelper.m */; };
@@ -463,6 +466,11 @@
 		C90ECA1016AE20F60085DF8C /* TermsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TermsViewController.h; path = ViewControllers/Login/TermsViewController.h; sourceTree = "<group>"; };
 		C90ECA1116AE20F60085DF8C /* TermsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TermsViewController.m; path = ViewControllers/Login/TermsViewController.m; sourceTree = "<group>"; };
 		C90ECA1216AE20F60085DF8C /* TermsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TermsViewController.xib; path = ViewControllers/Login/TermsViewController.xib; sourceTree = "<group>"; };
+		C916A7E716C33A6D00C26F70 /* AddressAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddressAnnotation.h; path = ViewControllers/Event/Annotation/AddressAnnotation.h; sourceTree = "<group>"; };
+		C916A7E816C33A6D00C26F70 /* AddressAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddressAnnotation.m; path = ViewControllers/Event/Annotation/AddressAnnotation.m; sourceTree = "<group>"; };
+		C916A7EA16C33B3F00C26F70 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		C916A7EC16C33DC500C26F70 /* MKMapView+ZoomLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MKMapView+ZoomLevel.h"; path = "Helpers/MKMapView+ZoomLevel.h"; sourceTree = "<group>"; };
+		C916A7ED16C33DC500C26F70 /* MKMapView+ZoomLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MKMapView+ZoomLevel.m"; path = "Helpers/MKMapView+ZoomLevel.m"; sourceTree = "<group>"; };
 		C94F7C0F1699F3DF00D65EDC /* Artist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Artist.h; path = Model/ManagedObjects/Artist.h; sourceTree = "<group>"; };
 		C94F7C101699F3E000D65EDC /* Artist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Artist.m; path = Model/ManagedObjects/Artist.m; sourceTree = "<group>"; };
 		C94F7C21169A0A3200D65EDC /* SPLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPLocationManager.h; path = Helpers/SPLocationManager.h; sourceTree = "<group>"; };
@@ -949,6 +957,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C916A7EB16C33B4000C26F70 /* MapKit.framework in Frameworks */,
 				C9606C8016B2843700F5C76F /* MessageUI.framework in Frameworks */,
 				C90847CC16803C7700DEF94E /* QuartzCore.framework in Frameworks */,
 				C9F49116167D43CE00C75C6F /* ImageIO.framework in Frameworks */,
@@ -1008,6 +1017,15 @@
 			children = (
 			);
 			name = Playback;
+			sourceTree = "<group>";
+		};
+		C916A7E616C33A4800C26F70 /* Annotation */ = {
+			isa = PBXGroup;
+			children = (
+				C916A7E716C33A6D00C26F70 /* AddressAnnotation.h */,
+				C916A7E816C33A6D00C26F70 /* AddressAnnotation.m */,
+			);
+			name = Annotation;
 			sourceTree = "<group>";
 		};
 		C9606C5A16AE4CC200F5C76F /* Terms */ = {
@@ -1163,6 +1181,7 @@
 		C97B147D1670FFFE005BB65F /* Event */ = {
 			isa = PBXGroup;
 			children = (
+				C916A7E616C33A4800C26F70 /* Annotation */,
 				C97B147E16710017005BB65F /* EventViewController.h */,
 				C97B147F16710017005BB65F /* EventViewController.m */,
 				C97B148016710017005BB65F /* EventViewController.xib */,
@@ -1313,6 +1332,7 @@
 		C97BFEE5166D909D005BB65F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C916A7EA16C33B3F00C26F70 /* MapKit.framework */,
 				C9606C7F16B2843600F5C76F /* MessageUI.framework */,
 				C90847CB16803C7700DEF94E /* QuartzCore.framework */,
 				C9F49115167D43CB00C75C6F /* ImageIO.framework */,
@@ -1542,6 +1562,8 @@
 				C94F7C60169BF5B500D65EDC /* SPModelHelper.m */,
 				24B3CB1B16B7838700E233B7 /* NSObject+PerformBlockAfterDelay.h */,
 				24B3CB1C16B7838700E233B7 /* NSObject+PerformBlockAfterDelay.m */,
+				C916A7EC16C33DC500C26F70 /* MKMapView+ZoomLevel.h */,
+				C916A7ED16C33DC500C26F70 /* MKMapView+ZoomLevel.m */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -2341,6 +2363,8 @@
 				C9A203A716BF142D0093E259 /* SPNavigationController.m in Sources */,
 				C9A203AC16C083B10093E259 /* PeopleCell.m in Sources */,
 				2473DE0416C0E2DA00E8F446 /* CreateEventViewController.m in Sources */,
+				C916A7E916C33A6D00C26F70 /* AddressAnnotation.m in Sources */,
+				C916A7EE16C33DC500C26F70 /* MKMapView+ZoomLevel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

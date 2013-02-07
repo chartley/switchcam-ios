@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 William Ketterer. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
 #import "AFNetworking.h"
 #import "EventInfoViewController.h"
 #import "SPConstants.h"
@@ -18,6 +19,8 @@
 #import "EventInfoOrganizerCell.h"
 #import "EventInfoDetailCell.h"
 #import "EventInfoLinksCell.h"
+#import "AddressAnnotation.h"
+#import "MKMapView+ZoomLevel.h"
 
 @interface EventInfoViewController ()
 
@@ -36,8 +39,7 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 
@@ -45,6 +47,21 @@
     AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     self.blockingLoadingIndicator = [[MBProgressHUD alloc] initWithWindow:appDelegate.window];
     [appDelegate.window addSubview:self.blockingLoadingIndicator];
+    
+    // Create and add annotation
+    AddressAnnotation *annotation = [[AddressAnnotation alloc] init];
+    CLLocationCoordinate2D missionCoordinate = CLLocationCoordinate2DMake([self.selectedMission.latitude doubleValue], [self.selectedMission.longitude doubleValue]);
+    [annotation setCoordinate:missionCoordinate];
+    
+    [self.mapView setCenterCoordinate:missionCoordinate zoomLevel:14 animated:NO];
+    
+    [self.mapView addAnnotation:annotation];
+    
+    // Round the corners on the map area
+    [self.mapView.layer setCornerRadius:5.0f];
+    [self.mapView.layer setBorderColor:RGBA(58, 60, 61, 1).CGColor];
+    [self.mapView.layer setBorderWidth:1.5f];
+    [self.mapView.layer setMasksToBounds:YES];
 }
 
 - (void)viewDidUnload {
@@ -374,6 +391,9 @@
                 [eventInfoDetailCell.streetAddressLabel setFont:[UIFont fontWithName:@"SourceSansPro-Light" size:14.0]];
                 [eventInfoDetailCell.cityStateZipLabel setFont:[UIFont fontWithName:@"SourceSansPro-Light" size:14.0]];
                 [eventInfoDetailCell.tapForDirectionsLabel setFont:[UIFont fontWithName:@"SourceSansPro-It" size:11.0]];
+                [eventInfoDetailCell.contentView addSubview:self.mapView];
+                [eventInfoDetailCell.mapView setFrame:CGRectMake(20, 49, 80, 120)];
+                [eventInfoDetailCell.contentView bringSubviewToFront:eventInfoDetailCell.directionsButton];
                 break;
             }
             case 3:
@@ -491,6 +511,16 @@
         
         [[UIApplication sharedApplication] openURL:urlToLaunch];
     }
+}
+
+#pragma mark - MKMapView
+
+- (MKAnnotationView *) mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>) annotation{
+    MKPinAnnotationView *annView=[[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"currentloc"];
+    annView.pinColor = MKPinAnnotationColorGreen;
+    annView.animatesDrop= NO;
+    annView.canShowCallout = NO;
+    return annView;
 }
 
 @end

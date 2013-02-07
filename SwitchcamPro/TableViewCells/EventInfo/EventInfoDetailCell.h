@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
 
 #define kEventInfoDetailCellIdentifier @"EventInfoDetailCellIdentifier"
 #define kEventInfoDetailCellRowHeight 200
@@ -20,5 +21,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *cityStateZipLabel;
 @property (strong, nonatomic) IBOutlet UILabel *tapForDirectionsLabel;
 @property (strong, nonatomic) IBOutlet UIButton *directionsButton;
+@property (strong, nonatomic) IBOutlet MKMapView *mapView;
 
 @end
