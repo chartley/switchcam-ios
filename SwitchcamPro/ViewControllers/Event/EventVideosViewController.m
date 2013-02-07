@@ -214,7 +214,12 @@
         }
         
         // Set the pending uploads
-        [pendingUploadCell.pendingUploadCountBadge setText:[NSString stringWithFormat:@"%d", count]];
+        if (count == 0) {
+            [pendingUploadCell.pendingUploadCountBadge setHidden:YES];
+        } else {
+            [pendingUploadCell.pendingUploadCountBadge setHidden:NO];
+            [pendingUploadCell.pendingUploadCountBadge setText:[NSString stringWithFormat:@"%d", count]];
+        }
         
         request = [[NSFetchRequest alloc] init];
         [request setEntity:[NSEntityDescription entityForName:@"UserVideo" inManagedObjectContext:managedObjectContext]];
