@@ -293,7 +293,7 @@
         [loadingIndicator hide:YES];
         NSDictionary *userObject = responseObject;
         
-        BOOL hasAcceptedTerms = ![[userObject objectForKey:@"legal_terms_accept_date"] isKindOfClass:[NSNull class]];
+        BOOL hasAcceptedTerms = ![[userObject objectForKey:@"mobile_legal_terms_accept_date"] isKindOfClass:[NSNull class]];
         
         if (hasAcceptedTerms) {
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kSPUserAcceptedTermsKey];

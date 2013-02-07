@@ -506,7 +506,7 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     
     [userMapping addAttributeMappingsFromDictionary:@{
      @"id": @"userId",
-     @"legal_terms_accept_date": @"legalTermsAcceptDate",
+     @"mobile_legal_terms_accept_date": @"legalTermsAcceptDate",
      @"pic_link": @"pictureURL",
      }];
     // If source and destination key path are the same, we can simply add a string to the array

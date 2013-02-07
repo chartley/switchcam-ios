@@ -155,7 +155,7 @@
     // Setup Parameters
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     
-    [parameters setObject:@"now" forKey:@"legal_terms_accept_date"];
+    [parameters setObject:@"now" forKey:@"mobile_legal_terms_accept_date"];
     
     // Make Request and set params
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:kAPIHost]];
