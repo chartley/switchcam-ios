@@ -59,8 +59,8 @@
         id<NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController.sections objectAtIndex:0];
         
         // Set the pending uploads
-        pendingUploadCell.pendingUploadCountLabel.text = [NSString stringWithFormat:@"%d", [sectionInfo numberOfObjects]];
-
+        [pendingUploadCell.pendingUploadCountBadge setFrame:CGRectMake(15, 8, 30, 30)];
+        [pendingUploadCell.pendingUploadCountBadge setText:[NSString stringWithFormat:@"%d", [sectionInfo numberOfObjects]]];
     }
     
     // Save row

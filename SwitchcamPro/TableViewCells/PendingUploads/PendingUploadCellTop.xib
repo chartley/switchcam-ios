@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
-		<int key="IBDocument.SystemTarget">1536</int>
+		<int key="IBDocument.SystemTarget">1552</int>
 		<string key="IBDocument.SystemVersion">12C60</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2844</string>
+		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
 		<string key="IBDocument.AppKitVersion">1187.34</string>
 		<string key="IBDocument.HIToolboxVersion">625.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">1930</string>
+			<string key="NS.object.0">2083</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBProxyObject</string>
@@ -48,7 +48,7 @@
 								<string key="NSFrameSize">{270, 181}</string>
 								<reference key="NSSuperview" ref="1042668938"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="850436451"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">1</int>
@@ -285,44 +285,6 @@
 								<reference key="IBUIFontDescription" ref="11798145"/>
 								<reference key="IBUIFont" ref="1008903109"/>
 							</object>
-							<object class="IBUIImageView" id="850436451">
-								<reference key="NSNextResponder" ref="1042668938"/>
-								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{22, 15}, {14, 15}}</string>
-								<reference key="NSSuperview" ref="1042668938"/>
-								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="510562448"/>
-								<bool key="IBUIOpaque">NO</bool>
-								<bool key="IBUIClipsSubviews">YES</bool>
-								<int key="IBUIContentMode">4</int>
-								<bool key="IBUIMultipleTouchEnabled">YES</bool>
-								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<object class="NSCustomResource" key="IBUIImage">
-									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">bg-alert-orange.png</string>
-								</object>
-							</object>
-							<object class="IBUILabel" id="510562448">
-								<reference key="NSNextResponder" ref="1042668938"/>
-								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{25, 10}, {42, 21}}</string>
-								<reference key="NSSuperview" ref="1042668938"/>
-								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="337364936"/>
-								<string key="NSReuseIdentifierKey">_NS:9</string>
-								<bool key="IBUIOpaque">NO</bool>
-								<bool key="IBUIClipsSubviews">YES</bool>
-								<int key="IBUIContentMode">7</int>
-								<bool key="IBUIUserInteractionEnabled">NO</bool>
-								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<string key="IBUIText">1</string>
-								<reference key="IBUITextColor" ref="650687900"/>
-								<reference key="IBUIHighlightedColor" ref="650687900"/>
-								<int key="IBUIBaselineAdjustment">0</int>
-								<reference key="IBUIFontDescription" ref="674164248"/>
-								<reference key="IBUIFont" ref="911019295"/>
-								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
-							</object>
 							<object class="IBUILabel" id="509640493">
 								<reference key="NSNextResponder" ref="1042668938"/>
 								<int key="NSvFlags">292</int>
@@ -451,14 +413,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">pendingUploadCountLabel</string>
-						<reference key="source" ref="77874410"/>
-						<reference key="destination" ref="510562448"/>
-					</object>
-					<int key="connectionID">43</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">previewLabel</string>
 						<reference key="source" ref="77874410"/>
 						<reference key="destination" ref="509640493"/>
@@ -546,9 +500,7 @@
 							<reference ref="966771469"/>
 							<reference ref="18504723"/>
 							<reference ref="677957965"/>
-							<reference ref="510562448"/>
 							<reference ref="337364936"/>
-							<reference ref="850436451"/>
 							<reference ref="509640493"/>
 							<reference ref="989676865"/>
 							<reference ref="941971055"/>
@@ -599,16 +551,6 @@
 						<reference key="parent" ref="77874410"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">42</int>
-						<reference key="object" ref="510562448"/>
-						<reference key="parent" ref="77874410"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">44</int>
-						<reference key="object" ref="850436451"/>
-						<reference key="parent" ref="77874410"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">45</int>
 						<reference key="object" ref="509640493"/>
 						<reference key="parent" ref="77874410"/>
@@ -646,8 +588,6 @@
 				<string key="32.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<real value="1" key="4.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
-				<string key="42.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="44.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="45.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="46.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="47.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -692,7 +632,6 @@
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="deleteButtonButton">UIButton</string>
 						<string key="deleteLabel">UILabel</string>
-						<string key="pendingUploadCountLabel">UILabel</string>
 						<string key="pendingUploadLabel">UILabel</string>
 						<string key="pendingUploadLengthLabel">UILabel</string>
 						<string key="pendingUploadTimeLabel">UILabel</string>
@@ -711,10 +650,6 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="deleteLabel">
 							<string key="name">deleteLabel</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="pendingUploadCountLabel">
-							<string key="name">pendingUploadCountLabel</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="pendingUploadLabel">
@@ -770,7 +705,6 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="bg-alert-orange.png">{14, 15}</string>
 			<string key="bg-video-middlecontrols-sidemenu.png">{226, 63}</string>
 			<string key="icn-delete-pressed.png">{27, 28}</string>
 			<string key="icn-delete.png">{27, 28}</string>
@@ -779,6 +713,6 @@
 			<string key="icn-upload-pressed.png">{36, 29}</string>
 			<string key="icn-upload.png">{36, 29}</string>
 		</dictionary>
-		<string key="IBCocoaTouchPluginVersion">1930</string>
+		<string key="IBCocoaTouchPluginVersion">2083</string>
 	</data>
 </archive>

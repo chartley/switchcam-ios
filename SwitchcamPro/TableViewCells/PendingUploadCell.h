@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LKBadgeView.h"
 
 #define kPendingUploadCellIdentifier @"PendingUploadCellIdentifier"
 #define kPendingUploadCellTopIdentifier @"PendingUploadCellTopIdentifier"
@@ -37,7 +38,8 @@
 @interface PendingUploadCell : UITableViewCell
 
 @property (strong, nonatomic) IBOutlet UILabel *pendingUploadLabel;
-@property (strong, nonatomic) IBOutlet UILabel *pendingUploadCountLabel;
+
+@property (strong, nonatomic) LKBadgeView *pendingUploadCountBadge;
 @property (strong, nonatomic) IBOutlet UIImageView *videoThumbnailImageView;
 @property (strong, nonatomic) IBOutlet UIButton *previewButton;
 @property (strong, nonatomic) IBOutlet UIButton *uploadButton;

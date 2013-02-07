@@ -16,6 +16,7 @@
 #import "Mission.h"
 #import "UserVideo.h"
 #import "Reachability.h"
+#import "SPConstants.h"
 
 
 @interface EventVideosViewController () <UITableViewDelegate, UITableViewDataSource>
@@ -181,20 +182,6 @@
         [refreshArray addObjectsFromArray:pendingUploadResults];
     }
     
-    // Grab cached items
-    fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"UserVideo"];
-    descriptor = [NSSortDescriptor sortDescriptorWithKey:@"recordStart" ascending:NO];
-    fetchRequest.sortDescriptors = @[descriptor];
-    predicate = [NSPredicate predicateWithFormat:@"mission == %@ && state >= 10", self.selectedMission];
-    fetchRequest.predicate = predicate;
-    fetchRequest.fetchLimit = 10;
-    
-    error = nil;
-    NSArray *results = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (error == nil && results != nil) {
-        [refreshArray addObjectsFromArray:results];
-    }
-    
     // Set Array
     self.videoArray = refreshArray;
     
@@ -227,8 +214,22 @@
         }
         
         // Set the pending uploads
-        pendingUploadCell.pendingUploadCountLabel.text = [NSString stringWithFormat:@"%d", count];
+        [pendingUploadCell.pendingUploadCountBadge setText:[NSString stringWithFormat:@"%d", count]];
         
+        request = [[NSFetchRequest alloc] init];
+        [request setEntity:[NSEntityDescription entityForName:@"UserVideo" inManagedObjectContext:managedObjectContext]];
+        
+        predicate = [NSPredicate predicateWithFormat:@"uploadedBy.userId == %@", [[NSUserDefaults standardUserDefaults] stringForKey:kSPUserIdKey]];
+        [request setPredicate:predicate];
+        
+        [request setIncludesSubentities:NO]; //Omit subentities. Default is YES (i.e. include subentities)
+        count = [managedObjectContext countForFetchRequest:request error:&err];
+        if(count == NSNotFound) {
+            //Handle error
+        }
+        
+        // Set the your videos
+        pendingUploadCell.yourVideosCountLabel.text = [NSString stringWithFormat:@"%d", count];
     }
     
     // Save row
@@ -338,6 +339,9 @@
         }
         
         cell = [nibArray objectAtIndex:0];
+        
+        [cell.yourVideosLabel sizeToFit];
+        [cell.yourVideosCountLabel setFrame:CGRectMake(cell.yourVideosLabel.frame.origin.x + cell.yourVideosLabel.frame.size.width + 3, cell.yourVideosCountLabel.frame.origin.y, cell.yourVideosCountLabel.frame.size.width, cell.yourVideosCountLabel.frame.size.height)];
     }
     
     [self configureCell:cell forTableView:tableView atIndexPath:indexPath];

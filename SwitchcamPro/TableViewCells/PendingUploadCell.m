@@ -39,12 +39,12 @@
     [self.deleteLabel setShadowColor:[UIColor blackColor]];
     [self.deleteLabel setShadowOffset:CGSizeMake(0, -1)];
     
-    [self.pendingUploadCountLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:12]];
-    [self.pendingUploadCountLabel setTextColor:[UIColor whiteColor]];
-    [self.pendingUploadCountLabel setShadowColor:[UIColor blackColor]];
-    [self.pendingUploadCountLabel setShadowOffset:CGSizeMake(0, -1)];
+    self.pendingUploadCountBadge = [[LKBadgeView alloc] initWithFrame:CGRectMake(154, 14, 50, 24)];
+    [self.pendingUploadCountBadge setTextColor:[UIColor whiteColor]];
+    [self.pendingUploadCountBadge setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:14]];
+    [self.contentView addSubview:self.pendingUploadCountBadge];
     
-    [self.pendingUploadLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:15]];
+    [self.pendingUploadLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:14]];
     [self.pendingUploadLabel setTextColor:[UIColor whiteColor]];
     [self.pendingUploadLabel setShadowColor:[UIColor blackColor]];
     [self.pendingUploadLabel setShadowOffset:CGSizeMake(0, -1)];
@@ -58,6 +58,9 @@
     [self.pendingUploadLengthLabel setTextColor:RGBA(105, 105, 105, 1)];
     [self.pendingUploadLengthLabel setShadowColor:[UIColor blackColor]];
     [self.pendingUploadLengthLabel setShadowOffset:CGSizeMake(0, -1)];
+    
+    [self.yourVideosLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:14]];
+    [self.yourVideosCountLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:14]];
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
