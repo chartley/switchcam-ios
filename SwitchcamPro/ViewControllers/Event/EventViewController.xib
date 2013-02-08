@@ -95,7 +95,7 @@
 							<object class="IBUIImageView" id="347492174">
 								<reference key="NSNextResponder" ref="168142542"/>
 								<int key="NSvFlags">288</int>
-								<string key="NSFrame">{{0, -32}, {320, 192}}</string>
+								<string key="NSFrame">{{0, -36}, {320, 192}}</string>
 								<reference key="NSSuperview" ref="168142542"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="200530393"/>
@@ -1114,6 +1114,65 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">EventViewController</string>
 					<string key="superclassName">UIViewController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="chooseFromLibrary:">id</string>
+						<string key="inviteFacebookFriendsButtonAction:">id</string>
+						<string key="menuButtonAction:">id</string>
+						<string key="noteButtonAction:">id</string>
+						<string key="photoButtonAction:">id</string>
+						<string key="postNoteButtonAction:">id</string>
+						<string key="recordButtonAction:">id</string>
+						<string key="shareButtonAction:">id</string>
+						<string key="shareEmailButtonAction:">id</string>
+						<string key="shareFacebookButtonAction:">id</string>
+						<string key="shareTwitterButtonAction:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="chooseFromLibrary:">
+							<string key="name">chooseFromLibrary:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="inviteFacebookFriendsButtonAction:">
+							<string key="name">inviteFacebookFriendsButtonAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="menuButtonAction:">
+							<string key="name">menuButtonAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="noteButtonAction:">
+							<string key="name">noteButtonAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="photoButtonAction:">
+							<string key="name">photoButtonAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="postNoteButtonAction:">
+							<string key="name">postNoteButtonAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="recordButtonAction:">
+							<string key="name">recordButtonAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="shareButtonAction:">
+							<string key="name">shareButtonAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="shareEmailButtonAction:">
+							<string key="name">shareEmailButtonAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="shareFacebookButtonAction:">
+							<string key="name">shareFacebookButtonAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="shareTwitterButtonAction:">
+							<string key="name">shareTwitterButtonAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="eventDateLabel">UILabel</string>
 						<string key="eventImageView">UIImageView</string>
