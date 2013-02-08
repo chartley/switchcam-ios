@@ -92,7 +92,7 @@
 							<object class="IBUITableView" id="100974851">
 								<reference key="NSNextResponder" ref="656910144"/>
 								<int key="NSvFlags">274</int>
-								<string key="NSFrame">{{0, 189}, {320, 210}}</string>
+								<string key="NSFrame">{{0, 189}, {320, 183}}</string>
 								<reference key="NSSuperview" ref="656910144"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView"/>
@@ -259,14 +259,6 @@
 						<reference key="destination" ref="145343204"/>
 					</object>
 					<int key="connectionID">50</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">backButtonAction:</string>
-						<reference key="source" ref="347508898"/>
-						<reference key="destination" ref="372490531"/>
-					</object>
-					<int key="connectionID">53</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">

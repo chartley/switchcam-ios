@@ -533,7 +533,7 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
      @"start_datetime": @"startDatetime",
      @"end_datetime": @"endDatetime",
      @"submission_deadline": @"submissionDeadline",
-     @"pic_url": @"picURL",
+     @"ios_thumb_url": @"picURL",
      @"description": @"missionDescription",
      @"mission_detail_url": @"missionPageURL",
      @"is_follower": @"isFollowing",
