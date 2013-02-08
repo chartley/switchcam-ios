@@ -204,7 +204,7 @@
         
         [request setIncludesSubentities:NO]; //Omit subentities. Default is YES (i.e. include subentities)
         
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"state < 10 && localVideoAssetURL != nil"];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"state < 10 && localVideoAssetURL != nil && mission == %@", self.selectedMission];
         [request setPredicate:predicate];
         
         NSError *err;
@@ -224,7 +224,7 @@
         request = [[NSFetchRequest alloc] init];
         [request setEntity:[NSEntityDescription entityForName:@"UserVideo" inManagedObjectContext:managedObjectContext]];
         
-        predicate = [NSPredicate predicateWithFormat:@"uploadedBy.userId == %@", [[NSUserDefaults standardUserDefaults] stringForKey:kSPUserIdKey]];
+        predicate = [NSPredicate predicateWithFormat:@"uploadedBy.userId == %@ && mission == %@", [[NSUserDefaults standardUserDefaults] stringForKey:kSPUserIdKey], self.selectedMission];
         [request setPredicate:predicate];
         
         [request setIncludesSubentities:NO]; //Omit subentities. Default is YES (i.e. include subentities)
