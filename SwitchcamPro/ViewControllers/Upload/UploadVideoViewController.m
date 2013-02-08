@@ -79,6 +79,13 @@
     [self.headerToolbarLabel setShadowColor:[UIColor blackColor]];
     [self.headerToolbarLabel setShadowOffset:CGSizeMake(0, -1)];
     
+    // Set Button Image
+    UIImage *buttonImage = [[UIImage imageNamed:@"btn-ltgrey"]
+                            resizableImageWithCapInsets:UIEdgeInsetsMake(20, 15, 20, 15)];
+    
+    // Set the background for any states you plan to use
+    [self.uploadLaterButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    
     // Set Labels
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 	[dateFormatter setDateFormat:@"h:mm a"];

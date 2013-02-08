@@ -654,6 +654,11 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
         if (![context saveToPersistentStore:&error]) {
             NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
         }
+        
+        // Upload
+        UploadVideoViewController *viewController = [[UploadVideoViewController alloc] init];
+        [viewController setUserVideoToUpload:[self.captureManager currentRecording]];
+        [self presentViewController:viewController animated:YES completion:nil];
     });
 }
 
