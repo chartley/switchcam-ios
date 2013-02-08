@@ -432,6 +432,22 @@
 					<int key="connectionID">73</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">topSeparatorView</string>
+						<reference key="source" ref="812539571"/>
+						<reference key="destination" ref="676599010"/>
+					</object>
+					<int key="connectionID">76</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">activityTopSeparatorView</string>
+						<reference key="source" ref="812539571"/>
+						<reference key="destination" ref="676599010"/>
+					</object>
+					<int key="connectionID">77</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">likeButtonAction:</string>
 						<reference key="source" ref="19721159"/>
@@ -574,7 +590,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">74</int>
+			<int key="maxID">77</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -606,6 +622,7 @@
 						</object>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="activityTopSeparatorView">UIView</string>
 						<string key="commentButton">UIButton</string>
 						<string key="commentCountLabel">UILabel</string>
 						<string key="contributorImageView">UIImageView</string>
@@ -616,6 +633,10 @@
 						<string key="verbLabel">UILabel</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="activityTopSeparatorView">
+							<string key="name">activityTopSeparatorView</string>
+							<string key="candidateClassName">UIView</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="commentButton">
 							<string key="name">commentButton</string>
 							<string key="candidateClassName">UIButton</string>

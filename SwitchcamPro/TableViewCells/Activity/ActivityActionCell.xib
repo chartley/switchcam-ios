@@ -242,7 +242,6 @@
 								<string key="NSFrame">{{260, 48}, {42, 21}}</string>
 								<reference key="NSSuperview" ref="975199096"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -369,6 +368,14 @@
 					<int key="connectionID">23</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">activityTopSeparatorView</string>
+						<reference key="source" ref="383847057"/>
+						<reference key="destination" ref="216172280"/>
+					</object>
+					<int key="connectionID">26</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">commentButtonAction:</string>
 						<reference key="source" ref="594815"/>
@@ -491,7 +498,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">24</int>
+			<int key="maxID">26</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -531,6 +538,7 @@
 						</object>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="activityTopSeparatorView">UIView</string>
 						<string key="commentButton">UIButton</string>
 						<string key="commentCountLabel">UILabel</string>
 						<string key="contributorImageView">UIImageView</string>
@@ -541,6 +549,10 @@
 						<string key="verbLabel">UILabel</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="activityTopSeparatorView">
+							<string key="name">activityTopSeparatorView</string>
+							<string key="candidateClassName">UIView</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="commentButton">
 							<string key="name">commentButton</string>
 							<string key="candidateClassName">UIButton</string>

@@ -6,44 +6,21 @@
 //  Copyright (c) 2013 William Ketterer. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
 #import "ActivityPhotoCell.h"
 
 @implementation ActivityPhotoCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        // Initialization code
-    }
-    return self;
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
-}
-
-#pragma mark - Button Actions
-
-- (IBAction)previewButtonAction:(id)sender {
-    if ([self.delegate respondsToSelector:@selector(previewButtonPressed:)]) {
-		[self.delegate performSelector:@selector(previewButtonPressed:) withObject:self];
-	}
-}
-
-- (IBAction)likeButtonAction:(id)sender {
-    if ([self.delegate respondsToSelector:@selector(likeButtonPressed:)]) {
-		[self.delegate performSelector:@selector(likeButtonPressed:) withObject:self];
-	}
-}
-
-- (IBAction)commentButtonAction:(id)sender {
-    if ([self.delegate respondsToSelector:@selector(commentButtonPressed:)]) {
-		[self.delegate performSelector:@selector(commentButtonPressed:) withObject:self];
-	}
+- (void)awakeFromNib {
+    // Thumbnail border
+    [self.photoThumbnailImageView.layer setCornerRadius:5.0f];
+    [self.photoThumbnailImageView.layer setBorderColor:[UIColor blackColor].CGColor];
+    [self.photoThumbnailImageView.layer setBorderWidth:1.5f];
+    [self.photoThumbnailImageView.layer setShadowColor:[UIColor blackColor].CGColor];
+    [self.photoThumbnailImageView.layer setShadowOpacity:0.8];
+    [self.photoThumbnailImageView.layer setShadowRadius:3.0];
+    [self.photoThumbnailImageView.layer setShadowOffset:CGSizeMake(2.0, 2.0)];
+    [self.photoThumbnailImageView.layer setMasksToBounds:YES];
 }
 
 @end

@@ -21,6 +21,8 @@
 
 @interface ActivityCell : UITableViewCell
 
+@property (strong, nonatomic) IBOutlet UIView *activityTopSeparatorView;
+
 @property (strong, nonatomic) IBOutlet UILabel *contributorLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *contributorImageView;
 @property (strong, nonatomic) IBOutlet UILabel *verbLabel;

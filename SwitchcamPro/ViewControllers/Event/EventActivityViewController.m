@@ -397,6 +397,13 @@
 
     ActivityCell *activityCell = (ActivityCell*)cell;
     
+    // Hide separator if top row
+    if (indexPath.row == 0) {
+        [activityCell.activityTopSeparatorView setHidden:YES];
+    } else {
+        [activityCell.activityTopSeparatorView setHidden:NO];
+    }
+    
     if (indexPath.row % 5 == 0) {
         // Post row
 
