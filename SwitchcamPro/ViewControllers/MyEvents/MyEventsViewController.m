@@ -178,7 +178,12 @@
         [self.loadMoreButton setEnabled:YES];
         
         // Add objects to list
-        [self.shootArray addObjectsFromArray:objects];
+        if (page == 1) {
+            self.shootArray = [NSMutableArray arrayWithArray:objects];
+        } else {
+            [self.shootArray addObjectsFromArray:objects];
+        }
+        
         
         // Show correct view depending on video count
         if ([self.shootArray count] == 0) {
