@@ -76,6 +76,11 @@
     AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     self.loadingIndicator = [[MBProgressHUD alloc] initWithWindow:appDelegate.window];
     [appDelegate.window addSubview:self.loadingIndicator];
+    
+    // If user has already accepted terms, we are coming from About controller
+    if (self.hasAccepted) {
+        [self.acceptView setHidden:YES];
+    }
 }
 
 - (void)viewDidUnload {
@@ -102,7 +107,11 @@
 }
 
 - (IBAction)backButtonAction:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if (self.hasAccepted) {
+        [self.navigationController popViewControllerAnimated:YES];
+    } else {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 #pragma mark - Network Request

@@ -14,6 +14,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *iAgreeButton;
 @property (strong, nonatomic) IBOutlet UILabel *acceptTermsLabel;
 @property (strong, nonatomic) IBOutlet UIView *acceptView;
+@property (nonatomic) BOOL hasAccepted;
 
 - (IBAction)iAgreeButtonAction:(id)sender;
 

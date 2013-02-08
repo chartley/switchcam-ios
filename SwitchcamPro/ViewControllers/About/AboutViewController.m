@@ -10,6 +10,7 @@
 #import "ECSlidingViewController.h"
 #import "MenuViewController.h"
 #import "SPConstants.h"
+#import "TermsViewController.h"
 
 #define kSwitchcamButtonTag 0
 #define kTwitterButtonTag 1
@@ -181,7 +182,7 @@
     [termsOfServiceLabel sizeToFit];
     
     [privacyPolicyLabel setCenter:CGPointMake(160, 435)];
-    [termsOfServiceLabel setCenter:CGPointMake(160, 475)];
+    [termsOfServiceLabel setCenter:CGPointMake(160, 465)];
     
     [self.scrollView addSubview:privacyPolicyLabel];
     [self.scrollView addSubview:termsOfServiceLabel];
@@ -269,14 +270,9 @@
 #pragma mark - TTTAttributedLabelDelegate
 
 - (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Leaving app", @"") message:NSLocalizedString(@"Pressing OK will open this link in Safari", @"") delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", @"") otherButtonTitles:NSLocalizedString(@"OK", @""), nil];
-    if ([[url absoluteString] isEqualToString:@"http://switchcam.com/legal/privacy"]) {
-        [alertView setTag:kPrivacyTag];
-    } else {
-        [alertView setTag:kTermsTag];
-    }
-
-    [alertView show];
+    TermsViewController *viewController = [[TermsViewController alloc] init];
+    [viewController setHasAccepted:YES];
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 @end
