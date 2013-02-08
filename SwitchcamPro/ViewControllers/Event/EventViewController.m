@@ -10,6 +10,7 @@
 #import "Artist.h"
 #import "Venue.h"
 #import "UserVideo.h"
+#import "ActionObject.h"
 #import "ECSlidingViewController.h"
 #import "MenuViewController.h"
 #import "EventInfoViewController.h"
@@ -22,6 +23,7 @@
 #import "UIPlaceholderTextView.h"
 #import "AppDelegate.h"
 #import "SPSerializable.h"
+#import "UploadPhotoViewController.h"
 
 enum { kTagTabBase = 100 };
 
@@ -511,6 +513,14 @@ enum { kTagTabBase = 100 };
 }
 
 - (IBAction)photoButtonAction:(id)sender {
+    // Pick from library, only videos
+    UIImagePickerController *viewController = [[UIImagePickerController alloc] init];
+    viewController.mediaTypes = [[NSArray alloc] initWithObjects: (NSString *) kUTTypeImage, nil];
+    viewController.delegate = self;
+    viewController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    viewController.allowsEditing = NO;
+    
+    [self presentViewController:viewController animated:YES completion:nil];
 }
 
 - (IBAction)recordButtonAction:(id)sender {
@@ -737,107 +747,159 @@ enum { kTagTabBase = 100 };
     [self dismissViewControllerAnimated:YES completion:^(void) {
         NSURL *assetURL = [info objectForKey:UIImagePickerControllerReferenceURL];
         
-        // Check if existing user video exists
-        UserVideo *userVideo = nil;
-        NSManagedObjectContext *managedObjectContext = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
-        
-        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"UserVideo" inManagedObjectContext:managedObjectContext];
-        [fetchRequest setEntity:entity];
-        
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"localVideoAssetURL == %@", [assetURL absoluteString]];
-        [fetchRequest setPredicate:predicate];
-        
-        NSError *error = nil;
-        NSArray *results = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
-        
-        if (error == nil && [results count] > 0) {
-            userVideo = [results objectAtIndex:0];
+        if ([[info objectForKey:UIImagePickerControllerMediaType] isEqualToString:@"public.movie"]) {
+            // Video
+            // Check if existing user video exists
+            UserVideo *userVideo = nil;
+            NSManagedObjectContext *managedObjectContext = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
             
-            if ([[userVideo state] intValue] > 10) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Already Uploaded", @"") message:NSLocalizedString(@"You've already uploaded this piece of media!", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles: nil];
-                [alertView show];
+            NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+            NSEntityDescription *entity = [NSEntityDescription entityForName:@"UserVideo" inManagedObjectContext:managedObjectContext];
+            [fetchRequest setEntity:entity];
+            
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"localVideoAssetURL == %@", [assetURL absoluteString]];
+            [fetchRequest setPredicate:predicate];
+            
+            NSError *error = nil;
+            NSArray *results = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
+            
+            if (error == nil && [results count] > 0) {
+                userVideo = [results objectAtIndex:0];
+                
+                if ([[userVideo state] intValue] > 10) {
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Already Uploaded", @"") message:NSLocalizedString(@"You've already uploaded this piece of media!", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles: nil];
+                    [alertView show];
+                } else {
+                    // Upload
+                    UploadVideoViewController *viewController = [[UploadVideoViewController alloc] init];
+                    [viewController setUserVideoToUpload:userVideo];
+                    [self presentViewController:viewController animated:YES completion:nil];
+                }
             } else {
-                // Upload
-                UploadVideoViewController *viewController = [[UploadVideoViewController alloc] init];
-                [viewController setUserVideoToUpload:userVideo];
-                [self presentViewController:viewController animated:YES completion:nil];
+                // Create Recording
+                UserVideo *userVideo = [NSEntityDescription
+                                        insertNewObjectForEntityForName:@"UserVideo"
+                                        inManagedObjectContext:managedObjectContext];
+                
+                
+                // Set record location
+                userVideo.localVideoAssetURL = [assetURL absoluteString];
+                
+                // Set time and length
+                userVideo.recordStart = [NSDate date];
+                userVideo.recordEnd = userVideo.recordStart;
+                
+                NSString *videoKey = [NSString stringWithFormat:@"v%@%@", [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookIdKey], [SPSerializable formattedStringFromDate:userVideo.recordStart]];
+                
+                [userVideo setUploadPath:videoKey];
+                
+                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                [dateFormatter setDateFormat:@"yyyy-MM-dd-HH-mm-ss"];
+                NSString *dateString = [dateFormatter stringFromDate:[userVideo recordStart]];
+                
+                // Make sure we don't overwrite
+                NSUInteger count = 0;
+                NSString *outputURLString = nil;
+                do {
+                    NSString *videoExtension = (__bridge NSString *)UTTypeCopyPreferredTagWithClass(( CFStringRef)AVFileTypeMPEG4, kUTTagClassFilenameExtension);
+                    NSString *photoExtension = (__bridge NSString *)UTTypeCopyPreferredTagWithClass(( CFStringRef)kUTTypePNG, kUTTagClassFilenameExtension);
+                    NSString *fileNameNoExtension = @"capture";
+                    NSString *fileName = [NSString stringWithFormat:@"%@-%@-%u",fileNameNoExtension , dateString, count];
+                    outputURLString = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+                    outputURLString = [outputURLString stringByAppendingPathComponent:fileName];
+                    NSString *videoURLString = [outputURLString stringByAppendingPathExtension:videoExtension];
+                    NSString *thumbnailURLString = [outputURLString stringByAppendingPathExtension:photoExtension];
+                    
+                    [userVideo setCompressedVideoURL:videoURLString];
+                    [userVideo setThumbnailLocalURL:thumbnailURLString];
+                    [userVideo setFilename:fileName];
+                    count++;
+                    
+                } while ([[NSFileManager defaultManager] fileExistsAtPath:outputURLString]);
+                
+                ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+                
+                // Set size when we access info from library and capture thumbnail
+                ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *myasset) {
+                    ALAssetRepresentation *rep = [myasset defaultRepresentation];
+                    userVideo.sizeBytes =  [NSNumber numberWithLongLong:rep.size];
+                    userVideo.sizeMegaBytes = [NSNumber numberWithLongLong:((rep.size/1024)/1024)];
+                    
+                    // Save Thumbnail
+                    CGImageWriteToFile([myasset aspectRatioThumbnail], [userVideo thumbnailLocalURL]);
+                    [managedObjectContext processPendingChanges];
+                    NSError *error = nil;
+                    if (![managedObjectContext save:&error]) {
+                        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+                    }
+                    
+                    // Upload
+                    UploadVideoViewController *viewController = [[UploadVideoViewController alloc] init];
+                    [viewController setUserVideoToUpload:userVideo];
+                    [self presentViewController:viewController animated:YES completion:nil];
+                };
+                
+                ALAssetsLibraryAccessFailureBlock failureblock  = ^(NSError *myerror) {
+                    
+                };
+                
+                [library assetForURL:assetURL
+                         resultBlock:resultblock
+                        failureBlock:failureblock];
             }
         } else {
-            // Create Recording
-            UserVideo *userVideo = [NSEntityDescription
-                                    insertNewObjectForEntityForName:@"UserVideo"
-                                    inManagedObjectContext:managedObjectContext];
+            // Photo
+            // Check if existing user video exists
+            UserVideo *userVideo = nil;
+            NSManagedObjectContext *managedObjectContext = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
             
+            NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+            NSEntityDescription *entity = [NSEntityDescription entityForName:@"UserVideo" inManagedObjectContext:managedObjectContext];
+            [fetchRequest setEntity:entity];
             
-            // Set record location
-            userVideo.localVideoAssetURL = [assetURL absoluteString];
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"localVideoAssetURL == %@", [assetURL absoluteString]];
+            [fetchRequest setPredicate:predicate];
             
-            // Set time and length
-            userVideo.recordStart = [NSDate date];
-            userVideo.recordEnd = userVideo.recordStart;
+            NSError *error = nil;
+            NSArray *results = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
             
-            NSString *videoKey = [NSString stringWithFormat:@"%@%@", [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookIdKey], [SPSerializable formattedStringFromDate:userVideo.recordStart]];
-            
-            [userVideo setUploadPath:videoKey];
-            
-            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-            [dateFormatter setDateFormat:@"yyyy-MM-dd-HH-mm-ss"];
-            NSString *dateString = [dateFormatter stringFromDate:[userVideo recordStart]];
-            
-            // Make sure we don't overwrite
-            NSUInteger count = 0;
-            NSString *outputURLString = nil;
-            do {
-                NSString *videoExtension = (__bridge NSString *)UTTypeCopyPreferredTagWithClass(( CFStringRef)AVFileTypeMPEG4, kUTTagClassFilenameExtension);
-                NSString *photoExtension = (__bridge NSString *)UTTypeCopyPreferredTagWithClass(( CFStringRef)kUTTypePNG, kUTTagClassFilenameExtension);
-                NSString *fileNameNoExtension = @"capture";
-                NSString *fileName = [NSString stringWithFormat:@"%@-%@-%u",fileNameNoExtension , dateString, count];
-                outputURLString = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-                outputURLString = [outputURLString stringByAppendingPathComponent:fileName];
-                NSString *videoURLString = [outputURLString stringByAppendingPathExtension:videoExtension];
-                NSString *thumbnailURLString = [outputURLString stringByAppendingPathExtension:photoExtension];
+            if (error == nil && [results count] > 0) {
+                userVideo = [results objectAtIndex:0];
                 
-                [userVideo setCompressedVideoURL:videoURLString];
-                [userVideo setThumbnailLocalURL:thumbnailURLString];
-                [userVideo setFilename:fileName];
-                count++;
-                
-            } while ([[NSFileManager defaultManager] fileExistsAtPath:outputURLString]);
-            
-            ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-            
-            // Set size when we access info from library and capture thumbnail
-            ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *myasset) {
-                ALAssetRepresentation *rep = [myasset defaultRepresentation];
-                userVideo.sizeBytes =  [NSNumber numberWithLongLong:rep.size];
-                userVideo.sizeMegaBytes = [NSNumber numberWithLongLong:((rep.size/1024)/1024)];
-                
-                // Save Thumbnail
-                CGImageWriteToFile([myasset aspectRatioThumbnail], [userVideo thumbnailLocalURL]);
-                [managedObjectContext processPendingChanges];
-                NSError *error = nil;
-                if (![managedObjectContext save:&error]) {
-                    NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+                if ([[userVideo state] intValue] > 10) {
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Already Uploaded", @"") message:NSLocalizedString(@"You've already uploaded this piece of media!", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles: nil];
+                    [alertView show];
+                } else {
+                    // Upload
+                    UploadVideoViewController *viewController = [[UploadVideoViewController alloc] init];
+                    [viewController setUserVideoToUpload:userVideo];
+                    [self presentViewController:viewController animated:YES completion:nil];
                 }
+            } else {
+                // Create photo
+                ActionObject *userPhoto = [NSEntityDescription
+                                        insertNewObjectForEntityForName:@"ActionObject"
+                                        inManagedObjectContext:managedObjectContext];
+                
+                userPhoto.localURL = [assetURL absoluteString];
+                userPhoto.mission = self.mission;
+                
+                userPhoto.createDate = [NSDate date];
+                
+                NSString *photoKey = [NSString stringWithFormat:@"%@%@", [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookIdKey], [SPSerializable formattedStringFromDate:userPhoto.createDate]];
+                userPhoto.photoKey = photoKey;
+                
                 
                 // Upload
-                UploadVideoViewController *viewController = [[UploadVideoViewController alloc] init];
-                [viewController setUserVideoToUpload:userVideo];
+                UploadPhotoViewController *viewController = [[UploadPhotoViewController alloc] init];
+                [viewController setPhotoToUpload:userPhoto];
                 [self presentViewController:viewController animated:YES completion:nil];
-            };
-            
-            ALAssetsLibraryAccessFailureBlock failureblock  = ^(NSError *myerror) {
-                
-            };
-            
-            [library assetForURL:assetURL
-                     resultBlock:resultblock
-                    failureBlock:failureblock];
+            }
         }
 
+
     }];
-        
+    
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {

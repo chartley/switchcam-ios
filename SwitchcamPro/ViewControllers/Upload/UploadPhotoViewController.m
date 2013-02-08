@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 William Ketterer. All rights reserved.
 //
 
+#import <AssetsLibrary/AssetsLibrary.h>
 #import <QuartzCore/QuartzCore.h>
 #import "UploadPhotoViewController.h"
 #import "SPConstants.h"
@@ -27,6 +28,7 @@
 @property (strong, nonatomic) UIProgressView *uploadProgressView;
 @property (strong, nonatomic) UILabel *uploadProgressLabel;
 @property (strong, nonatomic) NSTimer *uploadProgressBarTimer;
+@property (strong, nonatomic) NSData *photoData;
 
 - (void)startUpload;
 
@@ -98,6 +100,22 @@
         self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width, 480-44-20);
     }
     
+    ALAssetsLibrary *assetLibrary = [[ALAssetsLibrary alloc] init];
+    [assetLibrary assetForURL:[NSURL URLWithString:[self.photoToUpload localURL]] resultBlock:^(ALAsset *asset) {
+        ALAssetRepresentation *rep = [asset defaultRepresentation];
+        Byte *buffer = (Byte*)malloc(rep.size);
+        NSUInteger buffered = [rep getBytes:buffer fromOffset:0.0 length:rep.size error:nil];
+        self.photoData = [NSData dataWithBytesNoCopy:buffer length:buffered freeWhenDone:YES];
+        
+        UIImage *img = [UIImage
+                        imageWithCGImage:[rep fullScreenImage]
+                        scale:[rep scale]
+                        orientation:UIImageOrientationUp];
+        [self.photoThumbnailImageView setImage:img];
+    }
+                 failureBlock:^(NSError *error) {
+                     NSLog(@"Error: %@",[error localizedDescription]);
+                 }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -137,13 +155,11 @@
 #pragma mark - Helper Methods
 
 - (void)startUpload {
-    @autoreleasepool {
-        NSError *error;
-        // Get Data
-        NSData *uploadData = [[NSData alloc] initWithContentsOfFile:[self.photoToUpload localURL] options:NSDataReadingMapped error:&error];
-        
+    @autoreleasepool {      
         SCS3Uploader *uploader = [[SCS3Uploader alloc] init];
-        [uploader uploadVideo:uploadData withKey:self.photoToUpload.photoKey];
+        [uploader uploadVideo:self.photoData withKey:self.photoToUpload.photoKey];
+        
+        [self performSelectorOnMainThread:@selector(backButtonAction:) withObject:self waitUntilDone:NO];
     }
 }
 
@@ -155,16 +171,6 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     switch (indexPath.row) {
         case 0:
-        {
-            LabelTextFieldCell *labelTextFieldCell = (LabelTextFieldCell *)cell;
-            [labelTextFieldCell.leftLabel setText:NSLocalizedString(@"Video Title", @"")];
-            [labelTextFieldCell.leftLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:17]];
-            [labelTextFieldCell.textField setTextColor:[UIColor whiteColor]];
-            [labelTextFieldCell.textField setFont:[UIFont fontWithName:@"SourceSansPro-Light" size:17]];
-            [labelTextFieldCell.textField setDelegate:self];
-            break;
-        }
-        case 1:
         {
             ButtonToProgressCell *buttonToProgressCell = (ButtonToProgressCell *)cell;
             [buttonToProgressCell.bigButton setTitle:NSLocalizedString(@"Upload", @"") forState:UIControlStateNormal];
@@ -195,11 +201,6 @@
     switch (indexPath.row) {
         case 0:
         {
-            return kLabelTextFieldCellRowHeight;
-            break;
-        }
-        case 1:
-        {
             return kButtonToProgressCellRowHeight;
             break;
         }
@@ -210,7 +211,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
+    return 1;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -220,11 +221,6 @@
     
     switch (indexPath.row) {
         case 0:
-        {
-            cell = [tableView dequeueReusableCellWithIdentifier:kLabelTextFieldCellIdentifier];
-            break;
-        }
-        case 1:
         {
             cell = [tableView dequeueReusableCellWithIdentifier:kButtonToProgressCellIdentifier];
             break;
@@ -236,12 +232,6 @@
     if (cell == nil) {
         switch (indexPath.row) {
             case 0:
-            {
-                NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"LabelTextFieldCell" owner:self options:nil];
-                cell = [nibArray objectAtIndex:0];
-                break;
-            }
-            case 1:
             {
                 NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"ButtonToProgressCell" owner:self options:nil];
                 cell = [nibArray objectAtIndex:0];
@@ -274,13 +264,7 @@
     // Set backgrounds
     if (indexPath.row == 0) {
         // Top
-        [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grptableview-top"]]];
-    } else if (indexPath.row == 1) {
-        // Bottom
-        [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grptableview-bottom"]]];
-    } else {
-        // Middle
-        [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grptableview-middle"]]];
+        [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grptableview-single"]]];
     }
     
     return cell;

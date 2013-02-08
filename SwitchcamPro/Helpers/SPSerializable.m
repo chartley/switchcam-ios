@@ -18,7 +18,7 @@
 
 +(NSDate*)dateFromFormattedString:(NSString*)date {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd' 'HH:mm:ss"];
     return [dateFormatter dateFromString:date];
 }
 

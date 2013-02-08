@@ -16,6 +16,8 @@
 #import <CoreTelephony/CTCall.h>
 #import "UserVideo.h"
 #import "Mission.h"
+#import "Activity.h"
+#import "ActionObject.h"
 #import "UAirship.h"
 #import "UAPush.h"
 #import "SPLocationManager.h"
@@ -842,8 +844,15 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
 
 - (void)uploadCompleted:(NSNotification*)notification {
     self.isUserUploading = NO;
-    NSString *videoKey = (NSString*)[notification object];
-    [self createUserVideo:videoKey];
+    NSString *mediaKey = (NSString*)[notification object];
+    
+    // Check if video or photo
+    if ([[mediaKey substringWithRange:NSMakeRange(0, 1)] isEqualToString:@"v"]) {
+        [self createUserVideo:mediaKey];
+    } else {
+        [self createUserPhoto:mediaKey];
+    }
+    
     
     // Let screen fall asleep
     [UIApplication sharedApplication].idleTimerDisabled = NO;
@@ -987,6 +996,72 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     };
     
     [[RKObjectManager sharedManager] postObject:userVideoToUpload path:@"uservideo/" parameters:nil success:createUserVideoSuccessBlock failure:createUserVideoFailureBlock];
+}
+
+- (void)createUserPhoto:(NSString*)photoKey {
+    NSString *facebookId = [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookIdKey];
+    NSString *facebookToken = [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookTokenKey];
+    
+    // Get Photo with photoKey
+    ActionObject *actionObject = nil;
+    NSManagedObjectContext *managedObjectContext = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"ActionObject" inManagedObjectContext:managedObjectContext];
+    [fetchRequest setEntity:entity];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"photoKey == %@", photoKey];
+    [fetchRequest setPredicate:predicate];
+    
+    NSError *error = nil;
+    NSArray *results = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    
+    if (error == nil && [results count] > 0) {
+        actionObject = [results objectAtIndex:0];
+    } else {
+        [self.statusBarToastAndProgressView showToastWithMessage:NSLocalizedString(@"Upload Failed!", @"")];
+        [self.statusBarToastAndProgressView hideProgressView];
+        return;
+    }
+    
+    // Set S3 Info
+    actionObject.photoURL = [NSString stringWithFormat:@"https://s3.amazonaws.com/upload-switchcam-ios/%@", photoKey];
+    
+    
+    // Save
+    NSManagedObjectContext *context = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
+    [context processPendingChanges];
+    if (![context saveToPersistentStore:&error]) {
+        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+    }
+    
+    // Completion Blocks
+    void (^createUserPhotoSuccessBlock)(AFHTTPRequestOperation *operation, id responseObject);
+    void (^createUserPhotoFailureBlock)(AFHTTPRequestOperation *operation, NSError *error);
+    
+    
+    createUserPhotoSuccessBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self.statusBarToastAndProgressView showToastWithMessage:NSLocalizedString(@"Upload Complete!", @"")];
+        [self.statusBarToastAndProgressView hideProgressView];
+    };
+    
+    createUserPhotoFailureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self.statusBarToastAndProgressView showToastWithMessage:NSLocalizedString(@"Upload Failed!", @"")];
+        [self.statusBarToastAndProgressView hideProgressView];
+    };
+    
+    // Make Request and set params
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:kAPIHost]];
+    [httpClient setAuthorizationHeaderWithUsername:facebookId password:facebookToken];
+
+    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:actionObject.photoURL, @"url", nil];
+    
+    NSString *path = [NSString stringWithFormat:@"mission/%@/photo/", [actionObject.mission.missionId stringValue]];
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:path parameters:parameters];
+    
+    AFJSONRequestOperation *operation = [[AFJSONRequestOperation alloc] initWithRequest:request];
+    [operation setCompletionBlockWithSuccess:createUserPhotoSuccessBlock failure:createUserPhotoFailureBlock];
+    [operation start];
 }
 
 #pragma mark - UIAlertViewDelegate

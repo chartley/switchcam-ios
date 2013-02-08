@@ -50,7 +50,6 @@
 		C916A80316C409D400C26F70 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = C916A80216C409D300C26F70 /* User.m */; };
 		C916A80D16C40FEF00C26F70 /* UploadPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C916A80B16C40FEF00C26F70 /* UploadPhotoViewController.m */; };
 		C916A80E16C40FEF00C26F70 /* UploadPhotoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C916A80C16C40FEF00C26F70 /* UploadPhotoViewController.xib */; };
-		C916A81116C412AE00C26F70 /* ActionObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C916A81016C412AE00C26F70 /* ActionObject.m */; };
 		C94F7C111699F3E000D65EDC /* Artist.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F7C101699F3E000D65EDC /* Artist.m */; };
 		C94F7C23169A0A3200D65EDC /* SPLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F7C22169A0A3200D65EDC /* SPLocationManager.m */; };
 		C94F7C26169A234400D65EDC /* SPImageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C94F7C25169A234400D65EDC /* SPImageHelper.m */; };
@@ -75,7 +74,6 @@
 		C9606C7816AFDCE900F5C76F /* EventInfoGoingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9606C7716AFDCE900F5C76F /* EventInfoGoingCell.xib */; };
 		C9606C7B16B2788900F5C76F /* Link.m in Sources */ = {isa = PBXBuildFile; fileRef = C9606C7A16B2788900F5C76F /* Link.m */; };
 		C9606C8016B2843700F5C76F /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9606C7F16B2843600F5C76F /* MessageUI.framework */; };
-		C9606C8616B36E5600F5C76F /* Mission.m in Sources */ = {isa = PBXBuildFile; fileRef = C9606C8516B36E5600F5C76F /* Mission.m */; };
 		C9606C9216B45E1100F5C76F /* arrow-share-down.png in Resources */ = {isa = PBXBuildFile; fileRef = C9606C8A16B45E1100F5C76F /* arrow-share-down.png */; };
 		C9606C9316B45E1100F5C76F /* arrow-share-down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9606C8B16B45E1100F5C76F /* arrow-share-down@2x.png */; };
 		C9606C9416B45E1100F5C76F /* bg-sharefooter-noshadow.png in Resources */ = {isa = PBXBuildFile; fileRef = C9606C8C16B45E1100F5C76F /* bg-sharefooter-noshadow.png */; };
@@ -88,6 +86,8 @@
 		C9606CA216B4718200F5C76F /* SPInviteFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9606CA116B4718200F5C76F /* SPInviteFriendsViewController.m */; };
 		C962EB2D16B4786700C643D0 /* SPInviteFriendsTableDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = C962EB2C16B4786700C643D0 /* SPInviteFriendsTableDataSource.m */; };
 		C96B73B516C4C6C500E9D8F1 /* SPWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = C96B73B416C4C6C500E9D8F1 /* SPWindow.m */; };
+		C96B73B816C4D44900E9D8F1 /* ActionObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C96B73B716C4D44900E9D8F1 /* ActionObject.m */; };
+		C96B73BB16C4D44A00E9D8F1 /* Mission.m in Sources */ = {isa = PBXBuildFile; fileRef = C96B73BA16C4D44A00E9D8F1 /* Mission.m */; };
 		C97B0CB2166DBDC3005BB65F /* libUAirship-1.3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C97BFFC2166DBDC0005BB65F /* libUAirship-1.3.3.a */; };
 		C97B132F166DBFA8005BB65F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97B132E166DBFA8005BB65F /* SystemConfiguration.framework */; };
 		C97B1331166DBFB8005BB65F /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97B1330166DBFB8005BB65F /* CFNetwork.framework */; };
@@ -488,8 +488,6 @@
 		C916A80A16C40FEF00C26F70 /* UploadPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UploadPhotoViewController.h; path = ViewControllers/Upload/UploadPhotoViewController.h; sourceTree = "<group>"; };
 		C916A80B16C40FEF00C26F70 /* UploadPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UploadPhotoViewController.m; path = ViewControllers/Upload/UploadPhotoViewController.m; sourceTree = "<group>"; };
 		C916A80C16C40FEF00C26F70 /* UploadPhotoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UploadPhotoViewController.xib; path = ViewControllers/Upload/UploadPhotoViewController.xib; sourceTree = "<group>"; };
-		C916A80F16C412AD00C26F70 /* ActionObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActionObject.h; path = Model/ManagedObjects/ActionObject.h; sourceTree = "<group>"; };
-		C916A81016C412AE00C26F70 /* ActionObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActionObject.m; path = Model/ManagedObjects/ActionObject.m; sourceTree = "<group>"; };
 		C94F7C0F1699F3DF00D65EDC /* Artist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Artist.h; path = Model/ManagedObjects/Artist.h; sourceTree = "<group>"; };
 		C94F7C101699F3E000D65EDC /* Artist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Artist.m; path = Model/ManagedObjects/Artist.m; sourceTree = "<group>"; };
 		C94F7C21169A0A3200D65EDC /* SPLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPLocationManager.h; path = Helpers/SPLocationManager.h; sourceTree = "<group>"; };
@@ -529,8 +527,6 @@
 		C9606C7916B2788900F5C76F /* Link.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Link.h; path = Model/ManagedObjects/Link.h; sourceTree = "<group>"; };
 		C9606C7A16B2788900F5C76F /* Link.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Link.m; path = Model/ManagedObjects/Link.m; sourceTree = "<group>"; };
 		C9606C7F16B2843600F5C76F /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		C9606C8416B36E5600F5C76F /* Mission.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mission.h; path = Model/ManagedObjects/Mission.h; sourceTree = "<group>"; };
-		C9606C8516B36E5600F5C76F /* Mission.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Mission.m; path = Model/ManagedObjects/Mission.m; sourceTree = "<group>"; };
 		C9606C8A16B45E1100F5C76F /* arrow-share-down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-share-down.png"; sourceTree = "<group>"; };
 		C9606C8B16B45E1100F5C76F /* arrow-share-down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-share-down@2x.png"; sourceTree = "<group>"; };
 		C9606C8C16B45E1100F5C76F /* bg-sharefooter-noshadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-sharefooter-noshadow.png"; sourceTree = "<group>"; };
@@ -547,6 +543,10 @@
 		C962EB2C16B4786700C643D0 /* SPInviteFriendsTableDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPInviteFriendsTableDataSource.m; path = ViewControllers/Friends/SPInviteFriendsTableDataSource.m; sourceTree = "<group>"; };
 		C96B73B316C4C6C500E9D8F1 /* SPWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPWindow.h; path = Views/SPWindow.h; sourceTree = "<group>"; };
 		C96B73B416C4C6C500E9D8F1 /* SPWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPWindow.m; path = Views/SPWindow.m; sourceTree = "<group>"; };
+		C96B73B616C4D44900E9D8F1 /* ActionObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActionObject.h; path = Model/ManagedObjects/ActionObject.h; sourceTree = "<group>"; };
+		C96B73B716C4D44900E9D8F1 /* ActionObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ActionObject.m; path = Model/ManagedObjects/ActionObject.m; sourceTree = "<group>"; };
+		C96B73B916C4D44A00E9D8F1 /* Mission.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mission.h; path = Model/ManagedObjects/Mission.h; sourceTree = "<group>"; };
+		C96B73BA16C4D44A00E9D8F1 /* Mission.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Mission.m; path = Model/ManagedObjects/Mission.m; sourceTree = "<group>"; };
 		C97B132E166DBFA8005BB65F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		C97B1330166DBFB8005BB65F /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		C97B1332166DBFC5005BB65F /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -1288,14 +1288,14 @@
 				C9606C5F16AFB8FE00F5C76F /* Venue.m */,
 				C9606C7916B2788900F5C76F /* Link.h */,
 				C9606C7A16B2788900F5C76F /* Link.m */,
-				C9606C8416B36E5600F5C76F /* Mission.h */,
-				C9606C8516B36E5600F5C76F /* Mission.m */,
 				24F9C37516B679F10029D1E5 /* Activity.h */,
 				24F9C37616B679F10029D1E5 /* Activity.m */,
 				C916A80116C409D300C26F70 /* User.h */,
 				C916A80216C409D300C26F70 /* User.m */,
-				C916A80F16C412AD00C26F70 /* ActionObject.h */,
-				C916A81016C412AE00C26F70 /* ActionObject.m */,
+				C96B73B916C4D44A00E9D8F1 /* Mission.h */,
+				C96B73BA16C4D44A00E9D8F1 /* Mission.m */,
+				C96B73B616C4D44900E9D8F1 /* ActionObject.h */,
+				C96B73B716C4D44900E9D8F1 /* ActionObject.m */,
 			);
 			name = ManagedObjects;
 			sourceTree = "<group>";
@@ -2389,7 +2389,6 @@
 				C9606C6A16AFBFF300F5C76F /* EventInfoLinksCell.m in Sources */,
 				C9606C7616AFDCD200F5C76F /* EventInfoGoingCell.m in Sources */,
 				C9606C7B16B2788900F5C76F /* Link.m in Sources */,
-				C9606C8616B36E5600F5C76F /* Mission.m in Sources */,
 				C9606C9D16B4622E00F5C76F /* InviteFriendCell.m in Sources */,
 				C9606CA216B4718200F5C76F /* SPInviteFriendsViewController.m in Sources */,
 				C962EB2D16B4786700C643D0 /* SPInviteFriendsTableDataSource.m in Sources */,
@@ -2405,8 +2404,9 @@
 				C916A7F416C384EF00C26F70 /* LKBadgeView.m in Sources */,
 				C916A80316C409D400C26F70 /* User.m in Sources */,
 				C916A80D16C40FEF00C26F70 /* UploadPhotoViewController.m in Sources */,
-				C916A81116C412AE00C26F70 /* ActionObject.m in Sources */,
 				C96B73B516C4C6C500E9D8F1 /* SPWindow.m in Sources */,
+				C96B73B816C4D44900E9D8F1 /* ActionObject.m in Sources */,
+				C96B73BB16C4D44A00E9D8F1 /* Mission.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

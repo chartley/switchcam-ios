@@ -215,6 +215,7 @@
         SCS3Uploader *uploader = [[SCS3Uploader alloc] init];
         [uploader uploadVideo:uploadData withKey:self.userVideoToUpload.uploadPath];
     }
+    
 }
 
 - (void)startVideoCompressionWithSuccessHandler:(void (^)())successHandler failureHandler:(void (^)(NSError *))failureHandler  {

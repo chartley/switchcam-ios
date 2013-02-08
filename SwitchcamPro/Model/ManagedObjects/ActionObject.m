@@ -8,19 +8,21 @@
 
 #import "ActionObject.h"
 #import "Activity.h"
+#import "Mission.h"
 #import "User.h"
 
 
 @implementation ActionObject
 
-@dynamic createDate;
 @dynamic actionObjectId;
-@dynamic text;
-@dynamic photoURL;
-@dynamic thumbURL;
+@dynamic createDate;
 @dynamic localURL;
 @dynamic photoKey;
-@dynamic person;
+@dynamic photoURL;
+@dynamic text;
+@dynamic thumbURL;
 @dynamic activity;
+@dynamic person;
+@dynamic mission;
 
 @end
