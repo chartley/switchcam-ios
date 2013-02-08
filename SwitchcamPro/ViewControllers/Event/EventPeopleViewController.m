@@ -294,7 +294,7 @@
     
     for (int i = indexPath.row * 5; i < numberOfUsersInRow; i++) {
         User *user = [self.peopleArray objectAtIndex:i];
-        NSURL *userImage = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=square", [user.userId stringValue]]];
+        NSURL *userImage = [NSURL URLWithString:user.pictureURL];
         
         switch (i % 5) {
             case 0:
@@ -322,6 +322,8 @@
                 break;
         }
     }
+    
+    peopleCell.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
 #pragma mark - UITableViewDataSource methods
