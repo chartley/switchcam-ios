@@ -255,7 +255,7 @@
     
     NSString *locationString = [NSString stringWithFormat:@"%@, %@", [mission venue].venueName, [mission venue].city];
     
-    [myEventCell.eventNameLabel setText:[mission artist].artistName];
+    [myEventCell.eventNameLabel setText:[mission displayTitle]];
     [myEventCell.eventLocationLabel setText:locationString];
     [myEventCell.eventDateLabel setText:startEventTimeString];
     if ([mission picURL] != nil) {

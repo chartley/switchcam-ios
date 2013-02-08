@@ -17,6 +17,7 @@
 
 @implementation Mission
 
+@dynamic displayTitle;
 @dynamic endDatetime;
 @dynamic isCameraCrew;
 @dynamic isFollowing;

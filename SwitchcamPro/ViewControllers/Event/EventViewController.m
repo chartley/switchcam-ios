@@ -94,7 +94,7 @@ enum { kTagTabBase = 100 };
     if (self) {
         // Custom initialization
         self.mission = mission;
-        self.navigationItem.title = self.mission.artist.artistName;
+        self.navigationItem.title = self.mission.displayTitle;
         
         activityViewController = eventActivityViewController;
     }
@@ -678,7 +678,7 @@ enum { kTagTabBase = 100 };
     if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
         SLComposeViewController *facebookSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
         
-        NSString *initialText = [NSString stringWithFormat:NSLocalizedString(@"I'm making a video with %@ at %@ - check it out", @""), self.mission.artist.artistName, self.mission.venue.venueName];
+        NSString *initialText = [NSString stringWithFormat:NSLocalizedString(@"I'm making a video with %@ at %@ - check it out", @""), self.mission.displayTitle, self.mission.venue.venueName];
         [facebookSheet setInitialText:initialText];
         [facebookSheet addURL:[NSURL URLWithString:self.mission.missionPageURL]];
         
@@ -693,7 +693,7 @@ enum { kTagTabBase = 100 };
     if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
         SLComposeViewController *tweetSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
         
-        NSString *initialText = [NSString stringWithFormat:NSLocalizedString(@"I'm making a video with %@ at %@ - check it out", @""), self.mission.artist.artistName, self.mission.venue.venueName];
+        NSString *initialText = [NSString stringWithFormat:NSLocalizedString(@"I'm making a video with %@ at %@ - check it out", @""), self.mission.displayTitle, self.mission.venue.venueName];
         [tweetSheet setInitialText:initialText];
         [tweetSheet addURL:[NSURL URLWithString:self.mission.missionPageURL]];
         
@@ -706,11 +706,11 @@ enum { kTagTabBase = 100 };
 
 - (IBAction)shareEmailButtonAction:(id)sender {
     if ([MFMailComposeViewController canSendMail]) {
-        NSString *subject = [NSString stringWithFormat:NSLocalizedString(@"Video with %@?", @""), self.mission.artist.artistName];
+        NSString *subject = [NSString stringWithFormat:NSLocalizedString(@"Video with %@?", @""), self.mission.displayTitle];
 
         NSMutableString *body = [NSMutableString string];
         // add HTML before the link here with line breaks (\n)
-        [body appendFormat:NSLocalizedString(@"<h4>I joined the camera crew to make a video with %@ at %@!</h4>\n", @""), self.mission.artist.artistName, self.mission.venue.venueName];
+        [body appendFormat:NSLocalizedString(@"<h4>I joined the camera crew to make a video with %@ at %@!</h4>\n", @""), self.mission.displayTitle, self.mission.venue.venueName];
         [body appendFormat:NSLocalizedString(@"Sign up to join me <a href=\"%@\">here.</a>\n", @""), self.mission.missionPageURL];
         [body appendString:NSLocalizedString(@"<div>See you there!</div>\n", @"")];
         

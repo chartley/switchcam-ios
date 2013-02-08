@@ -53,6 +53,7 @@
         <relationship name="mission" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Mission" inverseName="links" inverseEntity="Mission" syncable="YES"/>
     </entity>
     <entity name="Mission" representedClassName="Mission" syncable="YES">
+        <attribute name="displayTitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="endDatetime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="isCameraCrew" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="isFollowing" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -126,14 +127,14 @@
         <relationship name="missions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mission" inverseName="venue" inverseEntity="Mission" syncable="YES"/>
     </entity>
     <elements>
+        <element name="ActionObject" positionX="160" positionY="192" width="128" height="180"/>
         <element name="Activity" positionX="160" positionY="192" width="128" height="330"/>
         <element name="Artist" positionX="160" positionY="192" width="128" height="90"/>
         <element name="Comment" positionX="160" positionY="192" width="128" height="150"/>
         <element name="Link" positionX="160" positionY="192" width="128" height="105"/>
-        <element name="Mission" positionX="160" positionY="192" width="128" height="345"/>
+        <element name="Mission" positionX="160" positionY="192" width="128" height="360"/>
         <element name="User" positionX="160" positionY="192" width="128" height="210"/>
         <element name="UserVideo" positionX="160" positionY="192" width="128" height="435"/>
         <element name="Venue" positionX="160" positionY="192" width="128" height="165"/>
-        <element name="ActionObject" positionX="160" positionY="192" width="128" height="180"/>
     </elements>
 </model>

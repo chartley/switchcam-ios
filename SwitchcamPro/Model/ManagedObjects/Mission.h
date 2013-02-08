@@ -13,6 +13,7 @@
 
 @interface Mission : NSManagedObject
 
+@property (nonatomic, retain) NSString * displayTitle;
 @property (nonatomic, retain) NSDate * endDatetime;
 @property (nonatomic, retain) NSNumber * isCameraCrew;
 @property (nonatomic, retain) NSNumber * isFollowing;

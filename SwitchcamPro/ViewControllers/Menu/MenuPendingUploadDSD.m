@@ -82,7 +82,7 @@
     [dateFormatter setDateFormat:@"h:mm a"];
     NSString *startRecordingTimeString = [dateFormatter stringFromDate:[recording recordStart]];
     
-    [pendingUploadCell.shootNameLabel setText:recording.mission.artist.artistName];
+    [pendingUploadCell.shootNameLabel setText:recording.mission.displayTitle];
     [pendingUploadCell.shootNameLabel sizeToFit];
     
     if (pendingUploadCell.shootNameLabel.frame.size.width > 300) {
