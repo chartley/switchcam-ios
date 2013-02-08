@@ -21,6 +21,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *headerToolbarLabel;
 @property (strong, nonatomic) IBOutlet UITableView *uploadTableView;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (strong, nonatomic) UITextField *videoTitleTextField;
 
 - (IBAction)backButtonAction:(id)sender;
 

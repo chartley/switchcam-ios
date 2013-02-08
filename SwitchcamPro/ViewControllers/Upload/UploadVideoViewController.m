@@ -153,6 +153,17 @@
 #pragma mark - Button Actions
 
 - (void)uploadButtonAction {
+    // Save video title
+    [self.userVideoToUpload setInputTitle:self.videoTitleTextField.text];
+    
+    NSError *error = nil;
+    // Save
+    NSManagedObjectContext *context = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
+    [context processPendingChanges];
+    if (![context saveToPersistentStore:&error]) {
+        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+    }
+    
     // Fade in progress bar
     [UIView animateWithDuration:1.0 animations:^(){
         [self.compressProgressView setAlpha:1.0];
@@ -239,6 +250,7 @@
             [labelTextFieldCell.textField setTextColor:[UIColor whiteColor]];
             [labelTextFieldCell.textField setFont:[UIFont fontWithName:@"SourceSansPro-Light" size:17]];
             [labelTextFieldCell.textField setDelegate:self];
+            self.videoTitleTextField = labelTextFieldCell.textField;
             break;
         }
         case 1:

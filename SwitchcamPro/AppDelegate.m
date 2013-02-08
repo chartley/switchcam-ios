@@ -681,6 +681,7 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
      @"latitude": @"lat",
      @"longitude": @"lon",
      @"state": @"state",
+     @"inputTitle": @"input_title",
      }];
     
     // Pagination
