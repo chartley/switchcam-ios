@@ -33,6 +33,7 @@
 #import "SCCamViewController.h"
 #import "SCCamCaptureManager.h"
 #import "SCCamRecorder.h"
+#import "SPWindow.h"
 
 NSString *const SCSessionStateChangedNotification = @"com.switchcam.switchcampro:SCSessionStateChangedNotification";
 NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switchcampro:SCAPINetworkRequestCanStartNotification";
@@ -79,7 +80,7 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     // Initialize TestFlight
     [TestFlight takeOff:@"2acb3bce-2531-4584-b080-013af6bd4993"];
     
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window = [[SPWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     Mission *mission = [self getDefaultMission];
     

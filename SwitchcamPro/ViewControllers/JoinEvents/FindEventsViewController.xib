@@ -359,6 +359,7 @@
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<int key="IBUIContentMode">4</int>
 						<bool key="IBUIMultipleTouchEnabled">YES</bool>
+						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
@@ -712,6 +713,35 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">FindEventsViewController</string>
 					<string key="superclassName">UIViewController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="createShootButtonAction:">id</string>
+						<string key="findYourEventButtonAction:">id</string>
+						<string key="loadMoreButtonAction:">id</string>
+						<string key="locationButtonAction:">id</string>
+						<string key="menuButtonAction:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="createShootButtonAction:">
+							<string key="name">createShootButtonAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="findYourEventButtonAction:">
+							<string key="name">findYourEventButtonAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="loadMoreButtonAction:">
+							<string key="name">loadMoreButtonAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="locationButtonAction:">
+							<string key="name">locationButtonAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="menuButtonAction:">
+							<string key="name">menuButtonAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="activityIndicatorView">UIActivityIndicatorView</string>
 						<string key="createShootButton">UIButton</string>

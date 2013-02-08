@@ -87,6 +87,7 @@
 		C9606C9D16B4622E00F5C76F /* InviteFriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9606C9C16B4622E00F5C76F /* InviteFriendCell.m */; };
 		C9606CA216B4718200F5C76F /* SPInviteFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9606CA116B4718200F5C76F /* SPInviteFriendsViewController.m */; };
 		C962EB2D16B4786700C643D0 /* SPInviteFriendsTableDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = C962EB2C16B4786700C643D0 /* SPInviteFriendsTableDataSource.m */; };
+		C96B73B516C4C6C500E9D8F1 /* SPWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = C96B73B416C4C6C500E9D8F1 /* SPWindow.m */; };
 		C97B0CB2166DBDC3005BB65F /* libUAirship-1.3.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C97BFFC2166DBDC0005BB65F /* libUAirship-1.3.3.a */; };
 		C97B132F166DBFA8005BB65F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97B132E166DBFA8005BB65F /* SystemConfiguration.framework */; };
 		C97B1331166DBFB8005BB65F /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97B1330166DBFB8005BB65F /* CFNetwork.framework */; };
@@ -544,6 +545,8 @@
 		C9606CA116B4718200F5C76F /* SPInviteFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPInviteFriendsViewController.m; path = ViewControllers/Friends/SPInviteFriendsViewController.m; sourceTree = "<group>"; };
 		C962EB2B16B4786700C643D0 /* SPInviteFriendsTableDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPInviteFriendsTableDataSource.h; path = ViewControllers/Friends/SPInviteFriendsTableDataSource.h; sourceTree = "<group>"; };
 		C962EB2C16B4786700C643D0 /* SPInviteFriendsTableDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPInviteFriendsTableDataSource.m; path = ViewControllers/Friends/SPInviteFriendsTableDataSource.m; sourceTree = "<group>"; };
+		C96B73B316C4C6C500E9D8F1 /* SPWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPWindow.h; path = Views/SPWindow.h; sourceTree = "<group>"; };
+		C96B73B416C4C6C500E9D8F1 /* SPWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPWindow.m; path = Views/SPWindow.m; sourceTree = "<group>"; };
 		C97B132E166DBFA8005BB65F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		C97B1330166DBFB8005BB65F /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		C97B1332166DBFC5005BB65F /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -1929,6 +1932,8 @@
 				C99E97EC167E4494006B3BBC /* StatusBarToastAndProgressView.m */,
 				24F9C37116B66D630029D1E5 /* UIPlaceHolderTextView.h */,
 				24F9C37216B66D630029D1E5 /* UIPlaceHolderTextView.m */,
+				C96B73B316C4C6C500E9D8F1 /* SPWindow.h */,
+				C96B73B416C4C6C500E9D8F1 /* SPWindow.m */,
 			);
 			name = "Custom Views";
 			sourceTree = "<group>";
@@ -2401,6 +2406,7 @@
 				C916A80316C409D400C26F70 /* User.m in Sources */,
 				C916A80D16C40FEF00C26F70 /* UploadPhotoViewController.m in Sources */,
 				C916A81116C412AE00C26F70 /* ActionObject.m in Sources */,
+				C96B73B516C4C6C500E9D8F1 /* SPWindow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
