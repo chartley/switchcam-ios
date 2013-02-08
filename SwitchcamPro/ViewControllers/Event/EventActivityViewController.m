@@ -38,6 +38,7 @@
 
 @property (nonatomic, strong) RKPaginator *activityPaginator;
 @property (nonatomic, strong) NSMutableArray *activities;
+@property (nonatomic, strong) UITextField *postCommentTextField;
 
 @end
 
@@ -319,6 +320,9 @@
             [selectedActivity removeLatestCommentsObject:[commentArray objectAtIndex:0]];
         }
         
+        // Increase comment count
+        [selectedActivity setCommentCount:[NSNumber numberWithInt:([selectedActivity.commentCount intValue] + 1)]];
+        
         // Calculate row height
         CGSize labelSize = [comment.comment sizeWithFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:13.0] constrainedToSize:CGSizeMake(264, 600) lineBreakMode:NSLineBreakByWordWrapping];
         int rowHeight = labelSize.height + 28 + 15; // Label size, fixed bottom, fixed top
@@ -485,6 +489,8 @@
         // Hide if we aren't showing post comment so we can have a small buffer at the bottom
         if (postCommentRow == indexPath.row) {
             activityPostCommentCell.hidden = NO;
+            
+            self.postCommentTextField = activityPostCommentCell.commentTextField;
         } else {
             activityPostCommentCell.hidden = YES;
         }
@@ -897,6 +903,9 @@
     
     // Refresh other data
     [self.eventActivityTableView reloadRowsAtIndexPaths:indexPathsToReload withRowAnimation:UITableViewRowAnimationNone];
+    
+    // Show keyboard
+    [self.postCommentTextField becomeFirstResponder];
 }
 
 - (void)postCommentButtonPressed:(ActivityPostCommentCell*)activityPostCommentCell {
