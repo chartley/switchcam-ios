@@ -114,6 +114,13 @@
     [httpClient setAuthorizationHeaderWithUsername:facebookId password:facebookToken];
     
     NSString *apnToken = [[UAPush shared] deviceToken];
+    
+    // Verify we have something
+    if (apnToken == nil || [apnToken isEqualToString:@""]) {
+        // If nil or empty set to 0
+        apnToken = @"0";
+    }
+    
     NSString *path = [NSString stringWithFormat:@"api/v1/person/me/token/%@/", apnToken];
     
     NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:path parameters:nil];
