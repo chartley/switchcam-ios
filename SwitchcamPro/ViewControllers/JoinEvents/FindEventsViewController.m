@@ -209,7 +209,15 @@
     
     // Check if we have search text
     if (self.eventSearchTextField.text != nil && ![self.eventSearchTextField.text isEqualToString:@""]) {
-        path = [path stringByAppendingFormat:@"&terms=%@", self.eventSearchTextField.text];
+        NSString *unescapedString = self.eventSearchTextField.text;
+        NSString *escapedString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
+                                                                                                        NULL,
+                                                                                                        (__bridge CFStringRef) unescapedString,
+                                                                                                        NULL,
+                                                                                                        CFSTR("!*'();:@&=+$,/?%#[]"),
+                                                                                                        kCFStringEncodingUTF8));
+        
+        path = [path stringByAppendingFormat:@"&terms=%@", escapedString];
     }
     
     // Location
