@@ -174,8 +174,7 @@
     // Check permissions before starting
     [[FBRequest requestForGraphPath:@"me/permissions"] startWithCompletionHandler:^(FBRequestConnection *connection, NSDictionary<FBGraphObject> *user, NSError *error) {
         NSDictionary *acceptedPermissions = [[user objectForKey:@"data"] objectAtIndex:0];
-        if ([acceptedPermissions objectForKey:@"email"] &&
-            [acceptedPermissions objectForKey:@"publish_actions"]) {
+        if ([acceptedPermissions objectForKey:@"email"]) {
             
             [self checkTerms];
         } else {
