@@ -927,7 +927,7 @@ enum { kTagTabBase = 100 };
                 [self.currentTabScrollView setContentOffset:CGPointMake(0, scrollableAmount)];
                 savedOffset = scrollableAmount;
             } else {
-                [self.currentTabScrollView setContentOffset:CGPointMake(0, offset)];
+                [self.currentTabScrollView setContentOffset:CGPointMake(0, offset + savedOffset)];
                 savedOffset = scrollableAmount;
             }
         } else {
