@@ -91,7 +91,13 @@
 	[dateFormatter setDateFormat:@"h:mm a"];
     [self.timeLabel setText:[dateFormatter stringFromDate:[self.userVideoToUpload recordStart]]];
     
-    NSString *lengthString = [NSString stringWithFormat:NSLocalizedString(@"Length: %@", @""), @""];
+    // Setup Length String
+    int durationSeconds = [[self.userVideoToUpload durationSeconds] intValue];
+    int seconds = (durationSeconds) % 60;
+    int minutes = (durationSeconds - seconds) / 60;
+    NSString *durationString = [NSString stringWithFormat:@"%d:%.2d", minutes, seconds];
+    
+    NSString *lengthString = [NSString stringWithFormat:NSLocalizedString(@"Length: %@", @""), durationString];
     [self.lengthLabel setText:lengthString];
     
     NSString *sizeString = [NSString stringWithFormat:NSLocalizedString(@"Size: %@MB", @""), [[self.userVideoToUpload sizeMegaBytes] stringValue]];
