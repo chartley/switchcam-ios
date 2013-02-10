@@ -391,7 +391,7 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
             // Once the user has logged out, we want them to be looking at the root view.
             UIViewController *topViewController = [self.slidingViewController topViewController];
             UIViewController *modalViewController = [topViewController presentedViewController];
-            if (modalViewController != nil) {
+            if (modalViewController != nil && modalViewController != self.loginViewController) {
                 [topViewController dismissViewControllerAnimated:NO completion:nil];
             }
             [self.slidingViewController resetTopView];
