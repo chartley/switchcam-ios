@@ -374,6 +374,13 @@
     NSManagedObjectContext *context = [[RKManagedObjectStore defaultStore] newChildManagedObjectContextWithConcurrencyType:NSPrivateQueueConcurrencyType];
     RKManagedObjectRequestOperation *operation = [[RKObjectManager sharedManager] managedObjectRequestOperationWithRequest:request managedObjectContext:context success:commentActivitySuccessBlock failure:commentActivityFailureBlock];
     
+    // Start Upload in background
+    [self performSelectorInBackground:@selector(startCommentPost:) withObject:operation];
+    
+
+}
+
+- (void)startCommentPost:(RKManagedObjectRequestOperation*) operation {
     [operation start];
 }
 
