@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C97BFEE1166D909D005BB65F"
-               BuildableName = "SwitchcamPro.app"
-               BlueprintName = "SwitchcamPro"
+               BuildableName = "Switchcam.app"
+               BlueprintName = "Switchcam"
                ReferencedContainer = "container:SwitchcamPro.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -33,8 +33,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C97BFEE1166D909D005BB65F"
-            BuildableName = "SwitchcamPro.app"
-            BlueprintName = "SwitchcamPro"
+            BuildableName = "Switchcam.app"
+            BlueprintName = "Switchcam"
             ReferencedContainer = "container:SwitchcamPro.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -52,8 +52,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C97BFEE1166D909D005BB65F"
-            BuildableName = "SwitchcamPro.app"
-            BlueprintName = "SwitchcamPro"
+            BuildableName = "Switchcam.app"
+            BlueprintName = "Switchcam"
             ReferencedContainer = "container:SwitchcamPro.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -75,8 +75,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C97BFEE1166D909D005BB65F"
-            BuildableName = "SwitchcamPro.app"
-            BlueprintName = "SwitchcamPro"
+            BuildableName = "Switchcam.app"
+            BlueprintName = "Switchcam"
             ReferencedContainer = "container:SwitchcamPro.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

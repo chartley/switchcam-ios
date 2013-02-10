@@ -243,7 +243,6 @@
 		C9DDF2A2167D24DD000399EA /* bgfull-fullapp-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9DDF1D0167D24DD000399EA /* bgfull-fullapp-568h@2x.png */; };
 		C9DDF2A3167D24DD000399EA /* bgfull-fullapp.png in Resources */ = {isa = PBXBuildFile; fileRef = C9DDF1D1167D24DD000399EA /* bgfull-fullapp.png */; };
 		C9DDF2A4167D24DD000399EA /* bgfull-fullapp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9DDF1D2167D24DD000399EA /* bgfull-fullapp@2x.png */; };
-		C9DDF2A5167D24DD000399EA /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9DDF1D3167D24DD000399EA /* Default-568h@2x.png */; };
 		C9DDF2A6167D24DD000399EA /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = C9DDF1D4167D24DD000399EA /* Default.png */; };
 		C9DDF2A7167D24DD000399EA /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9DDF1D5167D24DD000399EA /* Default@2x.png */; };
 		C9DDF2A8167D24DD000399EA /* bgfull-signin-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9DDF1D6167D24DD000399EA /* bgfull-signin-568h@2x.png */; };
@@ -1941,9 +1940,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C97BFEE1166D909D005BB65F /* SwitchcamPro */ = {
+		C97BFEE1166D909D005BB65F /* Switchcam */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C97BFF06166D909D005BB65F /* Build configuration list for PBXNativeTarget "SwitchcamPro" */;
+			buildConfigurationList = C97BFF06166D909D005BB65F /* Build configuration list for PBXNativeTarget "Switchcam" */;
 			buildPhases = (
 				C97BFEDE166D909D005BB65F /* Sources */,
 				C97BFEDF166D909D005BB65F /* Frameworks */,
@@ -1954,7 +1953,7 @@
 			);
 			dependencies = (
 			);
-			name = SwitchcamPro;
+			name = Switchcam;
 			productName = SwitchcamPro;
 			productReference = C97BFEE2166D909D005BB65F /* Switchcam.app */;
 			productType = "com.apple.product-type.application";
@@ -1980,7 +1979,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C97BFEE1166D909D005BB65F /* SwitchcamPro */,
+				C97BFEE1166D909D005BB65F /* Switchcam */,
 			);
 		};
 /* End PBXProject section */
@@ -2065,7 +2064,6 @@
 				C9DDF2A2167D24DD000399EA /* bgfull-fullapp-568h@2x.png in Resources */,
 				C9DDF2A3167D24DD000399EA /* bgfull-fullapp.png in Resources */,
 				C9DDF2A4167D24DD000399EA /* bgfull-fullapp@2x.png in Resources */,
-				C9DDF2A5167D24DD000399EA /* Default-568h@2x.png in Resources */,
 				C9DDF2A6167D24DD000399EA /* Default.png in Resources */,
 				C9DDF2A7167D24DD000399EA /* Default@2x.png in Resources */,
 				C9DDF2A8167D24DD000399EA /* bgfull-signin-568h@2x.png in Resources */,
@@ -2477,8 +2475,8 @@
 		C97BFF07166D909D005BB65F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Chris Hartley (7J7EDWHC8U)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Chris Hartley (7J7EDWHC8U)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Libraries/facebook-facebook-ios-sdk-a4c745f\"",
@@ -2495,8 +2493,8 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = Switchcam;
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "2275D6FA-56FF-4BE6-92D4-0AC2F5D3DE71";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2275D6FA-56FF-4BE6-92D4-0AC2F5D3DE71";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2540,7 +2538,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C97BFF06166D909D005BB65F /* Build configuration list for PBXNativeTarget "SwitchcamPro" */ = {
+		C97BFF06166D909D005BB65F /* Build configuration list for PBXNativeTarget "Switchcam" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C97BFF07166D909D005BB65F /* Debug */,
