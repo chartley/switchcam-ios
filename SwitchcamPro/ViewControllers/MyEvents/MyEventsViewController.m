@@ -67,9 +67,6 @@
     [self.noEventsFoundDetailLabel setShadowColor:[UIColor blackColor]];
     [self.noEventsFoundDetailLabel setShadowOffset:CGSizeMake(0, -1)];
     
-    // Set debug logging level. Set to 'RKLogLevelTrace' to see JSON payload
-    RKLogConfigureByName("RestKit/Network", RKLogLevelTrace);
-    
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Mission"];
     NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"startDatetime" ascending:NO];
     fetchRequest.sortDescriptors = @[descriptor];

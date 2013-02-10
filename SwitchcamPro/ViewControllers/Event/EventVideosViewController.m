@@ -54,9 +54,6 @@
     [self.noVideosFoundDetailLabel setTextColor:[UIColor whiteColor]];
     [self.noVideosFoundDetailLabel setShadowColor:[UIColor blackColor]];
     [self.noVideosFoundDetailLabel setShadowOffset:CGSizeMake(0, -1)];
-    
-    // Set debug logging level. Set to 'RKLogLevelTrace' to see JSON payload
-    RKLogConfigureByName("RestKit/Network", RKLogLevelTrace);
 }
 
 - (void)didReceiveMemoryWarning
