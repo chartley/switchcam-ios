@@ -91,6 +91,14 @@
     [appDelegate logoutUser];
 }
 
+- (IBAction)valueChanged:(id)sender {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kUploadOver3GEnabled]) {
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kUploadOver3GEnabled];
+    } else {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kUploadOver3GEnabled];
+    }
+}
+
 #pragma mark - Helper Methods
 
 - (void)configureCell:(UITableViewCell *)cell forTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
@@ -102,6 +110,7 @@
                     LabelSwitchCell *labelSwitchCell = (LabelSwitchCell *)cell;
                     [labelSwitchCell.leftLabel setText:NSLocalizedString(@"Upload over 3G", @"")];
                     labelSwitchCell.staySignedInSwitch = labelSwitchCell.staySignedInSwitch;
+                    [labelSwitchCell.staySignedInSwitch setOn:[[NSUserDefaults standardUserDefaults] boolForKey:kUploadOver3GEnabled]];
                     [labelSwitchCell.staySignedInSwitch addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
                     [labelSwitchCell.labelSwitchSeparator setHidden:YES];
                     break;

@@ -690,7 +690,7 @@
 		C97B194116740582005BB65F /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		C97B194316740594005BB65F /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		C97B1945167405C6005BB65F /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
-		C97BFEE2166D909D005BB65F /* SwitchcamPro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwitchcamPro.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C97BFEE2166D909D005BB65F /* Switchcam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Switchcam.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C97BFEE6166D909D005BB65F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C97BFEE8166D909D005BB65F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C97BFEEA166D909D005BB65F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -1346,7 +1346,7 @@
 		C97BFEE3166D909D005BB65F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C97BFEE2166D909D005BB65F /* SwitchcamPro.app */,
+				C97BFEE2166D909D005BB65F /* Switchcam.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1956,7 +1956,7 @@
 			);
 			name = SwitchcamPro;
 			productName = SwitchcamPro;
-			productReference = C97BFEE2166D909D005BB65F /* SwitchcamPro.app */;
+			productReference = C97BFEE2166D909D005BB65F /* Switchcam.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -2494,7 +2494,7 @@
 					"\"$(SRCROOT)/Libraries/Airship\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Switchcam;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
@@ -2521,7 +2521,7 @@
 					"\"$(SRCROOT)/Libraries/Airship\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Switchcam;
 				PROVISIONING_PROFILE = "4D03D598-F80D-460F-868A-D96ED7EBCF0E";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "4D03D598-F80D-460F-868A-D96ED7EBCF0E";
 				WRAPPER_EXTENSION = app;

@@ -11,6 +11,7 @@
 #import "Reachability.h"
 #import "SPConstants.h"
 #import "SCBucketNameGenerator.h"
+#import "AppDelegate.h"
 
 @interface SCS3Uploader () {
     BOOL        _doneUploadingToS3;
@@ -113,9 +114,36 @@ const int PART_SIZE = (5 * 1024 * 1024); // 5MB is the smallest part size allowe
     return ( r == 0 ) ? q : q + 1;
 }
 
+- (void)showUploadInProgressAlert {
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Oops", @"") message:NSLocalizedString(@"You can only upload one piece of media at a time.  Please wait for the current upload to complete before uploading another.", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles: nil];
+    [alertView show];
+}
+
+- (void)showUploadOn3GDisabledAlert {
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Oops", @"") message:NSLocalizedString(@"You've disabled uploading over 3G.  Connect to a wireless network or enabled uploading over 3G in settings.", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles: nil];
+    [alertView show];
+}
+
+-(BOOL)isWifiAvailable {
+    Reachability *r = [Reachability reachabilityForLocalWiFi];
+    return !( [r currentReachabilityStatus] == NotReachable);
+}
 
 - (void)uploadVideo:(NSData*)videoData withKey:(NSString*)videoKey;
 {
+    AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    if (appDelegate.isUserUploading) {
+        // Alert
+        [self performSelectorOnMainThread:@selector(showUploadInProgressAlert) withObject:nil waitUntilDone:NO];
+        return;
+    }
+    
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:kUploadOver3GEnabled] && ![self isWifiAvailable]) {
+        // Alert
+        [self performSelectorOnMainThread:@selector(showUploadOn3GDisabledAlert) withObject:nil waitUntilDone:NO];
+        return;
+    }
+    
     uploadVideoKey = videoKey;
     //[AmazonLogger verboseLogging];
     NSNumber *percentComplete = [NSNumber numberWithFloat:0];
@@ -189,11 +217,6 @@ const int PART_SIZE = (5 * 1024 * 1024); // 5MB is the smallest part size allowe
             [[NSNotificationCenter defaultCenter] postNotificationName:kSCS3UploadFailedNotification object:videoKey];
         }
     }
-}
-
--(BOOL)isWifiAvailable {
-    Reachability *r = [Reachability reachabilityForLocalWiFi];
-    return !( [r currentReachabilityStatus] == NotReachable); 
 }
 
 #pragma mark - AWS Delegate Methods

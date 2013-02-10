@@ -25,6 +25,10 @@
 
 #define kSPUserFullName @"SPUserFullName"
 #define kSPUserProfileURL @"SPUserProfileURL"
+
+#define kHasAppLaunchedPreviously @"HasAppLaunchedPreviously" // First Run check
+#define kUploadOver3GEnabled @"UploadOver3GEnabled"
+
 // Color Ease
 #define RGBA(r,g,b,a) [UIColor colorWithRed: r/255.0f green: g/255.0f \
 blue: b/255.0f alpha: a]

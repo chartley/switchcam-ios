@@ -54,7 +54,6 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
 @property (strong, nonatomic) StatusBarToastAndProgressView* statusBarToastAndProgressView;
 
 @property (nonatomic) BOOL isUserOnPhoneCall;
-@property (nonatomic) BOOL isUserUploading;
 
 - (void)showLoginView;
 
@@ -64,6 +63,12 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    // Check if launched before
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:kHasAppLaunchedPreviously]) {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kHasAppLaunchedPreviously];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kUploadOver3GEnabled];
+    }
+    
     // Initialize Push
     [self initAirship:launchOptions];
     

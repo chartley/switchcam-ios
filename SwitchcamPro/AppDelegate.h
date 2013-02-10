@@ -19,6 +19,8 @@ extern NSString *const SCAPINetworkRequestCanStartNotification;
 @property (strong, nonatomic) ECSlidingViewController *slidingViewController;
 @property (strong, nonatomic) SCCamViewController *recordingViewController;
 
+@property (nonatomic) BOOL isUserUploading;
+
 // Facebook
 - (BOOL)openReadSessionWithAllowLoginUI:(BOOL)allowLoginUI;
 - (BOOL)openWriteSessionWithAllowLoginUI:(BOOL)allowLoginUI;
