@@ -789,6 +789,9 @@ enum { kTagTabBase = 100 };
                 userVideo.recordStart = [NSDate date];
                 userVideo.recordEnd = userVideo.recordStart;
                 
+                // Set Mission
+                [userVideo setMission:self.mission];
+                
                 NSString *videoKey = [NSString stringWithFormat:@"v%@%@", [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookIdKey], [SPSerializable formattedStringFromDate:userVideo.recordStart]];
                 
                 [userVideo setUploadPath:videoKey];
