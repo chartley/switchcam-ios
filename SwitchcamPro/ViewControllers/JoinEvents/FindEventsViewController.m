@@ -21,6 +21,7 @@
 #import "Artist.h"
 #import "SPNavigationController.h"
 #import "CreateEventViewController.h"
+#import "FindEventCell.h"
 
 @interface FindEventsViewController () <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate>
 
@@ -321,14 +322,7 @@
     FindEventCell *findEventCell = (FindEventCell *)cell;
     [findEventCell.locationLabel setText:[mission title]];
     [findEventCell.detailLabel setText:detailString];
-    [findEventCell setDelegate:self];
     [findEventCell setTag:indexPath.row];
-    
-    if ([[mission isFollowing] boolValue]) {
-        [findEventCell.joinButton setEnabled:NO];
-    } else {
-        [findEventCell.joinButton setEnabled:YES];
-    }
 }
 
 #pragma mark - UITableViewDataSource methods
@@ -365,20 +359,7 @@
         [findEventCell.locationLabel setShadowOffset:CGSizeMake(0, 1)];
         [findEventCell.detailLabel setShadowOffset:CGSizeMake(0, 1)];
         
-        // Set Button Image
-        UIImage *buttonImage = [[UIImage imageNamed:@"btn-orange-lg"]
-                                resizableImageWithCapInsets:UIEdgeInsetsMake(20, 15, 20, 15)];
-        
-        // Set Button Image
-        UIImage *highlightButtonImage = [[UIImage imageNamed:@"btn-orange-lg-pressed"]
-                                         resizableImageWithCapInsets:UIEdgeInsetsMake(20, 15, 20, 15)];
-        
-        [findEventCell.joinButton.titleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Bold" size:17]];
-        
-        // Set the background for any states you plan to use
-        [findEventCell.joinButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
-        [findEventCell.joinButton setBackgroundImage:highlightButtonImage forState:UIControlStateHighlighted];
-        [findEventCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        [findEventCell setSelectionStyle:UITableViewCellSelectionStyleBlue];
     }
     
     [self configureCell:cell forTableView:tableView atIndexPath:indexPath];
@@ -390,10 +371,7 @@
     return NO;
 }
 
-#pragma mark - FindEventCellDelegate methods
-
-- (void)joinButtonPressed:(FindEventCell*)findEventCell {
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:findEventCell.tag inSection:0];
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     Mission *mission = [self.shootArray objectAtIndex:indexPath.row];
     
     // Load Event View Controller
@@ -403,7 +381,7 @@
     
     [self.slidingViewController anchorTopViewOffScreenTo:ECRight animations:nil onComplete:^{
         AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-
+        
         CGRect frame = appDelegate.slidingViewController.topViewController.view.frame;
         appDelegate.slidingViewController.topViewController = navController;
         appDelegate.slidingViewController.topViewController.view.frame = frame;

@@ -26,12 +26,4 @@
     // Configure the view for the selected state
 }
 
-#pragma mark - Button Actions
-
-- (IBAction)joinButtonAction:(id)sender {
-    if ([self.delegate respondsToSelector:@selector(joinButtonPressed:)]) {
-		[self.delegate performSelector:@selector(joinButtonPressed:) withObject:self];
-	}
-}
-
 @end

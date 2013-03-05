@@ -13,18 +13,9 @@
 
 @class FindEventCell;
 
-@protocol FindEventCellDelegate <NSObject>
-
-- (void)joinButtonPressed:(FindEventCell*)findEventCell;
-
-@end
-
 @interface FindEventCell : UITableViewCell
 
 @property (strong, nonatomic) IBOutlet UILabel *locationLabel;
 @property (strong, nonatomic) IBOutlet UILabel *detailLabel;
-@property (strong, nonatomic) IBOutlet UIButton *joinButton;
-
-@property (weak, nonatomic) id<FindEventCellDelegate> delegate;
 
 @end

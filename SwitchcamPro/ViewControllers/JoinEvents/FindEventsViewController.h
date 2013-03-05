@@ -7,9 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "FindEventCell.h"
 
-@interface FindEventsViewController : UIViewController <FindEventCellDelegate>
+@interface FindEventsViewController : UIViewController
 
 @property (strong, nonatomic) IBOutlet UITableView *eventsTableView;
 @property (strong, nonatomic) IBOutlet UITextField *eventSearchTextField;
