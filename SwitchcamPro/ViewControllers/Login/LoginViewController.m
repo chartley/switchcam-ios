@@ -8,6 +8,7 @@
 
 #import <FacebookSDK/FacebookSDK.h>
 #import <AFNetworking.h>
+#import <Mixpanel/Mixpanel.h>
 #import "LoginViewController.h"
 #import "AppDelegate.h"
 #import "MBProgressHUD.h"
@@ -190,6 +191,10 @@
 #pragma mark - IBActions
 
 - (IBAction)facebookConnectButtonAction:(id)sender {
+    // Track
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"Facebook Login Start"];
+    
     // The user has initiated a login, so call the openSession method.
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     [appDelegate openReadSessionWithAllowLoginUI:YES];

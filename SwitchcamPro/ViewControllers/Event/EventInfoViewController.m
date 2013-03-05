@@ -7,6 +7,7 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
+#import <Mixpanel/Mixpanel.h>
 #import "AFNetworking.h"
 #import "EventInfoViewController.h"
 #import "SPConstants.h"
@@ -79,12 +80,20 @@
 
 - (IBAction)imGoingButtonAction:(id)sender {
     if (![self.imGoingButton isSelected]) {
+        // Track
+        Mixpanel *mixpanel = [Mixpanel sharedInstance];
+        [mixpanel track:@"User joined event" properties:[NSDictionary dictionaryWithObjectsAndKeys:self.selectedMission.missionId, @"MissionID", nil]];
+        
         [self joinCameraCrew];
     }
 }
 
 - (IBAction)imNotGoingButtonAction:(id)sender {
     if (![self.imNotGoingButton isSelected]) {
+        // Track
+        Mixpanel *mixpanel = [Mixpanel sharedInstance];
+        [mixpanel track:@"User followed event" properties:[NSDictionary dictionaryWithObjectsAndKeys:self.selectedMission.missionId, @"MissionID", nil]];
+        
         [self followMission];
     }
 }

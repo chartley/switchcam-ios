@@ -14,6 +14,7 @@
 #import <TestFlightSDK/TestFlight.h>
 #import <CoreTelephony/CTCallCenter.h>
 #import <CoreTelephony/CTCall.h>
+#import <Mixpanel/Mixpanel.h>
 #import "UserVideo.h"
 #import "Mission.h"
 #import "Activity.h"
@@ -44,6 +45,8 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
 #define kUpgradeOptionalMessage 1001
 #define kAlertMessage 1002
 #define kAlertWithURLMessage 1003
+#define MIXPANEL_TOKEN @"4cdf3283144f7c56552f597dc54eec27"
+
 
 @interface AppDelegate () {
     CTCallCenter *callCenter;
@@ -74,6 +77,11 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     
     // Initialize Custom Navigation Bar
     [self initializeNavigationBarAppearance];
+    
+    // Initialize Mix Panel
+    [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"App launched"];
     
     // Show Activity Indicator
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
@@ -137,6 +145,8 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
                  
                  [[NSUserDefaults standardUserDefaults] setObject:facebookId forKey:kSPUserFacebookIdKey];
                  [[NSUserDefaults standardUserDefaults] setObject:facebookToken forKey:kSPUserFacebookTokenKey];
+                 [mixpanel registerSuperProperties:
+                  [NSDictionary dictionaryWithObject:facebookId forKey:@"Facebook ID"]];
                  
                  // Facebook id and token captured, we can start making network requests
                  [[NSNotificationCenter defaultCenter] postNotificationName:SCAPINetworkRequestCanStartNotification
@@ -352,7 +362,9 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     // is opened successfully, hide the login controller and show the main UI.
     switch (state) {
         case FBSessionStateOpen: {
-            //[self.mainViewController startLocationManager];
+            // Track
+            Mixpanel *mixpanel = [Mixpanel sharedInstance];
+            [mixpanel track:@"Facebook Login Complete"];
             
             // FBSample logic
             // Pre-fetch and cache the friends for the friend picker as soon as possible to improve
@@ -376,6 +388,11 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
                      [[NSUserDefaults standardUserDefaults] setObject:facebookToken forKey:kSPUserFacebookTokenKey];
                      [[NSUserDefaults standardUserDefaults] synchronize];
                      
+                     // Update facebook id for mixpanel tracking
+                     Mixpanel *mixpanel = [Mixpanel sharedInstance];
+                     [mixpanel registerSuperProperties:
+                      [NSDictionary dictionaryWithObject:facebookId forKey:@"Facebook ID"]];
+                     
                      // Facebook id and token captured, we can start making network requests
                      [[NSNotificationCenter defaultCenter] postNotificationName:SCAPINetworkRequestCanStartNotification
                                                                          object:[FBSession activeSession]];
@@ -387,6 +404,10 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
         }
             break;
         case FBSessionStateClosed: {
+            // Track
+            Mixpanel *mixpanel = [Mixpanel sharedInstance];
+            [mixpanel track:@"Facebook Logout"];
+            
             // FBSample logic
             // Once the user has logged out, we want them to be looking at the root view.
             UIViewController *topViewController = [self.slidingViewController topViewController];
@@ -404,6 +425,10 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
         }
             break;
         case FBSessionStateClosedLoginFailed: {
+            // Track
+            Mixpanel *mixpanel = [Mixpanel sharedInstance];
+            [mixpanel track:@"Facebook Login Failed"];
+            
             // if the token goes invalid we want to switch right back to
             // the login view, however we do it with a slight delay in order to
             // account for a race between this and the login view dissappearing
@@ -854,8 +879,18 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     // Check if video or photo
     if ([[mediaKey substringWithRange:NSMakeRange(0, 1)] isEqualToString:@"v"]) {
         [self createUserVideo:mediaKey];
+        
+        // Track
+        Mixpanel *mixpanel = [Mixpanel sharedInstance];
+        [mixpanel track:@"Video S3 Upload Complete"
+             properties:[NSDictionary dictionaryWithObjectsAndKeys:mediaKey, @"UploadPath", nil]];
     } else {
         [self createUserPhoto:mediaKey];
+        
+        // Track
+        Mixpanel *mixpanel = [Mixpanel sharedInstance];
+        [mixpanel track:@"Photo S3 Upload Complete"
+             properties:[NSDictionary dictionaryWithObjectsAndKeys:mediaKey, @"UploadPath", nil]];
     }
     
     
@@ -864,6 +899,13 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
 }
 
 - (void)uploadFailed:(NSNotification*)notification {
+    NSString *mediaKey = [notification object];
+    
+    // Track
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"Switchcam Upload Failed"
+         properties:[NSDictionary dictionaryWithObjectsAndKeys:mediaKey, @"UploadPath", nil]];
+    
     self.isUserUploading = NO;
     [self.statusBarToastAndProgressView showToastWithMessage:NSLocalizedString(@"Upload Failed!", @"")];
     [self.statusBarToastAndProgressView hideProgressView];
@@ -938,6 +980,11 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
 }
 
 - (void)createUserVideo:(NSString*)videoKey {
+    // Track
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"Switchcam Video Upload Notification Start"
+         properties:[NSDictionary dictionaryWithObjectsAndKeys:videoKey, @"UploadPath", nil]];
+    
     // Get UserVideo with videoKey
     UserVideo *userVideoToUpload = nil;
     NSManagedObjectContext *managedObjectContext = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
@@ -979,6 +1026,11 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     
     
     createUserVideoSuccessBlock = ^(RKObjectRequestOperation *operation, RKMappingResult *responseObject) {
+        // Track
+        Mixpanel *mixpanel = [Mixpanel sharedInstance];
+        [mixpanel track:@"Switchcam Video Upload Notification Complete"
+             properties:[NSDictionary dictionaryWithObjectsAndKeys:videoKey, @"UploadPath", nil]];
+        
         [self.statusBarToastAndProgressView showToastWithMessage:NSLocalizedString(@"Upload Complete!", @"")];
         [self.statusBarToastAndProgressView hideProgressView];
         
@@ -996,6 +1048,11 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     };
     
     createUserVideoFailureBlock = ^(RKObjectRequestOperation *operation, NSError *error) {
+        // Track
+        Mixpanel *mixpanel = [Mixpanel sharedInstance];
+        [mixpanel track:@"Switchcam Video Upload Notification Failed"
+             properties:[NSDictionary dictionaryWithObjectsAndKeys:videoKey, @"UploadPath", [error localizedFailureReason], @"Error Reason", nil]];
+        
         [self.statusBarToastAndProgressView showToastWithMessage:NSLocalizedString(@"Upload Failed!", @"")];
         [self.statusBarToastAndProgressView hideProgressView];
     };
@@ -1004,6 +1061,11 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
 }
 
 - (void)createUserPhoto:(NSString*)photoKey {
+    // Track
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"Switchcam Video Upload Notification Start"
+         properties:[NSDictionary dictionaryWithObjectsAndKeys:photoKey, @"UploadPath", nil]];
+    
     NSString *facebookId = [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookIdKey];
     NSString *facebookToken = [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookTokenKey];
     
@@ -1046,11 +1108,21 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     
     
     createUserPhotoSuccessBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
+        // Track
+        Mixpanel *mixpanel = [Mixpanel sharedInstance];
+        [mixpanel track:@"Switchcam Photo Upload Notification Complete"
+             properties:[NSDictionary dictionaryWithObjectsAndKeys:photoKey, @"UploadPath", nil]];
+        
         [self.statusBarToastAndProgressView showToastWithMessage:NSLocalizedString(@"Upload Complete!", @"")];
         [self.statusBarToastAndProgressView hideProgressView];
     };
     
     createUserPhotoFailureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
+        // Track
+        Mixpanel *mixpanel = [Mixpanel sharedInstance];
+        [mixpanel track:@"Switchcam Photo Upload Notification Failed"
+             properties:[NSDictionary dictionaryWithObjectsAndKeys:photoKey, @"UploadPath", [error localizedFailureReason], @"Error Reason", nil]];
+        
         [self.statusBarToastAndProgressView showToastWithMessage:NSLocalizedString(@"Upload Failed!", @"")];
         [self.statusBarToastAndProgressView hideProgressView];
     };

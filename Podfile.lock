@@ -1,18 +1,7 @@
 
-SPEC CHECKSUMS: 
-  TestFlightSDK: 29e194fb148e4861f92e4c1195b9697e1f3ad19a
-  RestKit/CoreData: ccca19640fcc3031f82ad4250c44061e2e2ddce7
-  SOCKit: 179515c1a621dd5652a60e9be02ea4adcd25bc9b
-  RestKit/Network: ccca19640fcc3031f82ad4250c44061e2e2ddce7
-  RestKit/Core: ccca19640fcc3031f82ad4250c44061e2e2ddce7
-  RestKit/Support: ccca19640fcc3031f82ad4250c44061e2e2ddce7
-  RestKit: ccca19640fcc3031f82ad4250c44061e2e2ddce7
-  AFNetworking: 761a418233d280c1e0580bcb76ff9cb4c3073d17
-  TTTAttributedLabel: 76843e36f992fddc1f9f8071ca29528761db629f
-  RestKit/ObjectMapping: ccca19640fcc3031f82ad4250c44061e2e2ddce7
-
 PODS: 
 - AFNetworking (1.1.0)
+- Mixpanel (1.1.1)
 - RestKit (0.20.0pre6): 
   - RestKit/Core (= 0.20.0pre6)
 - RestKit/Core (0.20.0pre6): 
@@ -31,14 +20,28 @@ PODS:
 - TTTAttributedLabel (1.5.1)
 - TestFlightSDK (1.2)
 
+COCOAPODS: 0.16.4
+
+DEPENDENCIES: 
+- Mixpanel (~> 1.1.1)
+- RestKit (from `https://github.com/RestKit/RestKit.git', branch `master')
+- TTTAttributedLabel (~> 1.5.1)
+- TestFlightSDK (~> 1.2)
+
 EXTERNAL SOURCES: 
   RestKit: 
     :git: https://github.com/RestKit/RestKit.git
     :branch: master
 
-DEPENDENCIES: 
-- RestKit (from `https://github.com/RestKit/RestKit.git', branch `master')
-- TTTAttributedLabel (~> 1.5.1)
-- TestFlightSDK (~> 1.2)
-
-COCOAPODS: 0.16.0
+SPEC CHECKSUMS: 
+  TestFlightSDK: 29e194fb148e4861f92e4c1195b9697e1f3ad19a
+  RestKit/Support: ccca19640fcc3031f82ad4250c44061e2e2ddce7
+  RestKit/CoreData: ccca19640fcc3031f82ad4250c44061e2e2ddce7
+  RestKit/ObjectMapping: ccca19640fcc3031f82ad4250c44061e2e2ddce7
+  RestKit/Core: ccca19640fcc3031f82ad4250c44061e2e2ddce7
+  SOCKit: ed67aeeca4a697b63a933229e53f4670d5b9300f
+  RestKit: ccca19640fcc3031f82ad4250c44061e2e2ddce7
+  Mixpanel: 388e78ffe1c4878b65a86127b5dab70be36479ad
+  AFNetworking: 761a418233d280c1e0580bcb76ff9cb4c3073d17
+  RestKit/Network: ccca19640fcc3031f82ad4250c44061e2e2ddce7
+  TTTAttributedLabel: 76843e36f992fddc1f9f8071ca29528761db629f

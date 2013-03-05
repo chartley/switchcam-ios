@@ -2,6 +2,7 @@
 #import <ImageIO/ImageIO.h>
 #import <AVFoundation/AVFoundation.h>
 #import <Social/Social.h>
+#import <Mixpanel/Mixpanel.h>
 #import "EventViewController.h"
 #import "SPTabStyle.h"
 #import "SPTabsView.h"
@@ -176,6 +177,10 @@ enum { kTagTabBase = 100 };
 }
 
 - (void)viewDidLoad {
+    // Track
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"User accessed event page" properties:[NSDictionary dictionaryWithObjectsAndKeys:self.mission.missionId, @"MissionID", nil]];
+    
     //TODO Switchcam movie
     if (true) {
         topPictureHeight = 156;

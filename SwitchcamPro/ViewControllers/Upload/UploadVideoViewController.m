@@ -8,6 +8,7 @@
 
 #import <AVFoundation/AVFoundation.h>
 #import <Foundation/Foundation.h>
+#import <Mixpanel/Mixpanel.h>
 #import "SPConstants.h"
 #import "UploadVideoViewController.h"
 #import "LabelInvisibleButtonCell.h"
@@ -204,6 +205,11 @@
     
     // Start Compression
     [self startVideoCompressionWithSuccessHandler:compressionSuccessBlock failureHandler:compressionFailureBlock];
+    
+    // Track
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"Video S3 Upload Began"
+         properties:[NSDictionary dictionaryWithObjectsAndKeys:self.userVideoToUpload.uploadPath, @"UploadPath", nil]];
 }
 
 - (IBAction)backButtonAction:(id)sender {

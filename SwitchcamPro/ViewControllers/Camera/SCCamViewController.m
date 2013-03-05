@@ -49,6 +49,7 @@
 #import <CoreData/CoreData.h>
 #import <RestKit/RestKit.h>
 #import <AssetsLibrary/AssetsLibrary.h>
+#import <Mixpanel/Mixpanel.h>
 #import "SCCamViewController.h"
 #import "SCCamCaptureManager.h"
 #import "SCCamRecorder.h"
@@ -654,6 +655,9 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
         if (![context saveToPersistentStore:&error]) {
             NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
         }
+        
+        Mixpanel *mixpanel = [Mixpanel sharedInstance];
+        [mixpanel track:@"Video was recorded"];
         
         // Upload
         UploadVideoViewController *viewController = [[UploadVideoViewController alloc] init];

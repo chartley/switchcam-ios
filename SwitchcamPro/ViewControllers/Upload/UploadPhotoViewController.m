@@ -8,6 +8,7 @@
 
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <QuartzCore/QuartzCore.h>
+#import <Mixpanel/Mixpanel.h>
 #import "UploadPhotoViewController.h"
 #import "SPConstants.h"
 #import "LabelInvisibleButtonCell.h"
@@ -146,6 +147,11 @@
 - (void)uploadButtonAction {
     // Start Upload in background
     [self performSelectorInBackground:@selector(startUpload) withObject:nil];
+    
+    // Track
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"Photo S3 Upload Began"
+         properties:[NSDictionary dictionaryWithObjectsAndKeys:self.photoToUpload.photoURL, @"UploadPath", nil]];
 }
 
 - (IBAction)backButtonAction:(id)sender {
