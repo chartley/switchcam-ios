@@ -56,10 +56,6 @@
     [self.view addSubview:backgroundImageView];
     [self.view sendSubviewToBack:backgroundImageView];
     
-
-    
-    [self.eventsTableView setTableFooterView:[[UIView alloc] init]];
-    
     // Menu Button and Location Button
     UIButton *menuButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [menuButton setFrame:CGRectMake(0, 0, 30, 30)];
@@ -123,9 +119,10 @@
         self.shootArray = [NSMutableArray array];
     }
     
-    [self findEventsWithLocation:YES];
-    
     // Footer
+    // Hide footer for load more
+    [self.loadMoreLabel setText:NSLocalizedString(@"Create More!", @"")];
+    [self.loadMoreButton setEnabled:NO];
     [self.eventsTableView setTableFooterView:self.findEventsFooterView];
     
     // Set the background for any states you plan to use
@@ -193,7 +190,7 @@
 
 - (IBAction)loadMoreButtonAction:(id)sender {
     // Adding a check since we don't hide the button
-    if ([self.shootPaginator hasNextPage]) {
+    if ([self.shootPaginator isLoaded] && [self.shootPaginator hasNextPage]) {
         // Load next page, disable button until call complete
         [self.loadMoreButton setEnabled:NO];
         [self.loadMoreLabel setText:NSLocalizedString(@"Loading...", @"")];
@@ -274,9 +271,11 @@
         if ([paginator hasNextPage]) {
             // Set footer for load more
             [self.loadMoreLabel setText:NSLocalizedString(@"Load More", @"")];
+            [self.loadMoreButton setEnabled:YES];
         } else {
             // Hide footer for load more
             [self.loadMoreLabel setText:NSLocalizedString(@"Create More!", @"")];
+            [self.loadMoreButton setEnabled:NO];
         }
         
         RKLogInfo(@"Load complete: Table should refresh...");
