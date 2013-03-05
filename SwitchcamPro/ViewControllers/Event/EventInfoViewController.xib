@@ -32,24 +32,23 @@
 				<string key="IBProxiedObjectIdentifier">IBFirstResponder</string>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
+			<object class="IBMKMapView" id="881354287">
+				<reference key="NSNextResponder"/>
+				<int key="NSvFlags">292</int>
+				<string key="NSFrameSize">{80, 120}</string>
+				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
+				<string key="NSReuseIdentifierKey">_NS:9</string>
+				<bool key="IBUIClipsSubviews">YES</bool>
+				<bool key="IBUIMultipleTouchEnabled">YES</bool>
+				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+				<bool key="IBMKZoomEnabled">NO</bool>
+				<bool key="IBMKScrollEnabled">NO</bool>
+			</object>
 			<object class="IBUIView" id="1042113877">
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">292</int>
 				<array class="NSMutableArray" key="NSSubviews">
-					<object class="IBMKMapView" id="881354287">
-						<reference key="NSNextResponder" ref="1042113877"/>
-						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 49}, {80, 120}}</string>
-						<reference key="NSSuperview" ref="1042113877"/>
-						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
-						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<bool key="IBUIClipsSubviews">YES</bool>
-						<bool key="IBUIMultipleTouchEnabled">YES</bool>
-						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<bool key="IBMKZoomEnabled">NO</bool>
-						<bool key="IBMKScrollEnabled">NO</bool>
-					</object>
 					<object class="IBUITableView" id="241921615">
 						<reference key="NSNextResponder" ref="1042113877"/>
 						<int key="NSvFlags">274</int>
@@ -161,7 +160,6 @@
 						<reference key="object" ref="1042113877"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="241921615"/>
-							<reference ref="881354287"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -173,7 +171,7 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">75</int>
 						<reference key="object" ref="881354287"/>
-						<reference key="parent" ref="1042113877"/>
+						<reference key="parent" ref="0"/>
 					</object>
 				</array>
 			</object>
@@ -197,6 +195,30 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">EventInfoViewController</string>
 					<string key="superclassName">EventTabViewController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="directionsButtonAction:">id</string>
+						<string key="imGoingButtonAction:">id</string>
+						<string key="imNotGoingButtonAction:">id</string>
+						<string key="linkButtonAction:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="directionsButtonAction:">
+							<string key="name">directionsButtonAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="imGoingButtonAction:">
+							<string key="name">imGoingButtonAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="imNotGoingButtonAction:">
+							<string key="name">imNotGoingButtonAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="linkButtonAction:">
+							<string key="name">linkButtonAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="eventInfoTableView">UITableView</string>
 						<string key="goingDetailLabel">UILabel</string>

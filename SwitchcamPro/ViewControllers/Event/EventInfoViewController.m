@@ -392,7 +392,7 @@
                 [eventInfoDetailCell.cityStateZipLabel setFont:[UIFont fontWithName:@"SourceSansPro-Light" size:14.0]];
                 [eventInfoDetailCell.tapForDirectionsLabel setFont:[UIFont fontWithName:@"SourceSansPro-It" size:11.0]];
                 [eventInfoDetailCell.contentView addSubview:self.mapView];
-                [eventInfoDetailCell.mapView setFrame:CGRectMake(20, 49, 80, 120)];
+                [self.mapView setFrame:CGRectMake(20, 49, 80, 120)];
                 [eventInfoDetailCell.contentView bringSubviewToFront:eventInfoDetailCell.directionsButton];
                 break;
             }
