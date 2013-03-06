@@ -1342,6 +1342,7 @@
 				A19C79BD691C4B088E80A4B3 /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
+			wrapsLines = 0;
 		};
 		C97BFEE3166D909D005BB65F /* Products */ = {
 			isa = PBXGroup;
