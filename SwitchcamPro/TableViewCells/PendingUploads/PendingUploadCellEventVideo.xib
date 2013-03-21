@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1552</int>
-		<string key="IBDocument.SystemVersion">12C60</string>
+		<string key="IBDocument.SystemVersion">11G63b</string>
 		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
-		<string key="IBDocument.AppKitVersion">1187.34</string>
-		<string key="IBDocument.HIToolboxVersion">625.00</string>
+		<string key="IBDocument.AppKitVersion">1138.51</string>
+		<string key="IBDocument.HIToolboxVersion">569.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			<string key="NS.object.0">2083</string>
@@ -50,6 +50,7 @@
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="866160342"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<int key="IBUIContentMode">2</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
@@ -154,7 +155,6 @@
 								<string key="NSFrame">{{79, 144}, {49, 21}}</string>
 								<reference key="NSSuperview" ref="637084113"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -598,12 +598,12 @@
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="deleteButtonButton">UIButton</string>
 						<string key="deleteLabel">UILabel</string>
-						<string key="pendingUploadCountLabel">UILabel</string>
 						<string key="pendingUploadLabel">UILabel</string>
 						<string key="pendingUploadLengthLabel">UILabel</string>
 						<string key="pendingUploadTimeLabel">UILabel</string>
 						<string key="previewButton">UIButton</string>
 						<string key="previewLabel">UILabel</string>
+						<string key="shootNameLabel">UILabel</string>
 						<string key="uploadButton">UIButton</string>
 						<string key="uploadLabel">UILabel</string>
 						<string key="videoThumbnailImageView">UIImageView</string>
@@ -617,10 +617,6 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="deleteLabel">
 							<string key="name">deleteLabel</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="pendingUploadCountLabel">
-							<string key="name">pendingUploadCountLabel</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="pendingUploadLabel">
@@ -641,6 +637,10 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="previewLabel">
 							<string key="name">previewLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="shootNameLabel">
+							<string key="name">shootNameLabel</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="uploadButton">
