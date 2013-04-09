@@ -134,31 +134,37 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
             [[SPLocationManager sharedInstance] start];
         }
         
-        // Save Facebook id and token for API access
-        [[FBRequest requestForMe] startWithCompletionHandler:
-         ^(FBRequestConnection *connection,
-           NSDictionary<FBGraphUser> *user,
-           NSError *error) {
-             if (!error) {
-                 NSString *facebookId = user.id;
-                 NSString *facebookToken = [FBSession activeSession].accessToken;
-                 
-                 // Force basic auth with credentials
-                 [[RKObjectManager sharedManager].HTTPClient setAuthorizationHeaderWithUsername:facebookId password:facebookToken];
-                 
-                 [[NSUserDefaults standardUserDefaults] setObject:facebookId forKey:kSPUserFacebookIdKey];
-                 [[NSUserDefaults standardUserDefaults] setObject:facebookToken forKey:kSPUserFacebookTokenKey];
-                 [mixpanel registerSuperProperties:
-                  [NSDictionary dictionaryWithObject:facebookId forKey:@"Facebook ID"]];
-                 
-                 // Facebook id and token captured, we can start making network requests
-                 [[NSNotificationCenter defaultCenter] postNotificationName:SCAPINetworkRequestCanStartNotification
-                                                                     object:[FBSession activeSession]];
-             } else {
-                 // No? Display the login page.
-                 [self showLoginView];
-             }
-         }];
+        if ([cookiesdata length]) {
+            // Facebook id and token captured, we can start making network requests
+            [[NSNotificationCenter defaultCenter] postNotificationName:SCAPINetworkRequestCanStartNotification
+                                                                object:[FBSession activeSession]];
+        } else {
+            // Save Facebook id and token for API access
+            [[FBRequest requestForMe] startWithCompletionHandler:
+             ^(FBRequestConnection *connection,
+               NSDictionary<FBGraphUser> *user,
+               NSError *error) {
+                 if (!error) {
+                     NSString *facebookId = user.id;
+                     NSString *facebookToken = [FBSession activeSession].accessToken;
+                     
+                     // Force basic auth with credentials
+                     [[RKObjectManager sharedManager].HTTPClient setAuthorizationHeaderWithUsername:facebookId password:facebookToken];
+                     
+                     [[NSUserDefaults standardUserDefaults] setObject:facebookId forKey:kSPUserFacebookIdKey];
+                     [[NSUserDefaults standardUserDefaults] setObject:facebookToken forKey:kSPUserFacebookTokenKey];
+                     [mixpanel registerSuperProperties:
+                      [NSDictionary dictionaryWithObject:facebookId forKey:@"Facebook ID"]];
+                     
+                     // Facebook id and token captured, we can start making network requests
+                     [[NSNotificationCenter defaultCenter] postNotificationName:SCAPINetworkRequestCanStartNotification
+                                                                         object:[FBSession activeSession]];
+                 } else {
+                     // No? Display the login page.
+                     [self showLoginView];
+                 }
+             }];
+        }
     }
     
     // Fade out splash screen
