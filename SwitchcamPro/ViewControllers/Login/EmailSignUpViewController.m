@@ -200,7 +200,16 @@
         [self.loadingIndicator show:YES];
         [self apnRegistration];
     } else {
-        [self signUp];
+        if ([self hasValidLoginFields]) {
+            [self signUp];
+        } else {
+            NSString *title = NSLocalizedString(@"Invalid Fields", @"");
+            NSString *message = NSLocalizedString(@"Please ensure that all your fields are filled in and valid and try again.", @"");
+            
+            // Show alert
+            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alertView show];
+        }
     }
 }
 
