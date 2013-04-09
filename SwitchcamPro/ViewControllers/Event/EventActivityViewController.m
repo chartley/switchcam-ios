@@ -515,7 +515,11 @@
         
         // Set Contributer
         [activityCell.contributorLabel setText:activity.person.name];
-        [activityCell.contributorImageView setImageWithURL:[NSURL URLWithString:[activity.person pictureURL]] placeholderImage:[UIImage imageNamed:@"img-shoot-thumb-placeholder"]];
+        if ([activity.person pictureURL]) {
+            [activityCell.contributorImageView setImageWithURL:[NSURL URLWithString:[activity.person pictureURL]] placeholderImage:[UIImage imageNamed:@"img-shoot-thumb-placeholder"]];
+        } else {
+            [activityCell.contributorImageView setImage:[UIImage imageNamed:@"img-shoot-thumb-placeholder"]];
+        }
         
         [activityCell.timeLabel setText:activity.timesince];
     } else if (indexPath.row % 5 == 4) {
@@ -544,7 +548,11 @@
             [activityCommentCell.commentLabel setText:comment.comment];
             
             [activityCell.contributorLabel setText:comment.person.name];
-            [activityCell.contributorImageView setImageWithURL:[NSURL URLWithString:[comment.person pictureURL]] placeholderImage:[UIImage imageNamed:@"img-shoot-thumb-placeholder"]];
+            if ([comment.person pictureURL]) {
+                [activityCell.contributorImageView setImageWithURL:[NSURL URLWithString:[comment.person pictureURL]] placeholderImage:[UIImage imageNamed:@"img-shoot-thumb-placeholder"]];
+            } else {
+                [activityCell.contributorImageView setImage:[UIImage imageNamed:@"img-shoot-thumb-placeholder"]];
+            }
             
             [activityCell.timeLabel setText:comment.timesince];
             

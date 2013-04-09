@@ -298,23 +298,43 @@
         
         switch (i % 5) {
             case 0:
-                [peopleCell.person1ImageView setImageWithURL:userImage placeholderImage:[UIImage imageNamed:@"img-shoot-thumb-placeholder"]];
+                if (userImage) {
+                    [peopleCell.person1ImageView setImageWithURL:userImage placeholderImage:[UIImage imageNamed:@"img-shoot-thumb-placeholder"]];
+                } else {
+                    [peopleCell.person1ImageView setImage:[UIImage imageNamed:@"img-shoot-thumb-placeholder"]];
+                }
                 [peopleCell.person1ImageView setHidden:NO];
                 break;
             case 1:
-                [peopleCell.person2ImageView setImageWithURL:userImage placeholderImage:[UIImage imageNamed:@"img-shoot-thumb-placeholder"]];
+                if (userImage) {
+                    [peopleCell.person2ImageView setImageWithURL:userImage placeholderImage:[UIImage imageNamed:@"img-shoot-thumb-placeholder"]];
+                } else {
+                    [peopleCell.person2ImageView setImage:[UIImage imageNamed:@"img-shoot-thumb-placeholder"]];
+                }
                 [peopleCell.person2ImageView setHidden:NO];
                 break;
             case 2:
-                [peopleCell.person3ImageView setImageWithURL:userImage placeholderImage:[UIImage imageNamed:@"img-shoot-thumb-placeholder"]];
+                if (userImage) {
+                    [peopleCell.person3ImageView setImageWithURL:userImage placeholderImage:[UIImage imageNamed:@"img-shoot-thumb-placeholder"]];
+                } else {
+                    [peopleCell.person3ImageView setImage:[UIImage imageNamed:@"img-shoot-thumb-placeholder"]];
+                }
                 [peopleCell.person3ImageView setHidden:NO];
                 break;
             case 3:
-                [peopleCell.person4ImageView setImageWithURL:userImage placeholderImage:[UIImage imageNamed:@"img-shoot-thumb-placeholder"]];
+                if (userImage) {
+                    [peopleCell.person4ImageView setImageWithURL:userImage placeholderImage:[UIImage imageNamed:@"img-shoot-thumb-placeholder"]];
+                } else {
+                    [peopleCell.person4ImageView setImage:[UIImage imageNamed:@"img-shoot-thumb-placeholder"]];
+                }
                 [peopleCell.person4ImageView setHidden:NO];
                 break;
             case 4:
-                [peopleCell.person5ImageView setImageWithURL:userImage placeholderImage:[UIImage imageNamed:@"img-shoot-thumb-placeholder"]];
+                if (userImage) {
+                    [peopleCell.person5ImageView setImageWithURL:userImage placeholderImage:[UIImage imageNamed:@"img-shoot-thumb-placeholder"]];
+                } else {
+                    [peopleCell.person5ImageView setImage:[UIImage imageNamed:@"img-shoot-thumb-placeholder"]];
+                }
                 [peopleCell.person5ImageView setHidden:NO];
                 break;
                 
