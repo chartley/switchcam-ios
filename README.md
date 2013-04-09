@@ -2,7 +2,7 @@ We are using CocoaPods for RestKit/AFNetworking
 
 Installation
 ---
-* Install Homebrew
+* Install Homebrew 
 * Install Latest version of git (>1.8)
 * Then:
 
@@ -24,4 +24,8 @@ ld: symbol(s) not found for architecture i386
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 ```
 
-Then you need to download and install the Testflight SDK, following the integration steps at https://testflightapp.com/sdk/doc/1.0beta1/
+Then you need to go to your workspace, open the Pods project
+Open the Pods group-> TestFlightSDK -> Right-click -> Add files to Pods -> Goto TestFlightSDK folder
+Add the libTestFlight.a files
+
+TestFlight's SDK isn't quite yet compatible with cocoapods just yet so this is the work around.
