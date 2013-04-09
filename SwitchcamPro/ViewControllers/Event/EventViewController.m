@@ -791,8 +791,8 @@ enum { kTagTabBase = 100 };
                 userVideo.localVideoAssetURL = [assetURL absoluteString];
                 
                 // Set time and length
-                userVideo.recordStart = [NSDate date];
-                userVideo.recordEnd = userVideo.recordStart;
+                userVideo.recordStart = nil;
+                userVideo.recordEnd = nil;
                 
                 // Set Mission
                 [userVideo setMission:self.mission];
@@ -892,7 +892,7 @@ enum { kTagTabBase = 100 };
                 userPhoto.localURL = [assetURL absoluteString];
                 userPhoto.mission = self.mission;
                 
-                userPhoto.createDate = [NSDate date];
+                userPhoto.createDate = nil;
                 
                 NSString *photoKey = [NSString stringWithFormat:@"%@%@", [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookIdKey], [SPSerializable formattedStringFromDate:userPhoto.createDate]];
                 userPhoto.photoKey = photoKey;
