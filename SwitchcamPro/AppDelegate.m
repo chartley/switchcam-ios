@@ -121,7 +121,7 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     NSData *cookiesdata = [[NSUserDefaults standardUserDefaults] objectForKey:@"SavedCookies"];
     
     // See if we have a valid token for the current state or if we have cookies
-    if (![self openReadSessionWithAllowLoginUI:NO] || [cookiesdata length]) {
+    if (![self openReadSessionWithAllowLoginUI:NO] && ![cookiesdata length]) {
         // No? Display the login page.
         [self showLoginView];
     } else if(![[NSUserDefaults standardUserDefaults] boolForKey:kSPUserAcceptedTermsKey]) {
