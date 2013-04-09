@@ -11,8 +11,8 @@
 
 @interface LoginViewController : UIViewController <SPPagingScrollViewDelegate, UIScrollViewDelegate>
 
-@property (strong, nonatomic) IBOutlet UIButton *loginButton;
-@property (strong, nonatomic) IBOutlet UIImageView *facebookLogo;
+@property (strong, nonatomic) IBOutlet UIButton *facebookLoginButton;
+@property (strong, nonatomic) IBOutlet UIButton *emailLoginButton;
 @property (strong, nonatomic) IBOutlet UIPageControl *pageControl;
 
 @property (strong, nonatomic) IBOutlet UIView *slide0View;

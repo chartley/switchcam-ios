@@ -1,14 +1,14 @@
 //
-//  CompleteLoginViewController.m
+//  EmailLoginViewController.m
 //  SwitchcamPro
 //
-//  Created by William Ketterer on 12/4/12.
-//  Copyright (c) 2012 William Ketterer. All rights reserved.
+//  Created by Matt Ketterer on 4/8/13.
+//  Copyright (c) 2013 William Ketterer. All rights reserved.
 //
 
 #import "UAPush.h"
-#import "CompleteLoginViewController.h"
-#import "LabelProfileCell.h"
+#import "EmailLoginViewController.h"
+#import "EmailSignUpViewController.h"
 #import "LabelTextFieldCell.h"
 #import "ButtonCell.h"
 #import "AFNetworking.h"
@@ -16,23 +16,31 @@
 #import "AppDelegate.h"
 #import "SPConstants.h"
 
-@interface CompleteLoginViewController () {
-    BOOL hasSetEmail;
+@interface EmailSignUpViewController () <UITextFieldDelegate> {
+    BOOL isRegistrationComplete;
 }
 
+@property (strong, nonatomic) UITextField *firstNameTextField;
+@property (strong, nonatomic) UITextField *lastNameTextField;
+@property (strong, nonatomic) UITextField *userEmailTextField;
+@property (strong, nonatomic) UITextField *userPasswordTextField;
+
+@property (strong, nonatomic) NSString *userFirstNameString;
+@property (strong, nonatomic) NSString *userLastNameString;
+@property (strong, nonatomic) NSString *userEmailString;
+@property (strong, nonatomic) NSString *userPasswordString;
 @property (strong, nonatomic) MBProgressHUD *loadingIndicator;
 
 @end
 
-@implementation CompleteLoginViewController
-
-@synthesize loadingIndicator;
+@implementation EmailSignUpViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        isRegistrationComplete = NO;
     }
     return self;
 }
@@ -50,7 +58,7 @@
     UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     [self.navigationItem setLeftBarButtonItem:backBarButtonItem];
     [self.navigationItem setHidesBackButton:YES];
-    [self.navigationItem setTitle:NSLocalizedString(@"Complete sign up...", @"")];
+    [self.navigationItem setTitle:NSLocalizedString(@"Email Login", @"")];
     
     // Add loading indicator
     AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
@@ -75,18 +83,72 @@
 
 #pragma mark - Network Calls
 
-- (void)login {
-    [loadingIndicator show:YES];
+- (void)signUp {
+    [self.loadingIndicator show:YES];
     
-    NSString *facebookId = [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookIdKey];
-    NSString *facebookToken = [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookTokenKey];
+    // Completion Blocks
+    void (^signUpSuccessBlock)(AFHTTPRequestOperation *operation, id responseObject);
+    void (^signUpFailureBlock)(AFHTTPRequestOperation *operation, NSError *error);
     
+    signUpSuccessBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self.loadingIndicator hide:YES];
+        
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kSPHasUserPreviouslyLoggedInKey];
+        
+        isRegistrationComplete = YES;
+        
+        AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+        [appDelegate successfulLoginViewControllerChange];
+    };
+    
+    signUpFailureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self.loadingIndicator hide:YES];
+        if ([error code] == NSURLErrorNotConnectedToInternet) {
+            NSString *title = NSLocalizedString(@"No Network Connection", @"");
+            NSString *message = NSLocalizedString(@"Please check your internet connection and try again.", @"");
+            
+            // Show alert
+            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alertView show];
+        } else if ([[operation response] statusCode] == 401) {
+            // Username taken
+            NSString *title = NSLocalizedString(@"Email already registered", @"");
+            NSString *message = NSLocalizedString(@"This email is already in use, please use another and try again.", @"");
+            
+            // Show alert
+            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alertView show];
+        } else {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Oops", @"") message:NSLocalizedString(@"We're having trouble connecting to the server, please try again.", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles:nil];
+            [alertView show];
+        }
+    };
+    
+    // Make Request and set params
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:kAPIHost]];
+    
+    NSString *path = [NSString stringWithFormat:@"person/"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:self.userFirstNameString, @"first_name",
+                                self.userLastNameString, @"last_name",
+                                self.userEmailString, @"email",
+                                self.userPasswordString, @"password", nil];
+    
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:path parameters:parameters];
+    
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    [operation setCompletionBlockWithSuccess:signUpSuccessBlock failure:signUpFailureBlock];
+    
+    [operation start];
+}
+
+- (void)apnRegistration {
     // Completion Blocks
     void (^apnRegistrationSuccessBlock)(AFHTTPRequestOperation *operation, id responseObject);
     void (^apnRegistrationFailureBlock)(AFHTTPRequestOperation *operation, NSError *error);
     
     apnRegistrationSuccessBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
-        [loadingIndicator hide:YES];
+        [self.loadingIndicator hide:YES];
         
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kSPHasUserPreviouslyLoggedInKey];
         
@@ -95,7 +157,7 @@
     };
     
     apnRegistrationFailureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
-        [loadingIndicator hide:YES];
+        [self.loadingIndicator hide:YES];
         if ([error code] == NSURLErrorNotConnectedToInternet) {
             NSString *title = NSLocalizedString(@"No Network Connection", @"");
             NSString *message = NSLocalizedString(@"Please check your internet connection and try again.", @"");
@@ -111,7 +173,6 @@
     
     // Make Request and set params
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:kAPIHost]];
-    [httpClient setAuthorizationHeaderWithUsername:facebookId password:facebookToken];
     
     NSString *apnToken = [[UAPush shared] deviceToken];
     
@@ -124,105 +185,116 @@
     NSString *path = [NSString stringWithFormat:@"person/me/token/%@/", apnToken];
     
     NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:path parameters:nil];
-    [request setValue:@"facebook" forHTTPHeaderField:@"Auth-Type"];
-
+    
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     [operation setCompletionBlockWithSuccess:apnRegistrationSuccessBlock failure:apnRegistrationFailureBlock];
     
     [operation start];
 }
 
-- (void)setEmail {
-    NSString *facebookId = [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookIdKey];
-    NSString *facebookToken = [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookTokenKey];
-    
-    // Completion Blocks
-    void (^setEmailSuccessBlock)(AFHTTPRequestOperation *operation, id responseObject);
-    void (^setEmailFailureBlock)(AFHTTPRequestOperation *operation, NSError *error);
-    
-    setEmailSuccessBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
-        hasSetEmail = YES;
-        [self login];
-    };
-    
-    setEmailFailureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
-        [loadingIndicator hide:YES];
-        if ([error code] == NSURLErrorNotConnectedToInternet) {
-            NSString *title = NSLocalizedString(@"No Network Connection", @"");
-            NSString *message = NSLocalizedString(@"Please check your internet connection and try again.", @"");
-            
-            // Show alert
-            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            [alertView show];
-        } else if ([[operation response] statusCode] == 400) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Oops", @"") message:NSLocalizedString(@"That email address is taken by another user.  Please change your email to another address.", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles:nil];
-            [alertView show];
-        } else {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Oops", @"") message:NSLocalizedString(@"We're having trouble connecting to the server, please try again.", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles:nil];
-            [alertView show];
-        }
-    };
-    
-    // Setup Parameters
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-    
-    [parameters setObject:self.userEmailTextField.text forKey:@"email"];
-    
-    // Make Request and set params
-    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:kAPIHost]];
-    [httpClient setAuthorizationHeaderWithUsername:facebookId password:facebookToken];
-    
-    NSString *path = [NSString stringWithFormat:@"person/me/"];
-    NSMutableURLRequest *request = [httpClient requestWithMethod:@"PUT" path:path parameters:parameters];
-    [request setValue:@"facebook" forHTTPHeaderField:@"Auth-Type"];
-    
-    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    [operation setCompletionBlockWithSuccess:setEmailSuccessBlock failure:setEmailFailureBlock];
-    
-    [operation start];
-}
 
 #pragma mark - IBActions
 
-- (IBAction)switchcamUserLogin:(id)sender {
-    // Check if failure was after email was set
-    if (hasSetEmail) {
-        // APN Registration with Switchcam API
-        [self login];
+- (IBAction)switchcamUserSignUp:(id)sender {
+    if (isRegistrationComplete) {
+        [self.loadingIndicator show:YES];
+        [self apnRegistration];
     } else {
-        // Set Email
-        [self setEmail];
+        [self signUp];
     }
 }
 
 - (IBAction)backButtonAction:(id)sender {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Helper Methods
+
+- (BOOL)isValidEmail:(NSString *)emailString {
+    BOOL stricterFilter = NO; // Discussion http://blog.logichigh.com/2010/09/02/validating-an-e-mail-address/
+    NSString *stricterFilterString = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
+    NSString *laxString = @".+@.+\\.[A-Za-z]{2}[A-Za-z]*";
+    NSString *emailRegex = stricterFilter ? stricterFilterString : laxString;
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
+    return [emailTest evaluateWithObject:emailString];
+}
+
+- (BOOL)hasValidLoginFields {
+    // Empty check
+    if (self.userFirstNameString == nil || [self.userFirstNameString isEqualToString:@""]) {
+        return NO;
+    } else if (self.userLastNameString == nil || [self.userLastNameString isEqualToString:@""]) {
+        return NO;
+    } else if (self.userEmailString == nil || [self.userEmailString isEqualToString:@""]) {
+        return NO;
+    } else if (self.userPasswordString == nil || [self.userPasswordString isEqualToString:@""]) {
+        return NO;
+    }
+    
+    // Valid email check
+    if (![self isValidEmail:self.userEmailString]) {
+        return NO;
+    }
+    
+    return YES;
+}
 
 - (void)configureCell:(UITableViewCell *)cell forTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.row) {
         case 0:
         {
-            LabelProfileCell *labelProfileCell = (LabelProfileCell *)cell;
-            
-            [labelProfileCell.profileNameLabel setText:self.userFullNameString];
-            [labelProfileCell.profileImageView setImageWithURL:self.userProfileURL placeholderImage:[UIImage imageNamed:@"img-shoot-thumb-placeholder"]];
+            LabelTextFieldCell *labelTextFieldCell = (LabelTextFieldCell *)cell;
+            [labelTextFieldCell.separator setHidden:YES];
+            self.firstNameTextField = labelTextFieldCell.textField;
+            [labelTextFieldCell.leftLabel setText:NSLocalizedString(@"First Name", @"")];
+            [labelTextFieldCell.textField setPlaceholder:NSLocalizedString(@"John", @"")];
+            [labelTextFieldCell.textField setSecureTextEntry:NO];
+            [labelTextFieldCell.textField setReturnKeyType:UIReturnKeyNext];
+            [labelTextFieldCell.textField setText:self.userFirstNameString];
             break;
         }
             
         case 1:
         {
             LabelTextFieldCell *labelTextFieldCell = (LabelTextFieldCell *)cell;
-            self.userEmailTextField = labelTextFieldCell.textField;
-            [labelTextFieldCell.textField setText:self.userEmailString];
+            [labelTextFieldCell.separator setHidden:NO];
+            self.lastNameTextField = labelTextFieldCell.textField;
+            [labelTextFieldCell.leftLabel setText:NSLocalizedString(@"Last Name", @"")];
+            [labelTextFieldCell.textField setPlaceholder:NSLocalizedString(@"Doe", @"")];
+            [labelTextFieldCell.textField setSecureTextEntry:NO];
+            [labelTextFieldCell.textField setReturnKeyType:UIReturnKeyNext];
+            [labelTextFieldCell.textField setText:self.userLastNameString];
             break;
         }
         case 2:
         {
+            LabelTextFieldCell *labelTextFieldCell = (LabelTextFieldCell *)cell;
+            [labelTextFieldCell.separator setHidden:NO];
+            self.userEmailTextField = labelTextFieldCell.textField;
+            [labelTextFieldCell.leftLabel setText:NSLocalizedString(@"Email Address", @"")];
+            [labelTextFieldCell.textField setPlaceholder:NSLocalizedString(@"johndoe@mail.com", @"")];
+            [labelTextFieldCell.textField setSecureTextEntry:NO];
+            [labelTextFieldCell.textField setReturnKeyType:UIReturnKeyNext];
+            [labelTextFieldCell.textField setText:self.userEmailString];
+            break;
+        }
+            
+        case 3:
+        {
+            LabelTextFieldCell *labelTextFieldCell = (LabelTextFieldCell *)cell;
+            [labelTextFieldCell.separator setHidden:NO];
+            self.userPasswordTextField = labelTextFieldCell.textField;
+            [labelTextFieldCell.leftLabel setText:NSLocalizedString(@"Password", @"")];
+            [labelTextFieldCell.textField setPlaceholder:@""];
+            [labelTextFieldCell.textField setSecureTextEntry:YES];
+            [labelTextFieldCell.textField setReturnKeyType:UIReturnKeyJoin];
+            [labelTextFieldCell.textField setText:self.userPasswordString];
+            break;
+        }
+        case 4:
+        {
             ButtonCell *buttonCell = (ButtonCell *)cell;
-            [buttonCell.bigButton addTarget:self action:@selector(switchcamUserLogin:) forControlEvents:UIControlEventTouchUpInside];
+            [buttonCell.bigButton addTarget:self action:@selector(switchcamUserSignUp:) forControlEvents:UIControlEventTouchUpInside];
             break;
         }
         default:
@@ -233,7 +305,7 @@
 #pragma mark - UITableViewDataSource methods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    return 5;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -243,17 +315,14 @@
     
     switch (indexPath.row) {
         case 0:
-        {
-            cell = [tableView dequeueReusableCellWithIdentifier:kLabelProfileCellIdentifier];
-            break;
-        }
-            
         case 1:
+        case 2:
+        case 3:
         {
             cell = [tableView dequeueReusableCellWithIdentifier:kLabelTextFieldCellIdentifier];
             break;
         }
-        case 2:
+        case 4:
         {
             cell = [tableView dequeueReusableCellWithIdentifier:kButtonCellIdentifier];
             break;
@@ -265,26 +334,20 @@
     if (cell == nil) {
         switch (indexPath.row) {
             case 0:
-            {
-                NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"LabelProfileCell" owner:self options:nil];
-                cell = [nibArray objectAtIndex:0];
-                break;
-            }
-                
             case 1:
+            case 2:
+            case 3:
             {
                 NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"LabelTextFieldCell" owner:self options:nil];
                 cell = [nibArray objectAtIndex:0];
                 LabelTextFieldCell *labelTextFieldCell = (LabelTextFieldCell *)cell;
-                [labelTextFieldCell.leftLabel setText:NSLocalizedString(@"Email Address", @"")];
                 [labelTextFieldCell.leftLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:17]];
                 [labelTextFieldCell.textField setTextColor:[UIColor whiteColor]];
                 [labelTextFieldCell.textField setFont:[UIFont fontWithName:@"SourceSansPro-Light" size:17]];
                 [labelTextFieldCell.textField setDelegate:self];
-                
                 break;
             }
-            case 2:
+            case 4:
             {
                 NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:@"ButtonCell" owner:self options:nil];
                 cell = [nibArray objectAtIndex:0];
@@ -315,7 +378,7 @@
     if (indexPath.row == 0) {
         // Top
         [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grptableview-top"]]];
-    } else if (indexPath.row == 2) {
+    } else if (indexPath.row == 4) {
         // Bottom
         [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grptableview-bottom"]]];
     } else {
@@ -342,17 +405,14 @@
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath: (NSIndexPath *) indexPath {
     switch (indexPath.row) {
         case 0:
-        {
-            return kLabelProfileCellRowHeight;
-            break;
-        }
-            
         case 1:
+        case 2:
+        case 3:
         {
             return kLabelTextFieldCellRowHeight;
             break;
         }
-        case 2:
+        case 4:
         {
             return kButtonCellRowHeight;
             break;
@@ -365,8 +425,31 @@
 
 #pragma mark - UITextField Delegate
 
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if (textField == self.firstNameTextField) {
+        self.userFirstNameString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    } else if (textField == self.lastNameTextField) {
+        self.userLastNameString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    } else if (textField == self.userEmailTextField) {
+        self.userEmailString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    } else if (textField == self.userPasswordTextField) {
+        self.userPasswordString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    }
+    return YES;
+}
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
+    
+    if (textField == self.firstNameTextField) {
+        [self.lastNameTextField becomeFirstResponder];
+    } else if (textField == self.lastNameTextField) {
+        [self.userEmailTextField becomeFirstResponder];
+    } else if (textField == self.userEmailTextField) {
+        [self.userPasswordTextField becomeFirstResponder];
+    } else if (textField == self.userPasswordTextField) {
+        [self switchcamUserSignUp:nil];
+    }
     
     return YES;
 }

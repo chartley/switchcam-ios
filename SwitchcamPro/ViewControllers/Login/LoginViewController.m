@@ -10,10 +10,11 @@
 #import <AFNetworking.h>
 #import <Mixpanel/Mixpanel.h>
 #import "LoginViewController.h"
+#import "CompleteLoginViewController.h"
+#import "EmailLoginViewController.h"
 #import "AppDelegate.h"
 #import "MBProgressHUD.h"
 #import "SPConstants.h"
-#import "CompleteLoginViewController.h"
 #import "TermsViewController.h"
 #import "UIImage+H568.h"
 #import "SlideView.h"
@@ -60,8 +61,20 @@
     UIImage *buttonImageHighlight = [[UIImage imageNamed:@"btn-fb-lg-pressed"]
                                      resizableImageWithCapInsets:UIEdgeInsetsMake(20, 15, 20, 15)];
     // Set the background for any states you plan to use
-    [self.loginButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
-    [self.loginButton setBackgroundImage:buttonImageHighlight forState:UIControlStateHighlighted];
+    [self.facebookLoginButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    [self.facebookLoginButton setBackgroundImage:buttonImageHighlight forState:UIControlStateHighlighted];
+    
+    // Set Button Image
+    UIImage *orangeButtonImage = [[UIImage imageNamed:@"btn-orange-lg"]
+                            resizableImageWithCapInsets:UIEdgeInsetsMake(20, 15, 20, 15)];
+    
+    // Set Button Image
+    UIImage *orangeHighlightButtonImage = [[UIImage imageNamed:@"btn-orange-lg-pressed"]
+                                     resizableImageWithCapInsets:UIEdgeInsetsMake(20, 15, 20, 15)];
+    
+    // Set the background for any states you plan to use
+    [self.emailLoginButton setBackgroundImage:orangeButtonImage forState:UIControlStateNormal];
+    [self.emailLoginButton setBackgroundImage:orangeHighlightButtonImage forState:UIControlStateSelected];
     
     // Listen for app fade in
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(slideUpSwitchCamAnimation) name:kAppFadeInCompleteNotification object:nil];
@@ -105,6 +118,10 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [self.navigationController setNavigationBarHidden:YES animated:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -202,6 +219,15 @@
     [loadingIndicator show:YES];
 }
 
+- (IBAction)emailLoginButtonAction:(id)sender {
+    // Track
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"Email Login Start"];
+    
+    EmailLoginViewController *viewController = [[EmailLoginViewController alloc] init];
+    [self.navigationController pushViewController:viewController animated:YES];
+}
+
 #pragma mark - Observer Methods
 
 - (void)stateChanged:(NSNotification*)notification {
@@ -258,8 +284,8 @@
 
 - (void)fadeInControlsAnimation {
     [UIView animateWithDuration:1.0 animations:^(){
-        [self.loginButton setAlpha:1.0];
-        [self.facebookLogo setAlpha:1.0];
+        [self.facebookLoginButton setAlpha:1.0];
+        [self.emailLoginButton setAlpha:1.0];
         [self.pageControl setAlpha:1.0];
         [self.slide0Label setAlpha:1.0];
     } completion:^(BOOL finished) {
@@ -340,6 +366,17 @@
         if ([error code] == NSURLErrorNotConnectedToInternet) {
             NSString *title = NSLocalizedString(@"No Network Connection", @"");
             NSString *message = NSLocalizedString(@"Please check your internet connection and try again.", @"");
+            
+            // Show alert
+            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alertView show];
+        } else if ([[operation response] statusCode] == 401) {
+            // Session expired
+            AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+            [appDelegate logoutUser];
+            
+            NSString *title = NSLocalizedString(@"Session expired", @"");
+            NSString *message = NSLocalizedString(@"Your session has expired, please login and try again.", @"");
             
             // Show alert
             UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
