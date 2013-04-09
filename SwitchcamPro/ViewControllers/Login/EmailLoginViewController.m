@@ -9,6 +9,7 @@
 #import "UAPush.h"
 #import "EmailLoginViewController.h"
 #import "EmailSignUpViewController.h"
+#import "TermsViewController.h"
 #import "LabelTextFieldCell.h"
 #import "ButtonCell.h"
 #import "AFNetworking.h"
@@ -87,8 +88,7 @@
         
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kSPHasUserPreviouslyLoggedInKey];
         
-        AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-        [appDelegate successfulLoginViewControllerChange];
+        [self checkTerms];
     };
     
     apnRegistrationFailureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -125,6 +125,70 @@
     
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     [operation setCompletionBlockWithSuccess:apnRegistrationSuccessBlock failure:apnRegistrationFailureBlock];
+    
+    [operation start];
+}
+
+- (void)checkTerms {
+    // Completion Blocks
+    void (^checkTermsSuccessBlock)(AFHTTPRequestOperation *operation, id responseObject);
+    void (^checkTermsFailureBlock)(AFHTTPRequestOperation *operation, NSError *error);
+    
+    checkTermsSuccessBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self.loadingIndicator hide:YES];
+        NSDictionary *userObject = responseObject;
+        
+        BOOL hasAcceptedTerms = ![[userObject objectForKey:@"mobile_legal_terms_accept_date"] isKindOfClass:[NSNull class]];
+        
+        if (hasAcceptedTerms) {
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kSPUserAcceptedTermsKey];
+            [[NSUserDefaults standardUserDefaults] setObject:[userObject objectForKey:@"id"] forKey:kSPUserIdKey];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            
+            // Start App
+            AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+            [appDelegate successfulLoginViewControllerChange];
+        } else {
+            TermsViewController *termsViewController = [[TermsViewController alloc] initWithNibName:@"TermsViewController" bundle:nil];
+            [self.navigationController pushViewController:termsViewController animated:YES];
+        }
+    };
+    
+    checkTermsFailureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self.loadingIndicator hide:YES];
+        if ([error code] == NSURLErrorNotConnectedToInternet) {
+            NSString *title = NSLocalizedString(@"No Network Connection", @"");
+            NSString *message = NSLocalizedString(@"Please check your internet connection and try again.", @"");
+            
+            // Show alert
+            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alertView show];
+        } else if ([[operation response] statusCode] == 401) {
+            // Session expired
+            AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+            [appDelegate logoutUser];
+            
+            NSString *title = NSLocalizedString(@"Session expired", @"");
+            NSString *message = NSLocalizedString(@"Your session has expired, please login and try again.", @"");
+            
+            // Show alert
+            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alertView show];
+        } else {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Oops", @"") message:NSLocalizedString(@"We're having trouble connecting to the server, please try again.", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles:nil];
+            [alertView show];
+        }
+    };
+    
+    // Make Request and set params
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:kAPIHost]];
+    
+    NSString *path = [NSString stringWithFormat:@"person/me/"];
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET" path:path parameters:nil];
+    
+    AFJSONRequestOperation *operation = [[AFJSONRequestOperation alloc] initWithRequest:request];
+    [operation setCompletionBlockWithSuccess:checkTermsSuccessBlock failure:checkTermsFailureBlock];
     
     [operation start];
 }
