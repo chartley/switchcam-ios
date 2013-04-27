@@ -2498,8 +2498,8 @@
 		C97BFF07166D909D005BB65F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Chris Hartley (7J7EDWHC8U)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Chris Hartley (7J7EDWHC8U)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: William Ketterer (85AJ3EP4J5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: William Ketterer (85AJ3EP4J5)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Libraries/facebook-facebook-ios-sdk-a4c745f\"",
@@ -2516,8 +2516,8 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = Switchcam;
-				PROVISIONING_PROFILE = "DC408EB4-0D7A-47E5-82BD-E1DE083BEDEC";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DC408EB4-0D7A-47E5-82BD-E1DE083BEDEC";
+				PROVISIONING_PROFILE = "6FBFD614-2379-4EA8-A131-1295B2F4A3CA";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6FBFD614-2379-4EA8-A131-1295B2F4A3CA";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;

@@ -797,7 +797,7 @@ enum { kTagTabBase = 100 };
                 // Set Mission
                 [userVideo setMission:self.mission];
                 
-                NSString *videoKey = [NSString stringWithFormat:@"v%@%@", [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookIdKey], [SPSerializable formattedStringFromDate:userVideo.recordStart]];
+                NSString *videoKey = [NSString stringWithFormat:@"v%@%@.mp4", [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookIdKey], [SPSerializable formattedStringFromDate:[NSDate date]]];
                 
                 [userVideo setUploadPath:videoKey];
                 
@@ -894,7 +894,7 @@ enum { kTagTabBase = 100 };
                 
                 userPhoto.createDate = nil;
                 
-                NSString *photoKey = [NSString stringWithFormat:@"%@%@", [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookIdKey], [SPSerializable formattedStringFromDate:userPhoto.createDate]];
+                NSString *photoKey = [NSString stringWithFormat:@"%@%@.png", [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookIdKey], [SPSerializable formattedStringFromDate:userPhoto.createDate]];
                 userPhoto.photoKey = photoKey;
                 
                 

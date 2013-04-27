@@ -350,7 +350,7 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
         [currentRecording setMission:self.selectedMission];
         [currentRecording setRecordStart:[NSDate date]];
         
-        NSString *videoKey = [NSString stringWithFormat:@"v%@%@", [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookIdKey], [SPSerializable formattedStringFromDate:currentRecording.recordStart]];
+        NSString *videoKey = [NSString stringWithFormat:@"v%@%@.mp4", [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookIdKey], [SPSerializable formattedStringFromDate:currentRecording.recordStart]];
         
         [currentRecording setUploadPath:videoKey];
         

@@ -95,6 +95,12 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     // Initialize TestFlight
     [TestFlight takeOff:@"2acb3bce-2531-4584-b080-013af6bd4993"];
     
+    // Set default upload quality if not set
+    NSString *uploadQuality = [[NSUserDefaults standardUserDefaults] objectForKey:kUploadQualityKey];
+    if (!uploadQuality) {
+        [[NSUserDefaults standardUserDefaults] setObject:AVAssetExportPreset1920x1080 forKey:kUploadQualityKey];
+    }
+    
     self.window = [[SPWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     Mission *mission = [self getDefaultMission];

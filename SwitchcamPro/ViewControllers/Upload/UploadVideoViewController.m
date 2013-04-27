@@ -239,8 +239,10 @@
         [[NSFileManager defaultManager] removeItemAtURL:outputURL error:nil];
     }
     
+    NSString *uploadQuality = [[NSUserDefaults standardUserDefaults] objectForKey:kUploadQualityKey];
+    
     AVURLAsset *asset = [AVURLAsset URLAssetWithURL:inputURL options:nil];
-    self.compressionSession = [[AVAssetExportSession alloc] initWithAsset:asset presetName:AVAssetExportPresetMediumQuality];
+    self.compressionSession = [[AVAssetExportSession alloc] initWithAsset:asset presetName:uploadQuality];
     self.compressionSession.outputURL = outputURL;
     self.compressionSession.outputFileType = AVFileTypeMPEG4;
     [self.compressionSession exportAsynchronouslyWithCompletionHandler:^(void) {

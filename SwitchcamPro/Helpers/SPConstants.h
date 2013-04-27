@@ -19,6 +19,7 @@
 // User Defaults
 #define kSPUserFacebookIdKey @"SPUserFacebookIdKey"
 #define kSPUserFacebookTokenKey @"SPUserFacebookTokenKey"
+#define kSPUserLoginTypeKey @"SPUserLoginTypeKey"
 #define kSPUserAcceptedTermsKey @"SPUserAcceptedTermsKey"
 #define kSPUserIdKey @"SPUserIdKey"
 #define kSPHasUserPreviouslyLoggedInKey @"SPHasUserPreviouslyLoggedInKey"
@@ -28,6 +29,12 @@
 
 #define kHasAppLaunchedPreviously @"HasAppLaunchedPreviously" // First Run check
 #define kUploadOver3GEnabled @"UploadOver3GEnabled"
+
+#define kUploadQualityKey @"UploadQuality"
+
+// Login Types
+#define kSPUserLoginTypeEmail @"email"
+#define kSPUserLoginTypeFacebook @"facebook"
 
 // Color Ease
 #define RGBA(r,g,b,a) [UIColor colorWithRed: r/255.0f green: g/255.0f \

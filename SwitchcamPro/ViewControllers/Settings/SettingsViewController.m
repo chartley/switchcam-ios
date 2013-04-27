@@ -8,6 +8,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import <AFNetworking/AFNetworking.h>
+#import <AVFoundation/AVFoundation.h>
 #import "SettingsViewController.h"
 #import "ECSlidingViewController.h"
 #import "MenuViewController.h"
@@ -16,6 +17,9 @@
 #import "ButtonCell.h"
 #import "AppDelegate.h"
 #import "SPConstants.h"
+
+#define kUploadQualityCellIdentifier @"UploadQualityCellIdentifier"
+#define kSeparatorTag 999
 
 @interface SettingsViewController ()
 
@@ -147,7 +151,51 @@
                     break;
             }
             break;
-        case 1:
+        case 1:{
+            NSString *uploadQuality = [[NSUserDefaults standardUserDefaults] objectForKey:kUploadQualityKey];
+            switch (indexPath.row) {
+                case 0:
+                {
+                    [cell.textLabel setText:NSLocalizedString(@"540p", @"")];
+                    [cell.detailTextLabel setText:NSLocalizedString(@"Fastest Upload", @"")];
+                    
+                    if ([uploadQuality isEqualToString:AVAssetExportPreset960x540]) {
+                        [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+                    } else {
+                        [cell setAccessoryType:UITableViewCellAccessoryNone];
+                    }
+                    break;
+                }
+                case 1:
+                {
+                    [cell.textLabel setText:NSLocalizedString(@"720p", @"")];
+                    [cell.detailTextLabel setText:NSLocalizedString(@"Better quality, slow upload", @"")];
+                    
+                    if ([uploadQuality isEqualToString:AVAssetExportPreset1280x720]) {
+                        [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+                    } else {
+                        [cell setAccessoryType:UITableViewCellAccessoryNone];
+                    }
+                    break;
+                }
+                case 2:
+                {
+                    [cell.textLabel setText:NSLocalizedString(@"1080p", @"")];
+                    [cell.detailTextLabel setText:NSLocalizedString(@"Best quality, slowest upload", @"")];
+
+                    if ([uploadQuality isEqualToString:AVAssetExportPreset1920x1080]) {
+                        [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+                    } else {
+                        [cell setAccessoryType:UITableViewCellAccessoryNone];
+                    }
+                    break;
+                }
+                default:
+                    break;
+            }
+            break;
+        }
+        case 2:
             switch (indexPath.row) {
                 case 0:
                 {
@@ -158,10 +206,6 @@
                     ProfileCell *profileCell = (ProfileCell *)cell;
                     [profileCell.profileNameLabel setText:userFullName];
                     [profileCell.profileImageView setImageWithURL:profileImageURL placeholderImage:[UIImage imageNamed:@"img-shoot-thumb-placeholder"]];
-
-                    
-                    
-
                     break;
                 }
                     
@@ -169,16 +213,30 @@
                 {
                     ButtonCell *buttonCell = (ButtonCell *)cell;
                     // Set Button Image
-                    UIImage *buttonImage = [[UIImage imageNamed:@"btn-fb-lg"]
-                                            resizableImageWithCapInsets:UIEdgeInsetsMake(20, 15, 20, 15)];
-                    UIImage *buttonImageHighlight = [[UIImage imageNamed:@"btn-fb-lg-pressed"]
-                                                     resizableImageWithCapInsets:UIEdgeInsetsMake(20, 15, 20, 15)];
-                    // Set the background for any states you plan to use
+                    UIImage *buttonImage = nil;
+                    UIImage *buttonImageHighlight = nil;
+                    
+                    NSString *loginType = [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserLoginTypeKey];
+                    if ([loginType isEqualToString:kSPUserLoginTypeEmail]) {
+                        buttonImage = [[UIImage imageNamed:@"btn-orange-lg"]
+                                                resizableImageWithCapInsets:UIEdgeInsetsMake(20, 15, 20, 15)];
+                        buttonImageHighlight = [[UIImage imageNamed:@"btn-orange-lg-pressed"]
+                                                         resizableImageWithCapInsets:UIEdgeInsetsMake(20, 15, 20, 15)];
+                        [buttonCell.bigButton setTitle:NSLocalizedString(@"Disconnect", @"") forState:UIControlStateNormal];
+                        [buttonCell.bigButton addTarget:self action:@selector(disconnectFacebookButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+                    } else {
+                        buttonImage = [[UIImage imageNamed:@"btn-fb-lg"]
+                                       resizableImageWithCapInsets:UIEdgeInsetsMake(20, 15, 20, 15)];
+                        buttonImageHighlight = [[UIImage imageNamed:@"btn-fb-lg-pressed"]
+                                                resizableImageWithCapInsets:UIEdgeInsetsMake(20, 15, 20, 15)];
+                        [buttonCell.bigButton setTitle:NSLocalizedString(@" Disconnect Facebook", @"") forState:UIControlStateNormal];
+                        [buttonCell.bigButton setImage:[UIImage imageNamed:@"icn-fb"] forState:UIControlStateNormal];
+                        [buttonCell.bigButton addTarget:self action:@selector(disconnectFacebookButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+                    }
+
+                    // Set the background states
                     [buttonCell.bigButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
                     [buttonCell.bigButton setBackgroundImage:buttonImageHighlight forState:UIControlStateHighlighted];
-                    [buttonCell.bigButton setTitle:NSLocalizedString(@" Disconnect Facebook", @"") forState:UIControlStateNormal];
-                    [buttonCell.bigButton setImage:[UIImage imageNamed:@"icn-fb"] forState:UIControlStateNormal];
-                    [buttonCell.bigButton addTarget:self action:@selector(disconnectFacebookButtonAction:) forControlEvents:UIControlEventTouchUpInside];
                     break;
                 }
                 default:
@@ -196,6 +254,8 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
         return 1;
+    } else if (section == 1) {
+        return 3;
     } else {
         return 2;
     }
@@ -213,8 +273,12 @@
             [((LabelSwitchCell*)cell).leftLabel setFont:[UIFont fontWithName:@"SourceSansPro-Bold" size:17]];
             break;
         }
-            
         case 1:
+        {
+            cell = [tableView dequeueReusableCellWithIdentifier:kUploadQualityCellIdentifier];
+            break;
+        }
+        case 2:
         {
             switch (indexPath.row) {
                 case 0:
@@ -244,8 +308,24 @@
                 cell = [nibArray objectAtIndex:0];
                 break;
             }
-                
             case 1:
+            {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kUploadQualityCellIdentifier];
+                [cell.textLabel setTextColor:[UIColor whiteColor]];
+                [cell.textLabel setBackgroundColor:[UIColor clearColor]];
+                [cell.textLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:17]];
+                
+                [cell.detailTextLabel setTextColor:[UIColor whiteColor]];
+                [cell.detailTextLabel setBackgroundColor:[UIColor clearColor]];
+                [cell.detailTextLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:14]];
+                
+                UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, 43, 320, 1)];
+                separator.tag = kSeparatorTag;
+                [separator setBackgroundColor:RGBA(47, 50, 51, 1)];
+                [cell addSubview:separator];
+                break;
+            }
+            case 2:
             {
                 switch (indexPath.row) {
                     case 0:
@@ -276,6 +356,17 @@
     if (indexPath.section == 0) {
         // Single
         [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grptableview-single"]]];
+    } else if (indexPath.section == 1) {
+        if (indexPath.row == 0) {
+            // Top
+            [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grptableview-top"]]];
+        } else if (indexPath.row == 1) {
+            // Middle
+            [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grptableview-middle"]]];
+        } else {
+            // Bottom
+            [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grptableview-bottom"]]];
+        }
     } else {
         if (indexPath.row == 0) {
             // Top
@@ -292,7 +383,7 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 3;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -300,6 +391,20 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 1) {
+        // Upload quality cells
+        if (indexPath.row == 0) {
+            // Low
+            [[NSUserDefaults standardUserDefaults] setObject:AVAssetExportPreset640x480 forKey:kUploadQualityKey];
+        } else if (indexPath.row == 1) {
+            // Medium
+            [[NSUserDefaults standardUserDefaults] setObject:AVAssetExportPreset1280x720 forKey:kUploadQualityKey];
+        } else {
+            // High
+            [[NSUserDefaults standardUserDefaults] setObject:AVAssetExportPreset1920x1080 forKey:kUploadQualityKey];
+        }
+    }
+    [tableView reloadData];
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath: (NSIndexPath *) indexPath {
@@ -309,8 +414,12 @@
             return kLabelSwitchCellRowHeight;
             break;
         }
-            
         case 1:
+        {
+            return 44;
+            break;
+        }
+        case 2:
         {
             switch (indexPath.row) {
                 case 0:
@@ -333,6 +442,28 @@
         default:
             return 0;
             break;
+    }
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *titleLabelContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    if (section == 1) {
+        UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, 300, 44)];
+        [titleLabel setBackgroundColor:[UIColor clearColor]];
+        [titleLabel setText:NSLocalizedString(@"Upload Quality", @"")];
+        [titleLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:17]];
+        [titleLabel setTextColor:[UIColor whiteColor]];
+        [titleLabelContainer addSubview:titleLabel];
+    } else {
+    }
+    return titleLabelContainer;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (section == 1) {
+        return 35;
+    } else {
+        return 0;
     }
 }
 
