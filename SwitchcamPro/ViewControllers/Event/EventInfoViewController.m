@@ -137,7 +137,25 @@
     };
     
     joinCameraCrewFailureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
-        // Fail silently
+        if ([error code] == NSURLErrorNotConnectedToInternet) {
+            NSString *title = NSLocalizedString(@"No Network Connection", @"");
+            NSString *message = NSLocalizedString(@"Please check your internet connection and try again.", @"");
+            
+            // Show alert
+            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alertView show];
+        } else if ([[operation response] statusCode] == 401) {
+            // Session expired
+            AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+            [appDelegate logoutUser];
+            
+            NSString *title = NSLocalizedString(@"Session expired", @"");
+            NSString *message = NSLocalizedString(@"Your session has expired, please login and try again.", @"");
+            
+            // Show alert
+            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alertView show];
+        }
     };
     
     // Make Request and set params
@@ -184,7 +202,25 @@
     };
     
     followMissionFailureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
-        // Fail silently
+        if ([error code] == NSURLErrorNotConnectedToInternet) {
+            NSString *title = NSLocalizedString(@"No Network Connection", @"");
+            NSString *message = NSLocalizedString(@"Please check your internet connection and try again.", @"");
+            
+            // Show alert
+            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alertView show];
+        } else if ([[operation response] statusCode] == 401) {
+            // Session expired
+            AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+            [appDelegate logoutUser];
+            
+            NSString *title = NSLocalizedString(@"Session expired", @"");
+            NSString *message = NSLocalizedString(@"Your session has expired, please login and try again.", @"");
+            
+            // Show alert
+            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alertView show];
+        }
     };
     
     // Make Request and set params

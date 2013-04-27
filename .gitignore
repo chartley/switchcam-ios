@@ -4,16 +4,13 @@ Breakpoints.xcbkptlist
 xcuserdata*
 
 .DS_Store
-/Pods/BuildHeaders/TestFlightSDK/
-/Pods/Headers/TestFlightSDK/
-/Pods/TestFlightSDK/
-/Pods/AFNetworking/
-/Pods/BuildHeaders/RestKit/
-/Pods/Headers/RestKit/
-/Pods/RestKit/
-/Pods/TTTAttributedLabel/
-/Pods/Headers/TTTAttributedLabel/
-/Pods/BuildHeaders/TTTAttributedLabel/
-/Pods/Mixpanel/
-/Pods/Headers/Mixpanel/
-/Pods/BuildHeaders/Mixpanel/
+
+####
+# Cocoapods: cocoapods.org
+# 
+# Ignoring these files means that whoever uses the code will first have to run:
+# pod install
+# in the App.xcodeproj directory.
+# This ensures the latest dependencies are used.
+Pods/
+Podfile.lock

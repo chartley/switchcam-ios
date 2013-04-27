@@ -19,6 +19,10 @@
 		24B3CB1D16B7838700E233B7 /* NSObject+PerformBlockAfterDelay.m in Sources */ = {isa = PBXBuildFile; fileRef = 24B3CB1C16B7838700E233B7 /* NSObject+PerformBlockAfterDelay.m */; };
 		24F9C37316B66D630029D1E5 /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F9C37216B66D630029D1E5 /* UIPlaceHolderTextView.m */; };
 		24F9C37716B679F10029D1E5 /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = 24F9C37616B679F10029D1E5 /* Activity.m */; };
+		89D5EE6817131E8B00906378 /* EmailLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89D5EE6617131E8B00906378 /* EmailLoginViewController.m */; };
+		89D5EE6917131E8B00906378 /* EmailLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 89D5EE6717131E8B00906378 /* EmailLoginViewController.xib */; };
+		89D5EE6D17131EA100906378 /* EmailSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89D5EE6B17131EA100906378 /* EmailSignUpViewController.m */; };
+		89D5EE6E17131EA100906378 /* EmailSignUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 89D5EE6C17131EA100906378 /* EmailSignUpViewController.xib */; };
 		C906ADBB16A019DE001E5E5C /* HostedEventVideoTopCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C906ADBA16A019DE001E5E5C /* HostedEventVideoTopCell.xib */; };
 		C906ADC916A6833C001E5E5C /* ActivityPostCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C906ADC816A6833B001E5E5C /* ActivityPostCommentCell.m */; };
 		C906ADCC16A68353001E5E5C /* ActivityCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C906ADCB16A68352001E5E5C /* ActivityCommentCell.m */; };
@@ -447,6 +451,12 @@
 		24F9C37216B66D630029D1E5 /* UIPlaceHolderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIPlaceHolderTextView.m; path = Views/UIPlaceHolderTextView.m; sourceTree = "<group>"; };
 		24F9C37516B679F10029D1E5 /* Activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Activity.h; path = Model/ManagedObjects/Activity.h; sourceTree = "<group>"; };
 		24F9C37616B679F10029D1E5 /* Activity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Activity.m; path = Model/ManagedObjects/Activity.m; sourceTree = "<group>"; };
+		89D5EE6517131E8B00906378 /* EmailLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EmailLoginViewController.h; path = ViewControllers/Login/EmailLoginViewController.h; sourceTree = "<group>"; };
+		89D5EE6617131E8B00906378 /* EmailLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EmailLoginViewController.m; path = ViewControllers/Login/EmailLoginViewController.m; sourceTree = "<group>"; };
+		89D5EE6717131E8B00906378 /* EmailLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EmailLoginViewController.xib; path = ViewControllers/Login/EmailLoginViewController.xib; sourceTree = "<group>"; };
+		89D5EE6A17131EA100906378 /* EmailSignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EmailSignUpViewController.h; path = ViewControllers/Login/EmailSignUpViewController.h; sourceTree = "<group>"; };
+		89D5EE6B17131EA100906378 /* EmailSignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EmailSignUpViewController.m; path = ViewControllers/Login/EmailSignUpViewController.m; sourceTree = "<group>"; };
+		89D5EE6C17131EA100906378 /* EmailSignUpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EmailSignUpViewController.xib; path = ViewControllers/Login/EmailSignUpViewController.xib; sourceTree = "<group>"; };
 		A19C79BD691C4B088E80A4B3 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		C906ADBA16A019DE001E5E5C /* HostedEventVideoTopCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HostedEventVideoTopCell.xib; path = TableViewCells/PendingUploads/HostedEventVideoTopCell.xib; sourceTree = "<group>"; };
 		C906ADC716A6833B001E5E5C /* ActivityPostCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActivityPostCommentCell.h; path = TableViewCells/Activity/ActivityPostCommentCell.h; sourceTree = "<group>"; };
@@ -1554,6 +1564,12 @@
 				C90ECA1016AE20F60085DF8C /* TermsViewController.h */,
 				C90ECA1116AE20F60085DF8C /* TermsViewController.m */,
 				C90ECA1216AE20F60085DF8C /* TermsViewController.xib */,
+				89D5EE6517131E8B00906378 /* EmailLoginViewController.h */,
+				89D5EE6617131E8B00906378 /* EmailLoginViewController.m */,
+				89D5EE6717131E8B00906378 /* EmailLoginViewController.xib */,
+				89D5EE6A17131EA100906378 /* EmailSignUpViewController.h */,
+				89D5EE6B17131EA100906378 /* EmailSignUpViewController.m */,
+				89D5EE6C17131EA100906378 /* EmailSignUpViewController.xib */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -2294,6 +2310,8 @@
 				C9A9653F16C8356B0066B839 /* Default-568h@2x.png in Resources */,
 				C9A9654016C8356B0066B839 /* Default.png in Resources */,
 				C9A9654116C8356B0066B839 /* Default@2x.png in Resources */,
+				89D5EE6917131E8B00906378 /* EmailLoginViewController.xib in Resources */,
+				89D5EE6E17131EA100906378 /* EmailSignUpViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2408,6 +2426,8 @@
 				C96B73B516C4C6C500E9D8F1 /* SPWindow.m in Sources */,
 				C96B73B816C4D44900E9D8F1 /* ActionObject.m in Sources */,
 				C96B73BB16C4D44A00E9D8F1 /* Mission.m in Sources */,
+				89D5EE6817131E8B00906378 /* EmailLoginViewController.m in Sources */,
+				89D5EE6D17131EA100906378 /* EmailSignUpViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

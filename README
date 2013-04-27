@@ -1,7 +1,0 @@
-Setup:
-We are using CocoaPods for RestKit/AFNetworking
-
-To install:
-Install Homebrew
-Install Latest version of git (>1.8)
-sudo gem install cocoapods

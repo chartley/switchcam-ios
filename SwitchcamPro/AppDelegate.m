@@ -117,8 +117,11 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     // Initialize Toast and Progress
     [self initalizeStatusBarToastAndProgressView];
     
-    // See if we have a valid token for the current state.
-    if (![self openReadSessionWithAllowLoginUI:NO]) {
+    // Grab cookies data
+    NSData *cookiesdata = [[NSUserDefaults standardUserDefaults] objectForKey:@"SavedCookies"];
+    
+    // See if we have a valid token for the current state or if we have cookies
+    if (![self openReadSessionWithAllowLoginUI:NO] && ![cookiesdata length]) {
         // No? Display the login page.
         [self showLoginView];
     } else if(![[NSUserDefaults standardUserDefaults] boolForKey:kSPUserAcceptedTermsKey]) {
@@ -131,31 +134,37 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
             [[SPLocationManager sharedInstance] start];
         }
         
-        // Save Facebook id and token for API access
-        [[FBRequest requestForMe] startWithCompletionHandler:
-         ^(FBRequestConnection *connection,
-           NSDictionary<FBGraphUser> *user,
-           NSError *error) {
-             if (!error) {
-                 NSString *facebookId = user.id;
-                 NSString *facebookToken = [FBSession activeSession].accessToken;
-                 
-                 // Force basic auth with credentials
-                 [[RKObjectManager sharedManager].HTTPClient setAuthorizationHeaderWithUsername:facebookId password:facebookToken];
-                 
-                 [[NSUserDefaults standardUserDefaults] setObject:facebookId forKey:kSPUserFacebookIdKey];
-                 [[NSUserDefaults standardUserDefaults] setObject:facebookToken forKey:kSPUserFacebookTokenKey];
-                 [mixpanel registerSuperProperties:
-                  [NSDictionary dictionaryWithObject:facebookId forKey:@"Facebook ID"]];
-                 
-                 // Facebook id and token captured, we can start making network requests
-                 [[NSNotificationCenter defaultCenter] postNotificationName:SCAPINetworkRequestCanStartNotification
-                                                                     object:[FBSession activeSession]];
-             } else {
-                 // No? Display the login page.
-                 [self showLoginView];
-             }
-         }];
+        if ([cookiesdata length]) {
+            // Facebook id and token captured, we can start making network requests
+            [[NSNotificationCenter defaultCenter] postNotificationName:SCAPINetworkRequestCanStartNotification
+                                                                object:[FBSession activeSession]];
+        } else {
+            // Save Facebook id and token for API access
+            [[FBRequest requestForMe] startWithCompletionHandler:
+             ^(FBRequestConnection *connection,
+               NSDictionary<FBGraphUser> *user,
+               NSError *error) {
+                 if (!error) {
+                     NSString *facebookId = user.id;
+                     NSString *facebookToken = [FBSession activeSession].accessToken;
+                     
+                     // Force basic auth with credentials
+                     [[RKObjectManager sharedManager].HTTPClient setAuthorizationHeaderWithUsername:facebookId password:facebookToken];
+                     
+                     [[NSUserDefaults standardUserDefaults] setObject:facebookId forKey:kSPUserFacebookIdKey];
+                     [[NSUserDefaults standardUserDefaults] setObject:facebookToken forKey:kSPUserFacebookTokenKey];
+                     [mixpanel registerSuperProperties:
+                      [NSDictionary dictionaryWithObject:facebookId forKey:@"Facebook ID"]];
+                     
+                     // Facebook id and token captured, we can start making network requests
+                     [[NSNotificationCenter defaultCenter] postNotificationName:SCAPINetworkRequestCanStartNotification
+                                                                         object:[FBSession activeSession]];
+                 } else {
+                     // No? Display the login page.
+                     [self showLoginView];
+                 }
+             }];
+        }
     }
     
     // Fade out splash screen
@@ -187,11 +196,26 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+    // Persist cookies through app termination to keep user logged in
+    NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies];
+    NSData *cookiesdata = [NSKeyedArchiver archivedDataWithRootObject:cookies];
+    [[NSUserDefaults standardUserDefaults] setObject:cookiesdata forKey:@"SavedCookies"];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    // Persist cookies through app termination to keep user logged in
+    NSData *cookiesdata = [[NSUserDefaults standardUserDefaults] objectForKey:@"SavedCookies"];
+    if([cookiesdata length]) {
+        NSArray *cookies = [NSKeyedUnarchiver unarchiveObjectWithData:cookiesdata];
+        NSHTTPCookie *cookie;
+        
+        for (cookie in cookies) {
+            [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
+        }
+    }
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

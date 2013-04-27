@@ -15,5 +15,6 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *leftLabel;
 @property (strong, nonatomic) IBOutlet UITextField *textField;
+@property (strong, nonatomic) IBOutlet UIView *separator;
 
 @end

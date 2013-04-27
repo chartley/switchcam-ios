@@ -219,6 +219,17 @@
             // Show alert
             UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alertView show];
+        } else if ([[operation response] statusCode] == 401) {
+            // Session expired
+            AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+            [appDelegate logoutUser];
+            
+            NSString *title = NSLocalizedString(@"Session expired", @"");
+            NSString *message = NSLocalizedString(@"Your session has expired, please login and try again.", @"");
+            
+            // Show alert
+            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alertView show];
         }
     };
     
@@ -265,6 +276,17 @@
         if ([error code] == NSURLErrorNotConnectedToInternet) {
             NSString *title = NSLocalizedString(@"No Network Connection", @"");
             NSString *message = NSLocalizedString(@"Please check your internet connection and try again.", @"");
+            
+            // Show alert
+            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alertView show];
+        } else if ([[operation response] statusCode] == 401) {
+            // Session expired
+            AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+            [appDelegate logoutUser];
+            
+            NSString *title = NSLocalizedString(@"Session expired", @"");
+            NSString *message = NSLocalizedString(@"Your session has expired, please login and try again.", @"");
             
             // Show alert
             UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -493,7 +515,11 @@
         
         // Set Contributer
         [activityCell.contributorLabel setText:activity.person.name];
-        [activityCell.contributorImageView setImageWithURL:[NSURL URLWithString:[activity.person pictureURL]] placeholderImage:[UIImage imageNamed:@"img-shoot-thumb-placeholder"]];
+        if ([activity.person pictureURL]) {
+            [activityCell.contributorImageView setImageWithURL:[NSURL URLWithString:[activity.person pictureURL]] placeholderImage:[UIImage imageNamed:@"img-shoot-thumb-placeholder"]];
+        } else {
+            [activityCell.contributorImageView setImage:[UIImage imageNamed:@"img-shoot-thumb-placeholder"]];
+        }
         
         [activityCell.timeLabel setText:activity.timesince];
     } else if (indexPath.row % 5 == 4) {
@@ -522,7 +548,11 @@
             [activityCommentCell.commentLabel setText:comment.comment];
             
             [activityCell.contributorLabel setText:comment.person.name];
-            [activityCell.contributorImageView setImageWithURL:[NSURL URLWithString:[comment.person pictureURL]] placeholderImage:[UIImage imageNamed:@"img-shoot-thumb-placeholder"]];
+            if ([comment.person pictureURL]) {
+                [activityCell.contributorImageView setImageWithURL:[NSURL URLWithString:[comment.person pictureURL]] placeholderImage:[UIImage imageNamed:@"img-shoot-thumb-placeholder"]];
+            } else {
+                [activityCell.contributorImageView setImage:[UIImage imageNamed:@"img-shoot-thumb-placeholder"]];
+            }
             
             [activityCell.timeLabel setText:comment.timesince];
             

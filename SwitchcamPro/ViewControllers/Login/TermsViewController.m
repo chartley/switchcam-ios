@@ -130,19 +130,27 @@
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kSPUserAcceptedTermsKey];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
-        // Get Information about the user
-        [[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection *connection, NSDictionary<FBGraphObject> *user, NSError *error) {
-            NSString *userFullName = [NSString stringWithFormat:@"%@ %@", [user objectForKey:@"first_name"], [user objectForKey:@"last_name"]];
-            NSURL *profileImageURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=square", [user objectForKey:@"id"]]];
+        // Check login type
+        if (facebookId) {
+            // Get Information about the user
+            [[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection *connection, NSDictionary<FBGraphObject> *user, NSError *error) {
+                NSString *userFullName = [NSString stringWithFormat:@"%@ %@", [user objectForKey:@"first_name"], [user objectForKey:@"last_name"]];
+                NSURL *profileImageURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=square", [user objectForKey:@"id"]]];
+                
+                // Add data to next controller and start
+                CompleteLoginViewController *completeLoginViewController = [[CompleteLoginViewController alloc] init];
+                [completeLoginViewController setUserEmailString:[user objectForKey:@"email"]];
+                [completeLoginViewController setUserFullNameString:userFullName];
+                [completeLoginViewController setUserProfileURL:profileImageURL];
+                [self.navigationController pushViewController:completeLoginViewController animated:YES];
+                [self.navigationController setNavigationBarHidden:NO];
+            }];
+        } else {
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kSPHasUserPreviouslyLoggedInKey];
             
-            // Add data to next controller and start
-            CompleteLoginViewController *completeLoginViewController = [[CompleteLoginViewController alloc] init];
-            [completeLoginViewController setUserEmailString:[user objectForKey:@"email"]];
-            [completeLoginViewController setUserFullNameString:userFullName];
-            [completeLoginViewController setUserProfileURL:profileImageURL];
-            [self.navigationController pushViewController:completeLoginViewController animated:YES];
-            [self.navigationController setNavigationBarHidden:NO];
-        }];
+            AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+            [appDelegate successfulLoginViewControllerChange];
+        }
     };
     
     acceptTermsFailureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -151,6 +159,17 @@
         if ([error code] == NSURLErrorNotConnectedToInternet) {
             NSString *title = NSLocalizedString(@"No Network Connection", @"");
             NSString *message = NSLocalizedString(@"Please check your internet connection and try again.", @"");
+            
+            // Show alert
+            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alertView show];
+        } else if ([[operation response] statusCode] == 401) {
+            // Session expired
+            AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+            [appDelegate logoutUser];
+            
+            NSString *title = NSLocalizedString(@"Session expired", @"");
+            NSString *message = NSLocalizedString(@"Your session has expired, please login and try again.", @"");
             
             // Show alert
             UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];

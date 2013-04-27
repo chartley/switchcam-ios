@@ -130,8 +130,6 @@
 #pragma mark - Network Requests
 
 - (void)emailLink {
-    NSString *facebookId = [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookIdKey];
-    NSString *facebookToken = [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserFacebookTokenKey];
     
     // Completion Blocks
     void (^emailLinkSuccessBlock)(AFHTTPRequestOperation *operation, id responseObject);
@@ -153,6 +151,17 @@
             // Show alert
             UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alertView show];
+        } else if ([[operation response] statusCode] == 401) {
+            // Session expired
+            AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+            [appDelegate logoutUser];
+            
+            NSString *title = NSLocalizedString(@"Session expired", @"");
+            NSString *message = NSLocalizedString(@"Your session has expired, please login and try again.", @"");
+            
+            // Show alert
+            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alertView show];
         } else {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Oops", @"") message:NSLocalizedString(@"We're having trouble connecting to the server, please try again.", @"") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles:nil];
             [alertView show];
@@ -161,7 +170,6 @@
     
     // Make Request and set params
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:kAPIHost]];
-    [httpClient setAuthorizationHeaderWithUsername:facebookId password:facebookToken];
     
     NSString *path = [NSString stringWithFormat:@"addshootrequest/"];
     NSMutableURLRequest *request = [httpClient requestWithMethod:@"POST" path:path parameters:nil];
