@@ -81,6 +81,8 @@
     }
     
     [self.view addGestureRecognizer:self.slidingViewController.panGesture];
+    
+    [self.settingsTableView reloadData];
 }
 
 #pragma mark - IBActions

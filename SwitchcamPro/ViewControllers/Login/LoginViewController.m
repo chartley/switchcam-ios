@@ -212,6 +212,8 @@
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     [mixpanel track:@"Facebook Login Start"];
     
+    [[NSUserDefaults standardUserDefaults] setObject:kSPUserLoginTypeFacebook forKey:kSPUserLoginTypeKey];
+    
     // The user has initiated a login, so call the openSession method.
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     [appDelegate openReadSessionWithAllowLoginUI:YES];
@@ -223,6 +225,8 @@
     // Track
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     [mixpanel track:@"Email Login Start"];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:kSPUserLoginTypeEmail forKey:kSPUserLoginTypeKey];
     
     EmailLoginViewController *viewController = [[EmailLoginViewController alloc] init];
     [self.navigationController pushViewController:viewController animated:YES];
