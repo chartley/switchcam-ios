@@ -325,6 +325,7 @@
             [labelTextFieldCell.textField setReturnKeyType:UIReturnKeyNext];
             [labelTextFieldCell.textField setText:self.userFirstNameString];
             [labelTextFieldCell.textField setAutocapitalizationType:UITextAutocapitalizationTypeWords];
+            [labelTextFieldCell.textField setKeyboardType:UIKeyboardTypeDefault];
             break;
         }
             
@@ -339,6 +340,7 @@
             [labelTextFieldCell.textField setReturnKeyType:UIReturnKeyNext];
             [labelTextFieldCell.textField setText:self.userLastNameString];
             [labelTextFieldCell.textField setAutocapitalizationType:UITextAutocapitalizationTypeWords];
+            [labelTextFieldCell.textField setKeyboardType:UIKeyboardTypeDefault];
             break;
         }
         case 2:
@@ -352,6 +354,7 @@
             [labelTextFieldCell.textField setReturnKeyType:UIReturnKeyNext];
             [labelTextFieldCell.textField setText:self.userEmailString];
             [labelTextFieldCell.textField setAutocapitalizationType:UITextAutocapitalizationTypeNone];
+            [labelTextFieldCell.textField setKeyboardType:UIKeyboardTypeEmailAddress];
             break;
         }
             
@@ -366,6 +369,7 @@
             [labelTextFieldCell.textField setReturnKeyType:UIReturnKeyJoin];
             [labelTextFieldCell.textField setText:self.userPasswordString];
             [labelTextFieldCell.textField setAutocapitalizationType:UITextAutocapitalizationTypeNone];
+            [labelTextFieldCell.textField setKeyboardType:UIKeyboardTypeDefault];
             break;
         }
         case 4:

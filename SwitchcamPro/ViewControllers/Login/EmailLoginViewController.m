@@ -258,6 +258,7 @@
             [self.userEmailTextField setPlaceholder:@"johndoe@mail.com"];
             [labelTextFieldCell.textField setReturnKeyType:UIReturnKeyNext];
             [labelTextFieldCell.textField setText:self.userEmailString];
+            [labelTextFieldCell.textField setKeyboardType:UIKeyboardTypeEmailAddress];
             break;
         }
         case 1:
@@ -270,6 +271,7 @@
             [labelTextFieldCell.textField setPlaceholder:@""];
             [labelTextFieldCell.textField setReturnKeyType:UIReturnKeyGo];
             [labelTextFieldCell.textField setText:self.userPasswordString];
+            [labelTextFieldCell.textField setKeyboardType:UIKeyboardTypeDefault];
             break;
         }
         case 2:
