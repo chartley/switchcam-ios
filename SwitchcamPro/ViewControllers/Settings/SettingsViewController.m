@@ -397,7 +397,7 @@
         // Upload quality cells
         if (indexPath.row == 0) {
             // Low
-            [[NSUserDefaults standardUserDefaults] setObject:AVAssetExportPreset640x480 forKey:kUploadQualityKey];
+            [[NSUserDefaults standardUserDefaults] setObject:AVAssetExportPreset960x540 forKey:kUploadQualityKey];
         } else if (indexPath.row == 1) {
             // Medium
             [[NSUserDefaults standardUserDefaults] setObject:AVAssetExportPreset1280x720 forKey:kUploadQualityKey];
