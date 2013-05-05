@@ -315,11 +315,11 @@
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kUploadQualityCellIdentifier];
                 [cell.textLabel setTextColor:[UIColor whiteColor]];
                 [cell.textLabel setBackgroundColor:[UIColor clearColor]];
-                [cell.textLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:17]];
+                [cell.textLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:16]];
                 
                 [cell.detailTextLabel setTextColor:[UIColor whiteColor]];
                 [cell.detailTextLabel setBackgroundColor:[UIColor clearColor]];
-                [cell.detailTextLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:14]];
+                [cell.detailTextLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:13]];
                 
                 UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, 43, 320, 1)];
                 separator.tag = kSeparatorTag;
