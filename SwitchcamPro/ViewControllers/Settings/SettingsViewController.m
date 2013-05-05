@@ -159,7 +159,7 @@
                 case 0:
                 {
                     [cell.textLabel setText:NSLocalizedString(@"540p", @"")];
-                    [cell.detailTextLabel setText:NSLocalizedString(@"Fastest Upload", @"")];
+                    [cell.detailTextLabel setText:NSLocalizedString(@"Small file size", @"")];
                     
                     if ([uploadQuality isEqualToString:AVAssetExportPreset960x540]) {
                         [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
@@ -171,7 +171,7 @@
                 case 1:
                 {
                     [cell.textLabel setText:NSLocalizedString(@"720p", @"")];
-                    [cell.detailTextLabel setText:NSLocalizedString(@"Better quality, slow upload", @"")];
+                    [cell.detailTextLabel setText:NSLocalizedString(@"Better quality, medium file size", @"")];
                     
                     if ([uploadQuality isEqualToString:AVAssetExportPreset1280x720]) {
                         [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
@@ -183,7 +183,7 @@
                 case 2:
                 {
                     [cell.textLabel setText:NSLocalizedString(@"1080p", @"")];
-                    [cell.detailTextLabel setText:NSLocalizedString(@"Best quality, slowest upload", @"")];
+                    [cell.detailTextLabel setText:NSLocalizedString(@"Best quality, larger file size", @"")];
 
                     if ([uploadQuality isEqualToString:AVAssetExportPreset1920x1080]) {
                         [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
