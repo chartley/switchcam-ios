@@ -259,6 +259,7 @@
             [labelTextFieldCell.textField setReturnKeyType:UIReturnKeyNext];
             [labelTextFieldCell.textField setText:self.userEmailString];
             [labelTextFieldCell.textField setKeyboardType:UIKeyboardTypeEmailAddress];
+            [labelTextFieldCell.textField setAutocorrectionType:UITextAutocorrectionTypeNo];
             break;
         }
         case 1:
