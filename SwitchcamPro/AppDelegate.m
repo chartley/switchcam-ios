@@ -98,7 +98,7 @@ NSString *const SCAPINetworkRequestCanStartNotification = @"com.switchcam.switch
     // Set default upload quality if not set
     NSString *uploadQuality = [[NSUserDefaults standardUserDefaults] objectForKey:kUploadQualityKey];
     if (!uploadQuality) {
-        [[NSUserDefaults standardUserDefaults] setObject:AVAssetExportPreset1920x1080 forKey:kUploadQualityKey];
+        [[NSUserDefaults standardUserDefaults] setObject:AVAssetExportPreset1280x720 forKey:kUploadQualityKey];
     }
     
     self.window = [[SPWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
