@@ -131,7 +131,8 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
         
         // Check login type
-        if (facebookId) {
+        NSString *loginType = [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserLoginTypeKey];
+        if ([loginType isEqualToString:kSPUserLoginTypeFacebook]) {
             // Get Information about the user
             [[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection *connection, NSDictionary<FBGraphObject> *user, NSError *error) {
                 NSString *userFullName = [NSString stringWithFormat:@"%@ %@", [user objectForKey:@"first_name"], [user objectForKey:@"last_name"]];

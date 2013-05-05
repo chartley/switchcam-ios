@@ -98,8 +98,7 @@
         
         isRegistrationComplete = YES;
         
-        AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-        [appDelegate successfulLoginViewControllerChange];
+        [self apnRegistration];
     };
     
     signUpFailureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -153,8 +152,7 @@
         
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kSPHasUserPreviouslyLoggedInKey];
         
-        AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-        [appDelegate successfulLoginViewControllerChange];
+        [self checkTerms];
     };
     
     apnRegistrationFailureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {

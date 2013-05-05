@@ -335,8 +335,9 @@
             [[NSUserDefaults standardUserDefaults] synchronize];
             
             BOOL hasLoggedInPreviously = [[NSUserDefaults standardUserDefaults] boolForKey:kSPHasUserPreviouslyLoggedInKey];
+            NSString *loginType = [[NSUserDefaults standardUserDefaults] objectForKey:kSPUserLoginTypeKey];
             
-            if (hasLoggedInPreviously) {
+            if (hasLoggedInPreviously || [loginType isEqualToString:kSPUserLoginTypeEmail]) {
                 // Start App
                 AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
                 [appDelegate successfulLoginViewControllerChange];
