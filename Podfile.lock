@@ -1,47 +1,80 @@
+PODS:
+  - AFNetworking (1.1.0)
+  - AWSiOSSDK (1.5.0):
+    - AWSiOSSDK/AutoScaling
+    - AWSiOSSDK/CloudWatch
+    - AWSiOSSDK/DynamoDB
+    - AWSiOSSDK/EC2
+    - AWSiOSSDK/ElasticLoadBalancing
+    - AWSiOSSDK/Runtime
+    - AWSiOSSDK/S3
+    - AWSiOSSDK/SES
+    - AWSiOSSDK/SimpleDB
+    - AWSiOSSDK/SNS
+    - AWSiOSSDK/SQS
+    - AWSiOSSDK/STS
+  - AWSiOSSDK/AutoScaling (1.5.0):
+    - AWSiOSSDK/Runtime
+  - AWSiOSSDK/CloudWatch (1.5.0):
+    - AWSiOSSDK/Runtime
+  - AWSiOSSDK/DynamoDB (1.5.0):
+    - AWSiOSSDK/Runtime
+  - AWSiOSSDK/EC2 (1.5.0):
+    - AWSiOSSDK/Runtime
+  - AWSiOSSDK/ElasticLoadBalancing (1.5.0):
+    - AWSiOSSDK/Runtime
+  - AWSiOSSDK/Runtime (1.5.0):
+    - AWSiOSSDK/DynamoDB
+  - AWSiOSSDK/S3 (1.5.0):
+    - AWSiOSSDK/Runtime
+  - AWSiOSSDK/SES (1.5.0):
+    - AWSiOSSDK/Runtime
+  - AWSiOSSDK/SimpleDB (1.5.0):
+    - AWSiOSSDK/Runtime
+  - AWSiOSSDK/SNS (1.5.0):
+    - AWSiOSSDK/Runtime
+  - AWSiOSSDK/SQS (1.5.0):
+    - AWSiOSSDK/Runtime
+  - AWSiOSSDK/STS (1.5.0):
+    - AWSiOSSDK/Runtime
+  - Mixpanel (1.1.1)
+  - RestKit (0.20.0pre6):
+    - RestKit/Core
+  - RestKit/Core (0.20.0pre6):
+    - RestKit/CoreData
+    - RestKit/Network
+    - RestKit/ObjectMapping
+  - RestKit/CoreData (0.20.0pre6)
+  - RestKit/Network (0.20.0pre6):
+    - AFNetworking (= 1.1.0)
+    - RestKit/ObjectMapping
+    - RestKit/Support
+    - SOCKit
+  - RestKit/ObjectMapping (0.20.0pre6)
+  - RestKit/Support (0.20.0pre6)
+  - SOCKit (1.1)
+  - TestFlightSDK (1.2)
+  - TTTAttributedLabel (1.5.1)
 
-PODS: 
-- AFNetworking (1.1.0)
-- Mixpanel (1.1.1)
-- RestKit (0.20.0pre6): 
-  - RestKit/Core (= 0.20.0pre6)
-- RestKit/Core (0.20.0pre6): 
-  - RestKit/CoreData
-  - RestKit/Network
-  - RestKit/ObjectMapping
-- RestKit/CoreData (0.20.0pre6)
-- RestKit/Network (0.20.0pre6): 
-  - AFNetworking (= 1.1.0)
-  - RestKit/ObjectMapping
-  - RestKit/Support
-  - SOCKit
-- RestKit/ObjectMapping (0.20.0pre6)
-- RestKit/Support (0.20.0pre6)
-- SOCKit (1.1)
-- TTTAttributedLabel (1.5.1)
-- TestFlightSDK (1.2)
+DEPENDENCIES:
+  - AWSiOSSDK (~> 1.5.0)
+  - Mixpanel (~> 1.1.1)
+  - RestKit (from `https://github.com/RestKit/RestKit.git`, branch `master`)
+  - TestFlightSDK (~> 1.2)
+  - TTTAttributedLabel (~> 1.5.1)
 
-COCOAPODS: 0.16.4
-
-DEPENDENCIES: 
-- Mixpanel (~> 1.1.1)
-- RestKit (from `https://github.com/RestKit/RestKit.git', branch `master')
-- TTTAttributedLabel (~> 1.5.1)
-- TestFlightSDK (~> 1.2)
-
-EXTERNAL SOURCES: 
-  RestKit: 
-    :git: https://github.com/RestKit/RestKit.git
+EXTERNAL SOURCES:
+  RestKit:
     :branch: master
+    :git: https://github.com/RestKit/RestKit.git
 
-SPEC CHECKSUMS: 
-  TestFlightSDK: 29e194fb148e4861f92e4c1195b9697e1f3ad19a
-  RestKit/Support: ccca19640fcc3031f82ad4250c44061e2e2ddce7
-  RestKit/CoreData: ccca19640fcc3031f82ad4250c44061e2e2ddce7
-  RestKit/ObjectMapping: ccca19640fcc3031f82ad4250c44061e2e2ddce7
-  RestKit/Core: ccca19640fcc3031f82ad4250c44061e2e2ddce7
-  SOCKit: ed67aeeca4a697b63a933229e53f4670d5b9300f
-  RestKit: ccca19640fcc3031f82ad4250c44061e2e2ddce7
-  Mixpanel: 388e78ffe1c4878b65a86127b5dab70be36479ad
+SPEC CHECKSUMS:
   AFNetworking: 761a418233d280c1e0580bcb76ff9cb4c3073d17
-  RestKit/Network: ccca19640fcc3031f82ad4250c44061e2e2ddce7
-  TTTAttributedLabel: 76843e36f992fddc1f9f8071ca29528761db629f
+  AWSiOSSDK: a7bf2c2d13bb5675855c9263c90115a344f1d9a5
+  Mixpanel: 388e78ffe1c4878b65a86127b5dab70be36479ad
+  RestKit: ccca19640fcc3031f82ad4250c44061e2e2ddce7
+  SOCKit: ed67aeeca4a697b63a933229e53f4670d5b9300f
+  TestFlightSDK: 29e194fb148e4861f92e4c1195b9697e1f3ad19a
+  TTTAttributedLabel: eb8f56ef4fb59e0d1422ca61c6d14ef51e2ef209
+
+COCOAPODS: 0.19.1

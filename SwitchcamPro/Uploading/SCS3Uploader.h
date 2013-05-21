@@ -22,4 +22,6 @@
 
 - (void)uploadVideo:(NSData*)videoData withKey:(NSString*)videoKey;
 
++ (SCS3Uploader *)sharedInstance;
+
 @end

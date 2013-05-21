@@ -160,13 +160,11 @@
 
 #pragma mark - Helper Methods
 
-- (void)startUpload {
-    @autoreleasepool {      
-        SCS3Uploader *uploader = [[SCS3Uploader alloc] init];
-        [uploader uploadVideo:self.photoData withKey:self.photoToUpload.photoKey];
-        
-        [self performSelectorOnMainThread:@selector(backButtonAction:) withObject:self waitUntilDone:NO];
-    }
+- (void)startUpload {    
+    SCS3Uploader *uploader = [SCS3Uploader sharedInstance];
+    [uploader uploadVideo:self.photoData withKey:self.photoToUpload.photoKey];
+    
+    [self performSelectorOnMainThread:@selector(backButtonAction:) withObject:self waitUntilDone:NO];
 }
 
 - (void)tagFriends {

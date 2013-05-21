@@ -219,15 +219,12 @@
 #pragma mark - Helper Methods
 
 - (void)startUpload {
-    @autoreleasepool {
-        NSError *error;
-        // Get Data
-        NSData *uploadData = [[NSData alloc] initWithContentsOfFile:[self.userVideoToUpload compressedVideoURL] options:NSDataReadingMapped error:&error];
-        
-        SCS3Uploader *uploader = [[SCS3Uploader alloc] init];
-        [uploader uploadVideo:uploadData withKey:self.userVideoToUpload.uploadPath];
-    }
+    NSError *error;
+    // Get Data
+    NSData *uploadData = [[NSData alloc] initWithContentsOfFile:[self.userVideoToUpload compressedVideoURL] options:NSDataReadingMapped error:&error];
     
+    SCS3Uploader *uploader = [SCS3Uploader sharedInstance];
+    [uploader uploadVideo:uploadData withKey:self.userVideoToUpload.uploadPath];
 }
 
 - (void)startVideoCompressionWithSuccessHandler:(void (^)())successHandler failureHandler:(void (^)(NSError *))failureHandler  {

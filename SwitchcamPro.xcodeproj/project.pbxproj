@@ -119,7 +119,6 @@
 		C97B1390166DDBF4005BB65F /* MyEventsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C97B138E166DDBF4005BB65F /* MyEventsViewController.xib */; };
 		C97B139D166DDD03005BB65F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = C97B139C166DDD03005BB65F /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C97B13A0166DDEFF005BB65F /* SCBucketNameGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = C97B139F166DDEFF005BB65F /* SCBucketNameGenerator.m */; };
-		C97B13A2166DE0A5005BB65F /* AWSiOSSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97B13A1166DE0A5005BB65F /* AWSiOSSDK.framework */; };
 		C97B13D4166EEFAB005BB65F /* CompleteLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C97B13D2166EEFAB005BB65F /* CompleteLoginViewController.m */; };
 		C97B13D5166EEFAB005BB65F /* CompleteLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C97B13D3166EEFAB005BB65F /* CompleteLoginViewController.xib */; };
 		C97B13D8166EF029005BB65F /* LabelProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C97B13D7166EF029005BB65F /* LabelProfileCell.m */; };
@@ -619,7 +618,6 @@
 		C97B139C166DDD03005BB65F /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = Helpers/Reachability.m; sourceTree = "<group>"; };
 		C97B139E166DDEFF005BB65F /* SCBucketNameGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCBucketNameGenerator.h; path = Uploading/SCBucketNameGenerator.h; sourceTree = "<group>"; };
 		C97B139F166DDEFF005BB65F /* SCBucketNameGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCBucketNameGenerator.m; path = Uploading/SCBucketNameGenerator.m; sourceTree = "<group>"; };
-		C97B13A1166DE0A5005BB65F /* AWSiOSSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSiOSSDK.framework; path = "Libraries/aws-ios-sdk-1.4.4/AWSiOSSDK.framework"; sourceTree = "<group>"; };
 		C97B13D1166EEFAB005BB65F /* CompleteLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompleteLoginViewController.h; path = ViewControllers/Login/CompleteLoginViewController.h; sourceTree = "<group>"; };
 		C97B13D2166EEFAB005BB65F /* CompleteLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CompleteLoginViewController.m; path = ViewControllers/Login/CompleteLoginViewController.m; sourceTree = "<group>"; };
 		C97B13D3166EEFAB005BB65F /* CompleteLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CompleteLoginViewController.xib; path = ViewControllers/Login/CompleteLoginViewController.xib; sourceTree = "<group>"; };
@@ -999,7 +997,6 @@
 				C97B193E1674053D005BB65F /* AVFoundation.framework in Frameworks */,
 				C97B19101673BAC6005BB65F /* StoreKit.framework in Frameworks */,
 				C97B19081673A93C005BB65F /* CoreData.framework in Frameworks */,
-				C97B13A2166DE0A5005BB65F /* AWSiOSSDK.framework in Frameworks */,
 				C97B136C166DC33F005BB65F /* Accounts.framework in Frameworks */,
 				C97B136D166DC33F005BB65F /* AdSupport.framework in Frameworks */,
 				C97B1369166DC31E005BB65F /* Social.framework in Frameworks */,
@@ -1377,7 +1374,6 @@
 				C97B193D1674053B005BB65F /* AVFoundation.framework */,
 				C97B1332166DBFC5005BB65F /* AudioToolbox.framework */,
 				C97B19071673A93C005BB65F /* CoreData.framework */,
-				C97B13A1166DE0A5005BB65F /* AWSiOSSDK.framework */,
 				C97B136A166DC33F005BB65F /* Accounts.framework */,
 				C97B136B166DC33F005BB65F /* AdSupport.framework */,
 				C97B1368166DC31E005BB65F /* Social.framework */,
@@ -2498,8 +2494,8 @@
 		C97BFF07166D909D005BB65F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: William Ketterer (85AJ3EP4J5)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: William Ketterer (85AJ3EP4J5)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Chris Hartley (7J7EDWHC8U)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Chris Hartley (7J7EDWHC8U)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Libraries/facebook-facebook-ios-sdk-a4c745f\"",
@@ -2516,8 +2512,8 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = Switchcam;
-				PROVISIONING_PROFILE = "6FBFD614-2379-4EA8-A131-1295B2F4A3CA";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6FBFD614-2379-4EA8-A131-1295B2F4A3CA";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
