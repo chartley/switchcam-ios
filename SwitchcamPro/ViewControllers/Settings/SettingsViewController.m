@@ -321,10 +321,10 @@
                 [cell.detailTextLabel setBackgroundColor:[UIColor clearColor]];
                 [cell.detailTextLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:13]];
                 
-                UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, 43, 320, 1)];
+                UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, 43, 300, 1)];
                 separator.tag = kSeparatorTag;
                 [separator setBackgroundColor:RGBA(47, 50, 51, 1)];
-                [cell addSubview:separator];
+                [cell.contentView addSubview:separator];
                 break;
             }
             case 2:
@@ -362,12 +362,15 @@
         if (indexPath.row == 0) {
             // Top
             [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grptableview-top"]]];
+            [[cell viewWithTag:kSeparatorTag] setHidden:NO];
         } else if (indexPath.row == 1) {
             // Middle
             [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grptableview-middle"]]];
+            [[cell viewWithTag:kSeparatorTag] setHidden:NO];
         } else {
             // Bottom
             [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grptableview-bottom"]]];
+            [[cell viewWithTag:kSeparatorTag] setHidden:YES];
         }
     } else {
         if (indexPath.row == 0) {
