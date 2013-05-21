@@ -224,6 +224,7 @@ static void *SCCamFocusModeObserverContext = &SCCamFocusModeObserverContext;
     {
         self.flashButton.hidden = YES;
         self.flashImageView.hidden = YES;
+        self.flashSelectedButton.hidden = YES;
     }
     
     // Set Button with resizable one
