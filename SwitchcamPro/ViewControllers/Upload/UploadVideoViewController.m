@@ -74,6 +74,8 @@
     [self.sizeLabel setTextColor:RGBA(105, 105, 105, 1)];
     [self.sizeLabel setShadowColor:[UIColor blackColor]];
     [self.sizeLabel setShadowOffset:CGSizeMake(0, -1)];
+    //TODO Enable with size estimation after compression
+    [self.sizeLabel setHidden:YES];
     
     [self.headerToolbarLabel setFont:[UIFont fontWithName:@"SourceSansPro-Regular" size:17]];
     [self.headerToolbarLabel setTextColor:[UIColor whiteColor]];
