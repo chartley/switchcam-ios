@@ -229,7 +229,7 @@
         
         [self.eventSearchTextField setPlaceholder:NSLocalizedString(@"Near Current Location", @"")];
     } else {
-        [self.eventSearchTextField setPlaceholder:NSLocalizedString(@"Enter event code or search", @"")];
+        [self.eventSearchTextField setPlaceholder:NSLocalizedString(@"Enter shoot code or search", @"")];
     }
     
     
@@ -392,7 +392,7 @@
 #pragma mark - UITextField Delegate
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    [self.eventSearchTextField setPlaceholder:NSLocalizedString(@"Enter event code or search", @"")];
+    [self.eventSearchTextField setPlaceholder:NSLocalizedString(@"Enter shoot code or search", @"")];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
